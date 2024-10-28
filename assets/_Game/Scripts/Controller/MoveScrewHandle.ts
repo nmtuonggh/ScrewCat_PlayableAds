@@ -1,12 +1,15 @@
 import { _decorator, Camera, Collider2D, Color, Component, director, EventMouse, Graphics, input, Input, Layers, Node, PhysicsSystem2D, Rect, Vec2, Vec3 } from 'cc';
 import { GameConfig } from '../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
-import { GameLayerComponent } from './GameLayerComponent';
-import { Screw } from './Screw/Screw';
+import { GameLayerComponent } from '../GameComponent/GameLayerComponent';
+import { Screw } from '../GameComponent/Screw/Screw';
+import { sSingleton } from '../../Singleton/sSingleton';
+import { Hole } from '../GameComponent/Hole/Hole';
+import { eColorType } from '../GameConfig/GameColorConfig';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
-export class MoveScrewHandle extends Component
+export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
 {
     private lastMousePosition: Vec2 = new Vec2();
 
@@ -23,6 +26,8 @@ export class MoveScrewHandle extends Component
     {
         input.off( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
+
+    //#region OnClick
 
     private onMouseDown ( event: EventMouse ): void
     {
@@ -43,8 +48,9 @@ export class MoveScrewHandle extends Component
 
     }
 
-    //tạo 1 biến kiểu layers có thể kéo thả vào inspector
+    //#endregion
 
+    //#region CheckClickScrew
     private checkClickScrew (): void
     {
         console.log( "checkClickScrew" );
@@ -57,7 +63,6 @@ export class MoveScrewHandle extends Component
     }
 
     private cachedColliders: Collider2D[] = [];
-
 
     private CheckClick ( layer: Layers ): GameLayerComponent
     {
@@ -126,5 +131,12 @@ export class MoveScrewHandle extends Component
 
         return null;
     }
+    //#endregion
 
+    //#region GetFreeHole
+    public GetFreeHoleBox (colorType : eColorType) : Hole
+    {
+        return 
+    }
+    //#endregion
 }
