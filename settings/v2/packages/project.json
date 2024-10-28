@@ -1,3 +1,19 @@
 {
-  "__version__": "1.0.6"
+  "__version__": "1.0.6",
+  "layer": [
+    {
+      "name": "Screw",
+      "value": 2048
+    },
+    {
+      "name": "Bar",
+      "value": 1024
+    }
+  ],
+  "physics": {
+    "collisionMatrix": {
+      "0": 1
+    }
+  },
+  "custom_joint_texture_layouts": []
 }
