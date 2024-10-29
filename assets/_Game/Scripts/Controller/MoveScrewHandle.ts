@@ -1,4 +1,4 @@
-import { _decorator, Camera, Collider2D, Color, Component, director, EventMouse, Graphics, input, Input, Layers, Node, PhysicsSystem2D, Rect, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Collider2D, Component, EventMouse, input, Input, Layers, Node, PhysicsSystem2D, Rect, Vec2, Vec3 } from 'cc';
 import { GameConfig } from '../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
 import { GameLayerComponent } from '../GameComponent/GameLayerComponent';
@@ -68,7 +68,7 @@ export class MoveScrewHandle extends Component
     {
         console.log( "checkClickScrew" );
         let component = this.CheckClick( GameLayerMaskConfig.SCREW_LAYER_MASK );
-        if ( component )
+        if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
             screw.CheckMove();
@@ -87,7 +87,6 @@ export class MoveScrewHandle extends Component
             GameConfig.CLICK_RADIUS * 2 );
 
         let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
-
         //loc cac collider theo layer
         if ( cachedCols.length === 0 ) return null;
 
@@ -155,4 +154,7 @@ export class MoveScrewHandle extends Component
         return BoxContainer.Instance.GetFreeBoxSlot( colorType );
     }
     //#endregion
+
+    
+
 }
