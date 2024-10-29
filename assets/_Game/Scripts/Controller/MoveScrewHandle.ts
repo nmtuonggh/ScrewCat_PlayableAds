@@ -1,25 +1,41 @@
-import { _decorator, Camera, Collider2D, Color, Component, director, EventMouse, Graphics, input, Input, Layers, Node, PhysicsSystem2D, Rect, Vec2, Vec3 } from 'cc';
+import { _decorator, Camera, Collider2D, Component, EventMouse, input, Input, Layers, Node, PhysicsSystem2D, Rect, Vec2, Vec3 } from 'cc';
 import { GameConfig } from '../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
 import { GameLayerComponent } from '../GameComponent/GameLayerComponent';
 import { Screw } from '../GameComponent/Screw/Screw';
-import { sSingleton } from '../../Singleton/sSingleton';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
+import { BoxContainer } from './BoxContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
-export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
+export class MoveScrewHandle extends Component
 {
-    private lastMousePosition: Vec2 = new Vec2();
-
+    //#region Properties
     @property( { type: Camera } )
     private camera: Camera | null = null;
 
-    protected onLoad (): void
+    private _lastMousePosition: Vec2 = new Vec2();
+    //#endregion
+
+    private static _instance: MoveScrewHandle = null;
+
+    public static get Instance (): MoveScrewHandle
     {
+        if ( this._instance === null )
+        {
+            this._instance = new MoveScrewHandle();
+        }
+        return this._instance;
+    }
+
+    protected override onLoad (): void
+    {
+        if ( MoveScrewHandle._instance === null )
+        {
+            MoveScrewHandle._instance = this;
+        }
         input.on( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
-        //this.camera = director.getScene().getChildByName( 'Main Camera' )?.getComponent( Camera ) || null;
     }
 
     protected onDestroy (): void
@@ -27,8 +43,7 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
         input.off( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
 
-    //#region OnClick
-
+    
     private onMouseDown ( event: EventMouse ): void
     {
         if ( event.getButton() === EventMouse.BUTTON_LEFT )
@@ -43,19 +58,17 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
 
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
-        this.lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
+        this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
         this.checkClickScrew();
 
     }
-
-    //#endregion
 
     //#region CheckClickScrew
     private checkClickScrew (): void
     {
         console.log( "checkClickScrew" );
         let component = this.CheckClick( GameLayerMaskConfig.SCREW_LAYER_MASK );
-        if ( component )
+        if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
             screw.CheckMove();
@@ -66,16 +79,16 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
 
     private CheckClick ( layer: Layers ): GameLayerComponent
     {
+        this.cachedColliders = [];
         const aabb = new Rect(
-            this.lastMousePosition.x - GameConfig.CLICK_RADIUS,
-            this.lastMousePosition.y - GameConfig.CLICK_RADIUS,
+            this._lastMousePosition.x - GameConfig.CLICK_RADIUS,
+            this._lastMousePosition.y - GameConfig.CLICK_RADIUS,
             GameConfig.CLICK_RADIUS * 2,
             GameConfig.CLICK_RADIUS * 2 );
 
         let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
-
         //loc cac collider theo layer
-        if( cachedCols.length === 0 ) return null;
+        if ( cachedCols.length === 0 ) return null;
 
         for ( let i = 0; i < cachedCols.length; i++ )
         {
@@ -103,6 +116,8 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
                 }
             }
 
+            console.log( "Tallest Layer: ", tallestLayer );
+
             //Tim node gan nhat trong layer cao nhat
             let collider: Collider2D | null = null;
             let nearest = Number.MAX_VALUE;
@@ -115,7 +130,7 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
                     let layer = iClickable.Layer;
                     if ( layer !== tallestLayer ) continue;
                     let nodePosition2D = new Vec2( this.cachedColliders[ i ].node.position.x, this.cachedColliders[ i ].node.position.y );
-                    let distance = Vec2.distance( this.lastMousePosition, nodePosition2D );
+                    let distance = Vec2.distance( this._lastMousePosition, nodePosition2D );
                     if ( distance < nearest )
                     {
                         nearest = distance;
@@ -134,9 +149,12 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
     //#endregion
 
     //#region GetFreeHole
-    public GetFreeHoleBox (colorType : eColorType) : Hole
+    public GetFreeHoleBox ( colorType: eColorType ): Hole
     {
-        return 
+        return BoxContainer.Instance.GetFreeBoxSlot( colorType );
     }
     //#endregion
+
+    
+
 }

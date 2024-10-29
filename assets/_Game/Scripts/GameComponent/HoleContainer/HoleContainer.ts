@@ -1,10 +1,18 @@
 import { _decorator, Component, Node } from 'cc';
-import { Hole } from '../Hole/Hole';
+import { HoleColor } from '../Hole/HoleColor';
 const { ccclass, property } = _decorator;
 
 @ccclass('HoleContainer')
-export class HoleContainer< T extends Hole > extends Component {
-    protected _holes: T[] = [];
+export abstract class HoleContainer extends Component {
+
+    @property({ type: HoleColor })
+    public _holes: HoleColor[] = [];
+
+    @property({ type: [Node] })
+    public holes: Node[] = [];
+
+    // protected onload (): void 
+    // {
+    //     //this._holes = this.getComponentsInChildren(HoleColor);
+    // }
 }
-
-
