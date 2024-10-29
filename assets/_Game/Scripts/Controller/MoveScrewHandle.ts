@@ -6,20 +6,26 @@ import { Screw } from '../GameComponent/Screw/Screw';
 import { sSingleton } from '../../Singleton/sSingleton';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
+import { BoxContainer } from '../GameComponent/HoleContainer/Box/BoxContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
 export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
-{
-    private lastMousePosition: Vec2 = new Vec2();
-
+{    
+    //#region Properties
     @property( { type: Camera } )
     private camera: Camera | null = null;
 
-    protected onLoad (): void
+    private _lastMousePosition: Vec2 = new Vec2();
+
+    private _boxContainer: BoxContainer | null = null;
+    //#endregion
+
+    protected override onLoad (): void
     {
+        super.onLoad();
         input.on( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
-        //this.camera = director.getScene().getChildByName( 'Main Camera' )?.getComponent( Camera ) || null;
+        this._boxContainer = BoxContainer.gInstance;
     }
 
     protected onDestroy (): void
@@ -43,7 +49,7 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
 
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
-        this.lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
+        this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
         this.checkClickScrew();
 
     }
@@ -67,8 +73,8 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
     private CheckClick ( layer: Layers ): GameLayerComponent
     {
         const aabb = new Rect(
-            this.lastMousePosition.x - GameConfig.CLICK_RADIUS,
-            this.lastMousePosition.y - GameConfig.CLICK_RADIUS,
+            this._lastMousePosition.x - GameConfig.CLICK_RADIUS,
+            this._lastMousePosition.y - GameConfig.CLICK_RADIUS,
             GameConfig.CLICK_RADIUS * 2,
             GameConfig.CLICK_RADIUS * 2 );
 
@@ -115,7 +121,7 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
                     let layer = iClickable.Layer;
                     if ( layer !== tallestLayer ) continue;
                     let nodePosition2D = new Vec2( this.cachedColliders[ i ].node.position.x, this.cachedColliders[ i ].node.position.y );
-                    let distance = Vec2.distance( this.lastMousePosition, nodePosition2D );
+                    let distance = Vec2.distance( this._lastMousePosition, nodePosition2D );
                     if ( distance < nearest )
                     {
                         nearest = distance;
@@ -136,7 +142,8 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
     //#region GetFreeHole
     public GetFreeHoleBox (colorType : eColorType) : Hole
     {
-        return 
+        console.log(this._boxContainer.node.name);
+        return this._boxContainer.GetFreeBoxSlot( colorType );
     }
     //#endregion
 }

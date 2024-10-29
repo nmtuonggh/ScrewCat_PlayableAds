@@ -4,6 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass( 'sSingleton' )
 export abstract class sSingleton<T extends sSingleton<T>> extends Component
 {
+    @property( Boolean )
     public DontDestroyOnLoad: boolean = false;
 
     private static _instance: any = null;

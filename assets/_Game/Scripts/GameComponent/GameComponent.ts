@@ -4,9 +4,9 @@ const { ccclass, property } = _decorator;
 
 @ccclass('GameComponent')
 export abstract class GameComponent extends Component {
-    private _gamelogic : MoveScrewHandle = null;
+    private _gamelogic : MoveScrewHandle;
 
-    public get GameLogic (): MoveScrewHandle
+    protected get GameLogic (): MoveScrewHandle
     {
         if ( this._gamelogic === null ) 
         {
