@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, CCBoolean, Component, Node } from 'cc';
 import { HoleContainer } from '../HoleContainer';
 import { HoleColor } from '../../Hole/HoleColor';
 import { eColorType } from '../../../GameConfig/GameColorConfig';
@@ -23,20 +23,21 @@ export class Box extends HoleContainer
     }
 
     //#endregion
-    protected override onload (): void
-    {
-        super.onload();
-    }
 
-    public GetFreeHole ( colorType: eColorType ) : Hole
+
+    public GetFreeHole ( colorType: eColorType ): Hole
     {
-        console.log("GetFreeHole");
         if ( this._colorType != colorType ) return null;
-        console.log("Same color");
 
-        for(const hole of this._holes)
+        //console.log( "Holes: ", this._holes.length );
+        for ( const hole of this.holes )
         {
-            if ( hole.IsFree ) return hole;
+            let holeColor = hole.getComponent( HoleColor );
+            if ( holeColor.IsFree() && holeColor.isLinked === false )
+            {
+                //console.log( "Tim duoc hole: " + hole );
+                return holeColor;
+            }
         }
 
         return null;

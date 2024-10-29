@@ -3,29 +3,39 @@ import { GameConfig } from '../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
 import { GameLayerComponent } from '../GameComponent/GameLayerComponent';
 import { Screw } from '../GameComponent/Screw/Screw';
-import { sSingleton } from '../../Singleton/sSingleton';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
-import { BoxContainer } from '../GameComponent/HoleContainer/Box/BoxContainer';
+import { BoxContainer } from './BoxContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
-export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
-{    
+export class MoveScrewHandle extends Component
+{
     //#region Properties
     @property( { type: Camera } )
     private camera: Camera | null = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
-
-    private _boxContainer: BoxContainer | null = null;
     //#endregion
+
+    private static _instance: MoveScrewHandle = null;
+
+    public static get Instance (): MoveScrewHandle
+    {
+        if ( this._instance === null )
+        {
+            this._instance = new MoveScrewHandle();
+        }
+        return this._instance;
+    }
 
     protected override onLoad (): void
     {
-        super.onLoad();
+        if ( MoveScrewHandle._instance === null )
+        {
+            MoveScrewHandle._instance = this;
+        }
         input.on( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
-        this._boxContainer = BoxContainer.gInstance;
     }
 
     protected onDestroy (): void
@@ -81,7 +91,7 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
         let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
 
         //loc cac collider theo layer
-        if( cachedCols.length === 0 ) return null;
+        if ( cachedCols.length === 0 ) return null;
 
         for ( let i = 0; i < cachedCols.length; i++ )
         {
@@ -140,10 +150,9 @@ export class MoveScrewHandle extends sSingleton<MoveScrewHandle>
     //#endregion
 
     //#region GetFreeHole
-    public GetFreeHoleBox (colorType : eColorType) : Hole
+    public GetFreeHoleBox ( colorType: eColorType ): Hole
     {
-        console.log(this._boxContainer.node.name);
-        return this._boxContainer.GetFreeBoxSlot( colorType );
+        return BoxContainer.Instance.GetFreeBoxSlot( colorType );
     }
     //#endregion
 }

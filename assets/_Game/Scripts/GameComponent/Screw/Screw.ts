@@ -32,11 +32,9 @@ export class Screw extends GameLayerComponent
 
     public CheckMoveBox (): boolean
     {
-        console.log( "gamelogic" + this.GameLogic );
         let freeBox = this.GameLogic.GetFreeHoleBox( this.ColorType );
         if ( freeBox !== null )
         {
-            console.log( "freeBox khong null" );
             this.MoveToBoxSlot( freeBox );
             return true;
         }
@@ -47,6 +45,8 @@ export class Screw extends GameLayerComponent
     private MoveToBoxSlot ( hole: Hole ): void
     {
         console.log( 'MoveToBoxSlot' );
+        hole.isLinked = true;
+        hole.SetColor();
     }
 }
 

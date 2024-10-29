@@ -3,13 +3,16 @@ import { HoleColor } from '../Hole/HoleColor';
 const { ccclass, property } = _decorator;
 
 @ccclass('HoleContainer')
-export class HoleContainer extends Component {
+export abstract class HoleContainer extends Component {
+
     @property({ type: HoleColor })
-    protected _holes: HoleColor[] = [];
+    public _holes: HoleColor[] = [];
 
-    protected onload (): void {
-        this._holes = this.getComponentsInChildren(HoleColor);
-    }
+    @property({ type: [Node] })
+    public holes: Node[] = [];
+
+    // protected onload (): void 
+    // {
+    //     //this._holes = this.getComponentsInChildren(HoleColor);
+    // }
 }
-
-

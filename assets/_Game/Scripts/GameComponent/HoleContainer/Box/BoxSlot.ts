@@ -4,12 +4,15 @@ const { ccclass, property } = _decorator;
 
 @ccclass('BoxSlot')
 export class BoxSlot extends Component {
+    @property({ type: Box })
     private box : Box = null;
 
     public get Box (): Box
     {
         return this.box;
     }
+
+
 }
 
 
