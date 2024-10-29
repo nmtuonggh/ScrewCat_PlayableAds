@@ -43,8 +43,7 @@ export class MoveScrewHandle extends Component
         input.off( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
 
-    //#region OnClick
-
+    
     private onMouseDown ( event: EventMouse ): void
     {
         if ( event.getButton() === EventMouse.BUTTON_LEFT )
@@ -64,8 +63,6 @@ export class MoveScrewHandle extends Component
 
     }
 
-    //#endregion
-
     //#region CheckClickScrew
     private checkClickScrew (): void
     {
@@ -82,6 +79,7 @@ export class MoveScrewHandle extends Component
 
     private CheckClick ( layer: Layers ): GameLayerComponent
     {
+        this.cachedColliders = [];
         const aabb = new Rect(
             this._lastMousePosition.x - GameConfig.CLICK_RADIUS,
             this._lastMousePosition.y - GameConfig.CLICK_RADIUS,
@@ -118,6 +116,8 @@ export class MoveScrewHandle extends Component
                     }
                 }
             }
+
+            console.log( "Tallest Layer: ", tallestLayer );
 
             //Tim node gan nhat trong layer cao nhat
             let collider: Collider2D | null = null;

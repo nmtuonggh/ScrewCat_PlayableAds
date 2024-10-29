@@ -32,7 +32,7 @@ export class BoxContainer extends Component
 
     public GetFreeBoxSlot ( colorType: eColorType ): Hole 
     {
-        console.log( "BoxSlots: ", this.boxSlots.length );
+        //console.log( "BoxSlots: ", this.boxSlots.length );
         for ( const boxSlot of this.boxSlots ) 
         {
             const box = boxSlot.Box;
@@ -41,7 +41,7 @@ export class BoxContainer extends Component
             const hole = boxSlot.Box.GetFreeHole( colorType );
             if ( hole !== null )
             {
-                console.log( "Tim duoc slot: " + hole);
+                //console.log( "Tim duoc slot: " + hole);
                 return hole;
             } 
         }

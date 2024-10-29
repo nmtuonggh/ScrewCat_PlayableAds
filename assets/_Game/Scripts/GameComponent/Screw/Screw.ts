@@ -26,7 +26,7 @@ export class Screw extends GameLayerComponent
     public CheckMove (): void
     {
         if(this.CheckMoveBox()){
-            console.log("Can move to box");
+            //console.log("Can move to box");
         }
     }
 
@@ -44,9 +44,10 @@ export class Screw extends GameLayerComponent
 
     private MoveToBoxSlot ( hole: Hole ): void
     {
-        console.log( 'MoveToBoxSlot' );
+        //console.log( 'MoveToBoxSlot' );
         hole.isLinked = true;
         hole.SetColor();
+        this.node.active = false;
     }
 }
 
