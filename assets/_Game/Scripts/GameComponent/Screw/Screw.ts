@@ -4,27 +4,27 @@ import { eColorType } from '../../GameConfig/GameColorConfig';
 import { Hole } from '../Hole/Hole';
 import { GameConfig } from '../../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../../GameConfig/GameLayerMaskConfig';
+import { ScrewRenderer } from './ScrewRenderer';
 const { ccclass, property } = _decorator;
 
 @ccclass('Screw')
-export class Screw extends GameLayerComponent {
-
-    private _colorType: eColorType = eColorType.Blue;
+export class Screw extends GameLayerComponent
+{
 
     @property({ type: HingeJoint2D })
     public hingeJoint: HingeJoint2D = null;
 
+    private screwRenderer: ScrewRenderer = null;
     //#region Encapsulation
 
-    public get ColorType(): eColorType {
-        return this._colorType;
-    }
-
-    public set ColorType(value: eColorType) {
-        this._colorType = value;
-    }
+    
 
     //#endregion
+
+    protected onLoad (): void
+    {
+        this.screwRenderer = this.getComponent( ScrewRenderer );
+    }
 
     //#region CheckMove
     public CheckMove(): void {
@@ -40,7 +40,7 @@ export class Screw extends GameLayerComponent {
     }
 
     public CheckMoveBox(): boolean {
-        let freeBox = this.GameLogic.GetFreeHoleBox(this.ColorType);
+        let freeBox = this.GameLogic.GetFreeHoleBox(this.screwRenderer.ColorType);
         if (freeBox !== null) {
             this.MoveToBoxSlot(freeBox);
             return true;

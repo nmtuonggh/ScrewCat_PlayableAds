@@ -1,3 +1,5 @@
+import { Color } from "cc";
+
 export enum eColorType
 {
     Green = 0,
@@ -9,4 +11,6 @@ export enum eColorType
     Pink = 6,
     Purple = 7,
     Orange = 8,
+    
 }
+
