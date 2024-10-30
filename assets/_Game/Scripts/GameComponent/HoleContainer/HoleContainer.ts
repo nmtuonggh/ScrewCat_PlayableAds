@@ -6,13 +6,5 @@ const { ccclass, property } = _decorator;
 export abstract class HoleContainer extends Component {
 
     @property({ type: HoleColor })
-    public _holes: HoleColor[] = [];
-
-    @property({ type: [Node] })
-    public holes: Node[] = [];
-
-    // protected onload (): void 
-    // {
-    //     //this._holes = this.getComponentsInChildren(HoleColor);
-    // }
+    public listHoles: HoleColor[] = [];
 }

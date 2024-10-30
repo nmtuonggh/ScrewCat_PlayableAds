@@ -19,24 +19,27 @@ export class Box extends HoleContainer
 
     public set ColorType ( value: eColorType )
     {
-        this._colorType = value;
+        this._colorType = value; 
     }
+
 
     //#endregion
 
+    protected onLoad (): void
+    {
+        this.listHoles = this.getComponentsInChildren( HoleColor );
+    }
 
     public GetFreeHole ( colorType: eColorType ): Hole
     {
         if ( this._colorType != colorType ) return null;
 
-        //console.log( "Holes: ", this._holes.length );
-        for ( const hole of this.holes )
+        for ( const hole of this.listHoles )
         {
-            let holeColor = hole.getComponent( HoleColor );
-            if ( holeColor.IsFree() && holeColor.isLinked === false )
+            if ( hole.IsFree() && hole.isLinked === false)
             {
                 //console.log( "Tim duoc hole: " + hole );
-                return holeColor;
+                return hole;
             }
         }
 

@@ -1,4 +1,4 @@
-import { _decorator, Collider2D, Node, PhysicsSystem2D, Rect } from 'cc';
+import { _decorator, Collider2D, HingeJoint2D, Node, PhysicsSystem2D, Rect } from 'cc';
 import { GameLayerComponent } from '../GameLayerComponent';
 import { eColorType } from '../../GameConfig/GameColorConfig';
 import { Hole } from '../Hole/Hole';
@@ -10,6 +10,9 @@ const { ccclass, property } = _decorator;
 export class Screw extends GameLayerComponent {
 
     private _colorType: eColorType = eColorType.Blue;
+
+    @property({ type: HingeJoint2D })
+    public hingeJoint: HingeJoint2D = null;
 
     //#region Encapsulation
 
@@ -102,8 +105,10 @@ export class Screw extends GameLayerComponent {
     {
         hole.isLinked = true;
         hole.SetColor();
+        this.hingeJoint.destroy();
         this.node.active = false;
     }
+
 }
 
 

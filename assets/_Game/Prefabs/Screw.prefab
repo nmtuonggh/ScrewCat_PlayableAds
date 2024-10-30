@@ -214,6 +214,7 @@
     "__prefab": {
       "__id__": 9
     },
+    "hingeJoint": null,
     "_id": ""
   },
   {
@@ -265,7 +266,7 @@
     "enabledContactListener": false,
     "bullet": false,
     "awakeOnLoad": true,
-    "_group": 1,
+    "_group": 2,
     "_type": 1,
     "_allowSleep": true,
     "_gravityScale": 1,
