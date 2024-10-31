@@ -6,6 +6,7 @@ import { Screw } from '../GameComponent/Screw/Screw';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { BoxContainer } from './BoxContainer';
+import { CahedContainer } from './CahedContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -43,7 +44,7 @@ export class MoveScrewHandle extends Component
         input.off( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
 
-    
+
     private onMouseDown ( event: EventMouse ): void
     {
         if ( event.getButton() === EventMouse.BUTTON_LEFT )
@@ -153,8 +154,13 @@ export class MoveScrewHandle extends Component
     {
         return BoxContainer.Instance.GetFreeBoxSlot( colorType );
     }
+
+    public GetFreeHoleCache (): Hole
+    {
+        return CahedContainer.Instance.GetFreeHole();
+    }
     //#endregion
 
-    
+
 
 }

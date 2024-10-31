@@ -38,15 +38,17 @@ export class BoxContainer extends Component
             const box = boxSlot.Box;
             if ( box === null ) continue;
 
-            const hole = boxSlot.Box.GetFreeHole( colorType );
+            const hole = box.GetFreeHole( colorType );
             if ( hole !== null )
             {
-                //console.log( "Tim duoc slot: " + hole);
+                
                 return hole;
             } 
         }
         return null;
     }
+
+
 
 }
 

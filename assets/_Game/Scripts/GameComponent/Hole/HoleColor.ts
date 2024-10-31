@@ -13,6 +13,8 @@ export class HoleColor extends Hole
     {
         return this._colorType;
     }
+
+    
 }
 
 

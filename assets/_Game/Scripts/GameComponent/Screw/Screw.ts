@@ -5,6 +5,7 @@ import { Hole } from '../Hole/Hole';
 import { GameConfig } from '../../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../../GameConfig/GameLayerMaskConfig';
 import { ScrewRenderer } from './ScrewRenderer';
+import { EventManager } from '../../EventManager/EventManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -40,6 +41,12 @@ export class Screw extends GameLayerComponent
         {
             //console.log("Can move to box");
         }
+        else if ( this.CheckMoveCache() )
+        {
+            //console.log("Can move to cache");
+        }
+
+
     }
 
     public CheckMoveBox (): boolean
@@ -48,6 +55,18 @@ export class Screw extends GameLayerComponent
         if ( freeBox !== null )
         {
             this.MoveToBoxSlot( freeBox );
+            return true;
+        }
+
+        return false;
+    }
+
+    public CheckMoveCache (): boolean
+    {
+        let freeHole = this.GameLogic.GetFreeHoleCache();
+        if ( freeHole !== null )
+        {
+            this.MoveToCacheSlot( freeHole );
             return true;
         }
 
@@ -110,11 +129,28 @@ export class Screw extends GameLayerComponent
     {
         hole.isLinked = true;
         this.linkingHole = hole;
+
+        this.hingeJoint.destroy();
+
+        tween( this.node )
+            .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
+            .call( () => 
+            {
+                const worldPosition = this.node.worldPosition;
+                this.node.parent = this.linkingHole.node;
+                this.node.worldPosition = worldPosition;
+                hole.Box.CheckFullBox();
+            } )
+            .start();
+
+    }
+
+    private MoveToCacheSlot ( hole: Hole ): void
+    {
+        hole.isLinked = true;
+        this.linkingHole = hole;
         hole.SetColor();
         this.hingeJoint.destroy();
-        //this.node.active = false;
-        console.log( this.node.position );
-        console.log( this.linkingHole.node.worldPosition );
 
         tween( this.node )
             .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
