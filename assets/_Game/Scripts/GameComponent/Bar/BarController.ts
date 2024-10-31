@@ -32,7 +32,7 @@ export class BarController extends GameLayerComponent
             const screwNode = instantiate( screwPrefab );
             screwNode.setParent( this.node.parent );
             screwNode.setWorldPosition( spawnPos );
-            this.listScrews = this.node.parent.getComponentsInChildren( Screw );
+            this.listScrews.push( screwNode.getComponent( Screw ) );
         }
     }
 

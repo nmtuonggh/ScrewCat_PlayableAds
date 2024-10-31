@@ -21,7 +21,6 @@ export class LevelManager extends Component
     protected onLoad (): void
     {
         this.listBar = this.Holder.getComponentsInChildren( BarController );
-
     }
 
     protected start (): void

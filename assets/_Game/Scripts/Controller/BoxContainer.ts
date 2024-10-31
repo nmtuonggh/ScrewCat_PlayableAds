@@ -54,6 +54,11 @@ export class BoxContainer extends Component
         box.parent = parent;
     }
 
+    public CreatNewBox ( ): void
+    {
+        
+    }
+
 }
 
 
