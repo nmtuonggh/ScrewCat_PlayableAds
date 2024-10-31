@@ -12,7 +12,10 @@ export class BoxSlot extends Component {
         return this.box;
     }
 
-
+    public SetBox(): void
+    {
+        this.box = this.getComponentInChildren(Box);
+    }
 }
 
 

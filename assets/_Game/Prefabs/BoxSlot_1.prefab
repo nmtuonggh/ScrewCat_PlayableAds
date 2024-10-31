@@ -17,22 +17,18 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
-    "_children": [
-      {
-        "__id__": 2
-      }
-    ],
+    "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 10
+        "__id__": 2
       },
       {
-        "__id__": 12
+        "__id__": 4
       }
     ],
     "_prefab": {
-      "__id__": 14
+      "__id__": 6
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -64,118 +60,6 @@
     "_id": ""
   },
   {
-    "__type__": "cc.Node",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 1
-    },
-    "_prefab": {
-      "__id__": 3
-    },
-    "__editorExtras__": {}
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 2
-    },
-    "asset": {
-      "__uuid__": "15629ab7-82ea-41f7-ba57-3e0ae2c5db95",
-      "__expectedType__": "cc.Prefab"
-    },
-    "fileId": "25zs5suSxEUpiAUtzQIcCj",
-    "instance": {
-      "__id__": 4
-    },
-    "targetOverrides": null
-  },
-  {
-    "__type__": "cc.PrefabInstance",
-    "fileId": "3dBHLgvlpOhYQ2TV0wG+Gi",
-    "prefabRootNode": {
-      "__id__": 1
-    },
-    "mountedChildren": [],
-    "mountedComponents": [],
-    "propertyOverrides": [
-      {
-        "__id__": 5
-      },
-      {
-        "__id__": 7
-      },
-      {
-        "__id__": 8
-      },
-      {
-        "__id__": 9
-      }
-    ],
-    "removedComponents": []
-  },
-  {
-    "__type__": "CCPropertyOverrideInfo",
-    "targetInfo": {
-      "__id__": 6
-    },
-    "propertyPath": [
-      "_name"
-    ],
-    "value": "Box"
-  },
-  {
-    "__type__": "cc.TargetInfo",
-    "localID": [
-      "25zs5suSxEUpiAUtzQIcCj"
-    ]
-  },
-  {
-    "__type__": "CCPropertyOverrideInfo",
-    "targetInfo": {
-      "__id__": 6
-    },
-    "propertyPath": [
-      "_lpos"
-    ],
-    "value": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    }
-  },
-  {
-    "__type__": "CCPropertyOverrideInfo",
-    "targetInfo": {
-      "__id__": 6
-    },
-    "propertyPath": [
-      "_lrot"
-    ],
-    "value": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    }
-  },
-  {
-    "__type__": "CCPropertyOverrideInfo",
-    "targetInfo": {
-      "__id__": 6
-    },
-    "propertyPath": [
-      "_euler"
-    ],
-    "value": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    }
-  },
-  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -185,7 +69,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 11
+      "__id__": 3
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -213,7 +97,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 13
+      "__id__": 5
     },
     "box": null,
     "_id": ""
@@ -234,29 +118,22 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 15
-      }
-    ],
-    "nestedPrefabInstanceRoots": [
-      {
-        "__id__": 2
+        "__id__": 7
       }
     ]
   },
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 12
+      "__id__": 4
     },
     "sourceInfo": null,
     "propertyPath": [
       "box"
     ],
-    "target": {
-      "__id__": 2
-    },
+    "target": null,
     "targetInfo": {
-      "__id__": 16
+      "__id__": 8
     }
   },
   {

@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, instantiate, Node, Prefab } from 'cc';
 import { BoxSlot } from '../GameComponent/HoleContainer/Box/BoxSlot';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { Hole } from '../GameComponent/Hole/Hole';
@@ -7,7 +7,7 @@ const { ccclass, property } = _decorator;
 @ccclass( 'BoxContainer' )
 export class BoxContainer extends Component
 {
-    private boxSlots: BoxSlot[] = [];
+    public boxSlots: BoxSlot[] = [];
 
     private static _instance: BoxContainer = null;
 
@@ -48,7 +48,11 @@ export class BoxContainer extends Component
         return null;
     }
 
-
+    public InitBox(boxPrefabs : Prefab, parent : Node): void
+    {
+        const box = instantiate( boxPrefabs );
+        box.parent = parent;
+    }
 
 }
 
