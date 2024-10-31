@@ -66,7 +66,7 @@ export class MoveScrewHandle extends Component
     //#region CheckClickScrew
     private checkClickScrew (): void
     {
-        console.log( "checkClickScrew" );
+        //console.log( "checkClickScrew" );
         let component = this.CheckClick( GameLayerMaskConfig.SCREW_LAYER_MASK );
         if ( component !== null )
         {
@@ -116,7 +116,7 @@ export class MoveScrewHandle extends Component
                 }
             }
 
-            console.log( "Tallest Layer: ", tallestLayer );
+            //console.log( "Tallest Layer: ", tallestLayer );
 
             //Tim node gan nhat trong layer cao nhat
             let collider: Collider2D | null = null;

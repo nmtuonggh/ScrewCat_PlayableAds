@@ -1,4 +1,4 @@
-import { _decorator, Collider2D, HingeJoint2D, Node, PhysicsSystem2D, Rect } from 'cc';
+import { _decorator, Collider2D, HingeJoint2D, Node, PhysicsSystem2D, Rect, tween, Vec2, Vec3 } from 'cc';
 import { GameLayerComponent } from '../GameLayerComponent';
 import { eColorType } from '../../GameConfig/GameColorConfig';
 import { Hole } from '../Hole/Hole';
@@ -7,17 +7,18 @@ import { GameLayerMaskConfig } from '../../GameConfig/GameLayerMaskConfig';
 import { ScrewRenderer } from './ScrewRenderer';
 const { ccclass, property } = _decorator;
 
-@ccclass('Screw')
+@ccclass( 'Screw' )
 export class Screw extends GameLayerComponent
 {
 
-    @property({ type: HingeJoint2D })
+    @property( { type: HingeJoint2D } )
     public hingeJoint: HingeJoint2D = null;
 
     private screwRenderer: ScrewRenderer = null;
+    private linkingHole: Hole = null;
     //#region Encapsulation
 
-    
+
 
     //#endregion
 
@@ -27,22 +28,26 @@ export class Screw extends GameLayerComponent
     }
 
     //#region CheckMove
-    public CheckMove(): void {
+    public CheckMove (): void
+    {
         if ( this.IsBlocked() === true )
         {
             console.log( "Is blocked" );
             return;
         }
 
-        if (this.CheckMoveBox()) {
+        if ( this.CheckMoveBox() )
+        {
             //console.log("Can move to box");
         }
     }
 
-    public CheckMoveBox(): boolean {
-        let freeBox = this.GameLogic.GetFreeHoleBox(this.screwRenderer.ColorType);
-        if (freeBox !== null) {
-            this.MoveToBoxSlot(freeBox);
+    public CheckMoveBox (): boolean
+    {
+        let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
+        if ( freeBox !== null )
+        {
+            this.MoveToBoxSlot( freeBox );
             return true;
         }
 
@@ -56,8 +61,8 @@ export class Screw extends GameLayerComponent
         this.cachedBarLayer = [];
 
         const barLayer = GameLayerMaskConfig.BAR_LAYER_MASK;
-        const screwPosition = this.node.getWorldPosition(this.node.position);
-    
+        const screwPosition = this.node.getWorldPosition( this.node.position );
+
         const aabb = new Rect(
             screwPosition.x - GameConfig.SCREW_RADIUS,
             screwPosition.y - GameConfig.SCREW_RADIUS,
@@ -69,7 +74,7 @@ export class Screw extends GameLayerComponent
 
         if ( cachedCollider.length === 0 ) return false;
 
-        console.log( "Cached Collider: ", cachedCollider.length );
+        //console.log( "Cached Collider: ", cachedCollider.length );
 
         for ( let i = 0; i < cachedCollider.length; i++ )
         {
@@ -80,14 +85,14 @@ export class Screw extends GameLayerComponent
             }
         }
 
-        console.log( "Cached BarLayer: ", this.cachedBarLayer.length );
+        // console.log( "Cached BarLayer: ", this.cachedBarLayer.length );
 
         for ( let i = 0; i < this.cachedBarLayer.length; i++ )
         {
             let bar = this.cachedBarLayer[ i ].node.getComponent( GameLayerComponent );
             if ( bar !== null )
             {
-                console.log( "Bar Layer: ", bar.Layer );
+                //console.log( "Bar Layer: ", bar.Layer );
                 if ( bar.Layer > this.Layer )
                 {
                     console.log( "Is blocked" );
@@ -101,12 +106,21 @@ export class Screw extends GameLayerComponent
 
     //#endregion
 
-    private MoveToBoxSlot(hole: Hole): void 
+    private MoveToBoxSlot ( hole: Hole ): void 
     {
         hole.isLinked = true;
+        this.linkingHole = hole;
         hole.SetColor();
         this.hingeJoint.destroy();
-        this.node.active = false;
+        //this.node.active = false;
+        console.log( this.node.position );
+        console.log( this.linkingHole.node.worldPosition );
+
+        tween( this.node )
+            .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
+            .start();
+
+        this.node.parent = this.linkingHole.node;
     }
 
 }

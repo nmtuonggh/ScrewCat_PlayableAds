@@ -10,7 +10,7 @@ export class BarController extends GameLayerComponent
 
     //#region Fields
     @property( Node )
-    private hingleJointPos: Node[] = [];
+    public listHolePos: Node[] = [];
 
     @property( Screw )
     public listScrews: Screw[] = [];
@@ -26,9 +26,9 @@ export class BarController extends GameLayerComponent
     //#region Spawn Screw
     public SpawnScrew ( screwPrefab: Prefab ): void 
     {
-        for ( let i = 0; i < this.hingleJointPos.length; i++ )
+        for ( let i = 0; i < this.listHolePos.length; i++ )
         {
-            const spawnPos = this.hingleJointPos[ i ].getWorldPosition();
+            const spawnPos = this.listHolePos[ i ].getWorldPosition();
             const screwNode = instantiate( screwPrefab );
             screwNode.setParent( this.node.parent );
             screwNode.setWorldPosition( spawnPos );

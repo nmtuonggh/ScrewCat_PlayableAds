@@ -23,7 +23,7 @@ export class BarPhysic extends Component {
         for ( let i = 0; i < this.barController.listScrews.length; i++ ) 
         {
             const screw = this.barController.listScrews[ i ];
-            const localPos = screw.node.position;
+            const localPos = this.barController.listHolePos[ i ].getPosition();
             const screwRb = screw.node.getComponent( RigidBody2D );
             screw.hingeJoint = this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb );
         }

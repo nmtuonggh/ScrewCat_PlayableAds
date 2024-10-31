@@ -524,7 +524,7 @@
       "__id__": 23
     },
     "tag": 0,
-    "_group": 4,
+    "_group": 1,
     "_density": 1,
     "_sensor": false,
     "_friction": 0.2,
@@ -542,8 +542,8 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": -51.3,
-        "y": 34.3
+        "x": -48.4,
+        "y": 36.4
       },
       {
         "__type__": "cc.Vec2",
@@ -557,7 +557,7 @@
       },
       {
         "__type__": "cc.Vec2",
-        "x": 141.4,
+        "x": 137.9,
         "y": -34.3
       }
     ],
@@ -583,7 +583,7 @@
     "bullet": false,
     "awakeOnLoad": true,
     "_group": 4,
-    "_type": 0,
+    "_type": 2,
     "_allowSleep": true,
     "_gravityScale": 1,
     "_linearDamping": 0,
@@ -613,7 +613,7 @@
     "__prefab": {
       "__id__": 27
     },
-    "hingleJointPos": [
+    "listHolePos": [
       {
         "__id__": 4
       },
