@@ -7,6 +7,7 @@ import { BoxRenderer } from './BoxRenderer';
 import { BoxSlot } from './BoxSlot';
 import { BoxContainer } from '../../../Controller/BoxContainer';
 import { CahedContainer } from '../../../Controller/CahedContainer';
+import { AudioController, AudioType } from '../../../AudioController/AudioController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -72,7 +73,9 @@ export class Box extends HoleContainer
             .to( 0.5, { position: new Vec3( 0, 0, 0 ) } )
             .call( () => 
             {
+                AudioController.Instance.PlayAudio( AudioType.meow );
                 this.MoveOut();
+                AudioController.Instance.PlayAudio( AudioType.boxComplete );
             } )
             .start();
     }

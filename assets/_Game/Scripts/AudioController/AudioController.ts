@@ -30,13 +30,13 @@ export class AudioController extends Component
         {
             AudioController._instance = this;
         }
-        this.PlayerBG( );
+        //this.PlayerBG( );
     }
 
     public PlayAudio ( type: AudioType )
     {
         this.audioSource.clip = this.audioClip[ type ];
-        this.audioSource.play();
+        this.audioSource.playOneShot(this.audioSource.clip);
     }
 
     public PlayerBG(){

@@ -62,7 +62,6 @@ export class MoveScrewHandle extends Component
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
         this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
         this.checkClickScrew();
-
     }
 
     //#region CheckClickScrew

@@ -9,6 +9,7 @@ import { EventManager } from '../../EventManager/EventManager';
 import { BoxContainer } from '../../Controller/BoxContainer';
 import { CahedContainer } from '../../Controller/CahedContainer';
 import { ScrewAnim } from './ScrewAnim';
+import { AudioController, AudioType } from '../../AudioController/AudioController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -46,11 +47,11 @@ export class Screw extends GameLayerComponent
 
         if ( this.CheckMoveBox() )
         {
-            //console.log("Can move to box");
+            AudioController.Instance.PlayAudio( AudioType.screwOut );
         }
         else if ( this.CheckMoveCache() )
         {
-            //console.log("Can move to cache");
+            AudioController.Instance.PlayAudio( AudioType.screwOut );
         }
 
 
@@ -144,16 +145,17 @@ export class Screw extends GameLayerComponent
             this.hingeJoint.destroy();
         }
         this.screwAnimation.ScrewOut();
-        this.TweenMove( this.node, hole , 0.2).start();
+        this.TweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
 
-    private TweenMove ( node: Node, hole: Hole , delayTime: number): Tween<Node>
+    private TweenMoveBox ( node: Node, hole: Hole, delayTime: number ): Tween<Node>
     {
         return tween( node )
-            .delay(delayTime)
-            .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
+            .delay( delayTime )
+            .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition } )
             .call( () =>
             {
+                AudioController.Instance.PlayAudio( AudioType.screwIn );
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
@@ -171,19 +173,26 @@ export class Screw extends GameLayerComponent
         this.linkingHole = hole;
         hole.SetColor();
         this.hingeJoint.destroy();
+        this.screwAnimation.ScrewOut();
+        this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
+    }
 
-        tween( this.node )
-            .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
-            .call( () => 
+    private TweenMoveCached ( node: Node, hole: Hole, delayTime: number ): Tween<Node>
+    {
+        return tween( node )
+            .delay( delayTime )
+            .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition } )
+            .call( () =>
             {
+                AudioController.Instance.PlayAudio( AudioType.screwIn );
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
                 hole.linkingScrew = this;
                 this.State = eScrewState.IN_CACHED;
+                this.screwAnimation.ScrewIn();
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
-            } )
-            .start();
+            } );
     }
 
 }
