@@ -45,8 +45,8 @@ export class LevelManager extends Component
         for ( let i = 0; i < listBoxSlot.length; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
-            BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 0 ], listBoxSlot[ i ].node );
-            boxSlot.SetBox();
+            BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 0 ], boxSlot.node );
+            boxSlot.InitBoxValue();
         }
     }
 

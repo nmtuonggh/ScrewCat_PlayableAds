@@ -4,6 +4,8 @@ import { HoleColor } from '../../Hole/HoleColor';
 import { eColorType } from '../../../GameConfig/GameColorConfig';
 import { Hole } from '../../Hole/Hole';
 import { BoxRenderer } from './BoxRenderer';
+import { BoxSlot } from './BoxSlot';
+import { BoxContainer } from '../../../Controller/BoxContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -12,12 +14,15 @@ export class Box extends HoleContainer
 
     private boxRenderer: BoxRenderer = null;
     private currentScrew: number = 0;
-    //#endregion
+    private boxSlotOwner: BoxSlot = null;
+   
+    public IS_ANIMATING: boolean = false;
 
     protected onLoad (): void
     {
         this.listHoles = this.getComponentsInChildren( HoleColor );
         this.boxRenderer = this.getComponent( BoxRenderer );
+        this.boxSlotOwner = this.node.parent.getComponent( BoxSlot );
     }
 
     protected start (): void
@@ -49,6 +54,7 @@ export class Box extends HoleContainer
         }
     }
 
+    //#region BoxComplete
     public CheckFullBox (): void
     {
         this.currentScrew++;
@@ -75,12 +81,22 @@ export class Box extends HoleContainer
         tween(this.node)
             .to(0.8, {position: pos})
             .call(() => {
-                //this.node.active = false;
+                this.boxSlotOwner.Box = null;
+                this.node.destroy();
+                BoxContainer.Instance.CheckCreateBox();
             })
             .start();
     }
 
+    //#endregion
 
+    public MoveIn ():void{
+        this.IS_ANIMATING = true;
+        tween(this.node)
+            .to(0.8, {position: new Vec3(0, 0, 0)})
+            .call(() => {this.IS_ANIMATING = false;})
+            .start();
+    }
 }
 
 
