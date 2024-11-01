@@ -33,7 +33,7 @@ export class Box extends HoleContainer
 
     public GetFreeHole ( colorType: eColorType ): Hole
     {
-        if ( this.boxRenderer.ColorType != colorType ) return null;
+        if ( this.boxRenderer.colorType != colorType ) return null;
 
         for ( const hole of this.listHoles )
         {

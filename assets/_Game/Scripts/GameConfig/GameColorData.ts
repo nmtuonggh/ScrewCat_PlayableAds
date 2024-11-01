@@ -25,7 +25,7 @@ export class GameColorData
                 return this.Yellow;
             case eColorType.Blue:
                 return this.Blue;
-            case eColorType.Lilac:
+            case eColorType.Gray:
                 return this.Lilac;
             case eColorType.Red:
                 return this.Red;

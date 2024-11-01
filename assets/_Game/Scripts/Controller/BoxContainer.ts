@@ -78,7 +78,7 @@ export class BoxContainer extends Component
             const box = boxSlot.Box;
             if ( box === null )
             {
-                const newbox = this.CreatBox( boxSlot, this.BoxData.BoxPrefab[ 1 ] );
+                const newbox = this.CreatBox( boxSlot, this.BoxData.BoxPrefab[ 2 ] );
                 boxSlot.Box = newbox;
             }
         }

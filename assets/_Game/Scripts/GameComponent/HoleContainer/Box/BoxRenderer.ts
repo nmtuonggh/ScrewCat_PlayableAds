@@ -11,25 +11,14 @@ export class BoxRenderer extends Component
     @property( Node )
     public closeBox: Node = null;
     @property( CCInteger )
-    private colorType: eColorType = eColorType.Blue;
+    public colorType: eColorType = eColorType.Blue;
 
     //#region Encapsulated
-
-    public get ColorType (): eColorType
-    {
-        return this.colorType;
-    }
-
-    public set ColorType ( value: eColorType )
-    {
-        this.colorType = value;
-    }
-
     //#endregion
 
     protected start (): void
     {
-        this.boxSprite.color = GameColorData.GetColorByType( this.colorType );
+        
     }
 
 }

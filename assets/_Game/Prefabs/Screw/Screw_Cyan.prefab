@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "Screw",
+    "_name": "Screw_Cyan",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Screw",
+    "_name": "Screw_Cyan",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -42,8 +42,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -640,
+      "y": -360,
       "z": 0
     },
     "_lrot": {
@@ -145,7 +145,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "4dSD42XGxBwaSlTjEXNVqf"
+    "fileId": "aaMDhnGfJCLbUqdb2hBJ19"
   },
   {
     "__type__": "cc.Sprite",
@@ -190,7 +190,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "867OrFZexDTotoMfr/qTKH"
+    "fileId": "3dK8V6Y/ZNp6c6NMxFZlAZ"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -200,7 +200,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "9aTRJbSJhHppn5oBvOkS20",
+    "fileId": "1d8b01umdItKcHz1n+4AF4",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -222,7 +222,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "42U0VRQKxJzIyzah3+YMWU"
+    "fileId": "40Fv1x08ZI8b/7Pd0Fx+o3"
   },
   {
     "__type__": "cc.CircleCollider2D",
@@ -252,7 +252,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "cevr36EzJDrZpuPbKqyzJL"
+    "fileId": "2eRFfm+XRAlrE2MVfT/4CE"
   },
   {
     "__type__": "cc.RigidBody2D",
@@ -286,7 +286,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "51UcWy6E5GnLrQvow1+p07"
+    "fileId": "aafP9++FxJnLTRTtxpwe4s"
   },
   {
     "__type__": "d6503gprEZPSaJENbGR26Wr",
@@ -301,12 +301,12 @@
       "__id__": 15
     },
     "screwSprite": null,
-    "colorType": 5,
+    "colorType": 1,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "b5HyVX1I5EsrU04zD7f0KJ"
+    "fileId": "6bF7S5U2tILo3/hOYCck1g"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -316,8 +316,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "aercwrTe1IwI79Cn2pvqTS",
-    "instance": null,
+    "fileId": "eePjjL9hRMLLM8L51oH1Cx",
     "targetOverrides": null
   }
 ]

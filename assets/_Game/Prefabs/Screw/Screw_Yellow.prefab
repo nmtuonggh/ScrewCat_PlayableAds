@@ -1,7 +1,7 @@
 [
   {
     "__type__": "cc.Prefab",
-    "_name": "Screw",
+    "_name": "Screw_Yellow",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_native": "",
@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Screw",
+    "_name": "Screw_Yellow",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": null,
@@ -42,8 +42,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -640,
+      "y": -360,
       "z": 0
     },
     "_lrot": {
@@ -145,7 +145,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "4dSD42XGxBwaSlTjEXNVqf"
+    "fileId": "8c6Q4EtpJAhIjYMJ8x0P3h"
   },
   {
     "__type__": "cc.Sprite",
@@ -170,7 +170,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "02928ab4-66bb-4b63-a98e-3902c02e82fd@f9941",
+      "__uuid__": "c3affd6d-8198-443d-800c-3fa2630c5ff5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -190,7 +190,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "867OrFZexDTotoMfr/qTKH"
+    "fileId": "694NQjDB5AAZobkriECzec"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -200,7 +200,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "9aTRJbSJhHppn5oBvOkS20",
+    "fileId": "80Yv7hxB5D0LjdsGAnHlq6",
     "instance": null,
     "targetOverrides": null,
     "nestedPrefabInstanceRoots": null
@@ -222,7 +222,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "42U0VRQKxJzIyzah3+YMWU"
+    "fileId": "048uOX9V9GVq3ivnorZ+6s"
   },
   {
     "__type__": "cc.CircleCollider2D",
@@ -252,7 +252,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "cevr36EzJDrZpuPbKqyzJL"
+    "fileId": "74L0McEKFOs5BBd0lPpNBp"
   },
   {
     "__type__": "cc.RigidBody2D",
@@ -286,7 +286,7 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "51UcWy6E5GnLrQvow1+p07"
+    "fileId": "68q5KNOdZG1onwpAUled3S"
   },
   {
     "__type__": "d6503gprEZPSaJENbGR26Wr",
@@ -301,12 +301,12 @@
       "__id__": 15
     },
     "screwSprite": null,
-    "colorType": 5,
+    "colorType": 2,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "b5HyVX1I5EsrU04zD7f0KJ"
+    "fileId": "a5nHxjRVlKtoPSB6oVy0Fp"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -316,8 +316,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "aercwrTe1IwI79Cn2pvqTS",
-    "instance": null,
+    "fileId": "64yHzuukFHNa//91KUbNHt",
     "targetOverrides": null
   }
 ]

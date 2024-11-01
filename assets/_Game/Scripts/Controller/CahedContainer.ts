@@ -63,13 +63,17 @@ export class CahedContainer extends Component
         return null;
     }
 
-    public CheckMoveScrewFromCachedToBox() : void 
+    public CheckMoveScrewFromCachedToBox (): void 
     {
-        for ( const hole of this.listActiveHole )
+        for ( let i = 0; i < this.listActiveHole.length; i++ )
         {
-            if ( hole.linkingScrew !== null )
+            const hole = this.listActiveHole[ i ];
+            if ( hole.isLinked && hole.linkingScrew !== null )
             {
-                hole.linkingScrew.CheckMoveBox();
+                if(hole.linkingScrew.CheckMoveBox( ))
+                {
+                    hole.isLinked = false;
+                }
             }
         }
     }

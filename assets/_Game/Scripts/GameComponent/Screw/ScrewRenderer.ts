@@ -10,16 +10,9 @@ export class ScrewRenderer extends Component
     private screwSprite: Sprite = null
 
     @property( CCInteger )
-    private colorType: eColorType = eColorType.Blue;
+    public colorType: eColorType = eColorType.Green;
 
     //#region Encapsulated
-    public get ColorType(): eColorType {
-        return this.colorType;
-    }
-
-    public set ColorType(value: eColorType) {
-        this.colorType = value;
-    }
     //#endregion
 
     protected onLoad (): void
@@ -29,7 +22,7 @@ export class ScrewRenderer extends Component
 
     protected start (): void
     {
-        this.screwSprite.color = GameColorData.GetColorByType( this.colorType );
+        //this.screwSprite.color = GameColorData.GetColorByType( this.colorType );
     }
 
 }

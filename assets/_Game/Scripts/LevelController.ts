@@ -2,6 +2,8 @@ import { _decorator, Component, Node, Prefab } from 'cc';
 import { BarController } from './GameComponent/Bar/BarController';
 import { BoxData } from './FakeSO/BoxData';
 import { BoxContainer } from './Controller/BoxContainer';
+import { Screw } from './GameComponent/Screw/Screw';
+import { ScrewData } from './FakeSO/ScrewData';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'LevelController' )
@@ -12,11 +14,10 @@ export class LevelController extends Component
 
     @property( BarController )
     private listBar: BarController[] = [];
-
-    @property( Prefab )
-    private screwPrefab: Prefab = null;
     @property( BoxData )
     private BoxData: BoxData = null;
+    @property( ScrewData )
+    private ScrewData: ScrewData = null
 
     protected onLoad (): void
     {
@@ -34,7 +35,7 @@ export class LevelController extends Component
     {
         this.listBar.forEach( bar => 
         {
-            bar.SpawnScrew( this.screwPrefab );
+            bar.SpawnScrew( this.ScrewData.ScrewPrefab[ 2 ] );
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();
         } );
@@ -46,14 +47,14 @@ export class LevelController extends Component
         for ( let i = 0; i < 3; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
-            BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 0 ], boxSlot.node );
+            BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 1 ], boxSlot.node );
             boxSlot.InitBoxValue();
         }
 
         for ( let i = 3; i < listBoxSlot.length; i++ )
             {
                 const boxSlot = listBoxSlot[ i ];
-                BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 1 ], boxSlot.node );
+                BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 2 ], boxSlot.node );
                 boxSlot.InitBoxValue();
             }
     }

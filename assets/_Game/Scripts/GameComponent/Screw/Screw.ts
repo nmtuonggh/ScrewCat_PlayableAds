@@ -6,6 +6,7 @@ import { GameConfig } from '../../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../../GameConfig/GameLayerMaskConfig';
 import { ScrewRenderer } from './ScrewRenderer';
 import { EventManager } from '../../EventManager/EventManager';
+import { BoxContainer } from '../../Controller/BoxContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -14,7 +15,7 @@ export class Screw extends GameLayerComponent
 
     @property( { type: HingeJoint2D } )
     public hingeJoint: HingeJoint2D = null;
-
+    @property( { type: ScrewRenderer } )
     private screwRenderer: ScrewRenderer = null;
     private linkingHole: Hole = null;
     public State : eScrewState = eScrewState.IN_BAR;
@@ -52,14 +53,9 @@ export class Screw extends GameLayerComponent
 
     public CheckMoveBox (): boolean
     {   
-        if(this.GameLogic === null){
-            console.log("GameLogic is null");
-        }
-        if(this.screwRenderer.ColorType === null){
-            console.log("screwRenderer is null");
-        }
+        //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
+        let freeBox = BoxContainer.Instance.GetFreeBoxSlot( 2 );
 
-        let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
         if ( freeBox !== null )
         {
             this.MoveToBoxSlot( freeBox );
@@ -160,7 +156,6 @@ export class Screw extends GameLayerComponent
     {
         hole.isLinked = true;
         this.linkingHole = hole;
-        hole.linkingScrew = this;
         hole.SetColor();
         this.hingeJoint.destroy();
 
@@ -171,6 +166,7 @@ export class Screw extends GameLayerComponent
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
+                hole.linkingScrew = this;
                 this.State = eScrewState.IN_CACHED;
             } )
             .start();
