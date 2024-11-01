@@ -78,7 +78,8 @@ export class BoxContainer extends Component
             const box = boxSlot.Box;
             if ( box === null )
             {
-                const newbox = this.CreatBox( boxSlot, this.BoxData.BoxPrefab[ 2 ] );
+                const randomIndex = Math.floor( Math.random() * this.BoxData.BoxPrefab.length );
+                const newbox = this.CreatBox( boxSlot, this.BoxData.BoxPrefab[ randomIndex ] );
                 boxSlot.Box = newbox;
             }
         }

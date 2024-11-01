@@ -35,26 +35,24 @@ export class LevelController extends Component
     {
         this.listBar.forEach( bar => 
         {
-            bar.SpawnScrew( this.ScrewData.ScrewPrefab[ 2 ] );
+            //random screw prefab
+            
+            bar.SpawnScrew( this.ScrewData.ScrewPrefab );
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();
+            bar.barPhysic.SetGroupLayer();
         } );
     }
 
     public InitBox (): void
     {
         const listBoxSlot = BoxContainer.Instance.boxSlots;
-        for ( let i = 0; i < 3; i++ )
-        {
-            const boxSlot = listBoxSlot[ i ];
-            BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 1 ], boxSlot.node );
-            boxSlot.InitBoxValue();
-        }
 
-        for ( let i = 3; i < listBoxSlot.length; i++ )
+        for ( let i = 0; i < listBoxSlot.length; i++ )
             {
                 const boxSlot = listBoxSlot[ i ];
-                BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 2 ], boxSlot.node );
+                const randomIndex = Math.floor(Math.random() * this.BoxData.BoxPrefab.length);
+                BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ randomIndex ], boxSlot.node );
                 boxSlot.InitBoxValue();
             }
     }

@@ -1,10 +1,9 @@
-import { _decorator, Component, HingeJoint2D, Node, RigidBody2D, Vec2 } from 'cc';
+import { _decorator, Component, debug, HingeJoint2D, Node, RigidBody2D, Vec2 } from 'cc';
 import { BarController } from './BarController';
 const { ccclass, property } = _decorator;
 
 @ccclass('BarPhysic')
 export class BarPhysic extends Component {
-    
     private rb: RigidBody2D = null;
 
     private barController : BarController = null;
@@ -13,7 +12,7 @@ export class BarPhysic extends Component {
     {
         this.rb = this.getComponent( RigidBody2D );
         this.barController = this.getComponent( BarController );
-        this.SetGroupLayer();
+        //this.SetGroupLayer();
     }
 
     //#region Hinge Joint
@@ -50,7 +49,7 @@ export class BarPhysic extends Component {
 
     SetGroupLayer() : void
     {
-        this.rb.group = this.barController.Layer + 13;
+        this.rb.group = 1 << this.barController.Layer +13;
     }
 }
 

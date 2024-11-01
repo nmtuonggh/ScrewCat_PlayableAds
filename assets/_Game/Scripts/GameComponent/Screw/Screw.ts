@@ -1,4 +1,4 @@
-import { _decorator, Collider2D, HingeJoint2D, Node, PhysicsSystem2D, Rect, tween, Vec2, Vec3 } from 'cc';
+import { _decorator, Collider2D, HingeJoint2D, Node, PhysicsSystem2D, Rect, Tween, tween, Vec2, Vec3 } from 'cc';
 import { GameLayerComponent } from '../GameLayerComponent';
 import { eColorType } from '../../GameConfig/GameColorConfig';
 import { Hole } from '../Hole/Hole';
@@ -7,6 +7,8 @@ import { GameLayerMaskConfig } from '../../GameConfig/GameLayerMaskConfig';
 import { ScrewRenderer } from './ScrewRenderer';
 import { EventManager } from '../../EventManager/EventManager';
 import { BoxContainer } from '../../Controller/BoxContainer';
+import { CahedContainer } from '../../Controller/CahedContainer';
+import { ScrewAnim } from './ScrewAnim';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -17,8 +19,10 @@ export class Screw extends GameLayerComponent
     public hingeJoint: HingeJoint2D = null;
     @property( { type: ScrewRenderer } )
     private screwRenderer: ScrewRenderer = null;
+    private screwAnimation: ScrewAnim = null;
+
     private linkingHole: Hole = null;
-    public State : eScrewState = eScrewState.IN_BAR;
+    public State: eScrewState = eScrewState.IN_BAR;
     //#region Encapsulation
 
 
@@ -28,6 +32,7 @@ export class Screw extends GameLayerComponent
     protected onLoad (): void
     {
         this.screwRenderer = this.getComponent( ScrewRenderer );
+        this.screwAnimation = this.getComponent( ScrewAnim );
     }
 
     //#region CheckMove
@@ -52,9 +57,9 @@ export class Screw extends GameLayerComponent
     }
 
     public CheckMoveBox (): boolean
-    {   
+    {
         //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
-        let freeBox = BoxContainer.Instance.GetFreeBoxSlot( 2 );
+        let freeBox = BoxContainer.Instance.GetFreeBoxSlot( this.screwRenderer.colorType );
 
         if ( freeBox !== null )
         {
@@ -134,23 +139,31 @@ export class Screw extends GameLayerComponent
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-        if( this.State === eScrewState.IN_BAR ){
+        if ( this.State === eScrewState.IN_BAR )
+        {
             this.hingeJoint.destroy();
         }
-        
-        tween( this.node )
+        this.screwAnimation.ScrewOut();
+        this.TweenMove( this.node, hole , 0.2).start();
+    }
+
+    private TweenMove ( node: Node, hole: Hole , delayTime: number): Tween<Node>
+    {
+        return tween( node )
+            .delay(delayTime)
             .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
-            .call( () => 
+            .call( () =>
             {
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
                 this.State = eScrewState.IN_BOX;
                 hole.Box.CheckFullBox();
-            } )
-            .start();
-
+                this.screwAnimation.ScrewIn();
+            } );
     }
+
+
 
     private MoveToCacheSlot ( hole: Hole ): void
     {
@@ -168,13 +181,15 @@ export class Screw extends GameLayerComponent
                 this.node.worldPosition = worldPosition;
                 hole.linkingScrew = this;
                 this.State = eScrewState.IN_CACHED;
+                CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
             } )
             .start();
     }
 
 }
 
-export enum eScrewState{
+export enum eScrewState
+{
     IN_BAR = 0,
     IN_CACHED = 1,
     IN_BOX = 2,

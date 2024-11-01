@@ -24,12 +24,13 @@ export class BarController extends GameLayerComponent
         this.barPhysic = this.getComponent( BarPhysic );
     }
     //#region Spawn Screw
-    public SpawnScrew ( screwPrefab: Prefab ): void 
+    public SpawnScrew ( screwPrefab: Prefab[] ): void 
     {
         for ( let i = 0; i < this.listHolePos.length; i++ )
         {
+            const randomIndex = Math.floor(Math.random() * screwPrefab.length);
             const spawnPos = this.listHolePos[ i ].getWorldPosition();
-            const screwNode = instantiate( screwPrefab );
+            const screwNode = instantiate( screwPrefab[randomIndex] );
             const screw = screwNode.getComponent( Screw );
             screwNode.setParent( this.node.parent );
             screwNode.setWorldPosition( spawnPos );

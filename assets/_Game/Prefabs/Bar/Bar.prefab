@@ -582,7 +582,7 @@
     "enabledContactListener": false,
     "bullet": false,
     "awakeOnLoad": true,
-    "_group": 4,
+    "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
     "_gravityScale": 1,
