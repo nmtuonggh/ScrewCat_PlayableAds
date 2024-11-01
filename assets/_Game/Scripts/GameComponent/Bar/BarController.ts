@@ -1,6 +1,6 @@
 import { _decorator, Component, ERigidBody2DType, HingeJoint2D, instantiate, Node, Prefab, RigidBody2D, UITransform, Vec2 } from 'cc';
 import { GameLayerComponent } from '../GameLayerComponent';
-import { Screw } from '../Screw/Screw';
+import { eScrewState, Screw } from '../Screw/Screw';
 import { BarPhysic } from './BarPhysic';
 const { ccclass, property } = _decorator;
 
@@ -30,9 +30,12 @@ export class BarController extends GameLayerComponent
         {
             const spawnPos = this.listHolePos[ i ].getWorldPosition();
             const screwNode = instantiate( screwPrefab );
+            const screw = screwNode.getComponent( Screw );
             screwNode.setParent( this.node.parent );
             screwNode.setWorldPosition( spawnPos );
-            this.listScrews.push( screwNode.getComponent( Screw ) );
+
+            screw.State = eScrewState.IN_BAR;
+            this.listScrews.push( screw);
         }
     }
 

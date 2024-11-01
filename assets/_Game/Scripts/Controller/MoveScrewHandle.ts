@@ -39,6 +39,7 @@ export class MoveScrewHandle extends Component
         input.on( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
 
+
     protected onDestroy (): void
     {
         input.off( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );

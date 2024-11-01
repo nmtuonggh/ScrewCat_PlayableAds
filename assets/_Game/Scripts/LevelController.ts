@@ -5,7 +5,7 @@ import { BoxContainer } from './Controller/BoxContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'LevelController' )
-export class LevelManager extends Component
+export class LevelController extends Component
 {
     @property( Node )
     private Holder: Node = null;
@@ -27,6 +27,7 @@ export class LevelManager extends Component
     {
         this.InitScrew();
         this.InitBox();
+        BoxContainer.Instance.InitQueue();
     }
 
     private InitScrew (): void 
@@ -42,12 +43,19 @@ export class LevelManager extends Component
     public InitBox (): void
     {
         const listBoxSlot = BoxContainer.Instance.boxSlots;
-        for ( let i = 0; i < listBoxSlot.length; i++ )
+        for ( let i = 0; i < 3; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
             BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 0 ], boxSlot.node );
             boxSlot.InitBoxValue();
         }
+
+        for ( let i = 3; i < listBoxSlot.length; i++ )
+            {
+                const boxSlot = listBoxSlot[ i ];
+                BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ 1 ], boxSlot.node );
+                boxSlot.InitBoxValue();
+            }
     }
 
 }

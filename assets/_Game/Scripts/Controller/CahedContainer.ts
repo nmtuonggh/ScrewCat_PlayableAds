@@ -6,7 +6,6 @@ const { ccclass, property } = _decorator;
 @ccclass( 'CahedContainer' )
 export class CahedContainer extends Component
 {
-
     @property( CCInteger )
     private holeCount: number = 0;
 
@@ -62,6 +61,17 @@ export class CahedContainer extends Component
         }
 
         return null;
+    }
+
+    public CheckMoveScrewFromCachedToBox() : void 
+    {
+        for ( const hole of this.listActiveHole )
+        {
+            if ( hole.linkingScrew !== null )
+            {
+                hole.linkingScrew.CheckMoveBox();
+            }
+        }
     }
 }
 

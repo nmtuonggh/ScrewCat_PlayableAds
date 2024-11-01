@@ -6,6 +6,7 @@ import { Hole } from '../../Hole/Hole';
 import { BoxRenderer } from './BoxRenderer';
 import { BoxSlot } from './BoxSlot';
 import { BoxContainer } from '../../../Controller/BoxContainer';
+import { CahedContainer } from '../../../Controller/CahedContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -84,6 +85,7 @@ export class Box extends HoleContainer
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
                 BoxContainer.Instance.CheckCreateBox();
+                BoxContainer.Instance.RemoveActiveBox(this);
             })
             .start();
     }
@@ -94,7 +96,11 @@ export class Box extends HoleContainer
         this.IS_ANIMATING = true;
         tween(this.node)
             .to(0.8, {position: new Vec3(0, 0, 0)})
-            .call(() => {this.IS_ANIMATING = false;})
+            .call(() => 
+            {
+                this.IS_ANIMATING = false;
+                CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
+            })
             .start();
     }
 }

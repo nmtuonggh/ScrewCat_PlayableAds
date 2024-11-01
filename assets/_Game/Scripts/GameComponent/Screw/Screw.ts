@@ -17,6 +17,7 @@ export class Screw extends GameLayerComponent
 
     private screwRenderer: ScrewRenderer = null;
     private linkingHole: Hole = null;
+    public State : eScrewState = eScrewState.IN_BAR;
     //#region Encapsulation
 
 
@@ -50,7 +51,14 @@ export class Screw extends GameLayerComponent
     }
 
     public CheckMoveBox (): boolean
-    {
+    {   
+        if(this.GameLogic === null){
+            console.log("GameLogic is null");
+        }
+        if(this.screwRenderer.ColorType === null){
+            console.log("screwRenderer is null");
+        }
+
         let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
         if ( freeBox !== null )
         {
@@ -128,10 +136,12 @@ export class Screw extends GameLayerComponent
     private MoveToBoxSlot ( hole: Hole ): void 
     {
         hole.isLinked = true;
+        hole.linkingScrew = null;
         this.linkingHole = hole;
-
-        this.hingeJoint.destroy();
-
+        if( this.State === eScrewState.IN_BAR ){
+            this.hingeJoint.destroy();
+        }
+        
         tween( this.node )
             .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
             .call( () => 
@@ -139,6 +149,7 @@ export class Screw extends GameLayerComponent
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
+                this.State = eScrewState.IN_BOX;
                 hole.Box.CheckFullBox();
             } )
             .start();
@@ -149,16 +160,29 @@ export class Screw extends GameLayerComponent
     {
         hole.isLinked = true;
         this.linkingHole = hole;
+        hole.linkingScrew = this;
         hole.SetColor();
         this.hingeJoint.destroy();
 
         tween( this.node )
             .to( 0.5, { worldPosition: this.linkingHole.node.worldPosition } )
+            .call( () => 
+            {
+                const worldPosition = this.node.worldPosition;
+                this.node.parent = this.linkingHole.node;
+                this.node.worldPosition = worldPosition;
+                this.State = eScrewState.IN_CACHED;
+            } )
             .start();
-
-        this.node.parent = this.linkingHole.node;
     }
 
+}
+
+export enum eScrewState{
+    IN_BAR = 0,
+    IN_CACHED = 1,
+    IN_BOX = 2,
+    MOVING = 999
 }
 
 
