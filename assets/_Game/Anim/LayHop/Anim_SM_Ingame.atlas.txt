@@ -1,0 +1,104 @@
+
+Anim_SM_Ingame.png
+size: 776,168
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arm l
+  rotate: true
+  xy: 401, 104
+  size: 62, 171
+  orig: 62, 171
+  offset: 0, 0
+  index: -1
+arm r
+  rotate: true
+  xy: 574, 105
+  size: 61, 172
+  orig: 61, 172
+  offset: 0, 0
+  index: -1
+bd
+  rotate: true
+  xy: 2, 5
+  size: 161, 198
+  orig: 161, 198
+  offset: 0, 0
+  index: -1
+ear l
+  rotate: true
+  xy: 526, 12
+  size: 90, 129
+  orig: 90, 129
+  offset: 0, 0
+  index: -1
+ear r
+  rotate: true
+  xy: 401, 2
+  size: 100, 123
+  orig: 100, 123
+  offset: 0, 0
+  index: -1
+eye l
+  rotate: true
+  xy: 707, 8
+  size: 39, 35
+  orig: 39, 35
+  offset: 0, 0
+  index: -1
+eye r
+  rotate: true
+  xy: 745, 53
+  size: 50, 23
+  orig: 50, 23
+  offset: 0, 0
+  index: -1
+face
+  rotate: false
+  xy: 202, 4
+  size: 197, 162
+  orig: 197, 162
+  offset: 0, 0
+  index: -1
+hand l
+  rotate: false
+  xy: 657, 57
+  size: 48, 46
+  orig: 48, 46
+  offset: 0, 0
+  index: -1
+hand r
+  rotate: false
+  xy: 657, 9
+  size: 48, 46
+  orig: 49, 46
+  offset: 1, 0
+  index: -1
+moth d
+  rotate: false
+  xy: 748, 127
+  size: 26, 39
+  orig: 26, 39
+  offset: 0, 0
+  index: -1
+moth u
+  rotate: true
+  xy: 744, 10
+  size: 37, 16
+  orig: 37, 16
+  offset: 0, 0
+  index: -1
+nose d
+  rotate: true
+  xy: 707, 49
+  size: 54, 36
+  orig: 54, 36
+  offset: 0, 0
+  index: -1
+nose u
+  rotate: false
+  xy: 748, 112
+  size: 22, 13
+  orig: 22, 13
+  offset: 0, 0
+  index: -1

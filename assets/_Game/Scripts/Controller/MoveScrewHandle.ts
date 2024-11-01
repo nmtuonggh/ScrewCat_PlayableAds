@@ -6,6 +6,7 @@ import { Screw } from '../GameComponent/Screw/Screw';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { BoxContainer } from './BoxContainer';
+import { CahedContainer } from './CahedContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -38,12 +39,13 @@ export class MoveScrewHandle extends Component
         input.on( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
 
+
     protected onDestroy (): void
     {
         input.off( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
 
-    
+
     private onMouseDown ( event: EventMouse ): void
     {
         if ( event.getButton() === EventMouse.BUTTON_LEFT )
@@ -60,13 +62,12 @@ export class MoveScrewHandle extends Component
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
         this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
         this.checkClickScrew();
-
     }
 
     //#region CheckClickScrew
     private checkClickScrew (): void
     {
-        console.log( "checkClickScrew" );
+        //console.log( "checkClickScrew" );
         let component = this.CheckClick( GameLayerMaskConfig.SCREW_LAYER_MASK );
         if ( component !== null )
         {
@@ -116,7 +117,7 @@ export class MoveScrewHandle extends Component
                 }
             }
 
-            console.log( "Tallest Layer: ", tallestLayer );
+            //console.log( "Tallest Layer: ", tallestLayer );
 
             //Tim node gan nhat trong layer cao nhat
             let collider: Collider2D | null = null;
@@ -153,8 +154,13 @@ export class MoveScrewHandle extends Component
     {
         return BoxContainer.Instance.GetFreeBoxSlot( colorType );
     }
+
+    public GetFreeHoleCache (): Hole
+    {
+        return CahedContainer.Instance.GetFreeHole();
+    }
     //#endregion
 
-    
+
 
 }

@@ -12,8 +12,121 @@
   ],
   "physics": {
     "collisionMatrix": {
-      "0": 1
-    }
+      "0": 1,
+      "1": 2,
+      "2": 4,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 8192,
+      "14": 16384,
+      "15": 32768,
+      "16": 65536,
+      "17": 131072,
+      "18": 262144,
+      "19": 524288,
+      "20": 1048576,
+      "21": 2097152,
+      "22": 4194304,
+      "23": 8388608
+    },
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "Screw0"
+      },
+      {
+        "index": 3,
+        "name": "Screw1"
+      },
+      {
+        "index": 4,
+        "name": "Screw2"
+      },
+      {
+        "index": 5,
+        "name": "Screw3"
+      },
+      {
+        "index": 6,
+        "name": "Screw4"
+      },
+      {
+        "index": 7,
+        "name": "Screw5"
+      },
+      {
+        "index": 8,
+        "name": "Screw6"
+      },
+      {
+        "index": 9,
+        "name": "Screw7"
+      },
+      {
+        "index": 10,
+        "name": "Screw8"
+      },
+      {
+        "index": 11,
+        "name": "Screw9"
+      },
+      {
+        "index": 12,
+        "name": "Screw10"
+      },
+      {
+        "index": 13,
+        "name": "Bar0"
+      },
+      {
+        "index": 14,
+        "name": "Bar1"
+      },
+      {
+        "index": 15,
+        "name": "Bar2"
+      },
+      {
+        "index": 16,
+        "name": "Bar3"
+      },
+      {
+        "index": 17,
+        "name": "Bar4"
+      },
+      {
+        "index": 18,
+        "name": "Bar5"
+      },
+      {
+        "index": 19,
+        "name": "Bar6"
+      },
+      {
+        "index": 20,
+        "name": "Bar7"
+      },
+      {
+        "index": 21,
+        "name": "Bar8"
+      },
+      {
+        "index": 22,
+        "name": "Bar9"
+      },
+      {
+        "index": 23,
+        "name": "Bar10"
+      }
+    ]
   },
   "custom_joint_texture_layouts": []
 }
