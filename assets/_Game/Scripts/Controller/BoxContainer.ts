@@ -69,6 +69,7 @@ export class BoxContainer extends Component
     {
         const box = instantiate( boxPrefabs );
         box.parent = parent;
+        box.setPosition( new Vec3( 0, 0, 0 ) );
     }
 
     public CheckCreateBox (): void
