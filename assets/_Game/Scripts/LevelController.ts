@@ -51,9 +51,9 @@ export class LevelController extends Component
         for ( let i = 0; i < listBoxSlot.length; i++ )
             {
                 const boxSlot = listBoxSlot[ i ];
-                const randomIndex = Math.floor(Math.random() * this.BoxData.BoxPrefab.length);
-                BoxContainer.Instance.InitBox( this.BoxData.BoxPrefab[ randomIndex ], boxSlot.node );
-                boxSlot.InitBoxValue();
+                const randomIndex = Math.floor(Math.random() * 9);
+                BoxContainer.Instance.InitBox( randomIndex, boxSlot.node );
+                boxSlot.InitBoxSlotData();
             }
     }
 

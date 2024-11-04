@@ -25,25 +25,12 @@ export class MeowAnimation extends Component {
         }
     }
 
-    public MoveIn(boxNode: Node) : void {
+    public MoveIn() : void {
         this.skeleton.setAnimation(0, 'Appear', false);
-        this.skeleton.timeScale = 1.5;
-        const pos = boxNode.getPosition();
-        this.node.position = new Vec3(pos.x + 20, 200, 0);
-        console.log('pos', pos);
-        tween(this.node)
-        .to(0.4, { position: new Vec3(pos.x + 20, -40, 0) })
-        // .call(() => {
-        //     this.MoveOut();
-        // })
-        .start();
     }
 
     public MoveOut() : void {
         this.skeleton.setAnimation(0, 'Appear2', true);
-        tween(this.node)
-        .to(0.4, { position: this.node.position.add3f(0, 240, 0) })
-        .start();
     }
 }
 

@@ -7,6 +7,7 @@ import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { BoxContainer } from './BoxContainer';
 import { CahedContainer } from './CahedContainer';
+import { MeowAnimation } from '../MeowAnimation';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -57,7 +58,6 @@ export class MoveScrewHandle extends Component
     private onClickHandle ( event: EventMouse ): void
     {
         if ( !this.camera ) return;
-
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
         this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );

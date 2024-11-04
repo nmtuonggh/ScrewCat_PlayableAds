@@ -12,30 +12,36 @@ import { GameConfig } from '../../../GameConfig/GameConfig';
 import { MeowAnimation } from '../../../MeowAnimation';
 const { ccclass, property } = _decorator;
 
-@ccclass('Box')
-export class Box extends HoleContainer {
+@ccclass( 'Box' )
+export class Box extends HoleContainer
+{
 
-    private boxRenderer: BoxRenderer = null;
+    public boxRenderer: BoxRenderer = null;
     private currentScrew: number = 0;
     private boxSlotOwner: BoxSlot = null;
 
     public IS_ANIMATING: boolean = false;
 
-    protected onLoad(): void {
-        this.listHoles = this.getComponentsInChildren(HoleColor);
-        this.boxRenderer = this.getComponent(BoxRenderer);
-        this.boxSlotOwner = this.node.parent.getComponent(BoxSlot);
+    protected onLoad (): void
+    {
+        this.listHoles = this.getComponentsInChildren( HoleColor );
+        this.boxRenderer = this.getComponent( BoxRenderer );
+        this.boxSlotOwner = this.node.parent.getComponent( BoxSlot );
     }
 
-    protected start(): void {
+    protected start (): void
+    {
         this.setHoleData();
     }
 
-    public GetFreeHole(colorType: eColorType): Hole {
-        if (this.boxRenderer.colorType != colorType) return null;
+    public GetFreeHole ( colorType: eColorType ): Hole
+    {
+        if ( this.boxRenderer.colorType != colorType ) return null;
 
-        for (const hole of this.listHoles) {
-            if (hole.IsFree() && hole.isLinked === false) {
+        for ( const hole of this.listHoles )
+        {
+            if ( hole.IsFree() && hole.isLinked === false )
+            {
                 //console.log( "Tim duoc hole: " + hole );
                 return hole;
             }
@@ -44,62 +50,72 @@ export class Box extends HoleContainer {
         return null;
     }
 
-    private setHoleData(): void {
-        for (const hole of this.listHoles) {
+    private setHoleData (): void
+    {
+        for ( const hole of this.listHoles )
+        {
             hole.Box = this;
         }
     }
 
     //#region BoxComplete
-    public CheckFullBox(): void {
+    public CheckFullBox (): void
+    {
         this.currentScrew++;
-        if (this.currentScrew >= this.listHoles.length) {
+        if ( this.currentScrew >= this.listHoles.length )
+        {
             this.CloseBox();
         }
     }
 
-    public CloseBox(): void {
+    public CloseBox (): void
+    {
         this.boxRenderer.closeBox.active = true;
-        tween(this.boxRenderer.closeBox)
-            .to(GameConfig.BOX_CLOSE_DURATION, { position: new Vec3(0, 0, 0) })
-            .call(() => {
-                MeowAnimation.Instance.MoveIn(this.node.parent);
-                AudioController.Instance.PlayAudio(AudioType.boxComplete);
-                AudioController.Instance.PlayAudio(AudioType.meow);
-                
-            })
-            .delay(0.4)
-            .call(() => {
+        tween( this.boxRenderer.closeBox )
+            .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
+            .call( () =>
+            {
+                //MeowAnimation.Instance.MoveIn(this.node.parent);
+                AudioController.Instance.PlayAudio( AudioType.boxComplete );
+                AudioController.Instance.PlayAudio( AudioType.meow );
+
+            } )
+            .delay( 0.4 )
+            .call( () =>
+            {
                 this.MoveOut();
-            })
+            } )
             .start();
     }
 
-    public MoveOut(): void {
-        const pos = this.node.position.clone().add(new Vec3(0, 200, 0));
-        MeowAnimation.Instance.MoveOut();
-
-        tween(this.node)
-            .to(GameConfig.BOX_MOVEOUT_DURATION, { position: pos })
-            .call(() => {
+    public MoveOut (): void
+    {
+        const pos = this.node.position.clone().add( new Vec3( 0, 200, 0 ) );
+        this.boxRenderer.skeleton.setAnimation(0, 'Appear', false);
+        tween( this.node )
+            .to( GameConfig.BOX_MOVEOUT_DURATION, { position: pos } )
+            .call( () =>
+            {
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
                 BoxContainer.Instance.CheckCreateBox();
-                BoxContainer.Instance.RemoveActiveBox(this);
-            })
+                BoxContainer.Instance.RemoveActiveBox( this );
+            } )
             .start();
     }
 
     //#endregion
 
-    public MoveIn(): void {
+    public MoveIn (): void
+    {
         this.IS_ANIMATING = true;
-        tween(this.node)
-            .to(GameConfig.BOX_MOVEIN_DURATION, { position: new Vec3(0, 0, 0) })
-            .call(() => {
+        tween( this.node )
+            .to( GameConfig.BOX_MOVEIN_DURATION, { position: new Vec3( 0, 0, 0 ) } )
+            .call( () => 
+            {
                 this.IS_ANIMATING = false;
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
-            })
+            } )
             .start();
     }
 }

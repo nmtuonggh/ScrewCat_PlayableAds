@@ -1,4 +1,4 @@
-import { _decorator, Component, instantiate, Node, Prefab, Vec3 } from 'cc';
+import { _decorator, color, Component, instantiate, Node, Prefab, Vec3 } from 'cc';
 import { BoxSlot } from '../GameComponent/HoleContainer/Box/BoxSlot';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { Hole } from '../GameComponent/Hole/Hole';
@@ -65,11 +65,13 @@ export class BoxContainer extends Component
         return null;
     }
 
-    public InitBox ( boxPrefabs: Prefab, parent: Node ): void
+    public InitBox ( colorType: eColorType, parent: Node ): void
     {
-        const box = instantiate( boxPrefabs );
+        const box = instantiate( this.BoxData.BoxPrefab );
         box.parent = parent;
         box.setPosition( new Vec3( 0, 0, 0 ) );
+        const boxComponent = box.getComponent( Box );
+        boxComponent.boxRenderer.SetBoxData( colorType, this.BoxData );
     }
 
     public CheckCreateBox (): void
@@ -79,19 +81,20 @@ export class BoxContainer extends Component
             const box = boxSlot.Box;
             if ( box === null )
             {
-                const randomIndex = Math.floor( Math.random() * this.BoxData.BoxPrefab.length );
-                const newbox = this.CreatBox( boxSlot, this.BoxData.BoxPrefab[ randomIndex ] );
+                const randomIndex = Math.floor( Math.random() * 9 );
+                const newbox = this.CreatBox( boxSlot, randomIndex );
                 boxSlot.Box = newbox;
             }
         }
     }
 
-    public CreatBox ( boxSlot: BoxSlot, boxPrefabs: Prefab ): Box
+    public CreatBox ( boxSlot: BoxSlot, colorType: eColorType): Box
     {
-        const boxNode = instantiate( boxPrefabs );
+        const boxNode = instantiate( this.BoxData.BoxPrefab );
         boxNode.parent = boxSlot.node;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
+        box.boxRenderer.SetBoxData( colorType, this.BoxData );
         // box.IS_ANIMATING = true;
         box.MoveIn();
         this.boxIsActive.push( box );

@@ -17,7 +17,7 @@ export class BoxSlot extends Component {
         this.box = value;
     }
 
-    public InitBoxValue(): void
+    public InitBoxSlotData(): void
     {
         this.box = this.getComponentInChildren(Box);
     }
