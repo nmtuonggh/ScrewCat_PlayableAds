@@ -72,11 +72,8 @@ export class MoveScrewHandle extends Component
         if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
-            if ( screw.State !== eScrewState.IN_CACHED )
-            {
-                screw.CheckMove();
-            }
-
+            
+            screw.CheckMove();
         }
     }
 

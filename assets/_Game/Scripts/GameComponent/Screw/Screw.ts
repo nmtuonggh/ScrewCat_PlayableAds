@@ -44,34 +44,20 @@ export class Screw extends GameLayerComponent
 
     }
 
+    private FreeJoints (): void 
+    {
+        this.hingeJoint.enabled = false;
+    }
+
     //#region CheckMove
     public CheckMove (): void
     {
-        if ( this.State === eScrewState.IN_BOX )
-        {
-            return;
-        }
-
         if ( this.State === eScrewState.MOVING )
         {
             return;
         }
 
-        if ( this.IsBlocked() === true )
-        {
-            console.log( "Is blocked" );
-            this.BlockedTween();
-        }
-        else if ( this.CheckMoveBox() )
-        {
-            AudioController.Instance.PlayAudio( AudioType.screwOut );
-        }
-        else if ( this.CheckMoveCache() )
-        {
-            AudioController.Instance.PlayAudio( AudioType.screwOut );
-        }
-
-        if ( this.State === eScrewState.IN_BAR && this.IsBlocked() )
+        if ( this.State === eScrewState.IN_BAR  && this.IsBlocked() )
         {
             this.BlockedTween();
             return;
@@ -80,20 +66,35 @@ export class Screw extends GameLayerComponent
         switch ( this.State )
         {
             case eScrewState.IN_BAR:
-                let moveSuccess: boolean;
+                let moveSuccess: boolean = false;
 
                 if ( this.CheckMoveBox() )
                 {
+                    this.State = eScrewState.MOVING;
                     moveSuccess = true;
                     AudioController.Instance.PlayAudio( AudioType.screwOut );
-
-                }else if (this.CheckMoveCache())
+                } 
+                else if ( this.CheckMoveCache() )
                 {
+                    this.State = eScrewState.MOVING;
                     moveSuccess = true;
+                    AudioController.Instance.PlayAudio( AudioType.screwOut );
                 }
+
+                if ( moveSuccess === true )
+                {
+                    this.FreeJoints();
+                }
+
                 break;
 
-            default:
+            case eScrewState.IN_CACHED:
+                if ( this.CheckMoveBox() )
+                {
+                    AudioController.Instance.PlayAudio( AudioType.screwOut );
+                }
+                break;
+            case eScrewState.IN_BOX:
                 break;
         }
 
@@ -190,14 +191,10 @@ export class Screw extends GameLayerComponent
     //#region MoveToBoxSlot
     private MoveToBoxSlot ( hole: Hole ): void 
     {
-        this.State === eScrewState.MOVING;
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-        if ( this.State === eScrewState.IN_BAR && this.hingeJoint !== null )
-        {
-            this.hingeJoint.destroy();
-        }
+        
         this.screwAnimation.ScrewOut();
         this.TweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
@@ -225,10 +222,8 @@ export class Screw extends GameLayerComponent
 
     private MoveToCacheSlot ( hole: Hole ): void
     {
-        this.State === eScrewState.MOVING;
         hole.isLinked = true;
         this.linkingHole = hole;
-        this.hingeJoint.destroy();
         this.screwAnimation.ScrewOut();
         this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
     }

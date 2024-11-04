@@ -133,5 +133,13 @@
       }
     ]
   },
-  "custom_joint_texture_layouts": []
+  "custom_joint_texture_layouts": [],
+  "general": {
+    "designResolution": {
+      "fitHeight": true,
+      "fitWidth": false,
+      "width": 1080,
+      "height": 1920
+    }
+  }
 }
