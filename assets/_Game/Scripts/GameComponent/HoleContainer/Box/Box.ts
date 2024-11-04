@@ -71,6 +71,7 @@ export class Box extends HoleContainer
     public CloseBox (): void
     {
         this.boxRenderer.closeBox.active = true;
+        this.boxRenderer.skeleton.setAnimation(0, 'Appear', false);
         tween( this.boxRenderer.closeBox )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
@@ -91,7 +92,7 @@ export class Box extends HoleContainer
     public MoveOut (): void
     {
         const pos = this.node.position.clone().add( new Vec3( 0, 200, 0 ) );
-        this.boxRenderer.skeleton.setAnimation(0, 'Appear', false);
+        this.boxRenderer.skeleton.setAnimation(0, 'Appear2', true);
         tween( this.node )
             .to( GameConfig.BOX_MOVEOUT_DURATION, { position: pos } )
             .call( () =>

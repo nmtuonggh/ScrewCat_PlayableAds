@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "14c10f51-55e9-4047-96c6-559a89d42ee6",
+  "uuid": "83fe9427-348b-4ce9-b03c-5888f24b8029",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "Screw_Cyan"
+    "syncNodeName": "Screw"
   }
 }

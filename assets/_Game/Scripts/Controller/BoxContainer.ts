@@ -65,13 +65,13 @@ export class BoxContainer extends Component
         return null;
     }
 
-    public InitBox ( colorType: eColorType, parent: Node ): void
+    public InitBox ( colorType: eColorType, parent: Node , data : BoxData): void
     {
-        const box = instantiate( this.BoxData.BoxPrefab );
+        const box = instantiate( data.BoxPrefab );
         box.parent = parent;
         box.setPosition( new Vec3( 0, 0, 0 ) );
         const boxComponent = box.getComponent( Box );
-        boxComponent.boxRenderer.SetBoxData( colorType, this.BoxData );
+        boxComponent.boxRenderer.SetBoxData( colorType, data );
     }
 
     public CheckCreateBox (): void

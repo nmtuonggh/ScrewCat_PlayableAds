@@ -2,7 +2,7 @@ import { _decorator, Camera, Collider2D, Component, EventMouse, input, Input, La
 import { GameConfig } from '../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
 import { GameLayerComponent } from '../GameComponent/GameLayerComponent';
-import { Screw } from '../GameComponent/Screw/Screw';
+import { eScrewState, Screw } from '../GameComponent/Screw/Screw';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { BoxContainer } from './BoxContainer';
@@ -72,7 +72,11 @@ export class MoveScrewHandle extends Component
         if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
-            screw.CheckMove();
+            if ( screw.State !== eScrewState.IN_CACHED )
+            {
+                screw.CheckMove();
+            }
+
         }
     }
 

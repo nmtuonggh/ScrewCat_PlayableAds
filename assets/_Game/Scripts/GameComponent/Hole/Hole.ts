@@ -22,10 +22,6 @@ export class Hole extends Component
         console.log("Hole IsFree");
         return this !== null;
     }
-
-    public SetColor(){
-        this.sprite.color = color(255, 255, 255, 255);
-    }
 }
 
 

@@ -1,4 +1,4 @@
-import { _decorator, Collider2D, HingeJoint2D, Node, PhysicsSystem2D, Rect, Tween, tween, Vec2, Vec3 } from 'cc';
+import { _decorator, Collider2D, HingeJoint2D, instantiate, Node, PhysicsSystem2D, Prefab, random, Rect, Tween, tween, Vec2, Vec3 } from 'cc';
 import { GameLayerComponent } from '../GameLayerComponent';
 import { eColorType } from '../../GameConfig/GameColorConfig';
 import { Hole } from '../Hole/Hole';
@@ -10,6 +10,7 @@ import { BoxContainer } from '../../Controller/BoxContainer';
 import { CahedContainer } from '../../Controller/CahedContainer';
 import { ScrewAnim } from './ScrewAnim';
 import { AudioController, AudioType } from '../../AudioController/AudioController';
+import { ScrewData } from '../../FakeSO/ScrewData';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -18,7 +19,7 @@ export class Screw extends GameLayerComponent
 
     @property( { type: HingeJoint2D } )
     public hingeJoint: HingeJoint2D = null;
-    @property( { type: ScrewRenderer } )
+    @property( ScrewRenderer)
     private screwRenderer: ScrewRenderer = null;
     private screwAnimation: ScrewAnim = null;
 
@@ -32,20 +33,31 @@ export class Screw extends GameLayerComponent
 
     protected onLoad (): void
     {
-        this.screwRenderer = this.getComponent( ScrewRenderer );
+        //this.screwRenderer = this.getComponent( ScrewRenderer );
         this.screwAnimation = this.getComponent( ScrewAnim );
+    }
+
+    public InitSCrewData ( colorType: eColorType, data: ScrewData ): void
+    {
+        this.State = eScrewState.IN_BAR;
+        this.screwRenderer.SetSprite( colorType, data );
+
     }
 
     //#region CheckMove
     public CheckMove (): void
     {
-        if ( this.IsBlocked() === true )
+        if ( this.State === eScrewState.IN_BOX )
         {
-            console.log( "Is blocked" );
             return;
         }
 
-        if ( this.CheckMoveBox() )
+        if ( this.IsBlocked() === true )
+        {
+            console.log( "Is blocked" );
+            this.BlockedTween();
+        }
+        else if ( this.CheckMoveBox() )
         {
             AudioController.Instance.PlayAudio( AudioType.screwOut );
         }
@@ -53,8 +65,6 @@ export class Screw extends GameLayerComponent
         {
             AudioController.Instance.PlayAudio( AudioType.screwOut );
         }
-
-
     }
 
     public CheckMoveBox (): boolean
@@ -84,6 +94,10 @@ export class Screw extends GameLayerComponent
     }
 
     private cachedBarLayer: Collider2D[] = [];
+
+    //#endregion
+
+    //#region Blocked
 
     private IsBlocked (): boolean
     {
@@ -133,8 +147,15 @@ export class Screw extends GameLayerComponent
         return false;
     }
 
+    private BlockedTween (): void
+    {
+        const axis = Math.floor( Math.random() * 4 );
+        this.screwAnimation.ScrewBlock( axis );
+    }
+
     //#endregion
 
+    //#region MoveToBoxSlot
     private MoveToBoxSlot ( hole: Hole ): void 
     {
         hole.isLinked = true;
@@ -165,13 +186,14 @@ export class Screw extends GameLayerComponent
             } );
     }
 
+    //#endregion
 
+    //#region MoveToCacheSlot
 
     private MoveToCacheSlot ( hole: Hole ): void
     {
         hole.isLinked = true;
         this.linkingHole = hole;
-        hole.SetColor();
         this.hingeJoint.destroy();
         this.screwAnimation.ScrewOut();
         this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
@@ -194,6 +216,8 @@ export class Screw extends GameLayerComponent
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
             } );
     }
+
+    //#endregion
 
 }
 

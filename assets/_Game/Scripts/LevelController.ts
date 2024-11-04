@@ -37,7 +37,7 @@ export class LevelController extends Component
         {
             //random screw prefab
             
-            bar.SpawnScrew( this.ScrewData.ScrewPrefab );
+            bar.SpawnScrew( this.ScrewData);
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();
             bar.barPhysic.SetGroupLayer();
@@ -52,7 +52,7 @@ export class LevelController extends Component
             {
                 const boxSlot = listBoxSlot[ i ];
                 const randomIndex = Math.floor(Math.random() * 9);
-                BoxContainer.Instance.InitBox( randomIndex, boxSlot.node );
+                BoxContainer.Instance.InitBox( randomIndex, boxSlot.node, this.BoxData );
                 boxSlot.InitBoxSlotData();
             }
     }
