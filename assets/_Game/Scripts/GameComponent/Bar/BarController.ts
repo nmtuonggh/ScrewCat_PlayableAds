@@ -29,7 +29,7 @@ export class BarController extends GameLayerComponent
 
     protected update ( dt: number ): void
     {
-        if(this.node.position.y < -1000)
+        if(this.node.position.y < -2000)
         {
             this.node.destroy();
         }

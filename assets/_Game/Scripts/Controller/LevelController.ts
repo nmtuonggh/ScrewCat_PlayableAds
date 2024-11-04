@@ -1,10 +1,9 @@
 import { _decorator, Component, Node, Prefab } from 'cc';
-import { BarController } from './GameComponent/Bar/BarController';
-import { BoxData } from './FakeSO/BoxData';
-import { BoxContainer } from './Controller/BoxContainer';
-import { Screw } from './GameComponent/Screw/Screw';
-import { ScrewData } from './FakeSO/ScrewData';
-import { StarController } from './Star/StarController';
+import { BarController } from '../GameComponent/Bar/BarController';
+import { BoxData } from '../FakeSO/BoxData';
+import { ScrewData } from '../FakeSO/ScrewData';
+import { BoxContainer } from './BoxContainer';
+
 const { ccclass, property } = _decorator;
 
 @ccclass( 'LevelController' )
