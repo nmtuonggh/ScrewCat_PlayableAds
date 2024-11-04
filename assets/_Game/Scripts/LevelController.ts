@@ -38,9 +38,11 @@ export class LevelController extends Component
             //random screw prefab
             
             bar.SpawnScrew( this.ScrewData);
+            
+            bar.barPhysic.SetGroupLayer();
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();
-            bar.barPhysic.SetGroupLayer();
+
         } );
     }
 
