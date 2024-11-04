@@ -4,6 +4,7 @@ import { BoxData } from './FakeSO/BoxData';
 import { BoxContainer } from './Controller/BoxContainer';
 import { Screw } from './GameComponent/Screw/Screw';
 import { ScrewData } from './FakeSO/ScrewData';
+import { StarController } from './Star/StarController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'LevelController' )
@@ -11,7 +12,6 @@ export class LevelController extends Component
 {
     @property( Node )
     private Holder: Node = null;
-
     @property( BarController )
     private listBar: BarController[] = [];
     @property( BoxData )
@@ -42,7 +42,6 @@ export class LevelController extends Component
             bar.barPhysic.SetGroupLayer();
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();
-
         } );
     }
 

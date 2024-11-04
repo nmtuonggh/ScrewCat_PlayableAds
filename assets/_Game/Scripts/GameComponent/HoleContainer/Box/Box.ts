@@ -10,6 +10,7 @@ import { CahedContainer } from '../../../Controller/CahedContainer';
 import { AudioController, AudioType } from '../../../AudioController/AudioController';
 import { GameConfig } from '../../../GameConfig/GameConfig';
 import { MeowAnimation } from '../../../MeowAnimation';
+import { StarController } from '../../../Star/StarController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -68,10 +69,13 @@ export class Box extends HoleContainer
         }
     }
 
+    private starList: Node[] = [];
+
     public CloseBox (): void
     {
+        StarController.Instance.currentScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
-        this.boxRenderer.skeleton.setAnimation(0, 'Appear', false);
+        this.boxRenderer.skeleton.setAnimation( 0, 'Appear', false );
         tween( this.boxRenderer.closeBox )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
@@ -79,11 +83,12 @@ export class Box extends HoleContainer
                 //MeowAnimation.Instance.MoveIn(this.node.parent);
                 AudioController.Instance.PlayAudio( AudioType.boxComplete );
                 AudioController.Instance.PlayAudio( AudioType.meow );
-
+                this.starList = StarController.Instance.SpawnStar( this.listHoles.length, this.listHoles );
             } )
             .delay( 0.4 )
             .call( () =>
             {
+                StarController.Instance.Move( this.starList );
                 this.MoveOut();
             } )
             .start();
@@ -92,7 +97,7 @@ export class Box extends HoleContainer
     public MoveOut (): void
     {
         const pos = this.node.position.clone().add( new Vec3( 0, 200, 0 ) );
-        this.boxRenderer.skeleton.setAnimation(0, 'Appear2', true);
+        this.boxRenderer.skeleton.setAnimation( 0, 'Appear2', true );
         tween( this.node )
             .to( GameConfig.BOX_MOVEOUT_DURATION, { position: pos } )
             .call( () =>

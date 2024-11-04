@@ -1,4 +1,4 @@
-import { _decorator, BoxCollider2D, Collider2D, Component, Contact2DType, ICollisionEvent, IPhysics2DContact, ITriggerEvent, Node, PhysicsSystem2D } from 'cc';
+import { _decorator, BoxCollider2D, Collider2D, Component, Contact2DType, HingeJoint2D, ICollisionEvent, IPhysics2DContact, ITriggerEvent, Node, PhysicsSystem2D } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('Destroyer')
@@ -20,7 +20,9 @@ export class Destroyer extends Component {
     onBeginContact (selfCollider: Collider2D, otherCollider: Collider2D, contact: IPhysics2DContact | null) {
         // will be called once when two colliders begin to contact
         console.log('onBeginContact');
-        otherCollider.node.destroy();
+        console.error(otherCollider.getComponents(HingeJoint2D));
+        // console.error(otherCollider.getComponents(HingeJoint2D));
+        otherCollider.node.active = false;
     }
 }
 

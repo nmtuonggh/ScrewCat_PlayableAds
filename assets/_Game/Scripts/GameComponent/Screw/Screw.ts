@@ -19,7 +19,7 @@ export class Screw extends GameLayerComponent
 
     @property( { type: HingeJoint2D } )
     public hingeJoint: HingeJoint2D = null;
-    @property( ScrewRenderer)
+    @property( ScrewRenderer )
     private screwRenderer: ScrewRenderer = null;
     private screwAnimation: ScrewAnim = null;
 
@@ -52,6 +52,11 @@ export class Screw extends GameLayerComponent
             return;
         }
 
+        if ( this.State === eScrewState.MOVING )
+        {
+            return;
+        }
+
         if ( this.IsBlocked() === true )
         {
             console.log( "Is blocked" );
@@ -65,6 +70,33 @@ export class Screw extends GameLayerComponent
         {
             AudioController.Instance.PlayAudio( AudioType.screwOut );
         }
+
+        if ( this.State === eScrewState.IN_BAR && this.IsBlocked() )
+        {
+            this.BlockedTween();
+            return;
+        }
+
+        switch ( this.State )
+        {
+            case eScrewState.IN_BAR:
+                let moveSuccess: boolean;
+
+                if ( this.CheckMoveBox() )
+                {
+                    moveSuccess = true;
+                    AudioController.Instance.PlayAudio( AudioType.screwOut );
+
+                }else if (this.CheckMoveCache())
+                {
+                    moveSuccess = true;
+                }
+                break;
+
+            default:
+                break;
+        }
+
     }
 
     public CheckMoveBox (): boolean
@@ -158,10 +190,11 @@ export class Screw extends GameLayerComponent
     //#region MoveToBoxSlot
     private MoveToBoxSlot ( hole: Hole ): void 
     {
+        this.State === eScrewState.MOVING;
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-        if ( this.State === eScrewState.IN_BAR )
+        if ( this.State === eScrewState.IN_BAR && this.hingeJoint !== null )
         {
             this.hingeJoint.destroy();
         }
@@ -192,6 +225,7 @@ export class Screw extends GameLayerComponent
 
     private MoveToCacheSlot ( hole: Hole ): void
     {
+        this.State === eScrewState.MOVING;
         hole.isLinked = true;
         this.linkingHole = hole;
         this.hingeJoint.destroy();

@@ -4,6 +4,7 @@ import { eScrewState, Screw } from '../Screw/Screw';
 import { BarPhysic } from './BarPhysic';
 import { eColorType } from '../../GameConfig/GameColorConfig';
 import { ScrewData } from '../../FakeSO/ScrewData';
+import { StarController } from '../../Star/StarController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -25,6 +26,14 @@ export class BarController extends GameLayerComponent
     {
         this.barPhysic = this.getComponent( BarPhysic );
     }
+
+    protected update ( dt: number ): void
+    {
+        if(this.node.position.y < -1000)
+        {
+            this.node.destroy();
+        }
+    }
     //#region Spawn Screw
     public SpawnScrew ( screwData : ScrewData ): void 
     {
@@ -41,6 +50,8 @@ export class BarController extends GameLayerComponent
 
             screw.InitSCrewData( randomIndex , screwData );
             this.listScrews.push( screw);
+            StarController.Instance.toltalScrew +=1;
+            
         }
     }
 
