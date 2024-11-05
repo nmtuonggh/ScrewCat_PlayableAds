@@ -7,6 +7,7 @@ import { Box } from '../GameComponent/HoleContainer/Box/Box';
 import { Queue } from '../Custom/Queue';
 import { GameManager } from '../Manager/GameManager';
 import { CahedContainer } from './CahedContainer';
+import { colorTypeCount } from './LogicSpawnBoxController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxContainer' )
@@ -98,8 +99,7 @@ export class BoxContainer extends Component
     public CreatBox ( boxSlot: BoxSlot, colorType: eColorType ): Box
     {
         ///
-        const color = this.GetMostColorType();
-        if (color === eColorType.None) return null;
+
 
         ///
         const boxNode = instantiate( this.BoxData.BoxPrefab );
@@ -121,7 +121,7 @@ export class BoxContainer extends Component
     public needMoreBox (): boolean
     {
         let screwRemain = GameManager.Instance.GetRemainningScrew();
-    
+
         for ( const box of this.boxIsActive )
         {
             screwRemain -= box.GetFreeHoleCount();
@@ -135,17 +135,7 @@ export class BoxContainer extends Component
         return true;
     }
 
-    public GetMostColorType (): eColorType
-    {
-        let mostColorType;
-        if(CahedContainer.Instance.GetMostColorType() !== eColorType.None)
-        {
-            mostColorType = CahedContainer.Instance.GetMostColorType();
-        }
-        return mostColorType;
-    }
-
-    private GetHoleNeedForBox (color : eColorType): number
+    private GetHoleNeedForBox ( color: eColorType ): number
     {
         for ( const box of this.boxIsActive )
         {

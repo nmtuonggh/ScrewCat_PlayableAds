@@ -12,6 +12,7 @@ import { ScrewAnim } from './ScrewAnim';
 import { AudioController, AudioType } from '../../AudioController/AudioController';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameManager } from '../../Manager/GameManager';
+import { LogicSpawnBoxController } from '../../Controller/LogicSpawnBoxController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -113,6 +114,9 @@ export class Screw extends GameLayerComponent
         if ( freeBox !== null )
         {
             this.MoveToBoxSlot( freeBox );
+            //loại screw này ra khỏi list screw của LogicSpawnBoxController
+            LogicSpawnBoxController.Instance.RemoveScrew( this );
+            
             return true;
         }
 

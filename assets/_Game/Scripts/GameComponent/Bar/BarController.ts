@@ -6,6 +6,7 @@ import { eColorType } from '../../GameConfig/GameColorConfig';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { StarController } from '../../Star/StarController';
 import { GameManager } from '../../Manager/GameManager';
+import { colorTypeCount, LogicSpawnBoxController } from '../../Controller/LogicSpawnBoxController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -53,6 +54,7 @@ export class BarController extends GameLayerComponent
             this.listScrews.push( screw);
            
             GameManager.Instance.TotalScrew += 1;
+            LogicSpawnBoxController.Instance.currentScrew.push( screw );
         }
     }
 
