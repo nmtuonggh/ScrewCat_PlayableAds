@@ -11,6 +11,7 @@ import { AudioController, AudioType } from '../../../AudioController/AudioContro
 import { GameConfig } from '../../../GameConfig/GameConfig';
 import { MeowAnimation } from '../../../MeowAnimation';
 import { StarController } from '../../../Star/StarController';
+import { GameManager } from '../../../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -73,7 +74,7 @@ export class Box extends HoleContainer
 
     public CloseBox (): void
     {
-        StarController.Instance.currentScrew += this.listHoles.length;
+        GameManager.Instance.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
         this.boxRenderer.skeleton.setAnimation( 0, 'Appear', false );
         tween( this.boxRenderer.closeBox )
@@ -123,6 +124,19 @@ export class Box extends HoleContainer
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
             } )
             .start();
+    }
+
+    public GetFreeHoleCount (): number
+    {
+        let count = 0;
+        for ( const hole of this.listHoles )
+        {
+            if ( hole.IsFree() && hole.isLinked === false )
+            {
+                count++;
+            }
+        }
+        return count;
     }
 }
 

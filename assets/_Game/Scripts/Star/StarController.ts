@@ -1,13 +1,11 @@
 import { _decorator, Component, instantiate, Node, Prefab, RichText, Sprite, tween } from 'cc';
 import { Hole } from '../GameComponent/Hole/Hole';
+import { GameManager } from '../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'StarController' )
 export class StarController extends Component 
 {
-    public toltalScrew = 0;
-    public currentScrew = 0;
-
     @property( Sprite )
     private starSprite: Sprite = null;
     @property( RichText )
@@ -38,20 +36,22 @@ export class StarController extends Component
     }
 
     public SetFillAmount (): void
-{
-    if (this.currentScrew > 0)
     {
-        const value = this.currentScrew / this.toltalScrew;
-        const intValue = Math.round(value * 100); // Làm tròn giá trị đến số nguyên gần nhất và nhân với 100
-        this.text.string = `${ intValue }%`;
-        this.starSprite.fillRange = value; // Giữ nguyên giá trị gốc cho fillRange
+        const collectedScrew = GameManager.Instance.CollectedScrew;
+        const toltalScrew = GameManager.Instance.CollectedScrew;
+        if ( collectedScrew > 0 )
+        {
+            const value = collectedScrew / toltalScrew;
+            const intValue = Math.round( value * 100 ); // Làm tròn giá trị đến số nguyên gần nhất và nhân với 100
+            this.text.string = `${ intValue }%`;
+            this.starSprite.fillRange = value; // Giữ nguyên giá trị gốc cho fillRange
+        }
+        else
+        {
+            this.text.string = ``;
+            this.starSprite.fillRange = 0;
+        }
     }
-    else
-    {
-        this.text.string = ``;
-        this.starSprite.fillRange = 0;
-    }
-}
 
     public SpawnStar ( amout: number, hole: Hole[] ): Node[]
     {

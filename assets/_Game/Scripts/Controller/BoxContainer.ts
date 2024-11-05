@@ -5,6 +5,8 @@ import { Hole } from '../GameComponent/Hole/Hole';
 import { BoxData } from '../FakeSO/BoxData';
 import { Box } from '../GameComponent/HoleContainer/Box/Box';
 import { Queue } from '../Custom/Queue';
+import { GameManager } from '../Manager/GameManager';
+import { CahedContainer } from './CahedContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxContainer' )
@@ -15,7 +17,7 @@ export class BoxContainer extends Component
 
     public boxSlots: BoxSlot[] = [];
 
-    public boxIsActive : Box[] = [];
+    public boxIsActive: Box[] = [];
 
     private static _instance: BoxContainer = null;
 
@@ -54,7 +56,7 @@ export class BoxContainer extends Component
         //duyệt qua từng phần tử trong queue
         for ( const box of this.boxIsActive )
         {
-            if (box === null || box.IS_ANIMATING) continue;
+            if ( box === null || box.IS_ANIMATING ) continue;
             const hole = box.GetFreeHole( colorType );
             if ( hole !== null )
             {
@@ -65,7 +67,7 @@ export class BoxContainer extends Component
         return null;
     }
 
-    public InitBox ( colorType: eColorType, parent: Node , data : BoxData): void
+    public InitBox ( colorType: eColorType, parent: Node, data: BoxData ): void
     {
         const box = instantiate( data.BoxPrefab );
         box.parent = parent;
@@ -76,6 +78,11 @@ export class BoxContainer extends Component
 
     public CheckCreateBox (): void
     {
+        if ( !this.needMoreBox() )
+        {
+            return;
+        }
+
         for ( const boxSlot of this.boxSlots )
         {
             const box = boxSlot.Box;
@@ -88,14 +95,18 @@ export class BoxContainer extends Component
         }
     }
 
-    public CreatBox ( boxSlot: BoxSlot, colorType: eColorType): Box
+    public CreatBox ( boxSlot: BoxSlot, colorType: eColorType ): Box
     {
+        ///
+        const color = this.GetMostColorType();
+        if (color === eColorType.None) return null;
+
+        ///
         const boxNode = instantiate( this.BoxData.BoxPrefab );
         boxNode.parent = boxSlot.node;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
         box.boxRenderer.SetBoxData( colorType, this.BoxData );
-        // box.IS_ANIMATING = true;
         box.MoveIn();
         this.boxIsActive.push( box );
         return box;
@@ -105,6 +116,44 @@ export class BoxContainer extends Component
     {
         const index = this.boxIsActive.indexOf( box );
         this.boxIsActive.splice( index, 1 );
+    }
+
+    public needMoreBox (): boolean
+    {
+        let screwRemain = GameManager.Instance.GetRemainningScrew();
+    
+        for ( const box of this.boxIsActive )
+        {
+            screwRemain -= box.GetFreeHoleCount();
+        }
+
+        if ( screwRemain <= 0 )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public GetMostColorType (): eColorType
+    {
+        let mostColorType;
+        if(CahedContainer.Instance.GetMostColorType() !== eColorType.None)
+        {
+            mostColorType = CahedContainer.Instance.GetMostColorType();
+        }
+        return mostColorType;
+    }
+
+    private GetHoleNeedForBox (color : eColorType): number
+    {
+        for ( const box of this.boxIsActive )
+        {
+            if ( box.boxRenderer.colorType === color )
+            {
+                return box.GetFreeHoleCount();
+            }
+        }
     }
 
 }

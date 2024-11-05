@@ -1,6 +1,7 @@
 import { _decorator, CCInteger, Component, Node } from 'cc';
 import { HorizontalGrid } from '../GameComponent/HoleContainer/Cache/HorizontalGrid';
 import { Hole } from '../GameComponent/Hole/Hole';
+import { eColorType } from '../GameConfig/GameColorConfig';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'CahedContainer' )
@@ -77,6 +78,56 @@ export class CahedContainer extends Component
             }
         }
     }
+
+    public GetMostColorType():eColorType
+    {
+        let colorTypeCountList: colorTypeCount[] = [];
+        //lay so luong phan tu trong eColorType
+        
+
+        //khoi tao list colorTypeCount
+        for ( let i = 0; i < 9; i++ )
+        {
+            let color = new colorTypeCount();
+            color.colorType = i;
+            color.count = 0;
+            colorTypeCountList.push( color );
+        }
+
+        for ( const hole of this.listActiveHole )
+        {
+            if (hole.linkingScrew == null) continue;
+            
+            for ( let i = 0; i < colorTypeCountList.length; i++ )
+            {
+                if ( colorTypeCountList[i].colorType === hole.linkingScrew.ScrewRenderer.colorType )
+                {
+                    colorTypeCountList[i].count++;
+                }
+            }
+        }
+
+        //tim colorType co so luong lon nhat
+        let maxCount = 0;
+        let maxColorType = eColorType.None;
+        for ( let i = 0; i < colorTypeCountList.length; i++ )
+        {
+            if ( colorTypeCountList[i].count > maxCount )
+            {
+                maxCount = colorTypeCountList[i].count;
+                maxColorType = colorTypeCountList[i].colorType;
+            }
+        }
+        
+        return maxColorType;
+    }
+}
+
+export class colorTypeCount
+{
+    public colorType: eColorType = eColorType.None;
+    public count: number = 0;
+
 }
 
 

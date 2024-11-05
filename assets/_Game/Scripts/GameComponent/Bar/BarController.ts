@@ -5,6 +5,7 @@ import { BarPhysic } from './BarPhysic';
 import { eColorType } from '../../GameConfig/GameColorConfig';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { StarController } from '../../Star/StarController';
+import { GameManager } from '../../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -50,8 +51,8 @@ export class BarController extends GameLayerComponent
 
             screw.InitSCrewData( randomIndex , screwData );
             this.listScrews.push( screw);
-            StarController.Instance.toltalScrew +=1;
-            
+           
+            GameManager.Instance.TotalScrew += 1;
         }
     }
 

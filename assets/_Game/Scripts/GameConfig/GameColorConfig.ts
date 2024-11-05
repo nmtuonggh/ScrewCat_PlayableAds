@@ -11,5 +11,6 @@ export enum eColorType
     Pink = 6,
     Purple = 7,
     Orange = 8, 
+    None = 999
 }
 

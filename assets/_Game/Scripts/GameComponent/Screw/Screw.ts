@@ -11,6 +11,7 @@ import { CahedContainer } from '../../Controller/CahedContainer';
 import { ScrewAnim } from './ScrewAnim';
 import { AudioController, AudioType } from '../../AudioController/AudioController';
 import { ScrewData } from '../../FakeSO/ScrewData';
+import { GameManager } from '../../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -27,6 +28,10 @@ export class Screw extends GameLayerComponent
     public State: eScrewState = eScrewState.IN_BAR;
     //#region Encapsulation
 
+    public get ScrewRenderer (): ScrewRenderer
+    {
+        return this.screwRenderer;
+    }
 
 
     //#endregion
@@ -194,7 +199,7 @@ export class Screw extends GameLayerComponent
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-        
+        GameManager.Instance.CheckGoToAdsCondition();
         this.screwAnimation.ScrewOut();
         this.TweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
@@ -225,6 +230,7 @@ export class Screw extends GameLayerComponent
         hole.isLinked = true;
         this.linkingHole = hole;
         this.screwAnimation.ScrewOut();
+        GameManager.Instance.CheckGoToAdsCondition();
         this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
     }
 
@@ -243,6 +249,7 @@ export class Screw extends GameLayerComponent
                 this.State = eScrewState.IN_CACHED;
                 this.screwAnimation.ScrewIn();
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
+                GameManager.Instance.CheckLose();
             } );
     }
 
