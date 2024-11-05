@@ -3,7 +3,8 @@ import { BarController } from '../GameComponent/Bar/BarController';
 import { BoxData } from '../FakeSO/BoxData';
 import { ScrewData } from '../FakeSO/ScrewData';
 import { BoxContainer } from './BoxContainer';
-import { LogicSpawnBoxController } from './LogicSpawnBoxController';
+import { colorTypeCount, LogicSpawnBoxController } from './LogicSpawnBoxController';
+import { eColorType } from '../GameConfig/GameColorConfig';
 
 const { ccclass, property } = _decorator;
 
@@ -26,6 +27,7 @@ export class LevelController extends Component
 
     protected start (): void
     {
+        LogicSpawnBoxController.Instance.currentBar = this.listBar;
         this.InitScrew();
         this.InitBox();
         BoxContainer.Instance.InitQueue();
@@ -36,9 +38,7 @@ export class LevelController extends Component
         this.listBar.forEach( bar => 
         {
             //random screw prefab
-
             bar.SpawnScrew( this.ScrewData );
-
             bar.barPhysic.SetGroupLayer();
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();
@@ -50,23 +50,31 @@ export class LevelController extends Component
     public InitBox (): void
     {
         const listBoxSlot = BoxContainer.Instance.boxSlots;
+        const mostColor = LogicSpawnBoxController.Instance.GetMostColorType(true);
 
         for ( let i = 0; i < 1; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
-            const randomIndex = Math.floor( Math.random() * 9 );
-            BoxContainer.Instance.InitBox( randomIndex, boxSlot.node, this.BoxData );
+            BoxContainer.Instance.InitBox( mostColor, boxSlot.node, this.BoxData );
             boxSlot.InitBoxSlotData();
         }
+
+        const colorData = LogicSpawnBoxController.Instance.colorScrewData;
+
 
         for ( let i = 1; i < listBoxSlot.length; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
-            const randomIndex = Math.floor( Math.random() * 9 );
-            BoxContainer.Instance.InitBox( randomIndex, boxSlot.node, this.BoxData );
+            // const randomIndex = Math.floor( Math.random() * 9 );
+            //chỉ random các máu có trong colorData
+            const randomIndex = Math.floor( Math.random() * colorData.length );
+            const colorType = colorData[ randomIndex ].colorType;
+            BoxContainer.Instance.InitBox( colorType, boxSlot.node, this.BoxData );
             boxSlot.InitBoxSlotData();
         }
     }
+
+    
 
 }
 

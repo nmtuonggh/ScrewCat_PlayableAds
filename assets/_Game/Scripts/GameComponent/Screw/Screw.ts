@@ -13,6 +13,7 @@ import { AudioController, AudioType } from '../../AudioController/AudioControlle
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameManager } from '../../Manager/GameManager';
 import { LogicSpawnBoxController } from '../../Controller/LogicSpawnBoxController';
+import { BarController } from '../Bar/BarController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -26,6 +27,7 @@ export class Screw extends GameLayerComponent
     private screwAnimation: ScrewAnim = null;
 
     private linkingHole: Hole = null;
+    public BarHolder: BarController = null;
     public State: eScrewState = eScrewState.IN_BAR;
     //#region Encapsulation
 
@@ -53,6 +55,7 @@ export class Screw extends GameLayerComponent
     private FreeJoints (): void 
     {
         this.hingeJoint.enabled = false;
+        this.BarHolder.RemoveScrew( this );
     }
 
     //#region CheckMove
@@ -141,7 +144,7 @@ export class Screw extends GameLayerComponent
 
     //#region Blocked
 
-    private IsBlocked (): boolean
+    public IsBlocked (): boolean
     {
         this.cachedBarLayer = [];
 

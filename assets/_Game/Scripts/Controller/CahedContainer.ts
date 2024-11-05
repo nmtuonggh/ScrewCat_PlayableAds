@@ -2,7 +2,6 @@ import { _decorator, CCInteger, Component, Node } from 'cc';
 import { HorizontalGrid } from '../GameComponent/HoleContainer/Cache/HorizontalGrid';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
-import { colorTypeCount } from './LogicSpawnBoxController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'CahedContainer' )
@@ -72,7 +71,7 @@ export class CahedContainer extends Component
             const hole = this.listActiveHole[ i ];
             if ( hole.isLinked && hole.linkingScrew !== null )
             {
-                if ( hole.linkingScrew.CheckMoveBox() )
+                if(hole.linkingScrew.CheckMoveBox( ))
                 {
                     hole.isLinked = false;
                 }
@@ -80,40 +79,55 @@ export class CahedContainer extends Component
         }
     }
 
-    public GetMostColorType (): eColorType
+    public GetMostColorType():eColorType
     {
-        let colorTypeCount: colorTypeCount[] = [];
-        this.listActiveHole.forEach( hole =>
+        let colorTypeCountList: colorTypeCount[] = [];
+        //lay so luong phan tu trong eColorType
+        
+
+        //khoi tao list colorTypeCount
+        for ( let i = 0; i < 9; i++ )
         {
-            if ( hole.linkingScrew !== null )
+            let color = new colorTypeCount();
+            color.colorType = i;
+            color.count = 0;
+            colorTypeCountList.push( color );
+        }
+
+        for ( const hole of this.listActiveHole )
+        {
+            if (hole.linkingScrew == null) continue;
+            
+            for ( let i = 0; i < colorTypeCountList.length; i++ )
             {
-                let colorType = hole.linkingScrew.ScrewRenderer.colorType;
-                let colorTypeCountItem = colorTypeCount.find( ctc => ctc.colorType === colorType );
-                if ( colorTypeCountItem )
+                if ( colorTypeCountList[i].colorType === hole.linkingScrew.ScrewRenderer.colorType )
                 {
-                    colorTypeCountItem.count++;
-                } else
-                {
-                    colorTypeCount.push( { colorType: colorType, count: 1 } );
+                    colorTypeCountList[i].count++;
                 }
-            };
-        });
-
-        let maxColorType = colorTypeCount[ 0 ];
-        let color = eColorType.None;
-        colorTypeCount.forEach( ctc =>
-        {
-            if ( ctc.count > maxColorType.count )
-            {
-                maxColorType = ctc;
-                color = ctc.colorType;
             }
-        } );
+        }
 
-        return color;
+        //tim colorType co so luong lon nhat
+        let maxCount = 0;
+        let maxColorType = eColorType.None;
+        for ( let i = 0; i < colorTypeCountList.length; i++ )
+        {
+            if ( colorTypeCountList[i].count > maxCount )
+            {
+                maxCount = colorTypeCountList[i].count;
+                maxColorType = colorTypeCountList[i].colorType;
+            }
+        }
+        
+        return maxColorType;
     }
 }
 
+export class colorTypeCount
+{
+    public colorType: eColorType = eColorType.None;
+    public count: number = 0;
 
+}
 
 

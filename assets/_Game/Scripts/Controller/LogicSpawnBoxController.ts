@@ -1,18 +1,18 @@
 import { _decorator, CCInteger, Component, Node } from 'cc';
 import { eColorType } from '../GameConfig/GameColorConfig';
-import { Screw } from '../GameComponent/Screw/Screw';
 import { CahedContainer } from './CahedContainer';
+import { BarController } from '../GameComponent/Bar/BarController';
+import { Screw } from '../GameComponent/Screw/Screw';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'LogicSpawnBoxController' )
 export class LogicSpawnBoxController extends Component 
 {
-    @property( Screw )
     public toltalScrew: Screw[] = [];
-    @property( Screw )
     public currentScrew: Screw[] = [];
-    
+
     public colorScrewData: colorTypeCount[] = [];
+    public currentBar: BarController[] = [];
 
 
     private static _instance: LogicSpawnBoxController = null;
@@ -43,6 +43,15 @@ export class LogicSpawnBoxController extends Component
         }
     }
 
+    public RemoveBar ( bar: BarController ): void
+    {
+        const index = this.currentBar.indexOf( bar );
+        if ( index > -1 ) 
+        {
+            this.currentBar.splice( index, 1 );
+        }
+    }
+
     public GetColorData (): void 
     {
         this.currentScrew.forEach( screw =>
@@ -58,15 +67,62 @@ export class LogicSpawnBoxController extends Component
         } );
     }
 
-    public GetMostColorType (): eColorType
+    public GetMostColorType ( isStart: boolean ): eColorType
     {
-        const mostCachedColor = CahedContainer.Instance.GetMostColorType();
-        
-        if ( mostCachedColor !== eColorType.None )
+        if ( !isStart )
         {
-            return mostCachedColor;
+            const mostCachedColor = CahedContainer.Instance.GetMostColorType();
+
+            if ( mostCachedColor !== eColorType.None )
+            {
+                return mostCachedColor;
+            }
         }
 
+
+        const mostBarColor = this.GetMostBarColor();
+
+        if ( mostBarColor !== eColorType.None )
+        {
+            return mostBarColor;
+        }
+    }
+
+    public GetMostBarColor (): eColorType
+    {
+        let colorData: colorTypeCount[] = [];
+        this.currentBar.forEach( bar =>
+        {
+            bar.listScrews.forEach( screw =>
+            {
+                if ( !screw.IsBlocked() )
+                {
+                    let colorType = screw.ScrewRenderer.colorType;
+                    let colorTypeCountItem = colorData.find( ctc => ctc.colorType === colorType );
+                    if ( colorTypeCountItem )
+                    {
+                        colorTypeCountItem.count++;
+                    } else
+                    {
+                        colorData.push( { colorType: colorType, count: 1 } );
+                    }
+                }
+
+            } );
+        } );
+
+        let maxColorType = colorData[ 0 ];
+        let color = eColorType.None;
+        colorData.forEach( ctc =>
+        {
+            if ( ctc.count > maxColorType.count )
+            {
+                maxColorType = ctc;
+                color = ctc.colorType;
+            }
+        } );
+
+        return color;
     }
 }
 

@@ -33,6 +33,7 @@ export class BarController extends GameLayerComponent
     {
         if(this.node.position.y < -2000)
         {
+            LogicSpawnBoxController.Instance.RemoveBar( this );
             this.node.destroy();
         }
     }
@@ -50,6 +51,7 @@ export class BarController extends GameLayerComponent
             screwNode.setParent( this.node.parent );
             screwNode.setWorldPosition( spawnPos );
 
+            screw.BarHolder = this;
             screw.InitSCrewData( randomIndex , screwData );
             this.listScrews.push( screw);
            
@@ -59,6 +61,15 @@ export class BarController extends GameLayerComponent
     }
 
     //#endregion
+
+    public RemoveScrew ( screw: Screw ): void
+    {
+        const index = this.listScrews.indexOf( screw );
+        if ( index > -1 ) 
+        {
+            this.listScrews.splice( index, 1 );
+        }
+    }
 }
 
 
