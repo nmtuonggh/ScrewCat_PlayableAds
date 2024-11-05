@@ -72,23 +72,32 @@ export class LogicSpawnBoxController extends Component
         if ( !isStart )
         {
             const mostCachedColor = CahedContainer.Instance.GetMostColorType();
+            const mostBarColor = this.GetMostBarColor();
 
-            if ( mostCachedColor !== eColorType.None )
+            if ( mostCachedColor.colorType !== eColorType.None  )
             {
-                return mostCachedColor;
+                if(mostCachedColor.count >= mostBarColor.count)
+                {
+                    return mostCachedColor.colorType;
+                }
+                else
+                {
+                    return mostBarColor.colorType;
+                }
             }
         }
 
 
         const mostBarColor = this.GetMostBarColor();
 
-        if ( mostBarColor !== eColorType.None )
+        if ( mostBarColor.colorType !== eColorType.None )
         {
-            return mostBarColor;
+            const color = mostBarColor.colorType;
+            return color;
         }
     }
 
-    public GetMostBarColor (): eColorType
+    public GetMostBarColor (): colorTypeCount
     {
         let colorData: colorTypeCount[] = [];
         this.currentBar.forEach( bar =>
@@ -112,17 +121,15 @@ export class LogicSpawnBoxController extends Component
         } );
 
         let maxColorType = colorData[ 0 ];
-        let color = eColorType.None;
         colorData.forEach( ctc =>
         {
-            if ( ctc.count > maxColorType.count )
+            if ( ctc.count >= maxColorType.count )
             {
                 maxColorType = ctc;
-                color = ctc.colorType;
             }
         } );
 
-        return color;
+        return maxColorType;
     }
 }
 

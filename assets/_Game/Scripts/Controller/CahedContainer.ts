@@ -79,7 +79,7 @@ export class CahedContainer extends Component
         }
     }
 
-    public GetMostColorType():eColorType
+    public GetMostColorType():colorTypeCount
     {
         let colorTypeCountList: colorTypeCount[] = [];
         //lay so luong phan tu trong eColorType
@@ -108,16 +108,25 @@ export class CahedContainer extends Component
         }
 
         //tim colorType co so luong lon nhat
-        let maxCount = 0;
-        let maxColorType = eColorType.None;
-        for ( let i = 0; i < colorTypeCountList.length; i++ )
+        // let maxCount = 0;
+        // let maxColorType = eColorType.None;
+        // for ( let i = 0; i < colorTypeCountList.length; i++ )
+        // {
+        //     if ( colorTypeCountList[i].count > maxCount )
+        //     {
+        //         maxCount = colorTypeCountList[i].count;
+        //         maxColorType = colorTypeCountList[i].colorType;
+        //     }
+        // }
+
+        let maxColorType = colorTypeCountList[0];
+        colorTypeCountList.forEach( ctc =>
         {
-            if ( colorTypeCountList[i].count > maxCount )
+            if ( ctc.count >= maxColorType.count )
             {
-                maxCount = colorTypeCountList[i].count;
-                maxColorType = colorTypeCountList[i].colorType;
+                maxColorType = ctc;
             }
-        }
+        } );
         
         return maxColorType;
     }

@@ -1175,10 +1175,20 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "BoxPrefab": {
-      "__uuid__": "5e0943a0-1255-4908-ac29-796bced2461c",
-      "__expectedType__": "cc.Prefab"
-    },
+    "BoxPrefab": [
+      {
+        "__uuid__": "a8bdb772-9e1b-4e86-96b5-d9ad7952a005",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "90fb1b56-1488-47c0-b0f9-eced6df7a9af",
+        "__expectedType__": "cc.Prefab"
+      },
+      {
+        "__uuid__": "5e0943a0-1255-4908-ac29-796bced2461c",
+        "__expectedType__": "cc.Prefab"
+      }
+    ],
     "BoxOpenSprite": [
       {
         "__uuid__": "6d1db456-bb51-4b3f-8312-8f8b47855173@f9941",

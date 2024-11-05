@@ -65,7 +65,6 @@ export class LevelController extends Component
         for ( let i = 1; i < listBoxSlot.length; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
-            // const randomIndex = Math.floor( Math.random() * 9 );
             //chỉ random các máu có trong colorData
             const randomIndex = Math.floor( Math.random() * colorData.length );
             const colorType = colorData[ randomIndex ].colorType;

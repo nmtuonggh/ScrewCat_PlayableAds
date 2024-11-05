@@ -7,7 +7,8 @@ import { Box } from '../GameComponent/HoleContainer/Box/Box';
 import { Queue } from '../Custom/Queue';
 import { GameManager } from '../Manager/GameManager';
 import { CahedContainer } from './CahedContainer';
-import { colorTypeCount } from './LogicSpawnBoxController';
+import { colorTypeCount, LogicSpawnBoxController } from './LogicSpawnBoxController';
+import { Screw } from '../GameComponent/Screw/Screw';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxContainer' )
@@ -70,7 +71,8 @@ export class BoxContainer extends Component
 
     public InitBox ( colorType: eColorType, parent: Node, data: BoxData ): void
     {
-        const box = instantiate( data.BoxPrefab );
+        //TODO
+        const box = instantiate( data.BoxPrefab[2] );
         box.parent = parent;
         box.setPosition( new Vec3( 0, 0, 0 ) );
         const boxComponent = box.getComponent( Box );
@@ -84,25 +86,40 @@ export class BoxContainer extends Component
             return;
         }
 
+        const color = LogicSpawnBoxController.Instance.GetMostColorType( false );
+        const holeNeeded = this.GetHoleNeedForBox( color ) - 1;
+
+        if ( holeNeeded < 0 )
+        {
+            //duyet qua currentScrew neu trung mau voi color thi remove
+            for ( let i = 0; i < LogicSpawnBoxController.Instance.currentScrew.length; i++ )
+            {
+                if ( LogicSpawnBoxController.Instance.currentScrew[ i ].ScrewRenderer.colorType === color )
+                {
+                    LogicSpawnBoxController.Instance.RemoveScrew( LogicSpawnBoxController.Instance.currentScrew[ i ] );
+                }
+            }
+            
+            this.CheckCreateBox();
+        }
+
         for ( const boxSlot of this.boxSlots )
         {
             const box = boxSlot.Box;
             if ( box === null )
             {
-                const randomIndex = Math.floor( Math.random() * 9 );
-                const newbox = this.CreatBox( boxSlot, randomIndex );
+                const newbox = this.CreatBox( boxSlot, color, holeNeeded );
                 boxSlot.Box = newbox;
             }
         }
     }
 
-    public CreatBox ( boxSlot: BoxSlot, colorType: eColorType ): Box
+    public CreatBox ( boxSlot: BoxSlot, colorType: eColorType , holeNeed : number): Box
     {
         ///
-
-
+        
         ///
-        const boxNode = instantiate( this.BoxData.BoxPrefab );
+        const boxNode = instantiate( this.BoxData.BoxPrefab[holeNeed] );
         boxNode.parent = boxSlot.node;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
@@ -120,7 +137,7 @@ export class BoxContainer extends Component
 
     public needMoreBox (): boolean
     {
-        let screwRemain = GameManager.Instance.GetRemainningScrew();
+        let screwRemain = LogicSpawnBoxController.Instance.currentScrew.length;
 
         for ( const box of this.boxIsActive )
         {
@@ -137,12 +154,39 @@ export class BoxContainer extends Component
 
     private GetHoleNeedForBox ( color: eColorType ): number
     {
+        let count = 0;
+        const currentScrew = LogicSpawnBoxController.Instance.currentScrew;
+
+        for ( const screw of currentScrew )
+        {
+            if ( screw.ScrewRenderer.colorType === color )
+            {
+                count++;
+            }
+        }
+
         for ( const box of this.boxIsActive )
         {
             if ( box.boxRenderer.colorType === color )
             {
-                return box.GetFreeHoleCount();
+                const freehole =  box.GetFreeHoleCount();
+                count -= freehole;
             }
+        }
+
+        if ( count <= 0 )
+        {
+            console.error( "Het lo: Bug" + count );
+            return 1;
+        }
+
+        if ( count >= 3 )
+        {
+            return 3;
+        }
+        else
+        {
+            return count;
         }
     }
 

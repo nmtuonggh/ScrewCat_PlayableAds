@@ -208,6 +208,7 @@ export class Screw extends GameLayerComponent
         this.linkingHole = hole;
         GameManager.Instance.CheckGoToAdsCondition();
         this.screwAnimation.ScrewOut();
+        LogicSpawnBoxController.Instance.RemoveScrew( this );
         this.TweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
 
