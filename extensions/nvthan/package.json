@@ -1,0 +1,74 @@
+{
+    "name": "nvthan",
+    "title": "NVTHAN",
+    "package_version": 2,
+    "version": "1.0.0",
+    "author": "nvthan",
+    "description": "i18n:nvthan.description",
+    "main": "main.js",
+    "contributions": {
+        "menu": [{
+            "path": "NVTHAN",
+            "label": "Open Super Tool",
+            "icon": "./static/iconiKame.png",
+            "message": "open"
+        }],
+        "messages": {
+            "open": {
+                "methods":[
+                    "open_panel"
+                ]
+            },
+            "create":{
+                "methods": [
+                    "create"
+                ]
+            }
+        },
+        "assets": {
+            "menu": {
+                "methods": "./assets-menu.js",
+                "createMenu": "onCreateMenu",
+                "assetMenu": "onAssetMenu",
+                "dbMenu": "onDBMenu",
+                "panelMenu": "onPanelMenu"
+            }
+        },
+        "inspector": {
+            "section": {
+                "node": {
+                    "CustomLabelComponent": "./dist/contributions/inspector/comp-label.js"
+                },
+                "asset": {
+                    "effect": "./dist/contributions/inspector/asset-effect.js"
+                }
+            }
+        },
+        "shortcuts": [
+            {
+                "message": "open",
+                "win": "alt+e",
+                "mac": "cmd+z"
+            }
+        ],
+        "scene": {
+            "script": "./dist/scene.js"
+        }
+    },
+    "panels" :{
+        "main_panel": {
+            "title": "NVTHAN PANEL",
+            "type": "dockable",
+            "main": "index.js",
+            "size": {
+                "width": 450,
+                "height": 1080
+            }
+        }
+    },
+    "dependencies": {
+        "@types/fs-extra": "^5.0.4",
+        "@types/node": "^14.5.2",
+        "fs-extra": "^10.0.0"
+    }
+}

@@ -67,6 +67,19 @@ export class BoxContainer extends Component
         return null;
     }
 
+    public GetBoxAvailable (): Box[]
+    {
+        let box = [];
+        for(const slot of this.boxSlots)
+        {
+            if(slot.Box !== null)
+            {
+                box.push(slot.Box);
+            }
+        }
+        return box;
+    }
+
     public InitBox ( colorType: eColorType, parent: Node, data: BoxData ): void
     {
         const box = instantiate( data.BoxPrefab );

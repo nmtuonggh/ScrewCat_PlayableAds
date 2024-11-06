@@ -6,6 +6,7 @@ import { eColorType } from '../../GameConfig/GameColorConfig';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { StarController } from '../../Star/StarController';
 import { GameManager } from '../../Manager/GameManager';
+import { PolygonCollider2D } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -21,11 +22,17 @@ export class BarController extends GameLayerComponent
 
     public barPhysic : BarPhysic = null;
 
+    @property(PolygonCollider2D)
+    public collider : PolygonCollider2D = null;
+    @property(PolygonCollider2D)
+    public modelCollider : PolygonCollider2D = null;
+
     //#endregion
 
     protected onLoad (): void
     {
         this.barPhysic = this.getComponent( BarPhysic );
+        this.collider.points = this.modelCollider.points;
     }
 
     protected update ( dt: number ): void
