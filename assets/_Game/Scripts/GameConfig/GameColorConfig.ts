@@ -13,4 +13,3 @@ export enum eColorType
     Orange = 8, 
     None = 999
 }
-

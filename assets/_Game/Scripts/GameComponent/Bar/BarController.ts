@@ -9,6 +9,7 @@ import { GameManager } from '../../Manager/GameManager';
 import { PolygonCollider2D } from 'cc';
 import { Sprite } from 'cc';
 import { Vec3 } from 'cc';
+import { Collider2D } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -47,9 +48,12 @@ export class BarController extends GameLayerComponent
         //         point.y * 0.7
         //     );
         // });
-        //this.collider.points = this.modelCollider.points;
-        this.collider.apply();
         
+    }
+
+    public SetCollider(){
+        this.collider.points = this.modelCollider.points;
+        this.collider.apply();
     }
 
     protected update ( dt: number ): void
@@ -96,11 +100,11 @@ export class BarController extends GameLayerComponent
         }
     }
 
-    public InitScrewColor ( screw: Screw ): void
+    public InitScrewColor ( screwData: ScrewData ): void
     {
         for ( let i = 0; i < this.listScrews.length; i++ )
         {
-            //screw.ScrewRenderer.SetSprite( randomIndex, screw.screwData );
+            this.listScrews[i].ScrewRenderer.SetSelfColor( screwData );
         }
     }
 

@@ -6,6 +6,8 @@ import { BoxContainer } from './BoxContainer';
 import { Screw } from '../GameComponent/Screw/Screw';
 import { Button } from 'cc';
 import { GameManager } from '../Manager/GameManager';
+import { Layers } from 'cc';
+import { eColorType } from '../GameConfig/GameColorConfig';
 
 const { ccclass, property } = _decorator;
 
@@ -22,6 +24,8 @@ export class LevelController extends Component
     private BoxData: BoxData = null;
     @property( ScrewData )
     private ScrewData: ScrewData = null;
+    @property(Number)
+    public colorBoxSpawnData: number[] = [];
 
     protected onLoad (): void
     {
@@ -34,6 +38,7 @@ export class LevelController extends Component
     protected start (): void
     {
         //this.RandomColorScrew();
+        //this.SetLayer();
         this.InitBarAndScrewColor();
         this.InitBox();
         BoxContainer.Instance.InitQueue();
@@ -49,13 +54,26 @@ export class LevelController extends Component
     //         screw.ScrewRenderer.SetSprite( randomIndex ,this.ScrewData );
     //     } );
     // }
+
+    private SetLayer (): void{
+        this.listBar.forEach( bar => 
+        {
+            bar.node.layer = 10;
+            
+        } );
+
+        this.listScrew.forEach( screw => 
+        {
+            screw.node.layer = 11;
+        } );
+    }
     
 
     private InitBarAndScrewColor (): void 
     {
         this.listBar.forEach( bar => 
         {
-            
+            bar.InitScrewColor( this.ScrewData );
             bar.barPhysic.SetGroupLayer();
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();
@@ -74,7 +92,4 @@ export class LevelController extends Component
                 boxSlot.InitBoxSlotData();
             }
     }
-
 }
-
-

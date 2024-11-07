@@ -27,6 +27,10 @@ export class ScrewRenderer extends Component
         this.topSprite.spriteFrame = data.ScrewTopSprite[ colorType ];
     }
 
+    public SetSelfColor(data : ScrewData){
+        this.topSprite.spriteFrame = data.ScrewTopSprite[ this.colorType ];
+    }
+
 }
 
 
