@@ -7,6 +7,8 @@ export class GameLayer extends Component
     @property( Number )
     public layerOrder: number = 0;
 
+    public screwCount: number = 0;
+
     public getLayer (): number
     {
         return this.layerOrder;
@@ -15,6 +17,21 @@ export class GameLayer extends Component
     public setLayer ( layer: number ): void
     {
         this.layerOrder = layer;
+    }
+
+    public ActiveLayer (): void
+    {
+        this.node.active = true;
+    }
+
+    public DeactiveLayer (): void
+    {
+        this.node.active = false;
+    }
+
+    public RemoveScrew (): void
+    {
+        this.screwCount--;
     }
 }
 

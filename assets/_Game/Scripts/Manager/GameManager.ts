@@ -1,15 +1,27 @@
 import { _decorator, CCInteger, Component, Node } from 'cc';
 import { CahedContainer } from '../Controller/CahedContainer';
 import { StarController } from '../Star/StarController';
+import { GameLayer } from '../GameComponent/GameLayer';
+import { group } from 'console';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameManager' )
 export class GameManager extends Component
 {
     @property( CCInteger )
+    public activeLayer: number = 0;
+    @property( CCInteger )
+    public toltalShowLayer: number = 0;
+
+    @property( CCInteger )
     public CollectedScrew: number = 0;
     @property( CCInteger )
     public TotalScrew: number = 0;
+
+    @property( Node )
+    public LevelContainer: Node = null;
+    @property( GameLayer )
+    private layerList: GameLayer[] = [];
 
     private static _instance: GameManager = null;
 
@@ -29,6 +41,12 @@ export class GameManager extends Component
             GameManager._instance = this;
         }
     }
+
+    protected start (): void
+    {
+
+    }
+
 
     public CheckLose (): void
     {
@@ -51,6 +69,24 @@ export class GameManager extends Component
         {
             console.log( "Go to ADS" );
         }
+    }
+
+    InitLayer (): void
+    {
+        //this.layerList = this.LevelContainer.getComponentsInChildren( GameLayer );
+
+        // for ( let i = this.layerList.length; i >= 0; i-- )
+        // {
+        //     if ( i < this.activeLayer )
+        //     {
+        //         this.layerList[ i ].node.active = true;
+        //     }
+        //     else
+        //     {
+        //         this.layerList[ i ].node.active = false;
+        //     }
+        // }
+
     }
 }
 

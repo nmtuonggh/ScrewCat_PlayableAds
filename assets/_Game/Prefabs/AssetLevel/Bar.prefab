@@ -414,8 +414,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 629,
-      "height": 379
+      "width": 330,
+      "height": 610
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -451,7 +451,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "97dc797f-b6ed-411e-be3e-fe579440594f@f9941",
+      "__uuid__": "894711de-a266-4df1-aac4-3d1e890f319f@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -2051,6 +2051,7 @@
       }
     ],
     "listScrews": [],
+    "barPhysic": null,
     "collider": {
       "__id__": 24
     },
@@ -2078,7 +2079,6 @@
     "__prefab": {
       "__id__": 31
     },
-    "rb": null,
     "_id": ""
   },
   {

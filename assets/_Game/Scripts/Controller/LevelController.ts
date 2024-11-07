@@ -27,33 +27,35 @@ export class LevelController extends Component
     {
         //this.listBar = this.Holder.getComponentsInChildren( BarController ).filter( bar => bar.node.parent.active === true );
         //this.listScrew = this.Holder.getComponentsInChildren( Screw ).filter( screw => screw.node.parent.active === true );
-        //this.listBar = this.Holder.getComponentsInChildren( BarController );
-        //this.listScrew = this.Holder.getComponentsInChildren( Screw );
+        this.listBar = this.Holder.getComponentsInChildren( BarController );
+        this.listScrew = this.Holder.getComponentsInChildren( Screw );
     }
 
     protected start (): void
     {
-        this.RandomColorScrew();
-        this.InitScrew();
+        //this.RandomColorScrew();
+        this.InitBarAndScrewColor();
         this.InitBox();
         BoxContainer.Instance.InitQueue();
         GameManager.Instance.TotalScrew = this.listScrew.length;
+        GameManager.Instance.InitLayer();
     }
 
-    private RandomColorScrew (): void
-    {
-        this.listScrew.forEach( screw =>
-        {
-            const randomIndex = Math.floor( Math.random() * 9 );
-            screw.ScrewRenderer.SetSprite( randomIndex ,this.ScrewData );
-        } );
-    }
+    // private RandomColorScrew (): void
+    // {
+    //     this.listScrew.forEach( screw =>
+    //     {
+    //         const randomIndex = Math.floor( Math.random() * 9 );
+    //         screw.ScrewRenderer.SetSprite( randomIndex ,this.ScrewData );
+    //     } );
+    // }
     
 
-    private InitScrew (): void 
+    private InitBarAndScrewColor (): void 
     {
         this.listBar.forEach( bar => 
         {
+            
             bar.barPhysic.SetGroupLayer();
             bar.barPhysic.CreatHGJoint();
             bar.barPhysic.EnableHGJoin();

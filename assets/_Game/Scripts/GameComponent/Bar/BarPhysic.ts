@@ -8,9 +8,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass('BarPhysic')
 export class BarPhysic extends Component {
-    @property(RigidBody2D)
+  
     private rb: RigidBody2D = null;
-    @property(BarController)
     private barController : BarController = null;
 
 

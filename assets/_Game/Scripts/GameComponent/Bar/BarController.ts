@@ -41,12 +41,13 @@ export class BarController extends GameLayerComponent
 
     protected start (): void
     {
-        this.collider.points = this.modelCollider.points.map(point => {
-            return new Vec2(
-                point.x * 0.7,
-                point.y * 0.7
-            );
-        });
+        // this.collider.points = this.modelCollider.points.map(point => {
+        //     return new Vec2(
+        //         point.x * 0.7,
+        //         point.y * 0.7
+        //     );
+        // });
+        //this.collider.points = this.modelCollider.points;
         this.collider.apply();
         
     }
@@ -92,6 +93,14 @@ export class BarController extends GameLayerComponent
             this.listScrews.push( screw );
 
            
+        }
+    }
+
+    public InitScrewColor ( screw: Screw ): void
+    {
+        for ( let i = 0; i < this.listScrews.length; i++ )
+        {
+            //screw.ScrewRenderer.SetSprite( randomIndex, screw.screwData );
         }
     }
 
