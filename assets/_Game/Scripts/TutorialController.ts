@@ -20,10 +20,11 @@ export class TutorialController extends Component
         this.handTutorial();
     }
 
-    private handTutorial (): void 
+    public handTutorial (): void 
     {
+        this.hand.active = true;
         let startPos = this.hand.getWorldPosition();
-        let screwPos = this.screw.node.worldPosition.clone();
+        let screwPos = this.screw.node.getWorldPosition();
         //toi muon dung easing de di chuyen chu khong phai di chuyen thang
         
         tween( this.hand ).repeatForever
@@ -41,7 +42,7 @@ export class TutorialController extends Component
     {
         this.screw.screwAnimation.PlayTutorial();
         Tween.stopAllByTarget( this.hand );
-        this.hand.destroy();
+        this.hand.active = false;
     }
 }
 

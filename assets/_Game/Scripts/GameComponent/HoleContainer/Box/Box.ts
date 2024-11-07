@@ -85,6 +85,7 @@ export class Box extends HoleContainer
                 AudioController.Instance.PlayAudio( AudioType.boxComplete );
                 AudioController.Instance.PlayAudio( AudioType.meow );
                 this.starList = StarController.Instance.SpawnStar( this.listHoles.length, this.listHoles );
+                StarController.Instance.PlayParticle( this.node.worldPosition );
             } )
             .delay( 0.4 )
             .call( () =>

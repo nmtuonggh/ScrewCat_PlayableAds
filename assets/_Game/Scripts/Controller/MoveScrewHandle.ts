@@ -9,6 +9,7 @@ import { BoxContainer } from './BoxContainer';
 import { CahedContainer } from './CahedContainer';
 import { MeowAnimation } from '../MeowAnimation';
 import { TutorialController } from '../TutorialController';
+import { AudioController } from '../AudioController/AudioController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -64,6 +65,7 @@ export class MoveScrewHandle extends Component
     {
         if(this.isFirstTouch === false){
             this.tutorialController.stopTutorial();
+            AudioController.Instance.PlayerBG();
             this.isFirstTouch = true;
         }
         if ( !this.camera ) return;

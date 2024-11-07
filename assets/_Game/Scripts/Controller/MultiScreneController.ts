@@ -1,4 +1,5 @@
 import { _decorator, Canvas, Component, Node, Sprite, SpriteFrame, View } from 'cc';
+import { TutorialController } from '../TutorialController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MultiScreneController' )
@@ -14,6 +15,8 @@ export class MultiScreneController extends Component
     public backgroundPortrait: SpriteFrame = null;
     @property(SpriteFrame)
     public backgroundLandscape: SpriteFrame = null;
+    @property(TutorialController)
+    public tutorialController: TutorialController = null;
 
     protected onEnable (): void
     {
@@ -34,10 +37,9 @@ export class MultiScreneController extends Component
         } else if ( ratio < 0.7 )
         {
             this.background.spriteFrame = this.backgroundLandscape;
-        } else
-        {
-
-        }
+        } 
+        // this.tutorialController.stopTutorial();
+        // this.tutorialController.handTutorial();
     }
 }
 

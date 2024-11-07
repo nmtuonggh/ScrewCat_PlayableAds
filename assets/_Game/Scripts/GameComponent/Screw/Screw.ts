@@ -107,9 +107,7 @@ export class Screw extends GameLayerComponent
     public CheckMoveBox (): boolean
     {
         //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
-        if (this.screwRenderer) {
-            debugger
-        }
+        
         let freeBox = BoxContainer.Instance.GetFreeBoxSlot( this.screwRenderer.colorType );
 
         if ( freeBox !== null )
@@ -231,6 +229,7 @@ export class Screw extends GameLayerComponent
     {
         hole.isLinked = true;
         this.linkingHole = hole;
+        hole.linkingScrew = this;
         this.screwAnimation.ScrewOut();
         GameManager.Instance.CheckGoToAdsCondition();
         this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
@@ -247,10 +246,10 @@ export class Screw extends GameLayerComponent
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
-                hole.linkingScrew = this;
                 this.State = eScrewState.IN_CACHED;
                 this.screwAnimation.ScrewIn();
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
+                CahedContainer.Instance.CheckWarning();
                 GameManager.Instance.CheckLose();
             } );
     }

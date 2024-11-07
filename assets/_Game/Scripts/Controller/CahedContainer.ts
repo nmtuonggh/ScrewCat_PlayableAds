@@ -71,7 +71,7 @@ export class CahedContainer extends Component
             const hole = this.listActiveHole[ i ];
             if ( hole.isLinked && hole.linkingScrew && hole.linkingScrew.isValid )
             {
-                if(hole.linkingScrew.CheckMoveBox( ))
+                if ( hole.linkingScrew.CheckMoveBox() )
                 {
                     hole.isLinked = false;
                 }
@@ -79,11 +79,35 @@ export class CahedContainer extends Component
         }
     }
 
-    public GetMostColorType():eColorType
+    public CheckWarning ()
+    {
+        let holeHasScrew = [];
+
+        for ( let i = 0; i < this.listActiveHole.length; i++ )
+        {
+            const hole = this.listActiveHole[ i ];
+            if ( hole.isLinked && hole.linkingScrew && hole.linkingScrew.isValid )
+            {
+                holeHasScrew.push( hole );
+            }
+        }
+        if ( this.listActiveHole.length - holeHasScrew.length <= 2 )
+        {
+            for ( let i = 0; i < this.listActiveHole.length; i++ )
+            {
+                const hole = this.listActiveHole[ i ];
+
+                hole.ShowWarning();
+
+            } 
+        }
+    }
+
+    public GetMostColorType (): eColorType
     {
         let colorTypeCountList: colorTypeCount[] = [];
         //lay so luong phan tu trong eColorType
-        
+
 
         //khoi tao list colorTypeCount
         for ( let i = 0; i < 9; i++ )
@@ -96,13 +120,13 @@ export class CahedContainer extends Component
 
         for ( const hole of this.listActiveHole )
         {
-            if (hole.linkingScrew == null) continue;
-            
+            if ( hole.linkingScrew == null ) continue;
+
             for ( let i = 0; i < colorTypeCountList.length; i++ )
             {
-                if ( colorTypeCountList[i].colorType === hole.linkingScrew.ScrewRenderer.colorType )
+                if ( colorTypeCountList[ i ].colorType === hole.linkingScrew.ScrewRenderer.colorType )
                 {
-                    colorTypeCountList[i].count++;
+                    colorTypeCountList[ i ].count++;
                 }
             }
         }
@@ -112,13 +136,13 @@ export class CahedContainer extends Component
         let maxColorType = eColorType.None;
         for ( let i = 0; i < colorTypeCountList.length; i++ )
         {
-            if ( colorTypeCountList[i].count > maxCount )
+            if ( colorTypeCountList[ i ].count > maxCount )
             {
-                maxCount = colorTypeCountList[i].count;
-                maxColorType = colorTypeCountList[i].colorType;
+                maxCount = colorTypeCountList[ i ].count;
+                maxColorType = colorTypeCountList[ i ].colorType;
             }
         }
-        
+
         return maxColorType;
     }
 }

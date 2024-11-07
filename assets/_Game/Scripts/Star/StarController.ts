@@ -1,6 +1,7 @@
 import { _decorator, Component, instantiate, Node, Prefab, RichText, Sprite, tween } from 'cc';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { GameManager } from '../Manager/GameManager';
+import { Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'StarController' )
@@ -14,6 +15,8 @@ export class StarController extends Component
     private starPrefab: Prefab = null;
     @property( Node )
     private Holder: Node = null;
+    @property(Prefab)
+    private starParticle: Prefab = null;
 
     private static _instance: StarController = null;
 
@@ -44,7 +47,10 @@ export class StarController extends Component
             const value = collectedScrew / toltalScrew;
             const intValue = Math.round( value * 100 ); // Làm tròn giá trị đến số nguyên gần nhất và nhân với 100
             this.text.string = `${ intValue }%`;
-            this.starSprite.fillRange = value; // Giữ nguyên giá trị gốc cho fillRange
+            this.starSprite.fillRange = value; 
+            // tween(this.starSprite.fillRange)
+            // .to( 0.5, { value: value } )
+            // .start();
         }
         else
         {
@@ -77,13 +83,24 @@ export class StarController extends Component
     public TweenMove ( star: Node ): void
     {
         tween( star )
-            .to( 0.5, { worldPosition: this.node.worldPosition } )
+            .to( 0.5, { worldPosition: this.node.worldPosition } , { easing: 'sineInOut' } )
             .call( () =>
             {
                 star.destroy();
                 this.SetFillAmount();
             } )
             .start();
+    }
+
+    public PlayParticle ( pos: Vec3 ): void
+    {
+        const particle = instantiate( this.starParticle );
+        particle.parent = this.Holder;
+        particle.worldPosition = pos;
+        setTimeout( () =>
+        {
+            particle.destroy();
+        }, 2000 );
     }
 }
 
