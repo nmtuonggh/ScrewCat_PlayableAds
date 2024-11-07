@@ -7,6 +7,7 @@ import { Box } from '../GameComponent/HoleContainer/Box/Box';
 import { Queue } from '../Custom/Queue';
 import { GameManager } from '../Manager/GameManager';
 import { CahedContainer } from './CahedContainer';
+import { LevelController } from './LevelController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxContainer' )
@@ -80,9 +81,9 @@ export class BoxContainer extends Component
         return box;
     }
 
-    public InitBox ( colorType: eColorType, parent: Node, data: BoxData ): void
+    public InitBox ( colorType: eColorType, parent: Node, data: BoxData , holeCount: number): void
     {
-        const box = instantiate( data.BoxPrefab );
+        const box = instantiate( data.boxPrefab[holeCount - 1] );
         box.parent = parent;
         box.setPosition( new Vec3( 0, 0, 0 ) );
         const boxComponent = box.getComponent( Box );
@@ -96,32 +97,41 @@ export class BoxContainer extends Component
             return;
         }
 
+        if(LevelController.Instance.currentIndex >= LevelController.Instance.colorBoxSpawnData.length) return;
+
         for ( const boxSlot of this.boxSlots )
         {
             const box = boxSlot.Box;
             if ( box === null )
             {
-                const randomIndex = Math.floor( Math.random() * 9 );
-                const newbox = this.CreatBox( boxSlot, randomIndex );
+                const newbox = this.CreatBox( boxSlot );
                 boxSlot.Box = newbox;
             }
         }
     }
 
-    public CreatBox ( boxSlot: BoxSlot, colorType: eColorType ): Box
+    public CreatBox ( boxSlot: BoxSlot ): Box
     {
         ///
-        const color = this.GetMostColorType();
+        
+        console.log( "Create Box with index : "  + LevelController.Instance.currentIndex + " color: " 
+            +  LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color + " holeCount: " 
+            + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount );
+
+        const color = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color;
+        const holeCount = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount;
+
         if (color === eColorType.None) return null;
 
         ///
-        const boxNode = instantiate( this.BoxData.BoxPrefab );
+        const boxNode = instantiate( this.BoxData.boxPrefab[holeCount - 1] );
         boxNode.parent = boxSlot.node;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
-        box.boxRenderer.SetBoxData( colorType, this.BoxData );
+        box.boxRenderer.SetBoxData( color, this.BoxData );
         box.MoveIn();
         this.boxIsActive.push( box );
+        LevelController.Instance.currentIndex++;
         return box;
     }
 

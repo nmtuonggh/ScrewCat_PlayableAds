@@ -8,6 +8,7 @@ import { eColorType } from '../GameConfig/GameColorConfig';
 import { BoxContainer } from './BoxContainer';
 import { CahedContainer } from './CahedContainer';
 import { MeowAnimation } from '../MeowAnimation';
+import { TutorialController } from '../TutorialController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -16,8 +17,12 @@ export class MoveScrewHandle extends Component
     //#region Properties
     @property( { type: Camera } )
     private camera: Camera | null = null;
+    @property(TutorialController)
+    private tutorialController : TutorialController = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
+
+    public isFirstTouch: boolean = false;
     //#endregion
 
     private static _instance: MoveScrewHandle = null;
@@ -57,6 +62,10 @@ export class MoveScrewHandle extends Component
 
     private onClickHandle ( event: EventMouse ): void
     {
+        if(this.isFirstTouch === false){
+            this.tutorialController.stopTutorial();
+            this.isFirstTouch = true;
+        }
         if ( !this.camera ) return;
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
@@ -72,7 +81,7 @@ export class MoveScrewHandle extends Component
         if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
-            
+            if(screw.State === eScrewState.IN_CACHED) return;
             screw.CheckMove();
         }
     }

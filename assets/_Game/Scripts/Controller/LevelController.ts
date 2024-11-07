@@ -8,6 +8,7 @@ import { Button } from 'cc';
 import { GameManager } from '../Manager/GameManager';
 import { Layers } from 'cc';
 import { eColorType } from '../GameConfig/GameColorConfig';
+import { boxSpawnData } from '../BoxSpawndata/boxSpawnData';
 
 const { ccclass, property } = _decorator;
 
@@ -24,11 +25,28 @@ export class LevelController extends Component
     private BoxData: BoxData = null;
     @property( ScrewData )
     private ScrewData: ScrewData = null;
-    @property(Number)
-    public colorBoxSpawnData: number[] = [];
+    @property( boxSpawnData )
+    public colorBoxSpawnData: boxSpawnData[] = [];
+    @property( Number )
+    public currentIndex: number = 0;
+
+    private static _instance: LevelController = null;
+
+    public static get Instance (): LevelController
+    {
+        if ( this._instance === null )
+        {
+            this._instance = new LevelController();
+        }
+        return this._instance;
+    }
 
     protected onLoad (): void
     {
+        if ( LevelController._instance === null )
+        {
+            LevelController._instance = this;
+        }
         //this.listBar = this.Holder.getComponentsInChildren( BarController ).filter( bar => bar.node.parent.active === true );
         //this.listScrew = this.Holder.getComponentsInChildren( Screw ).filter( screw => screw.node.parent.active === true );
         this.listBar = this.Holder.getComponentsInChildren( BarController );
@@ -55,11 +73,12 @@ export class LevelController extends Component
     //     } );
     // }
 
-    private SetLayer (): void{
+    private SetLayer (): void
+    {
         this.listBar.forEach( bar => 
         {
             bar.node.layer = 10;
-            
+
         } );
 
         this.listScrew.forEach( screw => 
@@ -67,7 +86,7 @@ export class LevelController extends Component
             screw.node.layer = 11;
         } );
     }
-    
+
 
     private InitBarAndScrewColor (): void 
     {
@@ -85,11 +104,13 @@ export class LevelController extends Component
         const listBoxSlot = BoxContainer.Instance.boxSlots;
 
         for ( let i = 0; i < listBoxSlot.length; i++ )
-            {
-                const boxSlot = listBoxSlot[ i ];
-                const randomIndex = Math.floor(Math.random() * 9);
-                BoxContainer.Instance.InitBox( randomIndex, boxSlot.node, this.BoxData );
-                boxSlot.InitBoxSlotData();
-            }
+        {
+            const boxSlot = listBoxSlot[ i ];
+            const color = this.colorBoxSpawnData[ this.currentIndex ].color;
+            const holeCount = this.colorBoxSpawnData[ this.currentIndex ].holeCount;
+            BoxContainer.Instance.InitBox( color, boxSlot.node, this.BoxData, holeCount );
+            boxSlot.InitBoxSlotData();
+            this.currentIndex++;
+        }
     }
 }

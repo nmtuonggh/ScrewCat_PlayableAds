@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass('BoxData')
 export class BoxData extends Component {
     @property(Prefab)
-    public BoxPrefab: Prefab = null;
+    public boxPrefab: Prefab[] = [];
 
     @property(SpriteFrame)
     public BoxOpenSprite: SpriteFrame[] = [];

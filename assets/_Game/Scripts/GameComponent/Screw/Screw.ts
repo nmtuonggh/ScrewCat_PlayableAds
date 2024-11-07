@@ -5,7 +5,6 @@ import { Hole } from '../Hole/Hole';
 import { GameConfig } from '../../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../../GameConfig/GameLayerMaskConfig';
 import { ScrewRenderer } from './ScrewRenderer';
-import { EventManager } from '../../EventManager/EventManager';
 import { BoxContainer } from '../../Controller/BoxContainer';
 import { CahedContainer } from '../../Controller/CahedContainer';
 import { ScrewAnim } from './ScrewAnim';
@@ -22,7 +21,7 @@ export class Screw extends GameLayerComponent
     public hingeJoint: HingeJoint2D = null;
     @property( ScrewRenderer )
     private screwRenderer: ScrewRenderer = null;
-    private screwAnimation: ScrewAnim = null;
+    public screwAnimation: ScrewAnim = null;
 
     private linkingHole: Hole = null;
     public State: eScrewState = eScrewState.IN_BAR;
@@ -108,6 +107,9 @@ export class Screw extends GameLayerComponent
     public CheckMoveBox (): boolean
     {
         //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
+        if (this.screwRenderer) {
+            debugger
+        }
         let freeBox = BoxContainer.Instance.GetFreeBoxSlot( this.screwRenderer.colorType );
 
         if ( freeBox !== null )
@@ -208,7 +210,7 @@ export class Screw extends GameLayerComponent
     {
         return tween( node )
             .delay( delayTime )
-            .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition } )
+            .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition }, { easing: 'sineInOut' } )
             .call( () =>
             {
                 AudioController.Instance.PlayAudio( AudioType.screwIn );
@@ -238,7 +240,7 @@ export class Screw extends GameLayerComponent
     {
         return tween( node )
             .delay( delayTime )
-            .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition } )
+            .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition }, { easing: 'sineInOut' } )
             .call( () =>
             {
                 AudioController.Instance.PlayAudio( AudioType.screwIn );

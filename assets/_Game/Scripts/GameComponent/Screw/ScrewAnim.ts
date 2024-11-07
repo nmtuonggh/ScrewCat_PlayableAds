@@ -26,9 +26,18 @@ export class ScrewAnim extends Component
         this.anim.play( 'ScrewIn' );
     }
 
-    public ScrewBlock (axis : Number): void
+    public PlayTutorial (): void
     {
-        switch (axis)
+        //tôi chỉ muốn play anim này khi nó không bị null
+        if ( this.anim.clips.length > 6 )
+        {
+            this.anim.play( 'TutorialScrew' );
+        }
+    }
+
+    public ScrewBlock ( axis: Number ): void
+    {
+        switch ( axis )
         {
             case 0:
                 this.anim.play( 'top' );

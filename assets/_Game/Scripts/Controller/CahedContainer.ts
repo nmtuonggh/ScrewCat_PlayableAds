@@ -69,7 +69,7 @@ export class CahedContainer extends Component
         for ( let i = 0; i < this.listActiveHole.length; i++ )
         {
             const hole = this.listActiveHole[ i ];
-            if ( hole.isLinked && hole.linkingScrew !== null )
+            if ( hole.isLinked && hole.linkingScrew && hole.linkingScrew.isValid )
             {
                 if(hole.linkingScrew.CheckMoveBox( ))
                 {

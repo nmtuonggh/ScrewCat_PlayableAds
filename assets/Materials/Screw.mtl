@@ -1,0 +1,78 @@
+{
+  "__type__": "cc.Material",
+  "_name": "",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "5cbb43f3-9bd2-4ab3-b0e0-b82763f4e4bf",
+    "__expectedType__": "cc.EffectAsset"
+  },
+  "_techIdx": 0,
+  "_defines": [
+    {}
+  ],
+  "_states": [
+    {
+      "priority": 100,
+      "rasterizerState": {
+        "lineWidth": 5
+      },
+      "depthStencilState": {
+        "stencilRefFront": 7.2
+      },
+      "blendState": {
+        "targets": [
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {},
+          {}
+        ]
+      }
+    }
+  ],
+  "_props": [
+    {
+      "_MatteTex": {
+        "__uuid__": "795cc453-777a-4bc6-beab-0b02c159181b@6c48a",
+        "__expectedType__": "cc.Texture2D"
+      },
+      "_Alpha": 1,
+      "_Size": 5.4,
+      "alphaThreshold": -0.3
+    }
+  ]
+}
