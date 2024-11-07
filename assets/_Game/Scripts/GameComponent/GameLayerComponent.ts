@@ -21,6 +21,7 @@ export class GameLayerComponent extends GameComponent
 
     public get Layer (): number
     {
+        if ( this.gameLayerContainer === null ) console.error( "GameLayer is null" );
         return this.gameLayerContainer?.getLayer() || 0;
     }
 }

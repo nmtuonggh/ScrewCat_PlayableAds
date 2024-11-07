@@ -823,7 +823,7 @@
       "__id__": 44
     },
     "asset": {
-      "__uuid__": "392821f1-5457-47c0-98ce-524e7ac7e216",
+      "__uuid__": "438ba670-8b89-4f10-a014-7e0ed87570d6",
       "__expectedType__": "cc.Prefab"
     },
     "fileId": "22QGjQsDZA16emS3jsw3U2",
@@ -834,7 +834,7 @@
   },
   {
     "__type__": "cc.PrefabInstance",
-    "fileId": "c2EmZXTktKAIICsOS1GuHL",
+    "fileId": "70ZCrh1olL/JROr/NXcjzH",
     "prefabRootNode": {
       "__id__": 1
     },
@@ -883,7 +883,7 @@
     "value": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 60,
+      "y": 0,
       "z": 0
     }
   },

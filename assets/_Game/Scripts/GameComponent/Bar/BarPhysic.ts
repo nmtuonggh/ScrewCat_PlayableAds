@@ -1,12 +1,18 @@
 import { _decorator, Component, debug, HingeJoint2D, Node, RigidBody2D, Vec2 } from 'cc';
 import { BarController } from './BarController';
+import { UI } from 'cc';
+import { Vec3 } from 'cc';
+import { Sprite } from 'cc';
+import { UITransform } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('BarPhysic')
 export class BarPhysic extends Component {
+    @property(RigidBody2D)
     private rb: RigidBody2D = null;
-
+    @property(BarController)
     private barController : BarController = null;
+
 
     protected onLoad (): void
     {
@@ -22,8 +28,9 @@ export class BarPhysic extends Component {
         for ( let i = 0; i < this.barController.listScrews.length; i++ ) 
         {
             const screw = this.barController.listScrews[ i ];
-            const localPos = this.barController.listHolePos[ i ].getPosition();
-            //const localPos = screw.node.getPosition();
+            //const worldPos = screw.node.getWorldPosition();
+            const worldPos = screw.node.getWorldPosition();
+            const localPos = this.node.getComponent(UITransform).convertToNodeSpaceAR(worldPos);
             const screwRb = screw.node.getComponent( RigidBody2D );
             screw.hingeJoint = this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb );
         }
@@ -50,6 +57,9 @@ export class BarPhysic extends Component {
 
     SetGroupLayer() : void
     {
+        if(this.barController === null) console.error("Bar Controller is null");
+        if(this.rb === null) console.error("Rigidbody2D is null");
+
         this.rb.group = 1 << this.barController.Layer +13;
     }
 }

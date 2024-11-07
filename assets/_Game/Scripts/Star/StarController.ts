@@ -38,7 +38,7 @@ export class StarController extends Component
     public SetFillAmount (): void
     {
         const collectedScrew = GameManager.Instance.CollectedScrew;
-        const toltalScrew = GameManager.Instance.CollectedScrew;
+        const toltalScrew = GameManager.Instance.TotalScrew;
         if ( collectedScrew > 0 )
         {
             const value = collectedScrew / toltalScrew;
