@@ -11,6 +11,10 @@ import { ScrewAnim } from './ScrewAnim';
 import { AudioController, AudioType } from '../../AudioController/AudioController';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameManager } from '../../Manager/GameManager';
+import { Graphics } from 'cc';
+import { Color } from 'cc';
+import { UITransform } from 'cc';
+import { BarController } from '../Bar/BarController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -61,7 +65,7 @@ export class Screw extends GameLayerComponent
             return;
         }
 
-        if ( this.State === eScrewState.IN_BAR  && this.IsBlocked() )
+        if ( this.State === eScrewState.IN_BAR && this.IsBlocked() )
         {
             this.BlockedTween();
             return;
@@ -77,7 +81,7 @@ export class Screw extends GameLayerComponent
                     this.State = eScrewState.MOVING;
                     moveSuccess = true;
                     AudioController.Instance.PlayAudio( AudioType.screwOut );
-                } 
+                }
                 else if ( this.CheckMoveCache() )
                 {
                     this.State = eScrewState.MOVING;
@@ -107,7 +111,7 @@ export class Screw extends GameLayerComponent
     public CheckMoveBox (): boolean
     {
         //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
-        
+
         let freeBox = BoxContainer.Instance.GetFreeBoxSlot( this.screwRenderer.colorType );
 
         if ( freeBox !== null )
@@ -142,14 +146,13 @@ export class Screw extends GameLayerComponent
         this.cachedBarLayer = [];
 
         const barLayer = GameLayerMaskConfig.BAR_LAYER_MASK;
-        const screwPosition = this.node.getWorldPosition( this.node.position );
+        const screwPosition = this.node.getWorldPosition();
 
         const aabb = new Rect(
             screwPosition.x - GameConfig.SCREW_RADIUS,
             screwPosition.y - GameConfig.SCREW_RADIUS,
             GameConfig.SCREW_RADIUS * 2,
             GameConfig.SCREW_RADIUS * 2 );
-
 
         let cachedCollider = PhysicsSystem2D.instance.testAABB( aabb );
 
@@ -170,13 +173,14 @@ export class Screw extends GameLayerComponent
 
         for ( let i = 0; i < this.cachedBarLayer.length; i++ )
         {
-            let bar = this.cachedBarLayer[ i ].node.getComponent( GameLayerComponent );
+            let bar = this.cachedBarLayer[ i ].node.getComponent( BarController );
             if ( bar !== null )
             {
                 //console.log( "Bar Layer: ", bar.Layer );
                 if ( bar.Layer > this.Layer )
                 {
-                    console.log( "Is blocked" );
+                    console.log( "Is blocked"  + bar.node.name);
+                    
                     return true;
                 }
             }
@@ -265,5 +269,13 @@ export enum eScrewState
     IN_BOX = 2,
     MOVING = 999
 }
+
+//how to drawn const aabb = new Rect(
+// screwPosition.x - GameConfig.SCREW_RADIUS,
+// screwPosition.y - GameConfig.SCREW_RADIUS,
+// GameConfig.SCREW_RADIUS * 2,
+// GameConfig.SCREW_RADIUS * 2 );
+
+
 
 

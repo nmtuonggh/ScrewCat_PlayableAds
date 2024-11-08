@@ -43,7 +43,8 @@ export class Tool extends Component
         {
             const bar = this.listBar[ i ];
             bar.SetCollider();
-            //bar.collider.threshold = 5;
+            //bar.collider.threshold = 5; 
+            bar.modelCollider.destroy();
         }
     }
 

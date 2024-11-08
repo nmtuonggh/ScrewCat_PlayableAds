@@ -8,6 +8,7 @@ import { Queue } from '../Custom/Queue';
 import { GameManager } from '../Manager/GameManager';
 import { CahedContainer } from './CahedContainer';
 import { LevelController } from './LevelController';
+import { Graphics } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxContainer' )
@@ -15,6 +16,8 @@ export class BoxContainer extends Component
 {
     @property( BoxData )
     private BoxData: BoxData = null;
+    @property(Prefab)
+    public grap: Prefab = null;
 
     public boxSlots: BoxSlot[] = [];
 
