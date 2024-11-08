@@ -6,29 +6,60 @@ const { ccclass, property, executeInEditMode } = _decorator;
 @ccclass( 'Tool' )
 @executeInEditMode( true )
 export class Tool extends Component
-{   
-    @property(Boolean)
-    public isDebug: boolean = false;
+{
+    @property( Boolean )
+    public runSetCollider: boolean = false;
+    @property( Boolean )
+    public runSetCollider2: boolean = false;
 
     @property( BarController )
     public listBar: BarController[] = [];
+    @property( BarController )
+    public listBar2: BarController[] = [];
     @property( Node )
     barparent: Node = null;
 
     protected onLoad (): void
     {
-        if (this.isDebug === false) return;
-        this.listBar = this.barparent.getComponentsInChildren( BarController );
+        if ( this.runSetCollider )
+        {
+            this.listBar = this.barparent.getComponentsInChildren( BarController );
+        }
+
     }
 
     protected start (): void
     {
-        if (this.isDebug === false) return;
+        if ( this.runSetCollider )
+        {
+            this.setCollider();
+        }
+
+        if ( this.runSetCollider2 )
+        {
+            this.setCollider2();
+        }
+
+
+    }
+
+    public setCollider (): void
+    {
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
             const bar = this.listBar[ i ];
             bar.SetCollider();
             bar.collider.threshold = 5;
+        }
+    }
+
+    public setCollider2(): void
+    {
+        for ( let i = 0; i < this.listBar2.length; i++ ) 
+        {
+            const bar = this.listBar[ i ];
+            bar.SetCollider();
+            bar.collider.threshold = 10;
         }
     }
 

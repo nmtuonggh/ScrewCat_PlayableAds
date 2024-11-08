@@ -10,6 +10,10 @@ import { CahedContainer } from './CahedContainer';
 import { MeowAnimation } from '../MeowAnimation';
 import { TutorialController } from '../TutorialController';
 import { AudioController } from '../AudioController/AudioController';
+import { Pool } from 'cc';
+import { PoolTouch } from '../PoolTouch';
+import { tween } from 'cc';
+import { instantiate } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -20,6 +24,10 @@ export class MoveScrewHandle extends Component
     private camera: Camera | null = null;
     @property(TutorialController)
     private tutorialController : TutorialController = null;
+    @property(PoolTouch)
+    private poolTouch : PoolTouch = null;
+    @property(Node)
+    private poolparrent : Node = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
 
@@ -43,6 +51,7 @@ export class MoveScrewHandle extends Component
         {
             MoveScrewHandle._instance = this;
         }
+        this.poolTouch.initializePool( 15 );
         input.on( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
     }
 
@@ -72,6 +81,7 @@ export class MoveScrewHandle extends Component
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
         this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
+        this.pointSpawnTouchEffect( this._lastMousePosition );
         this.checkClickScrew();
     }
 
@@ -174,5 +184,18 @@ export class MoveScrewHandle extends Component
     //#endregion
 
 
+    private pointSpawnTouchEffect (pos: Vec2) : void
+    {
+        const touch = this.poolTouch.getFromPool();
+        touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
+        
+        tween( touch )
+            .to( 0.4, { worldScale: new Vec3( 1, 1, 1 ) } )
+            .call( () =>
+            {
+                this.poolTouch.returnToPool( touch );
+            } )
+            .start();
 
+    }
 }

@@ -2,6 +2,7 @@ import { _decorator, Component, instantiate, Node, Prefab, RichText, Sprite, twe
 import { Hole } from '../GameComponent/Hole/Hole';
 import { GameManager } from '../Manager/GameManager';
 import { Vec3 } from 'cc';
+import { Label } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'StarController' )
@@ -9,8 +10,8 @@ export class StarController extends Component
 {
     @property( Sprite )
     private starSprite: Sprite = null;
-    @property( RichText )
-    private text: RichText = null;
+    @property( Label )
+    private text: Label = null;
     @property( Prefab )
     private starPrefab: Prefab = null;
     @property( Node )
@@ -36,6 +37,8 @@ export class StarController extends Component
             StarController._instance = this;
         }
         this.SetFillAmount();
+        // let prop = {v: 0};
+        // tween(prop).to(1, {v: 1}, {onUpdate: (target, ratio) => console.log(ratio)}).start();
     }
 
     public SetFillAmount (): void
@@ -46,11 +49,11 @@ export class StarController extends Component
         {
             const value = collectedScrew / toltalScrew;
             const intValue = Math.round( value * 100 ); // Làm tròn giá trị đến số nguyên gần nhất và nhân với 100
-            this.text.string = `${ intValue }%`;
-            this.starSprite.fillRange = value; 
-            // tween(this.starSprite.fillRange)
-            // .to( 0.5, { value: value } )
-            // .start();
+            this.text.string = `${ intValue }`;
+            //this.starSprite.fillRange = value; 
+            tween(this.starSprite)
+            .to( 0.5, { fillRange: value } )
+            .start();
         }
         else
         {
