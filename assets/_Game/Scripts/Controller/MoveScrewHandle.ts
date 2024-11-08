@@ -14,6 +14,7 @@ import { Pool } from 'cc';
 import { PoolTouch } from '../PoolTouch';
 import { tween } from 'cc';
 import { instantiate } from 'cc';
+import { PoolDot } from '../Pool/PoolDot';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -26,6 +27,8 @@ export class MoveScrewHandle extends Component
     private tutorialController : TutorialController = null;
     @property(PoolTouch)
     private poolTouch : PoolTouch = null;
+    @property(PoolDot)
+    private poolDot : PoolDot = null;
     @property(Node)
     private poolparrent : Node = null;
 
@@ -187,7 +190,9 @@ export class MoveScrewHandle extends Component
     private pointSpawnTouchEffect (pos: Vec2) : void
     {
         const touch = this.poolTouch.getFromPool();
+        
         touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
+        touch.setScale( new Vec3( 0.1, 0.1, 0.1 ) );
         
         tween( touch )
             .to( 0.4, { worldScale: new Vec3( 1, 1, 1 ) } )
@@ -196,6 +201,6 @@ export class MoveScrewHandle extends Component
                 this.poolTouch.returnToPool( touch );
             } )
             .start();
-
+        // 
     }
 }

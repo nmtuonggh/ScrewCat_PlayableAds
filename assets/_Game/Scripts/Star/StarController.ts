@@ -86,7 +86,7 @@ export class StarController extends Component
     public TweenMove ( star: Node ): void
     {
         tween( star )
-            .to( 0.5, { worldPosition: this.node.worldPosition } , { easing: 'sineInOut' } )
+            .to( 0.5, { worldPosition: this.node.worldPosition } , { easing: 'backInOut' } )
             .call( () =>
             {
                 star.destroy();

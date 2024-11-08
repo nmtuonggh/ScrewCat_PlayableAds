@@ -2,12 +2,12 @@
   "ver": "1.1.50",
   "importer": "prefab",
   "imported": true,
-  "uuid": "60575031-f69d-4eb9-9fec-396317ce5f6b",
+  "uuid": "f35fe7d3-b264-45b7-aab9-cb710d07869b",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "BoxSlot_1"
+    "syncNodeName": "Dot"
   }
 }

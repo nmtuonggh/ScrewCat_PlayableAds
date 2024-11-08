@@ -3,11 +3,10 @@ import { Prefab } from 'cc';
 import { _decorator, Component, Node } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass( 'PoolTouch' )
-export class PoolTouch extends Component
-{
+@ccclass('PoolDot')
+export class PoolDot extends Component {
     @property( Prefab )
-    public touchPrefabs: Prefab = null;
+    public DotPrefabs: Prefab = null;
     @property( Node )
     public poolParent: Node = null;
     @property (Node)
@@ -21,7 +20,7 @@ export class PoolTouch extends Component
     {
         for ( let i = 0; i < size; i++ )
         {
-            const node = instantiate( this.touchPrefabs );
+            const node = instantiate( this.DotPrefabs );
             node.parent = this.poolParent;
             this._poolTouch.push( node );
         }
@@ -39,7 +38,7 @@ export class PoolTouch extends Component
         }
         else
         {
-            node = instantiate( this.touchPrefabs );
+            node = instantiate( this.DotPrefabs );
             node.parent = this.touchParent;
             return node;
         }
@@ -52,8 +51,6 @@ export class PoolTouch extends Component
         node.setPosition( 0, 0, 0 );
         this._poolTouch.push( node );
     }
-
-
 }
 
 

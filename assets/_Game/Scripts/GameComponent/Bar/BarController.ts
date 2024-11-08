@@ -22,22 +22,19 @@ export class BarController extends GameLayerComponent
 
     @property( Screw )
     public listScrews: Screw[] = [];
-    @property(BarPhysic)
+    @property( BarPhysic )
     public barPhysic: BarPhysic = null;
 
     @property( PolygonCollider2D )
     public collider: PolygonCollider2D = null;
     @property( PolygonCollider2D )
     public modelCollider: PolygonCollider2D = null;
-    @property( Node )
-    public Moldel: Node = null;
 
     //#endregion
 
     protected onLoad (): void
     {
         this.barPhysic = this.getComponent( BarPhysic );
-        this.modelCollider = this.Moldel.getComponent( PolygonCollider2D );
     }
 
     protected start (): void
@@ -48,10 +45,11 @@ export class BarController extends GameLayerComponent
         //         point.y * 0.7
         //     );
         // });
-        
+
     }
 
-    public SetCollider(){
+    public SetCollider ()
+    {
         this.collider.points = this.modelCollider.points;
         this.collider.apply();
     }
@@ -96,7 +94,7 @@ export class BarController extends GameLayerComponent
             screw.InitSCrewData( randomIndex, screwData );
             this.listScrews.push( screw );
 
-           
+
         }
     }
 
@@ -104,7 +102,7 @@ export class BarController extends GameLayerComponent
     {
         for ( let i = 0; i < this.listScrews.length; i++ )
         {
-            this.listScrews[i].ScrewRenderer.SetSelfColor( screwData );
+            this.listScrews[ i ].ScrewRenderer.SetSelfColor( screwData );
         }
     }
 

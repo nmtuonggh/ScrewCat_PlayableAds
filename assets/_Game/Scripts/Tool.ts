@@ -35,12 +35,6 @@ export class Tool extends Component
             this.setCollider();
         }
 
-        if ( this.runSetCollider2 )
-        {
-            this.setCollider2();
-        }
-
-
     }
 
     public setCollider (): void
@@ -49,19 +43,10 @@ export class Tool extends Component
         {
             const bar = this.listBar[ i ];
             bar.SetCollider();
-            bar.collider.threshold = 5;
+            //bar.collider.threshold = 5;
         }
     }
 
-    public setCollider2(): void
-    {
-        for ( let i = 0; i < this.listBar2.length; i++ ) 
-        {
-            const bar = this.listBar[ i ];
-            bar.SetCollider();
-            bar.collider.threshold = 10;
-        }
-    }
 
     public run (): void
     {
