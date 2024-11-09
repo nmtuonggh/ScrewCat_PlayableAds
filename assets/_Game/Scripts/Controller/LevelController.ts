@@ -60,7 +60,7 @@ export class LevelController extends Component
         this.InitBarAndScrewColor();
         this.InitBox();
         BoxContainer.Instance.InitQueue();
-        GameManager.Instance.TotalScrew = this.listScrew.length;
+        GameManager.Instance.currentScrew = this.listScrew.length;
         GameManager.Instance.InitLayer();
     }
 

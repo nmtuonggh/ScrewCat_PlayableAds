@@ -16,6 +16,7 @@ import { tween } from 'cc';
 import { instantiate } from 'cc';
 import { PoolDot } from '../Pool/PoolDot';
 import { PlayableAdsManager } from '../../../PA_iKame/base-script/PlayableAds/PlayableAdsManager';
+import { GameManager } from '../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -82,6 +83,11 @@ export class MoveScrewHandle extends Component
             this.isFirstTouch = true;
         }
         if ( !this.camera ) return;
+        if (GameManager.Instance.currentScrew <= 1) 
+        {
+            this.playableAdsManager.ForceOpenStore();
+            return;
+        }
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
         this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );

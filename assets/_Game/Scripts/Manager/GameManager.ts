@@ -16,7 +16,7 @@ export class GameManager extends Component
     @property( CCInteger )
     public CollectedScrew: number = 0;
     @property( CCInteger )
-    public TotalScrew: number = 0;
+    public currentScrew: number = 0;
 
     @property( Node )
     public LevelContainer: Node = null;
@@ -58,7 +58,7 @@ export class GameManager extends Component
 
     public GetRemainningScrew (): number
     {
-        let screwRemain = this.TotalScrew - this.CollectedScrew;
+        let screwRemain = this.currentScrew - this.CollectedScrew;
 
         return screwRemain;
     }

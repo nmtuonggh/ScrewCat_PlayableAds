@@ -222,6 +222,7 @@ export class Screw extends GameLayerComponent
                 this.State = eScrewState.IN_BOX;
                 hole.Box.CheckFullBox();
                 this.screwAnimation.ScrewIn();
+                GameManager.Instance.currentScrew--;
             } );
     }
 
