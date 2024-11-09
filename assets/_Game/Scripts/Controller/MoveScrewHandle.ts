@@ -15,6 +15,7 @@ import { PoolTouch } from '../PoolTouch';
 import { tween } from 'cc';
 import { instantiate } from 'cc';
 import { PoolDot } from '../Pool/PoolDot';
+import { PlayableAdsManager } from '../../../PA_iKame/base-script/PlayableAds/PlayableAdsManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -27,10 +28,8 @@ export class MoveScrewHandle extends Component
     private tutorialController : TutorialController = null;
     @property(PoolTouch)
     private poolTouch : PoolTouch = null;
-    @property(PoolDot)
-    private poolDot : PoolDot = null;
-    @property(Node)
-    private poolparrent : Node = null;
+    @property(PlayableAdsManager)
+    private playableAdsManager : PlayableAdsManager = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
 
@@ -76,6 +75,8 @@ export class MoveScrewHandle extends Component
     private onClickHandle ( event: EventMouse ): void
     {
         if(this.isFirstTouch === false){
+            this.playableAdsManager.ActionFirstClicked();
+            
             this.tutorialController.stopTutorial();
             AudioController.Instance.PlayerBG();
             this.isFirstTouch = true;

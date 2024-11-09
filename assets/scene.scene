@@ -33,12 +33,15 @@
       },
       {
         "__id__": 1019
+      },
+      {
+        "__id__": 1051
       }
     ],
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 1051
+      "__id__": 1062
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -69,7 +72,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 1067
+      "__id__": 1080
     },
     "_id": "f19fd29a-8c4f-49e3-a53c-202743f1a41f"
   },
@@ -262,7 +265,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Canvas",
+    "_name": "Canvas_Gamplay",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -33215,12 +33218,7 @@
     "poolTouch": {
       "__id__": 1017
     },
-    "poolDot": {
-      "__id__": 1021
-    },
-    "poolparrent": {
-      "__id__": 7
-    },
+    "playableAdsManager": null,
     "_id": "45v9bJ0apHK6YHYUfIk2ep"
   },
   {
@@ -34128,6 +34126,149 @@
     "_id": "5cyO8o+1tBLrv+ugWgLCsY"
   },
   {
+    "__type__": "cc.Node",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_prefab": {
+      "__id__": 1052
+    },
+    "__editorExtras__": {}
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1051
+    },
+    "asset": {
+      "__uuid__": "6039405d-6bd0-43f7-b07f-0ba5f7934f6c",
+      "__expectedType__": "cc.Prefab"
+    },
+    "fileId": "3aWANEJC5EELEXwXQJzN/D",
+    "instance": {
+      "__id__": 1053
+    },
+    "targetOverrides": null,
+    "nestedPrefabInstanceRoots": null
+  },
+  {
+    "__type__": "cc.PrefabInstance",
+    "fileId": "c7767qVIVDJ5XvcJgtOggB",
+    "prefabRootNode": null,
+    "mountedChildren": [],
+    "mountedComponents": [],
+    "propertyOverrides": [
+      {
+        "__id__": 1054
+      },
+      {
+        "__id__": 1056
+      },
+      {
+        "__id__": 1057
+      },
+      {
+        "__id__": 1058
+      },
+      {
+        "__id__": 1059
+      },
+      {
+        "__id__": 1061
+      }
+    ],
+    "removedComponents": []
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 1055
+    },
+    "propertyPath": [
+      "_name"
+    ],
+    "value": "PlayableAdsManager"
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "3aWANEJC5EELEXwXQJzN/D"
+    ]
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 1055
+    },
+    "propertyPath": [
+      "_lpos"
+    ],
+    "value": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 1055
+    },
+    "propertyPath": [
+      "_lrot"
+    ],
+    "value": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    }
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 1055
+    },
+    "propertyPath": [
+      "_euler"
+    ],
+    "value": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 1060
+    },
+    "propertyPath": [
+      "logDebug"
+    ],
+    "value": false
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "293P3T/o5DgZ9t5L/xvAWE"
+    ]
+  },
+  {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 1060
+    },
+    "propertyPath": [
+      "activeTracking"
+    ],
+    "value": false
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": null,
     "asset": null,
@@ -34135,19 +34276,22 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 1052
+        "__id__": 1063
       },
       {
-        "__id__": 1055
+        "__id__": 1066
       },
       {
-        "__id__": 1058
+        "__id__": 1069
       },
       {
-        "__id__": 1061
+        "__id__": 1072
       },
       {
-        "__id__": 1064
+        "__id__": 1075
+      },
+      {
+        "__id__": 1078
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -34180,6 +34324,9 @@
       },
       {
         "__id__": 120
+      },
+      {
+        "__id__": 1051
       }
     ]
   },
@@ -34189,7 +34336,7 @@
       "__id__": 17
     },
     "sourceInfo": {
-      "__id__": 1053
+      "__id__": 1064
     },
     "propertyPath": [
       "sprite"
@@ -34198,7 +34345,7 @@
       "__id__": 17
     },
     "targetInfo": {
-      "__id__": 1054
+      "__id__": 1065
     }
   },
   {
@@ -34221,7 +34368,7 @@
       "__id__": 20
     },
     "sourceInfo": {
-      "__id__": 1056
+      "__id__": 1067
     },
     "propertyPath": [
       "boxSprite"
@@ -34230,7 +34377,7 @@
       "__id__": 20
     },
     "targetInfo": {
-      "__id__": 1057
+      "__id__": 1068
     }
   },
   {
@@ -34253,7 +34400,7 @@
       "__id__": 17
     },
     "sourceInfo": {
-      "__id__": 1059
+      "__id__": 1070
     },
     "propertyPath": [
       "boxSprite"
@@ -34262,7 +34409,7 @@
       "__id__": 17
     },
     "targetInfo": {
-      "__id__": 1060
+      "__id__": 1071
     }
   },
   {
@@ -34285,7 +34432,7 @@
       "__id__": 23
     },
     "sourceInfo": {
-      "__id__": 1062
+      "__id__": 1073
     },
     "propertyPath": [
       "boxSprite"
@@ -34294,7 +34441,7 @@
       "__id__": 23
     },
     "targetInfo": {
-      "__id__": 1063
+      "__id__": 1074
     }
   },
   {
@@ -34317,7 +34464,7 @@
       "__id__": 26
     },
     "sourceInfo": {
-      "__id__": 1065
+      "__id__": 1076
     },
     "propertyPath": [
       "boxSprite"
@@ -34326,7 +34473,7 @@
       "__id__": 26
     },
     "targetInfo": {
-      "__id__": 1066
+      "__id__": 1077
     }
   },
   {
@@ -34341,33 +34488,55 @@
     "localID": [
       "3dBHLgvlpOhYQ2TV0wG+Gi",
       "5d6z96LrpE4prJDJxCXKmA"
+    ]
+  },
+  {
+    "__type__": "cc.TargetOverrideInfo",
+    "source": {
+      "__id__": 1014
+    },
+    "sourceInfo": null,
+    "propertyPath": [
+      "playableAdsManager"
+    ],
+    "target": {
+      "__id__": 1051
+    },
+    "targetInfo": {
+      "__id__": 1079
+    }
+  },
+  {
+    "__type__": "cc.TargetInfo",
+    "localID": [
+      "293P3T/o5DgZ9t5L/xvAWE"
     ]
   },
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 1068
+      "__id__": 1081
     },
     "shadows": {
-      "__id__": 1069
+      "__id__": 1082
     },
     "_skybox": {
-      "__id__": 1070
+      "__id__": 1083
     },
     "fog": {
-      "__id__": 1071
+      "__id__": 1084
     },
     "octree": {
-      "__id__": 1072
+      "__id__": 1085
     },
     "skin": {
-      "__id__": 1073
+      "__id__": 1086
     },
     "lightProbeInfo": {
-      "__id__": 1074
+      "__id__": 1087
     },
     "postSettings": {
-      "__id__": 1075
+      "__id__": 1088
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
