@@ -14,6 +14,7 @@ import { tween } from 'cc';
 import { PlayableAdsManager } from '../../../PA_iKame/base-script/PlayableAds/PlayableAdsManager';
 import { GameManager } from '../Manager/GameManager';
 import { Game } from 'cc';
+import { EventTouch } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -52,28 +53,27 @@ export class MoveScrewHandle extends Component
             MoveScrewHandle._instance = this;
         }
         this.poolTouch.initializePool( 15 );
-        input.on( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
+        input.on( Input.EventType.TOUCH_START, this.onTouchStart, this );
     }
 
 
     protected onDestroy (): void
     {
-        input.off( Input.EventType.MOUSE_DOWN, this.onMouseDown, this );
+        input.off( Input.EventType.TOUCH_START, this.onTouchStart, this );
     }
 
 
-    private onMouseDown ( event: EventMouse ): void
+    private onTouchStart ( event: EventTouch ): void
     {
-        if ( event.getButton() === EventMouse.BUTTON_LEFT )
-        {
-            this.onClickHandle( event );
-        }
+
+        this.onClickHandle( event );
+
     }
 
-    private onClickHandle ( event: EventMouse ): void
+    private onClickHandle ( event: EventTouch ): void
     {
         if ( !this.camera ) return;
-        
+
         if ( this.isFirstTouch === false )
         {
             this.isFirstTouch = true;
@@ -89,7 +89,7 @@ export class MoveScrewHandle extends Component
             return;
         }
 
-        if(GameManager.Instance.lose === true)
+        if ( GameManager.Instance.lose === true )
         {
             this.playableAdsManager.ForceOpenStore();
             return;
@@ -119,13 +119,40 @@ export class MoveScrewHandle extends Component
     private CheckClick ( layer: Layers ): GameLayerComponent
     {
         this.cachedColliders = [];
-        const aabb = new Rect(
-            this._lastMousePosition.x - GameConfig.CLICK_RADIUS,
-            this._lastMousePosition.y - GameConfig.CLICK_RADIUS,
-            GameConfig.CLICK_RADIUS * 2,
-            GameConfig.CLICK_RADIUS * 2 );
+        // const aabb = new Rect(
+        //     this._lastMousePosition.x - GameConfig.CLICK_RADIUS,
+        //     this._lastMousePosition.y - GameConfig.CLICK_RADIUS,
+        //     GameConfig.CLICK_RADIUS * 2,
+        //     GameConfig.CLICK_RADIUS * 2 );
 
-        let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
+        //ban 10 diem xung quanh
+        const points = [];
+        const numPoints = 10;
+        const angleStep = ( 2 * Math.PI ) / numPoints;
+
+        for ( let i = 0; i < numPoints; i++ )
+        {
+            const angle = i * angleStep;
+            const x = this._lastMousePosition.x + GameConfig.CLICK_RADIUS * Math.cos( angle );
+            const y = this._lastMousePosition.y + GameConfig.CLICK_RADIUS * Math.sin( angle );
+            points.push( new Vec2( x, y ) );
+        }
+
+        let cachedCols: Collider2D[] = [];
+        //let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
+
+        for ( const point of points )
+        {
+            let collider = PhysicsSystem2D.instance.testPoint( point );
+            if ( collider.length > 0 )
+            {
+                for ( let i = 0; i < collider.length; i++ )
+                {
+                    cachedCols.push( collider[ i ] );
+                }
+            }
+        }
+
         //loc cac collider theo layer
         if ( cachedCols.length === 0 ) return null;
 

@@ -3,6 +3,7 @@ import { CahedContainer } from '../Controller/CahedContainer';
 import { StarController } from '../Star/StarController';
 import { GameLayer } from '../GameComponent/GameLayer';
 import { group } from 'console';
+import { AudioController, AudioType } from '../AudioController/AudioController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameManager' )
@@ -25,10 +26,10 @@ export class GameManager extends Component
     @property( GameLayer )
     private layerList: GameLayer[] = [];
 
-    @property(Node)
+    @property( Node )
     public loseUI: Node = null;
 
-    public lose : boolean = false;
+    public lose: boolean = false;
 
     private static _instance: GameManager = null;
 
@@ -39,7 +40,7 @@ export class GameManager extends Component
 
     protected override onLoad (): void
     {
-        if (!GameManager._instance)
+        if ( !GameManager._instance )
         {
             GameManager._instance = this;
         }
@@ -55,8 +56,14 @@ export class GameManager extends Component
     {
         if ( CahedContainer.Instance.GetFreeHole() === null )
         {
-            this.loseUI.active = true;
-            this.lose = true;
+            AudioController.Instance.PlayAudio( AudioType.lose );
+            AudioController.Instance.bg.stop();
+            //wait for 2s
+            setTimeout( () =>
+            {
+                this.loseUI.active = true;
+                this.lose = true;
+            }, 2000 );
         }
     }
 

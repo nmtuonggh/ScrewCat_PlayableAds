@@ -59,7 +59,7 @@ export enum AudioType
     screwOut = 1,
     screwInBox = 2,
     boxComplete = 3,
-    meow = 4,
+    lose = 4,
     bgm = 5,
 }
 
