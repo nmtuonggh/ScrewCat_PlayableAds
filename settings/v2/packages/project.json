@@ -8,6 +8,10 @@
     {
       "name": "Bar",
       "value": 1024
+    },
+    {
+      "name": "BotScrew",
+      "value": 512
     }
   ],
   "physics": {
