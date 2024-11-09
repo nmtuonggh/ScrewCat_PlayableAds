@@ -450,10 +450,7 @@
       "b": 255,
       "a": 255
     },
-    "_spriteFrame": {
-      "__uuid__": "894711de-a266-4df1-aac4-3d1e890f319f@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_fillType": 0,
     "_sizeMode": 1,
@@ -2057,9 +2054,6 @@
     },
     "modelCollider": {
       "__id__": 19
-    },
-    "Moldel": {
-      "__id__": 2
     },
     "_id": ""
   },
