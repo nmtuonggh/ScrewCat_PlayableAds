@@ -10,20 +10,28 @@ export class Tool extends Component
     @property( Boolean )
     public runSetCollider: boolean = false;
     @property( Boolean )
-    public runSetCollider2: boolean = false;
+    public setlayer: boolean = false;
 
     @property( BarController )
     public listBar: BarController[] = [];
     @property( BarController )
-    public listBar2: BarController[] = [];
+    public listScrew: BarController[] = [];
     @property( Node )
     barparent: Node = null;
 
     protected onLoad (): void
     {
+        //this.listBar.length = 0;
+        
         if ( this.runSetCollider )
         {
             this.listBar = this.barparent.getComponentsInChildren( BarController );
+        }
+
+        if ( this.setlayer )
+        {
+            this.listBar = this.barparent.getComponentsInChildren( BarController );
+            this.listScrew = this.barparent.getComponentsInChildren( BarController );
         }
 
     }
@@ -37,7 +45,7 @@ export class Tool extends Component
 
     }
 
-    public setCollider (): void
+    public setCollider (): void    
     {
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
@@ -48,10 +56,20 @@ export class Tool extends Component
         }
     }
 
-
-    public run (): void
+    public setLayer (): void
     {
-        console.log( 'Tool run' );
+        for ( let i = 0; i < this.listBar.length; i++ ) 
+        {
+            const bar = this.listBar[ i ];
+            bar.node.layer = 10;
+        }
+
+        for ( let i = 0; i < this.listScrew.length; i++ ) 
+        {
+            const screw = this.listScrew[ i ];
+            screw.node.layer = 11;
+        }
     }
+    
 }
 
