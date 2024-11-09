@@ -8,8 +8,8 @@ const { ccclass, property } = _decorator;
 @ccclass( 'TutorialController' )
 export class TutorialController extends Component
 {
-    @property( Screw )
-    public screw: Screw = null;
+    @property( Node )
+    public screw: Node = null;
     @property( Node )
     public handPortrait: Node = null;
 
@@ -20,7 +20,7 @@ export class TutorialController extends Component
 
     public stopTutorial (): void
     {
-        this.screw.screwAnimation.PlayTutorial();
+        this.screw.getComponent(Screw).screwAnimation.PlayTutorial();
         this.handPortrait.active = false;
         Tween.stopAllByTarget( this.handPortrait );
     }
@@ -35,11 +35,11 @@ export class TutorialController extends Component
             (
                 tween()
                     .to( 0.5, { position: new Vec3(0,0,0) }, { easing: 'cubicIn' } )
-                    .call( () => this.screw.screwAnimation.ScrewOut() )
+                    .call( () => this.screw.getComponent(Screw).screwAnimation.ScrewOut() )
                     .to( 0.5, { position: handPosition }, { easing: 'cubicOut' } )
                     .call( () =>
                     {
-                        this.screw.screwAnimation.ScrewIn();
+                        this.screw.getComponent(Screw).screwAnimation.ScrewIn();
                         console.log("ScrewIn");
                     } )
                     .delay( 0.5 )

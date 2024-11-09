@@ -1,9 +1,9 @@
 import { _decorator, Component, ERigidBody2DType, HingeJoint2D, instantiate, Node, Prefab, RigidBody2D, UITransform, Vec2 } from 'cc';
 import { GameLayerComponent } from '../GameLayerComponent';
-import { eScrewState, Screw } from '../Screw/Screw';
 import { BarPhysic } from './BarPhysic';
-import { ScrewData } from '../../FakeSO/ScrewData';
 import { PolygonCollider2D } from 'cc';
+import { Screw } from '../Screw/Screw';
+import { ScrewData } from '../../FakeSO/ScrewData';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -11,10 +11,12 @@ export class BarController extends GameLayerComponent
 {
 
     //#region Fields
-    @property( Screw )
+    @property(Number)
+    public idFirstScrew: number = 0;
+    @property(Number)
+    public screwCount: number = 0;
+    @property(Screw)
     public listScrews: Screw[] = [];
-    @property( Screw )
-    public listScrews2: Screw[] = [];
     @property( BarPhysic )
     public barPhysic: BarPhysic = null;
 
@@ -62,7 +64,7 @@ export class BarController extends GameLayerComponent
     {
         for ( let i = 0; i < this.listScrews.length; i++ )
         {
-            this.listScrews[ i ].ScrewRenderer.SetSelfColor( screwData );
+            this.listScrews[ i ].getComponent(Screw).ScrewRenderer.SetSelfColor( screwData );
         }
     }
 
