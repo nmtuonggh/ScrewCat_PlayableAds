@@ -11,38 +11,39 @@ export class TutorialController extends Component
     @property( Screw )
     public screw: Screw = null;
     @property( Node )
-    public hand: Node = null;
-
-    private firstTouch: boolean = false;
+    public handPortrait: Node = null;
 
     protected start (): void
     {
         this.handTutorial();
     }
 
-    public handTutorial (): void 
-    {
-        this.hand.active = true;
-        let startPos = this.hand.getWorldPosition();
-        let screwPos = this.screw.node.getWorldPosition();
-        //toi muon dung easing de di chuyen chu khong phai di chuyen thang
-        
-        tween( this.hand ).repeatForever
-            (
-                tween()
-                    .to( 0.5, { worldPosition: screwPos }, { easing: 'cubicIn' } )
-                    .call( () => this.screw.screwAnimation.ScrewOut() )
-                    .to( 0.5, { worldPosition: startPos }, { easing: 'cubicOut' } )
-                    .call( () => this.screw.screwAnimation.ScrewIn() )
-                    .delay( 0.5 )
-            ).start();
-    }
-
     public stopTutorial (): void
     {
         this.screw.screwAnimation.PlayTutorial();
-        Tween.stopAllByTarget( this.hand );
-        this.hand.active = false;
+        this.handPortrait.active = false;
+        Tween.stopAllByTarget( this.handPortrait );
+    }
+
+    public handTutorial (): void
+    {
+        this.stopTutorial();
+        this.handPortrait.active = true;
+
+        let handPosition = this.handPortrait.getPosition().clone();
+        tween( this.handPortrait ).repeatForever
+            (
+                tween()
+                    .to( 0.5, { position: new Vec3(0,0,0) }, { easing: 'cubicIn' } )
+                    .call( () => this.screw.screwAnimation.ScrewOut() )
+                    .to( 0.5, { position: handPosition }, { easing: 'cubicOut' } )
+                    .call( () =>
+                    {
+                        this.screw.screwAnimation.ScrewIn();
+                        console.log("ScrewIn");
+                    } )
+                    .delay( 0.5 )
+            ).start();
     }
 }
 

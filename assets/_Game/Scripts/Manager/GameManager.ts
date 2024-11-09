@@ -17,6 +17,8 @@ export class GameManager extends Component
     public CollectedScrew: number = 0;
     @property( CCInteger )
     public currentScrew: number = 0;
+    @property( CCInteger )
+    public TotalScrew: number = 0;
 
     @property( Node )
     public LevelContainer: Node = null;
@@ -24,22 +26,20 @@ export class GameManager extends Component
     private layerList: GameLayer[] = [];
 
     @property(Node)
-    public LosePanel: Node = null;
+    public loseUI: Node = null;
+
+    public lose : boolean = false;
 
     private static _instance: GameManager = null;
 
     public static get Instance (): GameManager
     {
-        if ( this._instance === null )
-        {
-            this._instance = new GameManager();
-        }
         return this._instance;
     }
 
     protected override onLoad (): void
     {
-        if ( GameManager._instance === null )
+        if (!GameManager._instance)
         {
             GameManager._instance = this;
         }
@@ -55,25 +55,16 @@ export class GameManager extends Component
     {
         if ( CahedContainer.Instance.GetFreeHole() === null )
         {
-            console.log( "Lose" );
-            this.LosePanel.active = true;
+            this.loseUI.active = true;
+            this.lose = true;
         }
     }
 
     public GetRemainningScrew (): number
     {
-        let screwRemain = this.currentScrew - this.CollectedScrew;
-
-        return screwRemain;
+        return this.currentScrew;
     }
 
-    public CheckGoToAdsCondition (): void
-    {
-        if ( this.GetRemainningScrew() <= 1 )
-        {
-            console.log( "Go to ADS" );
-        }
-    }
 
     InitLayer (): void
     {

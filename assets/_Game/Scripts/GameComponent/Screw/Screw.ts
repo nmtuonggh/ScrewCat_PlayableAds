@@ -203,7 +203,7 @@ export class Screw extends GameLayerComponent
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-        GameManager.Instance.CheckGoToAdsCondition();
+        
         this.screwAnimation.ScrewOut();
         this.TweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
@@ -236,7 +236,7 @@ export class Screw extends GameLayerComponent
         this.linkingHole = hole;
         hole.linkingScrew = this;
         this.screwAnimation.ScrewOut();
-        GameManager.Instance.CheckGoToAdsCondition();
+        
         this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
     }
 

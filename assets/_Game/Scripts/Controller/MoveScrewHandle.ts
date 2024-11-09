@@ -13,6 +13,7 @@ import { PoolTouch } from '../PoolTouch';
 import { tween } from 'cc';
 import { PlayableAdsManager } from '../../../PA_iKame/base-script/PlayableAds/PlayableAdsManager';
 import { GameManager } from '../Manager/GameManager';
+import { Game } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -21,12 +22,12 @@ export class MoveScrewHandle extends Component
     //#region Properties
     @property( { type: Camera } )
     private camera: Camera | null = null;
-    @property(TutorialController)
-    private tutorialController : TutorialController = null;
-    @property(PoolTouch)
-    private poolTouch : PoolTouch = null;
-    @property(PlayableAdsManager)
-    private playableAdsManager : PlayableAdsManager = null;
+    @property( TutorialController )
+    private tutorialController: TutorialController = null;
+    @property( PoolTouch )
+    private poolTouch: PoolTouch = null;
+    @property( PlayableAdsManager )
+    private playableAdsManager: PlayableAdsManager = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
 
@@ -71,15 +72,24 @@ export class MoveScrewHandle extends Component
 
     private onClickHandle ( event: EventMouse ): void
     {
-        if(this.isFirstTouch === false){
+        if ( !this.camera ) return;
+        
+        if ( this.isFirstTouch === false )
+        {
+            this.isFirstTouch = true;
             this.playableAdsManager.ActionFirstClicked();
-            
+
             this.tutorialController.stopTutorial();
             AudioController.Instance.PlayerBG();
-            this.isFirstTouch = true;
         }
-        if ( !this.camera ) return;
-        if (GameManager.Instance.currentScrew <= 1) 
+
+        if ( GameManager.Instance.currentScrew <= 1 ) 
+        {
+            this.playableAdsManager.ForceOpenStore();
+            return;
+        }
+
+        if(GameManager.Instance.lose === true)
         {
             this.playableAdsManager.ForceOpenStore();
             return;
@@ -99,7 +109,7 @@ export class MoveScrewHandle extends Component
         if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
-            if(screw.State === eScrewState.IN_CACHED) return;
+            if ( screw.State === eScrewState.IN_CACHED ) return;
             screw.CheckMove();
         }
     }
@@ -190,13 +200,13 @@ export class MoveScrewHandle extends Component
     //#endregion
 
 
-    private pointSpawnTouchEffect (pos: Vec2) : void
+    private pointSpawnTouchEffect ( pos: Vec2 ): void
     {
         const touch = this.poolTouch.getFromPool();
-        
+
         touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
         touch.setScale( new Vec3( 0.1, 0.1, 0.1 ) );
-        
+
         tween( touch )
             .to( 0.4, { worldScale: new Vec3( 1, 1, 1 ) } )
             .call( () =>

@@ -1,4 +1,5 @@
 import { _decorator, AudioClip, AudioSource, Component, Node } from 'cc';
+import * as exp from 'constants';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'AudioController' )
@@ -6,6 +7,8 @@ export class AudioController extends Component
 {
     @property( AudioClip )
     public audioClip: AudioClip[] = [];
+    @property( AudioClip )
+    public audioComplete: AudioClip[] = [];
 
     @property( AudioSource )
     public audioSource: AudioSource = null;
@@ -39,6 +42,12 @@ export class AudioController extends Component
         this.audioSource.playOneShot(this.audioSource.clip);
     }
 
+    public PlayMewoComplete (){
+        const index = Math.floor(Math.random() * this.audioComplete.length);
+        this.audioSource.clip = this.audioComplete[ index ];
+        this.audioSource.playOneShot(this.audioSource.clip);
+    }
+
     public PlayerBG(){
         this.bg.play();
     }
@@ -53,5 +62,6 @@ export enum AudioType
     meow = 4,
     bgm = 5,
 }
+
 
 

@@ -36,15 +36,20 @@ export class StarController extends Component
         {
             StarController._instance = this;
         }
-        this.SetFillAmount();
         // let prop = {v: 0};
         // tween(prop).to(1, {v: 1}, {onUpdate: (target, ratio) => console.log(ratio)}).start();
+    }
+
+    protected start (): void
+    {
+        this.SetFillAmount();
+        
     }
 
     public SetFillAmount (): void
     {
         const collectedScrew = GameManager.Instance.CollectedScrew;
-        const toltalScrew = GameManager.Instance.currentScrew;
+        const toltalScrew = GameManager.Instance.TotalScrew;
         if ( collectedScrew > 0 )
         {
             const value = collectedScrew / toltalScrew;

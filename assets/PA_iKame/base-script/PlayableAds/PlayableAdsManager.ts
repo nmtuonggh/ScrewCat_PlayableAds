@@ -70,7 +70,7 @@ export class PlayableAdsManager extends SingletonInSceneComponent {
     SetLinkStore(){
         // Điều chỉnh lại link này theo từng dự án
 
-        this.urlPlayStore = "https://ikameglobal.com/";
+        this.urlPlayStore = "https://play.google.com/store/apps/details?id=com.ig.screw.cat";
         this.urlAppStore = "https://ikameglobal.com/";
         super_html_playable.set_google_play_url(this.urlPlayStore);
         super_html_playable.set_app_store_url(this.urlAppStore);
