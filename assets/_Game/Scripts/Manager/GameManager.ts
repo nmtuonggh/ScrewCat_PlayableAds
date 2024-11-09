@@ -23,6 +23,9 @@ export class GameManager extends Component
     @property( GameLayer )
     private layerList: GameLayer[] = [];
 
+    @property(Node)
+    public LosePanel: Node = null;
+
     private static _instance: GameManager = null;
 
     public static get Instance (): GameManager
@@ -53,6 +56,7 @@ export class GameManager extends Component
         if ( CahedContainer.Instance.GetFreeHole() === null )
         {
             console.log( "Lose" );
+            this.LosePanel.active = true;
         }
     }
 
