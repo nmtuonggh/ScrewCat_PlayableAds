@@ -28,7 +28,6 @@ export class ScrewAnim extends Component
 
     public PlayTutorial (): void
     {
-        //tôi chỉ muốn play anim này khi nó không bị null
         if ( this.anim.clips.length > 6 )
         {
             this.anim.play( 'TutorialScrew' );
