@@ -20,10 +20,6 @@ export class AudioController extends Component
 
     public static get Instance (): AudioController
     {
-        if ( this._instance === null )
-        {
-            this._instance = new AudioController();
-        }
         return this._instance;
     }
 

@@ -18,10 +18,6 @@ export class CahedContainer extends Component
 
     public static get Instance (): CahedContainer
     {
-        if ( this._instance === null )
-        {
-            this._instance = new CahedContainer();
-        }
         return this._instance;
     }
 

@@ -10,10 +10,6 @@ export class MeowAnimation extends Component {
 
     public static get Instance (): MeowAnimation
     {
-        if ( this._instance === null )
-        {
-            this._instance = new MeowAnimation();
-        }
         return this._instance;
     }
 

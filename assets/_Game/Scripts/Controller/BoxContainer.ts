@@ -27,10 +27,6 @@ export class BoxContainer extends Component
 
     public static get Instance (): BoxContainer
     {
-        if ( this._instance === null )
-        {
-            this._instance = new BoxContainer();
-        }
         return this._instance;
     }
 

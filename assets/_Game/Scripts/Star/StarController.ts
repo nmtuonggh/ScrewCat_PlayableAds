@@ -23,10 +23,6 @@ export class StarController extends Component
 
     public static get Instance (): StarController
     {
-        if ( this._instance === null )
-        {
-            this._instance = new StarController();
-        }
         return this._instance;
     }
 

@@ -39,10 +39,6 @@ export class MoveScrewHandle extends Component
 
     public static get Instance (): MoveScrewHandle
     {
-        if ( this._instance === null )
-        {
-            this._instance = new MoveScrewHandle();
-        }
         return this._instance;
     }
 

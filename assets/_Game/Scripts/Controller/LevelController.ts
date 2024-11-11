@@ -34,10 +34,6 @@ export class LevelController extends Component
 
     public static get Instance (): LevelController
     {
-        if ( this._instance === null )
-        {
-            this._instance = new LevelController();
-        }
         return this._instance;
     }
 
