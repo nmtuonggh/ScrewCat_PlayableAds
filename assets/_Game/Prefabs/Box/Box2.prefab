@@ -31,17 +31,17 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 46
+        "__id__": 47
       },
       {
-        "__id__": 48
+        "__id__": 49
       },
       {
-        "__id__": 50
+        "__id__": 51
       }
     ],
     "_prefab": {
-      "__id__": 52
+      "__id__": 53
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -159,8 +159,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.65,
-      "y": 0.65,
+      "x": 0.75,
+      "y": 0.75,
       "z": 0.65
     },
     "_mobility": 0,
@@ -430,7 +430,7 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": -30.2,
+      "x": -33,
       "y": 0,
       "z": 0
     }
@@ -542,7 +542,7 @@
     ],
     "value": {
       "__type__": "cc.Vec3",
-      "x": 30.956,
+      "x": 33,
       "y": 0,
       "z": 0
     }
@@ -635,19 +635,19 @@
     "_active": false,
     "_components": [
       {
-        "__id__": 41
+        "__id__": 42
       },
       {
-        "__id__": 43
+        "__id__": 44
       }
     ],
     "_prefab": {
-      "__id__": 45
+      "__id__": 46
     },
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 222.573,
+      "y": 235,
       "z": 0
     },
     "_lrot": {
@@ -659,8 +659,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.65,
-      "y": 0.65,
+      "x": 0.75,
+      "y": 0.75,
       "z": 0.65
     },
     "_mobility": 0,
@@ -719,6 +719,9 @@
       },
       {
         "__id__": 40
+      },
+      {
+        "__id__": 41
       }
     ],
     "removedComponents": []
@@ -750,7 +753,7 @@
     "value": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 50,
       "z": 0
     }
   },
@@ -786,6 +789,21 @@
     }
   },
   {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 37
+    },
+    "propertyPath": [
+      "_lscale"
+    ],
+    "value": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    }
+  },
+  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -795,7 +813,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 42
+      "__id__": 43
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -823,7 +841,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 44
+      "__id__": 45
     },
     "_customMaterial": null,
     "_srcBlendFactor": 2,
@@ -881,7 +899,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 47
+      "__id__": 48
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -909,7 +927,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 49
+      "__id__": 50
     },
     "listHoles": [],
     "_id": ""
@@ -928,13 +946,13 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 51
+      "__id__": 52
     },
     "openSprite": {
       "__id__": 6
     },
     "closeSprite": {
-      "__id__": 43
+      "__id__": 44
     },
     "closeBox": {
       "__id__": 32
@@ -959,7 +977,7 @@
     "instance": null,
     "targetOverrides": [
       {
-        "__id__": 53
+        "__id__": 54
       }
     ],
     "nestedPrefabInstanceRoots": [
@@ -977,7 +995,7 @@
   {
     "__type__": "cc.TargetOverrideInfo",
     "source": {
-      "__id__": 50
+      "__id__": 51
     },
     "sourceInfo": null,
     "propertyPath": [
@@ -987,7 +1005,7 @@
       "__id__": 33
     },
     "targetInfo": {
-      "__id__": 54
+      "__id__": 55
     }
   },
   {

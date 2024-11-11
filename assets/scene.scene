@@ -764,7 +764,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -280.045,
+      "x": -325,
       "y": 0,
       "z": 0
     },
@@ -847,7 +847,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -100.045,
+      "x": -115,
       "y": 0,
       "z": 0
     },
@@ -930,7 +930,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 79.955,
+      "x": 95,
       "y": 0,
       "z": 0
     },
@@ -1013,7 +1013,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 259.955,
+      "x": 305,
       "y": 0,
       "z": 0
     },
@@ -1135,7 +1135,7 @@
     "node": {
       "__id__": 16
     },
-    "_enabled": false,
+    "_enabled": true,
     "__prefab": null,
     "_resizeMode": 0,
     "_layoutType": 1,
@@ -1145,11 +1145,11 @@
       "height": 40
     },
     "_startAxis": 0,
-    "_paddingLeft": -300,
+    "_paddingLeft": -325,
     "_paddingRight": 0,
     "_paddingTop": 0,
     "_paddingBottom": 0,
-    "_spacingX": 80,
+    "_spacingX": 110,
     "_spacingY": 0,
     "_verticalDirection": 1,
     "_horizontalDirection": 0,
@@ -3615,14 +3615,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 140
-      },
-      {
-        "__id__": 142
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 151
@@ -5552,14 +5545,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 197
-      },
-      {
-        "__id__": 199
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 208
@@ -7599,14 +7585,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 257
-      },
-      {
-        "__id__": 259
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 268
@@ -9089,14 +9068,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 300
-      },
-      {
-        "__id__": 302
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 311
@@ -10569,14 +10541,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 343
-      },
-      {
-        "__id__": 345
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 354
@@ -12034,14 +11999,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 386
-      },
-      {
-        "__id__": 388
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 397
@@ -13626,14 +13584,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 432
-      },
-      {
-        "__id__": 434
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 443
@@ -16924,14 +16875,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 531
-      },
-      {
-        "__id__": 533
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 542
@@ -18414,14 +18358,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 574
-      },
-      {
-        "__id__": 576
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 585
@@ -19884,14 +19821,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 617
-      },
-      {
-        "__id__": 619
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 628
@@ -21521,14 +21451,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 663
-      },
-      {
-        "__id__": 665
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 674
@@ -23885,14 +23808,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 734
-      },
-      {
-        "__id__": 736
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 745
@@ -25365,14 +25281,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 777
-      },
-      {
-        "__id__": 779
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 788
@@ -26991,14 +26900,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 823
-      },
-      {
-        "__id__": 825
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 834
@@ -28506,14 +28408,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 866
-      },
-      {
-        "__id__": 868
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 877
@@ -30173,14 +30068,7 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "listHolePos": [
-      {
-        "__id__": 914
-      },
-      {
-        "__id__": 916
-      }
-    ],
+    "listHolePos": [],
     "listScrews": [
       {
         "__id__": 925
@@ -34490,56 +34378,7 @@
     "__prefab": null,
     "runSetCollider": false,
     "runSetCollider2": false,
-    "listBar": [
-      {
-        "__id__": 150
-      },
-      {
-        "__id__": 207
-      },
-      {
-        "__id__": 267
-      },
-      {
-        "__id__": 310
-      },
-      {
-        "__id__": 353
-      },
-      {
-        "__id__": 396
-      },
-      {
-        "__id__": 442
-      },
-      {
-        "__id__": 541
-      },
-      {
-        "__id__": 584
-      },
-      {
-        "__id__": 627
-      },
-      {
-        "__id__": 673
-      },
-      {
-        "__id__": 744
-      },
-      {
-        "__id__": 787
-      },
-      {
-        "__id__": 833
-      },
-      {
-        "__id__": 876
-      },
-      {
-        "__id__": 924
-      }
-    ],
+    "listBar": [],
     "listBar2": [],
     "barparent": {
       "__id__": 135
