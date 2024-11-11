@@ -45,6 +45,10 @@ export class LevelController extends Component
     @property( CCInteger )
     public playingLayerCount: number = 3;
 
+    public listActiveLayer: GameLayer[] = [];
+    public listPlayingLayer: GameLayer[] = [];
+    public listUnActiveLayer: GameLayer[] = [];
+
     private static _instance: LevelController = null;
 
     public static get Instance (): LevelController
@@ -109,10 +113,6 @@ export class LevelController extends Component
             this.colorBoxSpawnData = [];
             if ( data.BoxData && Array.isArray( data.BoxData ) )
             {
-                // this.colorBoxSpawnData = data.BoxData.map( ( item: any ) => ( {
-                //     Color: item.Color,
-                //     HoleCount: item.HoleCount
-                // } ) );
                 for ( let i = 0; i < data.BoxData.length; i++ )
                 {
                     const item = data.BoxData[ i ];
@@ -130,24 +130,81 @@ export class LevelController extends Component
 
     public InitLayer (): void
     {
+        //Init screwCount
         for ( let i = 0; i < this.listLayer.length; i++ )
         {
-            let active = [];
+            this.listLayer[ i ].InitDataLayer();
+            let listBar = [];
+            listBar = this.listLayer[ i ].node.getComponentsInChildren( BarController );
+            this.listLayer[ i ].listBar = listBar;
+        }
+        //set acive layer
+        for ( let i = 0; i < this.listLayer.length; i++ )
+        {
             //Set active layer
             if ( i >= this.listLayer.length - this.activeLayerCount )
             {
-                this.listLayer[ i ].node.active = true;
-                active.push( this.listLayer[ i ] );
+                this.ActiveLayer( this.listLayer[ i ] );
             }
             else
             {
-                this.listLayer[ i ].node.active = false;
-            }
-
-            if ( i >= active.length - this.playingLayerCount )
-            {
-
+                this.listLayer[ i ].DeactiveScrew();
+                this.listLayer[ i ].DeactiveLayer();
+                this.listLayer[ i ].SetHidingBarLayer();
+                this.listUnActiveLayer.push( this.listLayer[ i ] );
             }
         }
+        //set playing layer
+        for ( let i = 0; i < this.listActiveLayer.length; i++ )
+        {
+            //Set playing layer
+            if ( i >= this.listActiveLayer.length - this.playingLayerCount )
+            {
+                this.SetPlayingLayer( this.listActiveLayer[ i ] );
+            }
+            else
+            {
+                this.listActiveLayer[ i ].DeactiveScrew();
+                this.listActiveLayer[ i ].SetHidingBarLayer();
+            }
+        }
+    }
+
+    public RemoveScrewInLayer ( screw: Screw ): void
+    {
+        for ( let i = 0; i < this.listLayer.length; i++ )
+        {
+            if ( screw.Layer === this.listLayer[ i ].layerOrder )
+            {
+                this.listLayer[ i ].RemoveScrew();
+                if ( this.listLayer[ i ].screwCount <= 0 )
+                {
+                    this.ActiveNewLayer();
+                }
+            }
+        }
+    }
+
+    private ActiveNewLayer (): void
+    {
+        //active layer cuoi cung trong listUnActiveLayer
+        if ( this.listUnActiveLayer.length > 0 )
+        {
+            this.ActiveLayer( this.listUnActiveLayer[ this.listUnActiveLayer.length - 1 ] );
+            this.listUnActiveLayer.pop();
+        }
+    }
+
+    private ActiveLayer ( layer: GameLayer ): void
+    {
+        layer.ActiveLayer();
+        this.listActiveLayer.push( layer );
+    }
+
+    private SetPlayingLayer (layer : GameLayer): void
+    {
+        layer.SetPlayingBarLayer();
+        layer.ActiveScrew();
+        this.listPlayingLayer.push(layer);
     }
 }

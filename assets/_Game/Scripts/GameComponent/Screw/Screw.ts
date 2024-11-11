@@ -12,6 +12,9 @@ import { AudioController, AudioType } from '../../AudioController/AudioControlle
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameManager } from '../../Manager/GameManager';
 import { BarController } from '../Bar/BarController';
+import { LevelController } from '../../Controller/LevelController';
+
+
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Screw' )
@@ -89,6 +92,7 @@ export class Screw extends GameLayerComponent
                 if ( moveSuccess === true )
                 {
                     this.FreeJoints();
+                    LevelController.Instance.RemoveScrewInLayer(this);
                 }
 
                 break;

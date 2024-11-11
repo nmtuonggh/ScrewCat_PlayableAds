@@ -5,7 +5,7 @@ const { ccclass, property } = _decorator;
 @ccclass('GameComponent')
 export abstract class GameComponent extends Component 
 {
-    protected GameLogic: MoveScrewHandle = MoveScrewHandle.Instance;
+    //protected GameLogic: MoveScrewHandle = MoveScrewHandle.Instance;
 }
 
 

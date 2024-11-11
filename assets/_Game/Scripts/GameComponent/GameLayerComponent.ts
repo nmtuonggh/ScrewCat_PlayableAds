@@ -1,10 +1,9 @@
 import { _decorator, Component, Node } from 'cc';
 import { GameLayer } from './GameLayer';
-import { GameComponent } from './GameComponent';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameLayerComponent' )
-export class GameLayerComponent extends GameComponent
+export class GameLayerComponent extends Component
 {
     private gameLayer: GameLayer | null = null;
 
