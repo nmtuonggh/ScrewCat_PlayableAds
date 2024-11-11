@@ -14,6 +14,9 @@ export class ScrewRenderer extends Component
     @property( { type: Enum(eColorType) } )
     public colorType: eColorType = eColorType.Green;
 
+    @property(Number)
+    public colorIndex: number = 0;
+
     //#region Encapsulated
     //#endregion
 
@@ -29,7 +32,8 @@ export class ScrewRenderer extends Component
     }
 
     public SetSelfColor(data : ScrewData){
-        this.topSprite.spriteFrame = data.ScrewTopSprite[ this.colorType ];
+        this.topSprite.spriteFrame = data.ScrewTopSprite[ this.colorIndex ];
+        this.colorType = this.colorIndex;
     }
 
 }

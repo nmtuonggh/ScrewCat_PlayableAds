@@ -11,9 +11,6 @@ import { ScrewAnim } from './ScrewAnim';
 import { AudioController, AudioType } from '../../AudioController/AudioController';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameManager } from '../../Manager/GameManager';
-import { Graphics } from 'cc';
-import { Color } from 'cc';
-import { UITransform } from 'cc';
 import { BarController } from '../Bar/BarController';
 const { ccclass, property } = _decorator;
 
@@ -125,7 +122,7 @@ export class Screw extends GameLayerComponent
 
     public CheckMoveCache (): boolean
     {
-        let freeHole = this.GameLogic.GetFreeHoleCache();
+        let freeHole = CahedContainer.Instance.GetFreeHole();
         if ( freeHole !== null )
         {
             this.MoveToCacheSlot( freeHole );
@@ -176,6 +173,7 @@ export class Screw extends GameLayerComponent
             let bar = this.cachedBarLayer[ i ].node.getComponent( BarController );
             if ( bar !== null )
             {
+                
                 //console.log( "Bar Layer: ", bar.Layer );
                 if ( bar.Layer > this.Layer )
                 {

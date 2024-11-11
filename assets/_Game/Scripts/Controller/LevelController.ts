@@ -9,6 +9,10 @@ import { GameManager } from '../Manager/GameManager';
 import { Layers } from 'cc';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { boxSpawnData } from '../BoxSpawndata/boxSpawnData';
+import { ScriptHolder } from '../ScriptHolder';
+import { CCInteger } from 'cc';
+import { GameLayer } from '../GameComponent/GameLayer';
+import { JsonAsset } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -19,16 +23,27 @@ export class LevelController extends Component
     private Holder: Node = null;
     @property( BarController )
     private listBar: BarController[] = [];
-    @property( Screw )
+    @property( [ Screw ] )
     private listScrew: Screw[] = [];
+    @property( [ GameLayer ] )
+    private listLayer: GameLayer[] = [];
+
+    @property( JsonAsset )
+    public jsonFile: JsonAsset = null;
     @property( BoxData )
     private BoxData: BoxData = null;
     @property( ScrewData )
     private ScrewData: ScrewData = null;
+
     @property( boxSpawnData )
     public colorBoxSpawnData: boxSpawnData[] = [];
-    @property( Number )
+    @property( CCInteger )
     public currentIndex: number = 0;
+
+    @property( CCInteger )
+    public activeLayerCount: number = 5;
+    @property( CCInteger )
+    public playingLayerCount: number = 3;
 
     private static _instance: LevelController = null;
 
@@ -43,47 +58,22 @@ export class LevelController extends Component
         {
             LevelController._instance = this;
         }
-        //this.listBar = this.Holder.getComponentsInChildren( BarController ).filter( bar => bar.node.parent.active === true );
-        //this.listScrew = this.Holder.getComponentsInChildren( Screw ).filter( screw => screw.node.parent.active === true );
+
         this.listBar = this.Holder.getComponentsInChildren( BarController );
         this.listScrew = this.Holder.getComponentsInChildren( Screw );
+        this.listLayer = this.Holder.getComponentsInChildren( GameLayer );
     }
 
     protected start (): void
     {
-        //this.RandomColorScrew();
-        //this.SetLayer();
+        this.loadBoxDataFromJson();
         this.InitBarAndScrewColor();
         this.InitBox();
         BoxContainer.Instance.InitQueue();
         GameManager.Instance.currentScrew = this.listScrew.length;
         GameManager.Instance.TotalScrew = this.listScrew.length;
-        GameManager.Instance.InitLayer();
+        this.InitLayer();
     }
-
-    // private RandomColorScrew (): void
-    // {
-    //     this.listScrew.forEach( screw =>
-    //     {
-    //         const randomIndex = Math.floor( Math.random() * 9 );
-    //         screw.ScrewRenderer.SetSprite( randomIndex ,this.ScrewData );
-    //     } );
-    // }
-
-    private SetLayer (): void
-    {
-        this.listBar.forEach( bar => 
-        {
-            bar.node.layer = 10;
-
-        } );
-
-        this.listScrew.forEach( screw => 
-        {
-            screw.node.layer = 11;
-        } );
-    }
-
 
     private InitBarAndScrewColor (): void 
     {
@@ -108,6 +98,56 @@ export class LevelController extends Component
             BoxContainer.Instance.InitBox( color, boxSlot.node, this.BoxData, holeCount );
             boxSlot.InitBoxSlotData();
             this.currentIndex++;
+        }
+    }
+
+    public loadBoxDataFromJson (): void
+    {
+        try
+        {
+            const data = this.jsonFile.json;
+            this.colorBoxSpawnData = [];
+            if ( data.BoxData && Array.isArray( data.BoxData ) )
+            {
+                // this.colorBoxSpawnData = data.BoxData.map( ( item: any ) => ( {
+                //     Color: item.Color,
+                //     HoleCount: item.HoleCount
+                // } ) );
+                for ( let i = 0; i < data.BoxData.length; i++ )
+                {
+                    const item = data.BoxData[ i ];
+                    this.colorBoxSpawnData.push( {
+                        color: item.Color,
+                        holeCount: item.HoleCount
+                    } );
+                }
+            }
+        } catch ( error )
+        {
+            console.error( "Failed to load box data:", error );
+        }
+    }
+
+    public InitLayer (): void
+    {
+        for ( let i = 0; i < this.listLayer.length; i++ )
+        {
+            let active = [];
+            //Set active layer
+            if ( i >= this.listLayer.length - this.activeLayerCount )
+            {
+                this.listLayer[ i ].node.active = true;
+                active.push( this.listLayer[ i ] );
+            }
+            else
+            {
+                this.listLayer[ i ].node.active = false;
+            }
+
+            if ( i >= active.length - this.playingLayerCount )
+            {
+
+            }
         }
     }
 }

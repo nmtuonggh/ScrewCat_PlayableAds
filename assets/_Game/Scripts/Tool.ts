@@ -1,6 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { BarController } from './GameComponent/Bar/BarController';
 import { Screw } from './GameComponent/Screw/Screw';
+import { CCBoolean } from 'cc';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 
@@ -8,17 +9,17 @@ const { ccclass, property, executeInEditMode } = _decorator;
 @executeInEditMode( true )
 export class Tool extends Component
 {
-    @property( Boolean )
+    @property( CCBoolean )
     public runSetCollider: boolean = false;
-    @property( Boolean )
+    @property( CCBoolean )
     public setlayer: boolean = false;
-    @property( Boolean )
+    @property( CCBoolean )
     public setScrewToBar: boolean = false;
 
     @property( BarController )
     public listBar: BarController[] = [];
-    @property( BarController )
-    public listScrew: BarController[] = [];
+    @property( Screw )
+    public listScrew: Screw[] = [];
     @property( Node )
     barparent: Node = null;
 
@@ -27,7 +28,7 @@ export class Tool extends Component
         this.listBar.length = 0;
         this.listScrew.length = 0;
 
-        if ( this.runSetCollider || this.setScrewToBar)
+        if ( this.runSetCollider || this.setScrewToBar )
         {
             this.listBar = this.barparent.getComponentsInChildren( BarController );
         }
@@ -35,7 +36,7 @@ export class Tool extends Component
         if ( this.setlayer )
         {
             this.listBar = this.barparent.getComponentsInChildren( BarController );
-            this.listScrew = this.barparent.getComponentsInChildren( BarController );
+            this.listScrew = this.barparent.getComponentsInChildren( Screw );
         }
 
     }
@@ -74,13 +75,13 @@ export class Tool extends Component
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
             const bar = this.listBar[ i ];
-            bar.node.layer = 10;
+            bar.node.layer = 1 << 10;
         }
-
         for ( let i = 0; i < this.listScrew.length; i++ ) 
         {
+
             const screw = this.listScrew[ i ];
-            screw.node.layer = 11;
+            screw.node.layer = 1 << 11;
         }
     }
 
@@ -90,21 +91,33 @@ export class Tool extends Component
         {
             const bar = this.listBar[ i ];
             bar.listScrews.length = 0;
-            for( let j = 0; j < bar.screwCount; j++ )
-            {
-                const id = bar.idFirstScrew + j;
-                //dyệt qua các child của parent của bar, nếu có node nào có tên là Screw_ + id thì gán vào listScrew
-                const screw = bar.node.parent.getChildByName( "Screw_" + id );
-                if ( screw.getComponent(Screw) )
-                {
-                    bar.listScrews.push( screw.getComponent( Screw ) );
-                }
-            }
-            console.log( "Screw: ", bar.listScrews.length );
 
+            let listScrewInLayer = bar.node.parent.getComponentsInChildren( Screw );
+
+            for ( let j = 0; j < listScrewInLayer.length; j++ )
+            {
+                const screw = listScrewInLayer[ j ];
+                const fullName = screw.node.name;
+                const extractedName = fullName.substring( fullName.indexOf( "Bar_" ) );
+                const barName = bar.node.name;
+
+                if ( extractedName === barName )
+                {
+                    bar.listScrews.push( screw );
+                }
+
+                //lay colorIndex
+                const parts = fullName.split( "_" );
+                const colorIndex = parts[ 1 ];
+
+                screw.ScrewRenderer.colorIndex = parseInt( colorIndex );
+
+            }
+            
+
+            console.log( "Screw: ", bar.listScrews.length );
         }
-        
     }
-    
+
 }
 

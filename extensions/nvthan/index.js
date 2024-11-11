@@ -126,212 +126,266 @@ exports.$ = {
     selectType: '.selectType',
 
 
-	onCreateClicked : '.onCreateClicked',
-    openDirectoryTexture : '.openDirectoryTexture',
-    openDirectoryJSON : '.openDirectoryJSON',
-	pathJSON : '.pathJSON',
-	textureFolder : '.textureFolder',
+    onCreateClicked: '.onCreateClicked',
+    openDirectoryTexture: '.openDirectoryTexture',
+    openDirectoryJSON: '.openDirectoryJSON',
+    pathJSON: '.pathJSON',
+    textureFolder: '.textureFolder',
 }
 
-exports.ready = async function () {
-    this.$.openDirectoryJSON.addEventListener('click', () => {
-		this.openDirectoryJSON();
-    })
-    this.$.openDirectoryTexture.addEventListener('click', () => {
-		this.openDirectoryTexture();
-    })
-	this.$.onCreateClicked.addEventListener('click', () => {
-		this.create();
+exports.ready = async function ()
+{
+    this.$.openDirectoryJSON.addEventListener( 'click', () =>
+    {
+        this.openDirectoryJSON();
+    } )
+    this.$.openDirectoryTexture.addEventListener( 'click', () =>
+    {
+        this.openDirectoryTexture();
+    } )
+    this.$.onCreateClicked.addEventListener( 'click', () =>
+    {
+        this.create();
         //this.Testing();
-    })
+    } )
 }
 exports.methods = {
-    async openDirectoryTexture() {
+    async openDirectoryTexture ()
+    {
         const config = {
             type: 'directory',
         };
-        const data = await Editor.Dialog.select(config);
+        const data = await Editor.Dialog.select( config );
         let targetPath = "db://assets";
-        if(data.filePaths[0] != null) {
-            const splitPath = data.filePaths[0].split('\\');
+        if ( data.filePaths[ 0 ] != null )
+        {
+            const splitPath = data.filePaths[ 0 ].split( '\\' );
             let index = 0;
-            for(let i = 0; i < splitPath.length; i++) {
-                if(splitPath[i] == "assets") {
+            for ( let i = 0; i < splitPath.length; i++ )
+            {
+                if ( splitPath[ i ] == "assets" )
+                {
                     index = i;
                 }
             }
-            for(let i = index + 1; i < splitPath.length; i++) {
-                targetPath += "/" + splitPath[i];
+            for ( let i = index + 1; i < splitPath.length; i++ )
+            {
+                targetPath += "/" + splitPath[ i ];
             }
         }
         this.$.textureFolder.value = targetPath;
     },
-    async openDirectoryJSON() {
+    async openDirectoryJSON ()
+    {
         const config = {
             type: 'directory',
         };
-        const data = await Editor.Dialog.select(config);
-        this.$.pathJSON.value = data.filePaths[0];
+        const data = await Editor.Dialog.select( config );
+        this.$.pathJSON.value = data.filePaths[ 0 ];
 
         let targetPath = "";
-        if(data.filePaths[0] != null) {
-            const splitPath = data.filePaths[0].split('\\');
-            targetPath = splitPath[0]+"";
-            for(let i = 1; i < splitPath.length; i++) {
-                targetPath += "/" + splitPath[i];
+        if ( data.filePaths[ 0 ] != null )
+        {
+            const splitPath = data.filePaths[ 0 ].split( '\\' );
+            targetPath = splitPath[ 0 ] + "";
+            for ( let i = 1; i < splitPath.length; i++ )
+            {
+                targetPath += "/" + splitPath[ i ];
             }
         }
         this.$.pathJSON.value = targetPath;
     },
 
-    async create() {
-        const json = require(this.$.pathJSON.value + "/" + this.$.levelName.value + '.json');
+    async create ()
+    {
+        const json = require( this.$.pathJSON.value + "/" + this.$.levelName.value + '.json' );
         //console.log(this.$.Canvas.value);
-        if (json != null) {
-            let root = await Editor.Message.request('scene', 'create-node', {
-                "name" : this.$.levelName.value,
-                "assetUuid" : this.$.levelPrefab.value,
-            });
-            
-            let node = await Editor.Message.request('scene', 'query-node', root);
-            this.editNode(json, root, node)
+        if ( json != null )
+        {
+            let root = await Editor.Message.request( 'scene', 'create-node', {
+                "name": this.$.levelName.value,
+                "assetUuid": this.$.levelPrefab.value,
+            } );
+
+            let node = await Editor.Message.request( 'scene', 'query-node', root );
+            this.editNode( json, root, node )
         }
     },
 
-    async editNode(info, uuidNode, parentNode) {
-        const assets = await Editor.Message.request('asset-db', 'query-assets', {
+    async editNode ( info, uuidNode, parentNode )
+    {
+        const assets = await Editor.Message.request( 'asset-db', 'query-assets', {
             type: 'image',
-            pattern :  this.$.textureFolder.value+"/"+ this.$.levelName.value+"/**/*",
-        });
+            pattern: this.$.textureFolder.value + "/" + this.$.levelName.value + "/**/*",
+        } );
 
-        console.log(assets.length);
+        console.log( assets.length );
 
         var uuidLayer = [];
         let targetParent = parentNode;
         let targetUUIDParent = uuidNode;
 
         var maxIndexLayer = 0;
-        for(let i = 0; i < info.layers.length; i++) {
-            if(maxIndexLayer < parseInt(info.layers[i].layerOrder)) {
-                maxIndexLayer = parseInt(info.layers[i].layerOrder);
+        for ( let i = 0; i < info.layers.length; i++ )
+        {
+            if ( maxIndexLayer < parseInt( info.layers[ i ].layerOrder ) )
+            {
+                maxIndexLayer = parseInt( info.layers[ i ].layerOrder );
             }
         }
 
-        for(let i = 0; i <= maxIndexLayer; i++) {
-            let root = await Editor.Message.request('scene', 'create-node', {
-                "name" : "Layer_" + i,
-                "parent" : targetUUIDParent
-            });
-            uuidLayer.push(root);
+        for ( let i = 0; i <= maxIndexLayer; i++ )
+        {
+            let root = await Editor.Message.request( 'scene', 'create-node', {
+                "name": "Layer_" + i,
+                "parent": targetUUIDParent
+            } );
+            uuidLayer.push( root );
         }
-        let ratioPosition = parseFloat(this.$.ratioPosition.value);
+        let ratioPosition = parseFloat( this.$.ratioPosition.value );
         var indexBar = 0;
-        if (info) {
-            if(info.bars){
-                
-                for(let i = 0; i < info.bars.length; i++) {
-                    var child = info.bars[i];
-                    let splitName = child.shapeName.split('_');
-                    let root = await Editor.Message.request('scene', 'create-node', {
-                        "name" : child.shapeName,
-                        "parent" : uuidLayer[parseInt(child.layer)],
-                        "assetUuid" : this.$.barPrefab.value,
-                    });
-                    indexBar++;
-                    let node = await Editor.Message.request('scene', 'query-node', root);
-                    const position = node.position;
-                    Editor.Message.send('scene', 'set-property', {
-                        "uuid" : root,
-                        "path" : `position`,
-                        "dump": {
-                            "type": 'cc.Vec3',
-                            "value" : { x: child.position.x * ratioPosition, y: child.position.y * ratioPosition, z: 0 }
-                        }
-                    });
-                    const rotation = node.rotation;
-                    Editor.Message.send('scene', 'set-property', {
-                        "uuid" : root,
-                        "path" : `rotation`,
-                        "dump": {
-                            "type": 'cc.Vec3',
-                            "value" : { x: 0, y: 0, z: child.rotation }
-                        }
-                    });
-                    
-                    if(splitName[0] == "Bar") {
+        if ( info )
+        {
+            if ( info.bars )
+            {
 
-                        var uuidChildren = node.children[0].value.uuid
-                        let newNode = await Editor.Message.request('scene', 'query-node', uuidChildren);
-                        let posBar = splitName[2];
+                for ( let i = 0; i < info.bars.length; i++ )
+                {
+                    var child = info.bars[ i ];
+                    let splitName = child.shapeName.split( '_' );
+                    let root = await Editor.Message.request( 'scene', 'create-node', {
+                        "name": child.shapeName,
+                        "parent": uuidLayer[ parseInt( child.layer ) ],
+                        "assetUuid": this.$.barPrefab.value,
+                    } );
+                    indexBar++;
+                    let node = await Editor.Message.request( 'scene', 'query-node', root );
+                    const position = node.position;
+                    Editor.Message.send( 'scene', 'set-property', {
+                        "uuid": root,
+                        "path": `position`,
+                        "dump": {
+                            "type": 'cc.Vec3',
+                            "value": { x: child.position.x * ratioPosition, y: child.position.y * ratioPosition, z: 0 }
+                        }
+                    } );
+                    const rotation = node.rotation;
+                    Editor.Message.send( 'scene', 'set-property', {
+                        "uuid": root,
+                        "path": `rotation`,
+                        "dump": {
+                            "type": 'cc.Vec3',
+                            "value": { x: 0, y: 0, z: child.rotation }
+                        }
+                    } );
+
+                    if ( splitName[ 0 ] == "Bar" )
+                    {
+
+                        var uuidChildren = node.children[ 0 ].value.uuid
+                        let newNode = await Editor.Message.request( 'scene', 'query-node', uuidChildren );
+                        let posBar = splitName[ 2 ];
                         const comps = newNode.__comps__;
                         let textures = 0;
-                        
-                        for(let i = 0; i < assets.length; i++) {
-                           if(assets[i] != null){
-                                if(assets[i].name.split('.')[0] == child.shapeName) {
-                                    textures = assets[i].subAssets.f9941.uuid;
+
+                        for ( let i = 0; i < assets.length; i++ )
+                        {
+                            if ( assets[ i ] != null )
+                            {
+                                if ( assets[ i ].name.split( '.' )[ 0 ] == child.shapeName )
+                                {
+                                    textures = assets[ i ].subAssets.f9941.uuid;
                                     break;
                                 }
-                           }
-                        }                
-                        for(let i = 0; i< comps.length; i++) {
-                            if(comps[i].type === 'cc.Sprite') {
-                                Editor.Message.send('scene', 'set-property', {
-                                    "uuid" : uuidChildren,
-                                    "path" : `__comps__.${i}.spriteFrame`,
-                                    "dump" : {
-                                        "type" : 'cc.SpriteFrame',
-                                        "value" : {
-                                            "uuid" : textures
+                            }
+                        }
+                        for ( let i = 0; i < comps.length; i++ )
+                        {
+                            if ( comps[ i ].type === 'cc.Sprite' )
+                            {
+                                Editor.Message.send( 'scene', 'set-property', {
+                                    "uuid": uuidChildren,
+                                    "path": `__comps__.${ i }.spriteFrame`,
+                                    "dump": {
+                                        "type": 'cc.SpriteFrame',
+                                        "value": {
+                                            "uuid": textures
                                         }
                                     }
-                                });
+                                } );
                             }
                         }
 
-                        
+
                     }
-                  
+
                 };
             }
-            if(info.screws){
+            if ( info.screws )
+            {
                 let indexBolts = 0;
-                for(let i = 0; i < info.screws.length; i++) {
-                    var layer = parseInt(info.screws[i].layer);
-                    let root = await Editor.Message.request('scene', 'create-node', {
-                        "name" : "Screw_" + indexBolts,
-                        "parent" : uuidLayer[layer],
-                        "assetUuid" : this.$.screwPrefab.value,
-                    });
+                for ( let i = 0; i < info.screws.length; i++ )
+                {
+                    var layer = parseInt( info.screws[ i ].layer );
+                    let root = await Editor.Message.request( 'scene', 'create-node', {
+                        "name": "Screw_" + info.screws[ i ].colorIndex + "_" + info.screws[ i ].barName,
+                        "parent": uuidLayer[ layer ],
+                        "assetUuid": this.$.screwPrefab.value,
+                    } );
                     indexBolts++;
-                    let node = await Editor.Message.request('scene', 'query-node', root);
+                    let node = await Editor.Message.request( 'scene', 'query-node', root );
                     const position = node.position;
-                    Editor.Message.send('scene', 'set-property', {
-                        "uuid" : root,
-                        "path" : `position`,
+                    Editor.Message.send( 'scene', 'set-property', {
+                        "uuid": root,
+                        "path": `position`,
                         "dump": {
                             "type": 'cc.Vec3',
-                            "value" : { x: info.screws[i].position.x * ratioPosition, y: info.screws[i].position.y * ratioPosition, z: 0 }
+                            "value": { x: info.screws[ i ].position.x * ratioPosition, y: info.screws[ i ].position.y * ratioPosition, z: 0 }
                         }
-                    });
+                    } );
+
+                    // //test setvalue
+                    // const comps = node.__comps__;
+                    // for ( let i = 0; i < comps.length; i++ )
+                    // {
+                    //     if ( comps[ i ].type === 'ScrewRenderer' )
+                    //     {
+                    //         console.log( comps[ i ].type )
+                    //         Editor.Message.send( 'scene', 'set-property',
+                    //             {
+                    //                 "uuid": node.uuid,
+                    //                 "path": `__comps__.${ i }.colorIndex`,
+                    //                 "dump": {
+                    //                     "type": 'Number',
+                    //                     "value":
+                    //                     {
+                    //                         "colorIndex": info.screws[ i ].colorIndex
+                    //                     }
+                    //                 }
+                    //             } );
+                    //     }
+                    // }
                 };
-                
+
             }
         }
     },
 
-    async Testing(){
-        let root = await Editor.Message.request('scene', 'create-node', {
-            "name" : "Testing",
-            "assetUuid" : this.$.barPrefab.value,
-        });
-        let newNode = await Editor.Message.request('scene', 'query-node', root);
-        uuidNode = newNode.children[0].value.uuid;
-        let rendererNode = await Editor.Message.request('scene', 'query-node', uuidNode);
+    async Testing ()
+    {
+        let root = await Editor.Message.request( 'scene', 'create-node', {
+            "name": "Testing",
+            "assetUuid": this.$.barPrefab.value,
+        } );
+        let newNode = await Editor.Message.request( 'scene', 'query-node', root );
+        uuidNode = newNode.children[ 0 ].value.uuid;
+        let rendererNode = await Editor.Message.request( 'scene', 'query-node', uuidNode );
         const comps = rendererNode.__comps__;
-        for(let i = 0; i< comps.length; i++) {
-            if(comps[i].type === 'cc.Sprite') {
-                console.log(comps[i]);
+        for ( let i = 0; i < comps.length; i++ )
+        {
+            if ( comps[ i ].type === 'cc.Sprite' )
+            {
+                console.log( comps[ i ] );
             }
         }
         //_sizeMode

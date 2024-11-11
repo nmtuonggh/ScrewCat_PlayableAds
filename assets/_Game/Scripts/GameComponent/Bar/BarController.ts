@@ -40,8 +40,11 @@ export class BarController extends GameLayerComponent
         //         point.y * 0.7
         //     );
         // });
-
+        //log ten cua cac screw trong listScrews
+        
     }
+
+
 
     public SetCollider ()
     {

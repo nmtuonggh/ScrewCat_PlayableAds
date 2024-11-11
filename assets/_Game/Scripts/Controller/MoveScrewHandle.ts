@@ -48,6 +48,7 @@ export class MoveScrewHandle extends Component
         {
             MoveScrewHandle._instance = this;
         }
+        
         this.poolTouch.initializePool( 15 );
         input.on( Input.EventType.TOUCH_START, this.onTouchStart, this );
     }
