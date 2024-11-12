@@ -3,6 +3,7 @@ import { BarController } from './GameComponent/Bar/BarController';
 import { Screw } from './GameComponent/Screw/Screw';
 import { CCBoolean } from 'cc';
 import { PolygonCollider2D } from 'cc';
+import { Sprite } from 'cc';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 
@@ -91,11 +92,11 @@ export class Tool extends Component
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
             const bar = this.listBar[ i ];
-            const child = bar.node.children[ 0 ];
-            let childCollider = child.getComponent( PolygonCollider2D );
-
-            childCollider.destroy();
-            
+            // thêm 1 node vào trong bar.node
+            const node = new Node();
+            node.parent = bar.node;
+            node.addComponent(Sprite);
+            node.name = "HideShape";
         }
     }
 
