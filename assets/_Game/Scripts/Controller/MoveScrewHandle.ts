@@ -79,7 +79,7 @@ export class MoveScrewHandle extends Component
             this.tutorialController.stopTutorial();
             AudioController.Instance.PlayerBG();
         }
-
+        console.log( "currentScrew: ", GameManager.Instance.currentScrew );
         if ( GameManager.Instance.currentScrew <= 1 ) 
         {
             this.playableAdsManager.ForceOpenStore();
