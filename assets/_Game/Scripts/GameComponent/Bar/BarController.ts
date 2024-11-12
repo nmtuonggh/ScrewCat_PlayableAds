@@ -28,7 +28,7 @@ export class BarController extends GameLayerComponent
     @property( PolygonCollider2D )
     public modelCollider: PolygonCollider2D = null;
 
-    public sprite: Sprite = null;
+    public modelSprite: Sprite = null;
     @property( Sprite )
     public hideSprite: Sprite = null;
     //#endregion
@@ -36,7 +36,7 @@ export class BarController extends GameLayerComponent
     protected onLoad (): void
     {
         this.barPhysic = this.getComponent( BarPhysic );
-        this.sprite = this.node.children[ 0 ].getComponent( Sprite );
+        this.modelSprite = this.node.children[ 0 ].getComponent( Sprite );
     }
 
     protected start (): void
@@ -82,23 +82,16 @@ export class BarController extends GameLayerComponent
 
     public HideBar (): void
     {
-        this.sprite.color = new Color( 0, 0, 0, 255 );
+        this.modelSprite.node.active = false;
+        this.hideSprite.node.active = true;
     }
 
     public ShowBar (): void
     {
-        this.sprite.color = new Color( 255, 255, 255, 255 );
-    }
-
-    public FakeUnactiveBar (): void
-    {
-        this.sprite.enabled = false;
-    }
-
-    public FakeActiveBar (): void
-    {
-        this.sprite.enabled = true;
+        this.modelSprite.node.active = true;
+        this.hideSprite.node.active = false;
     }
 }
+
 
 

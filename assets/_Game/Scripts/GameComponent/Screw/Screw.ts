@@ -92,7 +92,7 @@ export class Screw extends GameLayerComponent
                 if ( moveSuccess === true )
                 {
                     this.FreeJoints();
-                    LevelController.Instance.RemoveScrewInLayer(this);
+                    LevelController.Instance.RemoveScrewInLayer( this );
                 }
 
                 break;
@@ -177,12 +177,12 @@ export class Screw extends GameLayerComponent
             let bar = this.cachedBarLayer[ i ].node.getComponent( BarController );
             if ( bar !== null )
             {
-                
+
                 //console.log( "Bar Layer: ", bar.Layer );
                 if ( bar.Layer > this.Layer )
                 {
-                    console.log( "Is blocked"  + bar.node.name);
-                    
+                    console.log( "Is blocked" + bar.node.name );
+
                     return true;
                 }
             }
@@ -205,7 +205,7 @@ export class Screw extends GameLayerComponent
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-        
+
         this.screwAnimation.ScrewOut();
         this.TweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
@@ -238,7 +238,7 @@ export class Screw extends GameLayerComponent
         this.linkingHole = hole;
         hole.linkingScrew = this;
         this.screwAnimation.ScrewOut();
-        
+
         this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
     }
 
@@ -263,6 +263,17 @@ export class Screw extends GameLayerComponent
 
     //#endregion
 
+    public Hide (): void
+    { 
+        this.screwRenderer.HideScrew(); 
+        this.State = eScrewState.IS_HIDING;
+    }
+
+    public Show (): void
+    {
+        this.screwRenderer.ShowScrew();
+        this.State = eScrewState.IN_BAR;
+    }
 }
 
 export enum eScrewState
@@ -270,6 +281,7 @@ export enum eScrewState
     IN_BAR = 0,
     IN_CACHED = 1,
     IN_BOX = 2,
+    IS_HIDING = 3,
     MOVING = 999
 }
 

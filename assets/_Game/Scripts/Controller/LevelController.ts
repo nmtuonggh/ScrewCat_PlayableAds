@@ -154,12 +154,12 @@ export class LevelController extends Component
             this.listLayer[ i ].listBar = listBar;
         }
 
-        //UnActive all layer + set black bar
+        //UnActive all layer + set hideSprite cua bar + hideScrew
         for ( let i = 0; i < this.listLayer.length; i++ )
         {
-            this.listLayer[ i ].SetHidingBarLayer();
-            this.listLayer[ i ].DeactiveLayer();
-            this.listLayer[ i ].DeactiveScrew();
+            this.listLayer[ i ].SetHideSpriteBar();
+            this.listLayer[ i ].UnActiveLayer();
+            this.listLayer[ i ].HideScrew();
             this.listUnActiveLayer.push( this.listLayer[ i ] );
         }
 
@@ -188,7 +188,7 @@ export class LevelController extends Component
     //#endregion
 
 
-
+    
     public RemoveScrewInLayer ( screw: Screw ): void
     {
         for ( let i = 0; i < this.listLayer.length; i++ )
@@ -229,13 +229,13 @@ export class LevelController extends Component
     {
         layer.ActiveLayer();
         this.listActiveLayer.push( layer );
-        console.log( "Active Layer: ", layer.layerOrder );
     }
 
     private SetPlayingLayer ( layer: GameLayer ): void
     {
-        layer.ActiveScrew();
-        layer.SetPlayingBarLayer();
+        //bat screw + show bar
+        layer.ShowScrew();
+        layer.SetNormalSpriteBarInLayer();
         //layer.SetDynamicBarLayer();
         this.listPlayingLayer.push( layer );
         console.log( "Playing Layer: ", layer.layerOrder );

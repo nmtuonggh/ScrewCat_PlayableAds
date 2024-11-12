@@ -91,11 +91,12 @@ export class Tool extends Component
 
     public setCollider2222222 (): void    
     {
-        for ( let i = 0; i < this.listScrew.length; i++ ) 
+        for ( let i = 0; i < this.listBar.length; i++ ) 
         {
-            const screw = this.listScrew[ i ];
-            let child2 = screw.node.children[ 0 ];
-            screw.ScrewRenderer.botSprite = child2.getComponent( Sprite );
+            const bar = this.listBar[ i ];
+            let child2 = bar.node.children[ 1 ];
+            child2.layer = 1 << 25;
+            
         }
     }
 

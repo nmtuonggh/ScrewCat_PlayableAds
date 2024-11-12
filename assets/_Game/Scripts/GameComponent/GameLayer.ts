@@ -31,7 +31,7 @@ export class GameLayer extends Component
         this.node.active = true;
     }
 
-    public DeactiveLayer (): void
+    public UnActiveLayer (): void
     {
         this.node.active = false;
     }
@@ -49,21 +49,21 @@ export class GameLayer extends Component
         this.screwCount--;
     }
 
-    public ActiveScrew (): void{
+    public ShowScrew (): void{
         for ( let i = 0; i < this.listScrew.length; i++ )
         {
-            this.listScrew[i].ScrewRenderer.ShowScrew();
+            this.listScrew[i].Show();
         }
     }
 
-    public DeactiveScrew (): void{
+    public HideScrew (): void{
         for ( let i = 0; i < this.listScrew.length; i++ )
         {
-            this.listScrew[i].ScrewRenderer.HideScrew();
+            this.listScrew[i].Hide();
         }
     }
 
-    public SetPlayingBarLayer (): void
+    public SetNormalSpriteBarInLayer (): void
     {
         for ( let i = 0; i < this.listBar.length; i++ )
         {
@@ -72,7 +72,7 @@ export class GameLayer extends Component
         }
     }
 
-    public SetHidingBarLayer (): void
+    public SetHideSpriteBar (): void
     {
         for ( let i = 0; i < this.listBar.length; i++ )
         {
