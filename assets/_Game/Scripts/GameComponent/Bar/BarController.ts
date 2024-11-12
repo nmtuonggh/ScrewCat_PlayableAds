@@ -29,7 +29,8 @@ export class BarController extends GameLayerComponent
     public modelCollider: PolygonCollider2D = null;
 
     public sprite: Sprite = null;
-
+    @property( Sprite )
+    public hideSprite: Sprite = null;
     //#endregion
 
     protected onLoad (): void

@@ -92,11 +92,13 @@ export class Tool extends Component
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
             const bar = this.listBar[ i ];
-            // thêm 1 node vào trong bar.node
-            const node = new Node();
-            node.parent = bar.node;
-            node.addComponent(Sprite);
-            node.name = "HideShape";
+            let child2 = bar.node.children[ 1 ];
+            let child1 = bar.node.children[ 0 ];
+
+            child2.scale = child1.scale;
+            bar.hideSprite = child2.getComponent( Sprite );
+            
+
         }
     }
 
