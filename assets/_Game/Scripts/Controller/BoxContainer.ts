@@ -95,7 +95,7 @@ export class BoxContainer extends Component
     {
         const box = instantiate( data.boxAdsPrefab );
         box.parent = parent;
-        box.setPosition( new Vec3( 0, 0, 0 ) );
+        //box.setPosition( new Vec3( 0, 0, 0 ) );
     }
 
     public CheckCreateBox (): void
@@ -109,6 +109,7 @@ export class BoxContainer extends Component
 
         for ( const boxSlot of this.boxSlots )
         {
+            if ( boxSlot.isAds ) continue;
             const box = boxSlot.Box;
             if ( box === null )
             {
@@ -133,7 +134,7 @@ export class BoxContainer extends Component
 
         ///
         const boxNode = instantiate( this.BoxData.boxPrefab[ holeCount - 1 ] );
-        boxNode.parent = boxSlot.node;
+        boxNode.parent = boxSlot.boxHolder;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
         box.boxRenderer.SetBoxData( color, this.BoxData );

@@ -101,13 +101,14 @@ export class LevelController extends Component
             const boxSlot = listBoxSlot[ i ];
             if ( boxSlot.isAds )
             {
-                BoxContainer.Instance.InitAdsBox( boxSlot.node, this.BoxData );
+                boxSlot.boxAdsPrefab.active = true;
+                boxSlot.SetUnlockBox();
             }
             else
             {
                 const color = this.colorBoxSpawnData[ this.currentIndex ].color;
                 const holeCount = this.colorBoxSpawnData[ this.currentIndex ].holeCount;
-                BoxContainer.Instance.InitBox( color, boxSlot.node, this.BoxData, holeCount );
+                BoxContainer.Instance.InitBox( color, boxSlot.boxHolder, this.BoxData, holeCount );
                 boxSlot.InitBoxSlotData();
                 this.currentIndex++;
             }

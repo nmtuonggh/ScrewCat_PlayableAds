@@ -12,6 +12,7 @@ import { GameConfig } from '../../../GameConfig/GameConfig';
 import { MeowAnimation } from '../../../MeowAnimation';
 import { StarController } from '../../../Star/StarController';
 import { GameManager } from '../../../Manager/GameManager';
+import { UnlockBoxController } from '../../../UnlockBoxConcept/UnlockBoxController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -28,7 +29,7 @@ export class Box extends HoleContainer
     {
         this.listHoles = this.getComponentsInChildren( HoleColor );
         this.boxRenderer = this.getComponent( BoxRenderer );
-        this.boxSlotOwner = this.node.parent.getComponent( BoxSlot );
+        this.boxSlotOwner = this.node.parent.parent.getComponent( BoxSlot );
     }
 
     protected start (): void
@@ -106,6 +107,7 @@ export class Box extends HoleContainer
             {
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
+                UnlockBoxController.Instance.AddLockCount();
                 BoxContainer.Instance.CheckCreateBox();
                 BoxContainer.Instance.RemoveActiveBox( this );
             } )
