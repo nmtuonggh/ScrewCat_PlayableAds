@@ -88,6 +88,16 @@ export class BarController extends GameLayerComponent
     {
         this.sprite.color = new Color( 255, 255, 255, 255 );
     }
+
+    public FakeUnactiveBar (): void
+    {
+        this.sprite.enabled = false;
+    }
+
+    public FakeActiveBar (): void
+    {
+        this.sprite.enabled = true;
+    }
 }
 
 

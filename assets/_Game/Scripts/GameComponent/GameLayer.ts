@@ -1,6 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { Screw } from './Screw/Screw';
 import { BarController } from './Bar/BarController';
+import { GameLayerComponent } from './GameLayerComponent';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameLayer' )
@@ -38,7 +39,7 @@ export class GameLayer extends Component
     public InitDataLayer():void
     {
         this.listScrew = this.node.getComponentsInChildren(Screw);
-        //this.listBar = this.node.getComponentsInChildren(BarController);
+        //this.listBar = this.node.getComponentsInChildren(GameLayerComponent) as BarController[];
         this.screwCount = this.listScrew.length;
         
     }
@@ -51,14 +52,14 @@ export class GameLayer extends Component
     public ActiveScrew (): void{
         for ( let i = 0; i < this.listScrew.length; i++ )
         {
-            this.listScrew[i].node.active = true;
+            this.listScrew[i].ScrewRenderer.ShowScrew();
         }
     }
 
     public DeactiveScrew (): void{
         for ( let i = 0; i < this.listScrew.length; i++ )
         {
-            this.listScrew[i].node.active = false;
+            this.listScrew[i].ScrewRenderer.HideScrew();
         }
     }
 
@@ -77,6 +78,24 @@ export class GameLayer extends Component
         {
             const bar = this.listBar[ i ];
             bar.HideBar();
+        }
+    }
+
+    public SetKinematicBarLayer (): void
+    {
+        for ( let i = 0; i < this.listBar.length; i++ )
+        {
+            const bar = this.listBar[ i ];
+            bar.barPhysic.SetKinematic();
+        }
+    }
+
+    public SetDynamicBarLayer (): void
+    {
+        for ( let i = 0; i < this.listBar.length; i++ )
+        {
+            const bar = this.listBar[ i ];
+            bar.barPhysic.SetDynamic();
         }
     }
 }

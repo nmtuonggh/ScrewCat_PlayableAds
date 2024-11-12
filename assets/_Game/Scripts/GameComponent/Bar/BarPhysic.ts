@@ -4,6 +4,7 @@ import { UI } from 'cc';
 import { Vec3 } from 'cc';
 import { Sprite } from 'cc';
 import { UITransform } from 'cc';
+import { ERigidBody2DType } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('BarPhysic')
@@ -52,6 +53,14 @@ export class BarPhysic extends Component {
         }
     }
 
+    public DisableHGJoin (): void
+    {
+        for ( let i = 0; i < this.barController.listScrews.length; i++ ) 
+        {
+            this.barController.listScrews[ i ].hingeJoint.enabled = false;
+        }
+    }
+
     //#endregion
 
     SetGroupLayer() : void
@@ -60,6 +69,16 @@ export class BarPhysic extends Component {
         if(this.rb === null) console.error("Rigidbody2D is null");
 
         this.rb.group = 1 << this.barController.Layer +13;
+    }
+
+    public SetKinematic () : void
+    {
+        this.rb.type = ERigidBody2DType.Kinematic;
+    }
+
+    public SetDynamic () : void
+    {
+        this.rb.type = ERigidBody2DType.Dynamic;
     }
 }
 

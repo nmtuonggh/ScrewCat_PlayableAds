@@ -12,7 +12,7 @@ export class TrackingManager extends Component {
 
     static api_secret : string = `ymcwxS12SSi6IavS3-Jj-Q`;
     static firebase_app_id : string= `1:444377725360:android:b0bef9148a16a69aa27e75`;
-    static package_name : string = `com.ig.weapon.backpack`;
+    static package_name : string = `com.ig.screw.cat`;
     static os : OPERATING_SYSTEM = OPERATING_SYSTEM.NONE;
 
     static returnGame : USER_RETURN = USER_RETURN._false;
@@ -80,7 +80,8 @@ export class TrackingManager extends Component {
         const currentTime = new Date().getTime();
         const timeString = currentTime.toString(16);
         const timeStringLength = timeString.length;
-        for (let i = 0; i < 32 - timeStringLength; i++) {
+        for (let i = 0; i < 32 - timeStringLength; i++) 
+        {
             randomStr += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return timeString + randomStr;

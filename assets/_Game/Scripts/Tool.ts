@@ -2,6 +2,7 @@ import { _decorator, Component, Node } from 'cc';
 import { BarController } from './GameComponent/Bar/BarController';
 import { Screw } from './GameComponent/Screw/Screw';
 import { CCBoolean } from 'cc';
+import { PolygonCollider2D } from 'cc';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 
@@ -15,6 +16,9 @@ export class Tool extends Component
     public setlayer: boolean = false;
     @property( CCBoolean )
     public setScrewToBar: boolean = false;
+
+    @property( CCBoolean )
+    public runSetCollider2222222: boolean = false;
 
     @property( BarController )
     public listBar: BarController[] = [];
@@ -39,6 +43,11 @@ export class Tool extends Component
             this.listScrew = this.barparent.getComponentsInChildren( Screw );
         }
 
+        if ( this.setCollider2222222 )
+        {
+            this.listBar = this.barparent.getComponentsInChildren( BarController );
+        }
+
     }
 
     protected start (): void
@@ -57,16 +66,36 @@ export class Tool extends Component
         {
             this.SetScrewBar();
         }
+
+        if ( this.runSetCollider2222222 )
+        {
+            this.setCollider2222222();
+        }
     }
 
     public setCollider (): void    
     {
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
+
             const bar = this.listBar[ i ];
             bar.SetCollider();
             //bar.collider.threshold = 5; 
             bar.modelCollider.destroy();
+        }
+    }
+
+
+    public setCollider2222222 (): void    
+    {
+        for ( let i = 0; i < this.listBar.length; i++ ) 
+        {
+            const bar = this.listBar[ i ];
+            const child = bar.node.children[ 0 ];
+            let childCollider = child.getComponent( PolygonCollider2D );
+
+            childCollider.destroy();
+            
         }
     }
 
@@ -113,7 +142,7 @@ export class Tool extends Component
                 screw.ScrewRenderer.colorIndex = parseInt( colorIndex );
 
             }
-            
+
 
             console.log( "Screw: ", bar.listScrews.length );
         }

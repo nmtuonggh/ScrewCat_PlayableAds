@@ -16,7 +16,7 @@ export class BoxContainer extends Component
 {
     @property( BoxData )
     private BoxData: BoxData = null;
-    @property(Prefab)
+    @property( Prefab )
     public grap: Prefab = null;
 
     public boxSlots: BoxSlot[] = [];
@@ -43,6 +43,8 @@ export class BoxContainer extends Component
     {
         for ( const boxSlot of this.boxSlots )
         {
+            if ( boxSlot.isAds ) continue;
+
             const box = boxSlot.Box;
             if ( box !== null )
             {
@@ -70,33 +72,40 @@ export class BoxContainer extends Component
     public GetBoxAvailable (): Box[]
     {
         let box = [];
-        for(const slot of this.boxSlots)
+        for ( const slot of this.boxSlots )
         {
-            if(slot.Box !== null)
+            if ( slot.Box !== null )
             {
-                box.push(slot.Box);
+                box.push( slot.Box );
             }
         }
         return box;
     }
 
-    public InitBox ( colorType: eColorType, parent: Node, data: BoxData , holeCount: number): void
+    public InitBox ( colorType: eColorType, parent: Node, data: BoxData, holeCount: number ): void
     {
-        const box = instantiate( data.boxPrefab[holeCount - 1] );
+        const box = instantiate( data.boxPrefab[ holeCount - 1 ] );
         box.parent = parent;
         box.setPosition( new Vec3( 0, 0, 0 ) );
         const boxComponent = box.getComponent( Box );
         boxComponent.boxRenderer.SetBoxData( colorType, data );
     }
 
+    public InitAdsBox ( parent: Node, data: BoxData ): void
+    {
+        const box = instantiate( data.boxAdsPrefab );
+        box.parent = parent;
+        box.setPosition( new Vec3( 0, 0, 0 ) );
+    }
+
     public CheckCreateBox (): void
     {
-        if ( !this.needMoreBox() )
-        {
-            return;
-        }
+        // if ( !this.needMoreBox() )
+        // {
+        //     return;
+        // }
 
-        if(LevelController.Instance.currentIndex >= LevelController.Instance.colorBoxSpawnData.length) return;
+        if ( LevelController.Instance.currentIndex >= LevelController.Instance.colorBoxSpawnData.length ) return;
 
         for ( const boxSlot of this.boxSlots )
         {
@@ -112,18 +121,18 @@ export class BoxContainer extends Component
     public CreatBox ( boxSlot: BoxSlot ): Box
     {
         ///
-        
-        console.log( "Create Box with index : "  + LevelController.Instance.currentIndex + " color: " 
-            +  LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color + " holeCount: " 
+
+        console.log( "Create Box with index : " + LevelController.Instance.currentIndex + " color: "
+            + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color + " holeCount: "
             + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount );
 
         const color = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color;
         const holeCount = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount;
 
-        if (color === eColorType.None) return null;
+        if ( color === eColorType.None ) return null;
 
         ///
-        const boxNode = instantiate( this.BoxData.boxPrefab[holeCount - 1] );
+        const boxNode = instantiate( this.BoxData.boxPrefab[ holeCount - 1 ] );
         boxNode.parent = boxSlot.node;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
@@ -143,7 +152,7 @@ export class BoxContainer extends Component
     public needMoreBox (): boolean
     {
         let screwRemain = GameManager.Instance.GetRemainningScrew();
-    
+
         for ( const box of this.boxIsActive )
         {
             screwRemain -= box.GetFreeHoleCount();
@@ -160,22 +169,11 @@ export class BoxContainer extends Component
     public GetMostColorType (): eColorType
     {
         let mostColorType;
-        if(CahedContainer.Instance.GetMostColorType() !== eColorType.None)
+        if ( CahedContainer.Instance.GetMostColorType() !== eColorType.None )
         {
             mostColorType = CahedContainer.Instance.GetMostColorType();
         }
         return mostColorType;
-    }
-
-    private GetHoleNeedForBox (color : eColorType): number
-    {
-        for ( const box of this.boxIsActive )
-        {
-            if ( box.boxRenderer.colorType === color )
-            {
-                return box.GetFreeHoleCount();
-            }
-        }
     }
 
 }

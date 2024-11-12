@@ -36,6 +36,27 @@ export class ScrewRenderer extends Component
         this.colorType = this.colorIndex;
     }
 
+    public HideScrew (): void
+    {
+        this.topSprite.color = color( 0, 0, 0, 255 );
+    }
+
+    public ShowScrew (): void
+    {
+        this.topSprite.color = color( 255, 255, 255, 255 );
+    }
+
+    public FakeUnActiveScrew (): void
+    {
+        this.topSprite.enabled = false;
+       
+    }
+
+    public FakeActiveScrew (): void
+    {
+        this.topSprite.enabled = true;
+    }
+
 }
 
 
