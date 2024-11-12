@@ -10,6 +10,8 @@ export class ScrewRenderer extends Component
 {
     @property(Sprite)
     private topSprite: Sprite = null
+    @property(Sprite)
+    public botSprite: Sprite = null
 
     @property( { type: Enum(eColorType) } )
     public colorType: eColorType = eColorType.Green;

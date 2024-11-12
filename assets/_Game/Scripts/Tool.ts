@@ -47,6 +47,8 @@ export class Tool extends Component
         if ( this.setCollider2222222 )
         {
             this.listBar = this.barparent.getComponentsInChildren( BarController );
+            this.listScrew = this.barparent.getComponentsInChildren( Screw );
+
         }
 
     }
@@ -89,16 +91,11 @@ export class Tool extends Component
 
     public setCollider2222222 (): void    
     {
-        for ( let i = 0; i < this.listBar.length; i++ ) 
+        for ( let i = 0; i < this.listScrew.length; i++ ) 
         {
-            const bar = this.listBar[ i ];
-            let child2 = bar.node.children[ 1 ];
-            let child1 = bar.node.children[ 0 ];
-
-            child2.scale = child1.scale;
-            bar.hideSprite = child2.getComponent( Sprite );
-            
-
+            const screw = this.listScrew[ i ];
+            let child2 = screw.node.children[ 0 ];
+            screw.ScrewRenderer.botSprite = child2.getComponent( Sprite );
         }
     }
 
