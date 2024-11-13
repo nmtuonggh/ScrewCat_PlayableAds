@@ -518,7 +518,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "d28fd848-9a86-415c-842c-e6196e6ab625@f9941",
+      "__uuid__": "58c6f04a-4a37-43e4-842a-d3b5f636d5c2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -1109,7 +1109,7 @@
     "propertyPath": [
       "lockCount"
     ],
-    "value": 1
+    "value": 10
   },
   {
     "__type__": "CCPropertyOverrideInfo",
@@ -1299,7 +1299,7 @@
     "propertyPath": [
       "lockCount"
     ],
-    "value": 2
+    "value": 20
   },
   {
     "__type__": "CCPropertyOverrideInfo",
@@ -101246,7 +101246,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "f9562877-b13b-42fc-bc39-6a35f34d9627@f9941",
+      "__uuid__": "ff83d1f0-4474-4e89-989e-8e963182ed49@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -101561,7 +101561,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "f9562877-b13b-42fc-bc39-6a35f34d9627@f9941",
+      "__uuid__": "ff83d1f0-4474-4e89-989e-8e963182ed49@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -101746,7 +101746,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 160.03990173339844,
+      "width": 169.6875,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -101994,7 +101994,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 191.87989807128906,
+      "width": 195.625,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -103412,7 +103412,7 @@
       "__expectedType__": "cc.SpriteFrame"
     },
     "backgroundLandscape": {
-      "__uuid__": "7c9530aa-8fbf-4209-8ebc-696dd018ce4a@f9941",
+      "__uuid__": "58c6f04a-4a37-43e4-842a-d3b5f636d5c2@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "tutorialController": {
