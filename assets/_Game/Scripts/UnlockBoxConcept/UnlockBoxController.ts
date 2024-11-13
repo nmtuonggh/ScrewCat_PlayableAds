@@ -69,7 +69,7 @@ export class UnlockBoxController extends Component
         this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
 
         AudioController.Instance.PlayAudio( AudioType.unlockChain);
-        this.currentLockBoxSlot.ActAnimation();
+        this.currentLockBoxSlot.UnlockAnimation();
             setTimeout( () =>
             {
                 this.currentLockBoxSlot.lockAnim.node.active = false;

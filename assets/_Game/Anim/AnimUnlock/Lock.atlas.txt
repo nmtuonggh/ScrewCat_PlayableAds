@@ -6,10 +6,10 @@ filter: Linear,Linear
 repeat: none
 2_00000
   rotate: false
-  xy: 89, 47
-  size: 28, 39
+  xy: 89, 46
+  size: 29, 40
   orig: 94, 89
-  offset: 33, 33
+  offset: 33, 32
   index: -1
 Lock_00007
   rotate: true
