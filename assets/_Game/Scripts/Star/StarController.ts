@@ -16,7 +16,7 @@ export class StarController extends Component
     private starPrefab: Prefab = null;
     @property( Node )
     private Holder: Node = null;
-    @property(Prefab)
+    @property( Prefab )
     private starParticle: Prefab = null;
 
     private static _instance: StarController = null;
@@ -39,7 +39,7 @@ export class StarController extends Component
     protected start (): void
     {
         this.SetFillAmount();
-        
+
     }
 
     public SetFillAmount (): void
@@ -50,11 +50,11 @@ export class StarController extends Component
         {
             const value = collectedScrew / toltalScrew;
             const intValue = Math.round( value * 100 ); // Làm tròn giá trị đến số nguyên gần nhất và nhân với 100
-            this.text.string = `${ intValue }`;
+            this.text.string = `${ intValue }%`;
             //this.starSprite.fillRange = value; 
-            tween(this.starSprite)
-            .to( 0.5, { fillRange: value } )
-            .start();
+            tween( this.starSprite )
+                .to( 0.5, { fillRange: value } )
+                .start();
         }
         else
         {
@@ -87,11 +87,12 @@ export class StarController extends Component
     public TweenMove ( star: Node ): void
     {
         tween( star )
-            .to( 0.5, { worldPosition: this.node.worldPosition } , { easing: 'backIn' } )
+            .to( 0.7, { worldPosition: this.node.worldPosition }, { easing: 'backIn' } )
             .call( () =>
             {
                 star.destroy();
                 this.SetFillAmount();
+                this.AnimGetStar();
             } )
             .start();
     }
@@ -105,6 +106,14 @@ export class StarController extends Component
         {
             particle.destroy();
         }, 2000 );
+    }
+
+    public AnimGetStar (): void 
+    { 
+        tween(this.node)
+        .to(0.2, { scale: new Vec3( 1, 1, 1 ) } )
+        .to(0.2, { scale: new Vec3( 0.7, 0.7, 1 ) })
+        .start();
     }
 }
 

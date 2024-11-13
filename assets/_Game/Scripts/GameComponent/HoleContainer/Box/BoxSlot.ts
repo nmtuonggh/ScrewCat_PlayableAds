@@ -48,7 +48,7 @@ export class BoxSlot extends Component
     public SetTextLockBox (): void
     {
         this.lockText.node.active = true;
-        this.lockText.color = new Color( 70, 70, 70 );
+        this.lockText.color = new Color( 255, 255, 255 );
         this.lockText.string = this.currentCount + "/" + this.lockCount;
     }
 

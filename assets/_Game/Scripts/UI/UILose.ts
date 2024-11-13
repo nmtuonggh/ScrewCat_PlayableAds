@@ -16,9 +16,7 @@ export class UILose extends Component
     public loseUI: Node = null!;
     protected onEnable (): void
     {
-
         this.TweenBtn();
-
     }
 
     public TweenBtn (): void

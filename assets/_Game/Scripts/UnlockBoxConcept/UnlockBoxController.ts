@@ -1,6 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { BoxSlot } from '../GameComponent/HoleContainer/Box/BoxSlot';
 import { BoxContainer } from '../Controller/BoxContainer';
+import { AudioController, AudioType } from '../AudioController/AudioController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'UnlockBoxController' )
@@ -59,13 +60,6 @@ export class UnlockBoxController extends Component
             this.currentLockBoxSlot.boxAdsPrefab.active = false;
             this.lockBoxSlot.shift();
             this.SetCurrentBlockBox();
-
-            this.currentLockBoxSlot[ 1 ].ActAnimation();
-            setTimeout( () =>
-            {
-                this.lockBoxSlot[ 1 ].SetTextLockBox();
-            }, 1000 );
-
         }
     }
 
@@ -73,6 +67,14 @@ export class UnlockBoxController extends Component
     {
         if ( this.lockBoxSlot.length === 0 ) return;
         this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
+
+        AudioController.Instance.PlayAudio( AudioType.unlockChain);
+        this.currentLockBoxSlot.ActAnimation();
+            setTimeout( () =>
+            {
+                this.currentLockBoxSlot.lockAnim.node.active = false;
+                this.currentLockBoxSlot.SetTextLockBox();
+            }, 1000 );
     }
 
     public InitBlockBox (): void

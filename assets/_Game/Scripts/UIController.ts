@@ -1,5 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { BoxContainer } from './Controller/BoxContainer';
+import { tween } from 'cc';
+import { Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIController')
@@ -14,7 +16,7 @@ export class UIController extends Component {
     @property(Node)
     public StarCollection : Node = null;
     @property(Node)
-    public HandTutorial : Node = null;
+    public FailUI : Node = null;
 
 
     protected static _instance: UIController = null;
@@ -48,6 +50,13 @@ export class UIController extends Component {
         this.IconGame.setPosition(-430, -140, 0);
         this.StarCollection.setPosition(550, 700, 0);
         
+    }
+
+    public TweenFail():void{
+        this.FailUI.active = true;
+        tween(this.FailUI)
+        .to(0.5, {scale: new Vec3(1.5, 1.5, 1)})
+        .start();
     }
 }
 

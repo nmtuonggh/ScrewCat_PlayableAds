@@ -57,6 +57,7 @@ export enum AudioType
     boxComplete = 3,
     lose = 4,
     bgm = 5,
+    unlockChain = 6,
 }
 
 

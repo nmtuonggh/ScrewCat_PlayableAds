@@ -4,6 +4,8 @@ import { StarController } from '../Star/StarController';
 import { GameLayer } from '../GameComponent/GameLayer';
 import { group } from 'console';
 import { AudioController, AudioType } from '../AudioController/AudioController';
+import { UIManager } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/3d/manager/ui';
+import { UIController } from '../UIController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameManager' )
@@ -58,6 +60,8 @@ export class GameManager extends Component
         {
             AudioController.Instance.PlayAudio( AudioType.lose );
             AudioController.Instance.bg.stop();
+            UIController.Instance.TweenFail();
+
             //wait for 2s
             setTimeout( () =>
             {
@@ -72,24 +76,6 @@ export class GameManager extends Component
         return this.currentScrew;
     }
 
-
-    InitLayer (): void
-    {
-        //this.layerList = this.LevelContainer.getComponentsInChildren( GameLayer );
-
-        // for ( let i = this.layerList.length; i >= 0; i-- )
-        // {
-        //     if ( i < this.activeLayer )
-        //     {
-        //         this.layerList[ i ].node.active = true;
-        //     }
-        //     else
-        //     {
-        //         this.layerList[ i ].node.active = false;
-        //     }
-        // }
-
-    }
 }
 
 
