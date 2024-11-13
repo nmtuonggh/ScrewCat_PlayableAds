@@ -87,6 +87,7 @@ export class Tool extends Component
             //bar.collider.threshold = 5; 
             bar.modelCollider.destroy();
         }
+               
     }
 
 
