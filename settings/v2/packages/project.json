@@ -12,6 +12,10 @@
     {
       "name": "BotScrew",
       "value": 512
+    },
+    {
+      "name": "BackGround",
+      "value": 524288
     }
   ],
   "physics": {

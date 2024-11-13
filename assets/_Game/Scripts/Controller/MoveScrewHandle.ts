@@ -15,6 +15,10 @@ import { PlayableAdsManager } from '../../../PA_iKame/base-script/PlayableAds/Pl
 import { GameManager } from '../Manager/GameManager';
 import { Game } from 'cc';
 import { EventTouch } from 'cc';
+import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
+import { ParticleSystem } from 'cc';
+import { instantiate } from 'cc';
+import { Prefab } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -29,6 +33,10 @@ export class MoveScrewHandle extends Component
     private poolTouch: PoolTouch = null;
     @property( PlayableAdsManager )
     private playableAdsManager: PlayableAdsManager = null;
+    @property(Prefab)
+    private touchEffect: Prefab = null;
+    @property( Node )
+    private touchHolder: Node = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
 
@@ -79,7 +87,7 @@ export class MoveScrewHandle extends Component
             this.tutorialController.stopTutorial();
             AudioController.Instance.PlayerBG();
         }
-        console.log( "currentScrew: ", GameManager.Instance.currentScrew );
+        
         if ( GameManager.Instance.currentScrew <= 1 ) 
         {
             this.playableAdsManager.ForceOpenStore();
@@ -116,39 +124,40 @@ export class MoveScrewHandle extends Component
     private CheckClick ( layer: Layers ): GameLayerComponent
     {
         this.cachedColliders = [];
-        // const aabb = new Rect(
-        //     this._lastMousePosition.x - GameConfig.CLICK_RADIUS,
-        //     this._lastMousePosition.y - GameConfig.CLICK_RADIUS,
-        //     GameConfig.CLICK_RADIUS * 2,
-        //     GameConfig.CLICK_RADIUS * 2 );
+        const aabb = new Rect(
+            this._lastMousePosition.x - GameConfig.CLICK_RADIUS,
+            this._lastMousePosition.y - GameConfig.CLICK_RADIUS,
+            GameConfig.CLICK_RADIUS * 2,
+            GameConfig.CLICK_RADIUS * 2 );
+
+        let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
 
         //ban 10 diem xung quanh
-        const points = [];
-        const numPoints = 10;
-        const angleStep = ( 2 * Math.PI ) / numPoints;
+        // const points = [];
+        // const numPoints = 10;
+        // const angleStep = ( 2 * Math.PI ) / numPoints;
 
-        for ( let i = 0; i < numPoints; i++ )
-        {
-            const angle = i * angleStep;
-            const x = this._lastMousePosition.x + GameConfig.CLICK_RADIUS * Math.cos( angle );
-            const y = this._lastMousePosition.y + GameConfig.CLICK_RADIUS * Math.sin( angle );
-            points.push( new Vec2( x, y ) );
-        }
+        // for ( let i = 0; i < numPoints; i++ )
+        // {
+        //     const angle = i * angleStep;
+        //     const x = this._lastMousePosition.x + GameConfig.CLICK_RADIUS * Math.cos( angle );
+        //     const y = this._lastMousePosition.y + GameConfig.CLICK_RADIUS * Math.sin( angle );
+        //     points.push( new Vec2( x, y ) );
+        // }
 
-        let cachedCols: Collider2D[] = [];
-        //let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
+        // let cachedCols: Collider2D[] = [];
 
-        for ( const point of points )
-        {
-            let collider = PhysicsSystem2D.instance.testPoint( point );
-            if ( collider.length > 0 )
-            {
-                for ( let i = 0; i < collider.length; i++ )
-                {
-                    cachedCols.push( collider[ i ] );
-                }
-            }
-        }
+        // for ( const point of points )
+        // {
+        //     let collider = PhysicsSystem2D.instance.testPoint( point );
+        //     if ( collider.length > 0 )
+        //     {
+        //         for ( let i = 0; i < collider.length; i++ )
+        //         {
+        //             cachedCols.push( collider[ i ] );
+        //         }
+        //     }
+        // }
 
         //loc cac collider theo layer
         if ( cachedCols.length === 0 ) return null;
@@ -226,18 +235,21 @@ export class MoveScrewHandle extends Component
 
     private pointSpawnTouchEffect ( pos: Vec2 ): void
     {
-        const touch = this.poolTouch.getFromPool();
+        // const touch = this.poolTouch.getFromPool();
+        // touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
+        // touch.getComponent(ParticleSystem).play();
+    
+        // setTimeout( () =>
+        // {
+        //    this.poolTouch.returnToPool( touch );
+        // }, 1000 );
 
-        touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
-        touch.setScale( new Vec3( 0.1, 0.1, 0.1 ) );
-
-        tween( touch )
-            .to( 0.4, { worldScale: new Vec3( 1, 1, 1 ) } )
-            .call( () =>
-            {
-                this.poolTouch.returnToPool( touch );
-            } )
-            .start();
-        // 
+        const particle = instantiate( this.touchEffect );
+        particle.parent = this.touchHolder;
+        particle.worldPosition = new Vec3( pos.x, pos.y, 0 );
+        setTimeout( () =>
+        {
+            particle.destroy();
+        }, 2000 );
     }
 }

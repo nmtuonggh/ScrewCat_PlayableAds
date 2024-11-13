@@ -1,0 +1,77 @@
+{
+"skeleton": {
+	"hash": "1mODegTqxbtQylEy2XdK9+yLLY0",
+	"spine": "3.8.99",
+	"x": -201,
+	"y": -119,
+	"width": 402,
+	"height": 238,
+	"images": "./Comp 1/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root" }
+],
+"slots": [
+	{ "name": "collect Start", "bone": "bone", "attachment": "Comp 1_00000" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"collect Start": {
+				"Comp 1_00000": { "width": 402, "height": 238 },
+				"Comp 1_00001": { "width": 402, "height": 238 },
+				"Comp 1_00002": { "width": 402, "height": 238 },
+				"Comp 1_00003": { "width": 402, "height": 238 },
+				"Comp 1_00004": { "width": 402, "height": 238 },
+				"Comp 1_00005": { "width": 402, "height": 238 },
+				"Comp 1_00006": { "width": 402, "height": 238 },
+				"Comp 1_00007": { "width": 402, "height": 238 },
+				"Comp 1_00008": { "width": 402, "height": 238 },
+				"Comp 1_00009": { "width": 402, "height": 238 },
+				"Comp 1_00010": { "width": 402, "height": 238 },
+				"Comp 1_00011": { "width": 402, "height": 238 },
+				"Comp 1_00012": { "width": 402, "height": 238 },
+				"Comp 1_00013": { "width": 402, "height": 238 },
+				"Comp 1_00014": { "width": 402, "height": 238 },
+				"Comp 1_00015": { "width": 402, "height": 238 },
+				"Comp 1_00016": { "width": 402, "height": 238 },
+				"Comp 1_00017": { "width": 402, "height": 238 },
+				"Comp 1_00018": { "width": 402, "height": 238 },
+				"Comp 1_00019": { "width": 402, "height": 238 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"collect Start": {
+				"attachment": [
+					{ "time": 0.0333, "name": "Comp 1_00001" },
+					{ "time": 0.0667, "name": "Comp 1_00002" },
+					{ "time": 0.1, "name": "Comp 1_00003" },
+					{ "time": 0.1333, "name": "Comp 1_00004" },
+					{ "time": 0.1667, "name": "Comp 1_00005" },
+					{ "time": 0.2, "name": "Comp 1_00006" },
+					{ "time": 0.2333, "name": "Comp 1_00007" },
+					{ "time": 0.2667, "name": "Comp 1_00008" },
+					{ "time": 0.3, "name": "Comp 1_00009" },
+					{ "time": 0.3333, "name": "Comp 1_00010" },
+					{ "time": 0.3667, "name": "Comp 1_00011" },
+					{ "time": 0.4, "name": "Comp 1_00012" },
+					{ "time": 0.4333, "name": "Comp 1_00013" },
+					{ "time": 0.4667, "name": "Comp 1_00014" },
+					{ "time": 0.5, "name": "Comp 1_00015" },
+					{ "time": 0.5333, "name": "Comp 1_00016" },
+					{ "time": 0.5667, "name": "Comp 1_00017" },
+					{ "time": 0.6, "name": "Comp 1_00018" },
+					{ "time": 0.6333, "name": "Comp 1_00019" }
+				]
+			}
+		}
+	}
+}
+}

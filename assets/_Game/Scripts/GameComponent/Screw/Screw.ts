@@ -93,6 +93,8 @@ export class Screw extends GameLayerComponent
                 {
                     this.FreeJoints();
                     LevelController.Instance.RemoveScrewInLayer( this );
+                    GameManager.Instance.currentScrew--;
+
                 }
 
                 break;
@@ -224,7 +226,6 @@ export class Screw extends GameLayerComponent
                 this.State = eScrewState.IN_BOX;
                 hole.Box.CheckFullBox();
                 this.screwAnimation.ScrewIn();
-                GameManager.Instance.currentScrew--;
             } );
     }
 
@@ -264,8 +265,8 @@ export class Screw extends GameLayerComponent
     //#endregion
 
     public Hide (): void
-    { 
-        this.screwRenderer.HideScrew(); 
+    {
+        this.screwRenderer.HideScrew();
         this.State = eScrewState.IS_HIDING;
     }
 

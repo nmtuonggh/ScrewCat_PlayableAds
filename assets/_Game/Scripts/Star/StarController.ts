@@ -3,6 +3,7 @@ import { Hole } from '../GameComponent/Hole/Hole';
 import { GameManager } from '../Manager/GameManager';
 import { Vec3 } from 'cc';
 import { Label } from 'cc';
+import { sp } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'StarController' )
@@ -18,6 +19,8 @@ export class StarController extends Component
     private Holder: Node = null;
     @property( Prefab )
     private starParticle: Prefab = null;
+    @property(sp.Skeleton)
+    public collectEff: sp.Skeleton = null
 
     private static _instance: StarController = null;
 
@@ -91,6 +94,7 @@ export class StarController extends Component
             .call( () =>
             {
                 star.destroy();
+                this.collectEff.setAnimation(0, 'animation', false);
                 this.SetFillAmount();
                 this.AnimGetStar();
             } )
