@@ -235,21 +235,20 @@ export class MoveScrewHandle extends Component
 
     private pointSpawnTouchEffect ( pos: Vec2 ): void
     {
-        // const touch = this.poolTouch.getFromPool();
-        // touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
-        // touch.getComponent(ParticleSystem).play();
+        const touch = this.poolTouch.getFromPool();
+        touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
     
-        // setTimeout( () =>
-        // {
-        //    this.poolTouch.returnToPool( touch );
-        // }, 1000 );
-
-        const particle = instantiate( this.touchEffect );
-        particle.parent = this.touchHolder;
-        particle.worldPosition = new Vec3( pos.x, pos.y, 0 );
         setTimeout( () =>
         {
-            particle.destroy();
+           this.poolTouch.returnToPool( touch );
         }, 2000 );
+
+        // const particle = instantiate( this.touchEffect );
+        // particle.parent = this.touchHolder;
+        // particle.worldPosition = new Vec3( pos.x, pos.y, 0 );
+        // setTimeout( () =>
+        // {
+        //     particle.destroy();
+        // }, 2000 );
     }
 }

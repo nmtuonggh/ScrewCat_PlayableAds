@@ -10,8 +10,6 @@ export class PoolTouch extends Component
     public touchPrefabs: Prefab = null;
     @property( Node )
     public poolParent: Node = null;
-    @property (Node)
-    public touchParent: Node = null;
     // Create a pool for touch prefabs
     private _poolTouch: Node[] = [];
 
@@ -23,6 +21,7 @@ export class PoolTouch extends Component
         {
             const node = instantiate( this.touchPrefabs );
             node.parent = this.poolParent;
+            node.active = false;
             this._poolTouch.push( node );
         }
     }
@@ -34,13 +33,15 @@ export class PoolTouch extends Component
         if ( this._poolTouch.length > 0 )
         {
             node = this._poolTouch.pop();
-            node.parent = this.touchParent;
-            return node;
+            if ( node.active === false )
+            {
+                node.active = true;
+                return node;
+            }
         }
         else
         {
             node = instantiate( this.touchPrefabs );
-            node.parent = this.touchParent;
             return node;
         }
     }
@@ -50,6 +51,7 @@ export class PoolTouch extends Component
     {
         node.parent = this.poolParent;
         node.setPosition( 0, 0, 0 );
+        node.active = false;
         this._poolTouch.push( node );
     }
 

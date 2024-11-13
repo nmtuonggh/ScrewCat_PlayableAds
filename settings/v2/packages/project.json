@@ -16,6 +16,14 @@
     {
       "name": "BackGround",
       "value": 524288
+    },
+    {
+      "name": "GamePlay",
+      "value": 4096
+    },
+    {
+      "name": "Particle",
+      "value": 256
     }
   ],
   "physics": {
