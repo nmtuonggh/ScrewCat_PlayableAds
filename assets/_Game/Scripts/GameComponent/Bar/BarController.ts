@@ -7,6 +7,8 @@ import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameLayerComponent } from '../GameLayerComponent';
 import { Sprite } from 'cc';
 import { Color } from 'cc';
+import { UIOpacity } from 'cc';
+import { tween } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -31,6 +33,8 @@ export class BarController extends GameLayerComponent
     public modelSprite: Sprite = null;
     @property( Sprite )
     public hideSprite: Sprite = null;
+    @property( UIOpacity )
+    public hideOpacity: UIOpacity = null;
     //#endregion
 
     protected onLoad (): void
@@ -84,12 +88,20 @@ export class BarController extends GameLayerComponent
     {
         this.modelSprite.node.active = false;
         this.hideSprite.node.active = true;
+        this.hideOpacity.opacity = 255;
     }
 
     public ShowBar (): void
     {
-        this.modelSprite.node.active = true;
-        this.hideSprite.node.active = false;
+        tween( this.hideOpacity )
+
+            .to( 0.5, { opacity: 0 } )
+            .call( () =>
+            {
+                this.modelSprite.node.active = true;
+                this.hideSprite.node.active = false;
+            } )
+            .start();
     }
 }
 

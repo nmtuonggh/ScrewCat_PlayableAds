@@ -1,0 +1,20 @@
+
+Lock.png
+size: 120,88
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+2_00000
+  rotate: false
+  xy: 89, 47
+  size: 28, 39
+  orig: 94, 89
+  offset: 33, 33
+  index: -1
+Lock_00007
+  rotate: true
+  xy: 2, 2
+  size: 84, 85
+  orig: 94, 89
+  offset: 5, 2
+  index: -1

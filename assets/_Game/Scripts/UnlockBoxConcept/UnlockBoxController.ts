@@ -11,7 +11,7 @@ export class UnlockBoxController extends Component
 
     public boxSlot: BoxSlot[] = [];
 
-    @property( [BoxSlot] )
+    @property( [ BoxSlot ] )
     public lockBoxSlot: BoxSlot[] = [];
 
     @property( BoxSlot )
@@ -43,13 +43,14 @@ export class UnlockBoxController extends Component
                 this.lockBoxSlot.push( slot );
             }
         }
-        this.SetCurrentBlockBox();
+        this.InitBlockBox();
     }
 
     public AddLockCount (): void
     {
         this.currentLockBoxSlot.currentCount += 1;
         this.currentLockBoxSlot.lockText.string = this.currentLockBoxSlot.currentCount + "/" + this.currentLockBoxSlot.lockCount;
+        this.currentLockBoxSlot.TextLockBoxAnim();
 
         if ( this.currentLockBoxSlot.currentCount >= this.currentLockBoxSlot.lockCount )
         {
@@ -58,13 +59,39 @@ export class UnlockBoxController extends Component
             this.currentLockBoxSlot.boxAdsPrefab.active = false;
             this.lockBoxSlot.shift();
             this.SetCurrentBlockBox();
+
+            this.currentLockBoxSlot[ 1 ].ActAnimation();
+            setTimeout( () =>
+            {
+                this.lockBoxSlot[ 1 ].SetTextLockBox();
+            }, 1000 );
+
         }
     }
 
     public SetCurrentBlockBox (): void
     {
         if ( this.lockBoxSlot.length === 0 ) return;
-        this.currentLockBoxSlot = this.lockBoxSlot[0];
+        this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
+    }
+
+    public InitBlockBox (): void
+    {
+        if ( this.lockBoxSlot.length >= 2 )
+        {
+            this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
+            for ( let i = 1; i < this.lockBoxSlot.length; i++ )
+            {
+                const boxSlot = this.lockBoxSlot[ i ];
+                boxSlot.SetLock();
+            }
+        }
+        else if ( this.lockBoxSlot.length === 1 )
+        {
+            this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
+        }
+
+        this.currentLockBoxSlot.SetTextLockBox();
     }
 }
 

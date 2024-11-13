@@ -102,7 +102,6 @@ export class LevelController extends Component
             if ( boxSlot.isAds )
             {
                 boxSlot.boxAdsPrefab.active = true;
-                boxSlot.SetUnlockBox();
             }
             else
             {

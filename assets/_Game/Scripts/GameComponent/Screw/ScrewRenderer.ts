@@ -4,6 +4,7 @@ import { GameColorData } from '../../GameConfig/GameColorData';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { Enum } from 'cc';
 import { tween } from 'cc';
+import { UIOpacity } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'ScrewRenderer' )
@@ -13,6 +14,8 @@ export class ScrewRenderer extends Component
     private topSprite: Sprite = null
     @property( Sprite )
     public botSprite: Sprite = null
+    @property( UIOpacity )
+    public topOpacity: UIOpacity = null;
 
     @property( { type: Enum( eColorType ) } )
     public colorType: eColorType = eColorType.Green;
@@ -43,17 +46,22 @@ export class ScrewRenderer extends Component
     public HideScrew (): void
     {
         //this.topSprite.node.active = false;
-        this.topSprite.color = color( 255, 255, 255, 0 );
+        //this.topSprite.color = color( 255, 255, 255, 0 );
+        this.topOpacity.opacity = 0;
         this.botSprite.node.active = false;
     }
 
     public ShowScrew (): void
     {
         //this.topSprite.node.active = true;
-        tween(this.topSprite.color)
-        .to(0.5, { a: 255 })
-        .start();
-        this.botSprite.node.active = true;
+        tween( this.topOpacity )
+        .delay( 0.5 )
+            .to( 0.5, { opacity: 255 } )
+            .call( () =>
+            {
+                this.botSprite.node.active = true;
+            } )
+            .start();
     }
 
 }

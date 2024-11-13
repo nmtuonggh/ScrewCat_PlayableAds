@@ -4,6 +4,7 @@ import { Screw } from './GameComponent/Screw/Screw';
 import { CCBoolean } from 'cc';
 import { PolygonCollider2D } from 'cc';
 import { Sprite } from 'cc';
+import { UIOpacity } from 'cc';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 
@@ -93,9 +94,11 @@ export class Tool extends Component
     {
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
-            const bar = this.listBar[ i ];
-            let child2 = bar.node.children[ 1 ];
-            child2.layer = 1 << 25;
+            const node = this.listBar[ i ];
+            let top = node.node.children[ 1 ];
+            top.addComponent(UIOpacity);    
+            
+            node.hideOpacity = top.getComponent(UIOpacity);
             
         }
     }
