@@ -26,25 +26,33 @@ export class TutorialController extends Component
     }
 
     public handTutorial (): void
-    {
-        this.stopTutorial();
-        this.handPortrait.active = true;
+{
+    this.stopTutorial();
+    this.handPortrait.active = true;
 
-        let handPosition = this.handPortrait.getPosition().clone();
-        tween( this.handPortrait ).repeatForever
-            (
-                tween()
-                    .to( 0.5, { position: new Vec3(0,0,0) }, { easing: 'cubicIn' } )
-                    .call( () => this.screw.getComponent(Screw).screwAnimation.ScrewOut() )
-                    .to( 0.5, { position: handPosition }, { easing: 'cubicOut' } )
-                    .call( () =>
-                    {
-                        this.screw.getComponent(Screw).screwAnimation.ScrewIn();
-                        console.log("ScrewIn");
-                    } )
-                    .delay( 0.5 )
-            ).start();
-    }
+    let handPosition = this.handPortrait.getPosition().clone();
+    let handScale = this.handPortrait.getScale().clone();
+    
+    tween(this.handPortrait).repeatForever
+    (
+        tween()
+            .parallel(
+                tween().to(0.5, { position: new Vec3(0, 0, 0) }, { easing: 'cubicIn' }),
+                tween().to(0.5, { scale: new Vec3(1.2, 1.2, 1.2) }, { easing: 'cubicIn' })
+            )
+            .call(() => this.screw.getComponent(Screw).screwAnimation.ScrewOut())
+            .parallel(
+                tween().to(0.5, { position: handPosition }, { easing: 'cubicOut' }),
+                tween().to(0.5, { scale: handScale }, { easing: 'cubicOut' })
+            )
+            .call(() =>
+            {
+                this.screw.getComponent(Screw).screwAnimation.ScrewIn();
+                console.log("ScrewIn");
+            })
+            .delay(0.5)
+    ).start();
+}
 }
 
 

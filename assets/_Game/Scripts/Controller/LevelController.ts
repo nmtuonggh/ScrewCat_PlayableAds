@@ -188,7 +188,7 @@ export class LevelController extends Component
     //#endregion
 
 
-    
+    //#region New Layer
     public RemoveScrewInLayer ( screw: Screw ): void
     {
         for ( let i = 0; i < this.listLayer.length; i++ )
@@ -224,7 +224,9 @@ export class LevelController extends Component
             this.SetPlayingLayer( layer );
         }
     }
+    //#endregion
 
+    //#region Show Layer
     private ActiveLayer ( layer: GameLayer ): void
     {
         layer.ActiveLayer();
@@ -240,4 +242,5 @@ export class LevelController extends Component
         this.listPlayingLayer.push( layer );
         console.log( "Playing Layer: ", layer.layerOrder );
     }
+    //#endregion
 }

@@ -91389,6 +91389,10 @@
       {
         "__uuid__": "109e91ab-c157-4231-8786-799a372f6c67",
         "__expectedType__": "cc.AnimationClip"
+      },
+      {
+        "__uuid__": "afa9ae6b-f4b5-46d7-9be4-d7e4d98a052f",
+        "__expectedType__": "cc.AnimationClip"
       }
     ],
     "_defaultClip": {
