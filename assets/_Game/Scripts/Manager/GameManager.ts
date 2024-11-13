@@ -65,6 +65,7 @@ export class GameManager extends Component
             //wait for 2s
             setTimeout( () =>
             {
+                UIController.Instance.FailUI.active = false;
                 this.loseUI.active = true;
                 this.lose = true;
             }, 2000 );
