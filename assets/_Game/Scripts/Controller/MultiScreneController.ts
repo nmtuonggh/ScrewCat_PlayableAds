@@ -20,8 +20,14 @@ export class MultiScreneController extends Component
     @property( Node )
     public listCanvas: Node[] = [];
 
-    @property( Camera )
-    public UICamera: Camera = null;
+    @property( Sprite )
+    public BGSprite: Sprite = null;
+    @property( SpriteFrame )
+    public bgPortrains: SpriteFrame = null;
+    @property( SpriteFrame )
+    public bgLanscape: SpriteFrame = null;
+    @property(Canvas)
+    public baseCanvas: Canvas = null;
 
     public ScreenType: ScreenType = 0;
 
@@ -29,16 +35,37 @@ export class MultiScreneController extends Component
 
     protected onEnable (): void
     {
-        //this.sceneCanvas.node.on( Node.EventType.SIZE_CHANGED, this.onSizeChanged, this );
+        this.baseCanvas.node.on( Node.EventType.SIZE_CHANGED, this.onSizeChanged, this );
         this.uiController = UIController.Instance;
     }
 
     protected start (): void
     {
+        this.getScreenSize();
         this.onSizeChanged();
     }
 
-    onSizeChanged (): void
+    public onSizeChanged (): void
+    {
+        console.log( "Size Changed" );
+        let view = View.instance.getVisibleSize();
+        let width = view.width;
+        let height = view.height;
+
+        let ratio = width / height;
+
+        if ( ratio < 1.4 )
+        {
+            //console.log( "Portrait" );
+            this.BGSprite.spriteFrame = this.bgPortrains;
+
+        } else if ( ratio > 1.4 )
+        {
+            //console.log( "Landscape" );
+            this.BGSprite.spriteFrame = this.bgLanscape;
+        }
+    }
+    getScreenSize (): void
     {
         let width = screen.windowSize.width;
         let height = screen.windowSize.height;
