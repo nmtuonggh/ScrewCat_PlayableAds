@@ -89,21 +89,23 @@ export class BarController extends GameLayerComponent
         this.modelSprite.node.active = false;
         this.hideSprite.node.active = true;
         this.hideOpacity.opacity = 0;
+        this.hideOpacity.getComponent( Sprite ).color = new Color( 190, 190, 190, 255 );
 
         tween( this.hideOpacity )
             .delay( 0.5 )
-            .to( 0.5, { opacity: 255 } )
+            .to( 0.5, { opacity: 200 } )
             .start();
     }
 
     public ShowBar (): void
     {
+        this.modelSprite.node.active = true;
+
         tween( this.hideOpacity )
 
             .to( 0.5, { opacity: 0 } )
             .call( () =>
             {
-                this.modelSprite.node.active = true;
                 this.hideSprite.node.active = false;
             } )
             .start();

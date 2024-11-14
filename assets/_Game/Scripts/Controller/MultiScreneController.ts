@@ -42,12 +42,12 @@ export class MultiScreneController extends Component
 
         if ( ratio > 1.5 )
         {
-            this.background.spriteFrame = this.backgroundPortrait;
+            //this.background.spriteFrame = this.backgroundPortrait;
             this.uiController.onPortrait();
             //this.tutorialController.handPortraitTutorial();
         } else if ( ratio < 0.7 )
         {
-            this.background.spriteFrame = this.backgroundLandscape;
+            //this.background.spriteFrame = this.backgroundLandscape;
             this.uiController.onLandscape();
             //this.tutorialController.handLandscapeTutorial();
         } 

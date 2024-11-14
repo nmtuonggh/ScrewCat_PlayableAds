@@ -9,7 +9,6 @@ import { GameManager } from '../Manager/GameManager';
 import { Layers } from 'cc';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { boxSpawnData } from '../BoxSpawndata/boxSpawnData';
-import { ScriptHolder } from '../ScriptHolder';
 import { CCInteger } from 'cc';
 import { GameLayer } from '../GameComponent/GameLayer';
 import { JsonAsset } from 'cc';
