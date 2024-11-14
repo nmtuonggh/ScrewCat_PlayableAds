@@ -6,6 +6,7 @@ import { group } from 'console';
 import { AudioController, AudioType } from '../AudioController/AudioController';
 import { UIManager } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/3d/manager/ui';
 import { UIController } from '../UIController';
+import { MultiScreneController } from '../Controller/MultiScreneController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameManager' )
@@ -25,8 +26,8 @@ export class GameManager extends Component
 
     @property( Node )
     public LevelContainer: Node = null;
-    @property( GameLayer )
-    private layerList: GameLayer[] = [];
+    @property( MultiScreneController )
+    private multiScreenController: MultiScreneController= null;
 
     @property( Node )
     public loseUI: Node = null;
@@ -60,13 +61,13 @@ export class GameManager extends Component
         {
             AudioController.Instance.PlayAudio( AudioType.lose );
             AudioController.Instance.bg.stop();
-            UIController.Instance.TweenFail();
+            UIController.Instance.TweenFail(this.multiScreenController.ScreenType);
 
             //wait for 2s
             setTimeout( () =>
             {
-                UIController.Instance.FailUI.active = false;
-                this.loseUI.active = true;
+                UIController.Instance.fail[this.multiScreenController.ScreenType].active = false;
+                UIController.Instance.LoseUI[this.multiScreenController.ScreenType].active = true;
                 this.lose = true;
             }, 2000 );
         }

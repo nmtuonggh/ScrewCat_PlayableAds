@@ -8,11 +8,11 @@ const { ccclass, property } = _decorator;
 export class UIController extends Component {
 
     
-    @property(Node)
-    public FailUI : Node = null;
-    @property(Node)
-    public CanvasList : Node[] = [];
-
+   
+    @property([Node])
+    public fail : Node[] = [];
+    @property([Node])
+    public LoseUI : Node[] = [];
     private canvasIndex : number = 0;
 
 
@@ -41,9 +41,9 @@ export class UIController extends Component {
         
     }
 
-    public TweenFail():void{
-        this.FailUI.active = true;
-        tween(this.FailUI)
+    public TweenFail(index : number):void{
+        this.fail[index].active = true;
+        tween(this.fail[index])
         .to(0.5, {scale: new Vec3(1.5, 1.5, 1)})
         .start();
     }

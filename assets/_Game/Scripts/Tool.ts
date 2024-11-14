@@ -114,13 +114,13 @@ export class Tool extends Component
 
     public setCollider2222222 (): void    
     {
-        for ( let i = 0; i < this.listBar.length; i++ ) 
+        for ( let i = 0; i < this.listScrew.length; i++ ) 
         {
-            const node = this.listBar[ i ];
-            let top = node.node.children[ 1 ];
-            top.addComponent(UIOpacity);    
+            const node = this.listScrew[ i ];
+            if(node.ScrewRenderer.colorIndex ===4){
+                node.ScrewRenderer.colorIndex =7;
+            }
             
-            node.hideOpacity = top.getComponent(UIOpacity);
             
         }
     }

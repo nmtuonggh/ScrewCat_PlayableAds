@@ -7,7 +7,6 @@ import { ResolutionPolicy } from 'cc';
 import { UITransform } from 'cc';
 import { Widget } from 'cc';
 import { Camera } from 'cc';
-import { CameraController } from '../CameraController';
 import { Vec3 } from 'cc';
 import { UIMultiScreen } from '../MultiScreen/UIMultiScreen';
 import { MoveScrewHandle } from './MoveScrewHandle';
@@ -17,13 +16,9 @@ const { ccclass, property } = _decorator;
 @ccclass( 'MultiScreneController' )
 export class MultiScreneController extends Component
 {
-
-    @property( CameraController )
-    public CameraController: CameraController = null;
-
     @property( Node )
     public listCanvas: Node[] = [];
-    @property( [Camera] )
+    @property( [ Camera ] )
     public listCamera: Camera[] = [];
 
     @property( Sprite )
@@ -32,7 +27,7 @@ export class MultiScreneController extends Component
     public bgPortrains: SpriteFrame = null;
     @property( SpriteFrame )
     public bgLanscape: SpriteFrame = null;
-    @property(Canvas)
+    @property( Canvas )
     public baseCanvas: Canvas = null;
 
     public ScreenType: ScreenType = 0;
@@ -50,7 +45,6 @@ export class MultiScreneController extends Component
     protected start (): void
     {
         this.getScreenSize();
-        this.onSizeChanged();
         
     }
 
@@ -67,57 +61,58 @@ export class MultiScreneController extends Component
 
         let ratio = width / height;
 
-        if ( ratio < 1.4 )
+        if ( ratio < 0.69 )
         {
             //console.log( "Portrait" );
             this.ScreenType = ScreenType.Portrait;
 
-        } else if ( ratio > 1.4 )
+        } else if ( ratio > 0.69 && ratio < 1.4 )
+        {
+            //console.log( "Landscape" );
+            this.ScreenType = ScreenType.Square;
+        }
+        else if ( ratio > 1.4 && ratio < 1.65 )
+        {
+            //console.log( "Landscape" );
+            this.ScreenType = ScreenType.Mixed;
+        }
+        else if ( ratio > 1.65 )
         {
             //console.log( "Landscape" );
             this.ScreenType = ScreenType.Landscape;
         }
 
-        //this.tutorialController.updatePosition();
+        this.onSizeChanged();
     }
 
-    protected UpdateSize(): void
+    protected UpdateSize (): void
     {
         let ratio = screen.windowSize.width / screen.windowSize.height;
         //console.log( "Ratio: ", ratio );
         let targetSize: Size = new Size( 1920, 1080 );
         let screenType = ScreenType.Landscape;
 
-        // if ( ratio < 0.69 )
-        // {
-        //     targetSize = new Size( 1080, 1920 );
-        //     screenType = ScreenType.Portrait;
-        // }
-        // else if ( ratio > 0.69 && ratio < 1.4 )
-        // {
-        //     targetSize = new Size( 1920, 1920 );
-        //     screenType = ScreenType.Square;
-        // }
-        // else if ( ratio > 1.4 && ratio < 1.65 )
-        // {
-        //     targetSize = new Size( 1920, 1324 );
-        //     screenType = ScreenType.Mixed;
-        // }
-        // else if ( ratio > 1.65 )
-        // {
-        //     targetSize = new Size( 1920, 1080 );
-        //     screenType = ScreenType.Landscape;
-        // }
-        if ( ratio < 1.4 )
+        if ( ratio < 0.69 )
         {
             targetSize = new Size( 1080, 1920 );
             screenType = ScreenType.Portrait;
         }
-        else if ( ratio > 1.4 )
+        else if ( ratio > 0.69 && ratio < 1.4 )
+        {
+            targetSize = new Size( 1920, 1920 );
+            screenType = ScreenType.Square;
+        }
+        else if ( ratio > 1.4 && ratio < 1.65 )
+        {
+            targetSize = new Size( 1920, 1324 );
+            screenType = ScreenType.Mixed;
+        }
+        else if ( ratio > 1.65 )
         {
             targetSize = new Size( 1920, 1080 );
             screenType = ScreenType.Landscape;
         }
+        
 
 
         if ( screenType != this.ScreenType )
@@ -138,6 +133,8 @@ export class MultiScreneController extends Component
                 this.setupCanvas( this.ScreenType, targetSize, ratio );
             }
         }
+
+        console.log("Ratio: ", ratio);
     }
 
     setupCanvas ( type: ScreenType, targetSize: Size, ratio: number ): void
@@ -152,18 +149,12 @@ export class MultiScreneController extends Component
     }
 }
 
-// export enum ScreenType
-// {
-//     Portrait = 0,
-//     Square = 1,
-//     Mixed = 2,
-//     Landscape = 3
-// }
-
 export enum ScreenType
 {
     Portrait = 0,
-    Landscape = 1
+    Square = 1,
+    Mixed = 2,
+    Landscape = 3
 }
 
 
