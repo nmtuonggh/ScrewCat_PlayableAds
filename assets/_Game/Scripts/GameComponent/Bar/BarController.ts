@@ -15,15 +15,10 @@ const { ccclass, property } = _decorator;
 export class BarController extends GameLayerComponent
 {
     //#region Fields
-    @property( Number )
-    public idFirstScrew: number = 0;
-    @property( Number )
-    public screwCount: number = 0;
-    @property( Screw )
+    @property( { type: [Screw], visible: true } )
     public listScrews: Screw[] = [];
     @property( BarPhysic )
     public barPhysic: BarPhysic = null;
-
 
     @property( PolygonCollider2D )
     public collider: PolygonCollider2D = null;

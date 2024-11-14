@@ -22,6 +22,8 @@ export class StarController extends Component
     @property(sp.Skeleton)
     public collectEff: sp.Skeleton = null
 
+    private startScale : Vec3 = null;
+
     private static _instance: StarController = null;
 
     public static get Instance (): StarController
@@ -42,7 +44,7 @@ export class StarController extends Component
     protected start (): void
     {
         this.SetFillAmount();
-
+        this.startScale = this.node.scale;
     }
 
     public SetFillAmount (): void
@@ -114,9 +116,11 @@ export class StarController extends Component
 
     public AnimGetStar (): void 
     { 
+        let scale = this.startScale.clone().add(new Vec3(0.3, 0.3, 0));
+        let startScale = this.startScale.clone();
         tween(this.node)
-        .to(0.2, { scale: new Vec3( 1, 1, 1 ) } )
-        .to(0.2, { scale: new Vec3( 0.7, 0.7, 1 ) })
+        .to(0.2, { scale: new Vec3( scale.x, scale.y, 1 ) } )
+        .to(0.2, { scale: new Vec3( startScale.x, startScale.y, 1 ) })
         .start();
     }
 }

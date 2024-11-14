@@ -5,6 +5,7 @@ import { CCBoolean } from 'cc';
 import { PolygonCollider2D } from 'cc';
 import { Sprite } from 'cc';
 import { UIOpacity } from 'cc';
+import { UIMultiScreen } from './MultiScreen/UIMultiScreen';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 
@@ -18,6 +19,8 @@ export class Tool extends Component
     public setlayer: boolean = false;
     @property( CCBoolean )
     public setScrewToBar: boolean = false;
+    @property( CCBoolean )
+    public setPosScreen: boolean = false;
 
     @property( CCBoolean )
     public runSetCollider2222222: boolean = false;
@@ -28,6 +31,20 @@ export class Tool extends Component
     public listScrew: Screw[] = [];
     @property( Node )
     barparent: Node = null;
+
+    @property(UIMultiScreen)
+    public uiMultiScreen: UIMultiScreen = null;
+    @property({type: Node, group: "Element"})
+    public LevelContainer: Node = null;
+
+    @property({type: Node, group: "Element"})
+    public BoxContainer: Node = null;
+
+    @property({type: Node, group: "Element"})
+    public CacheContainer: Node = null;
+
+    @property({type: Node, group: "Element"})
+    public Star: Node = null;
 
     protected onLoad (): void
     {
@@ -50,6 +67,11 @@ export class Tool extends Component
             this.listBar = this.barparent.getComponentsInChildren( BarController );
             this.listScrew = this.barparent.getComponentsInChildren( Screw );
 
+        }
+
+        if ( this.setPosScreen )
+        {
+            this.SetScreenElements();
         }
 
     }
@@ -150,6 +172,15 @@ export class Tool extends Component
 
             console.log( "Screw: ", bar.listScrews.length );
         }
+    }
+
+    public SetScreenElements (): void
+    {
+        this.uiMultiScreen.LevelContainerPosPortrai = this.LevelContainer.position;
+        this.uiMultiScreen.BoxContainerPosPortrai  = this.BoxContainer.position;
+        this.uiMultiScreen.CacheContainerPosPortrai  = this.CacheContainer.position;
+        this.uiMultiScreen.StarPosPortrai  = this.Star.position;
+
     }
 
 }

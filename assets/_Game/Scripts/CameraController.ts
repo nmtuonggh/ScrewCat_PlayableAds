@@ -10,7 +10,7 @@ export class CameraController extends Component {
 
     public setCameraOthorSize(screenSize : Size): void 
     {
-        this.BackGroundCamera.orthoHeight = screenSize.height / 2;
+        //this.BackGroundCamera.orthoHeight = screenSize.height / 2;
     }
 }
 

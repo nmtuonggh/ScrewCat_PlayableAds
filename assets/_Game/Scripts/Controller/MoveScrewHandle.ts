@@ -26,17 +26,13 @@ export class MoveScrewHandle extends Component
 {
     //#region Properties
     @property( { type: Camera } )
-    private camera: Camera | null = null;
+    public camera: Camera = null;
     @property( TutorialController )
     private tutorialController: TutorialController = null;
     @property( PoolTouch )
     private poolTouch: PoolTouch = null;
     @property( PlayableAdsManager )
     private playableAdsManager: PlayableAdsManager = null;
-    @property(Prefab)
-    private touchEffect: Prefab = null;
-    @property( Node )
-    private touchHolder: Node = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
 
@@ -99,10 +95,11 @@ export class MoveScrewHandle extends Component
             this.playableAdsManager.ForceOpenStore();
             return;
         }
+        let ratio =1;
         const mousePosition = event.getLocation();
-        const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
-        this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
-        this.pointSpawnTouchEffect( this._lastMousePosition );
+        const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x * ratio, mousePosition.y * ratio, 0 ) );
+        this._lastMousePosition = new Vec2( worldPosition.x , worldPosition.y);
+        this.pointSpawnTouchEffect( this._lastMousePosition  );
         this.checkClickScrew();
     }
 

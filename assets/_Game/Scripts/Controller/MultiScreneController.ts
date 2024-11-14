@@ -8,6 +8,10 @@ import { UITransform } from 'cc';
 import { Widget } from 'cc';
 import { Camera } from 'cc';
 import { CameraController } from '../CameraController';
+import { Vec3 } from 'cc';
+import { UIMultiScreen } from '../MultiScreen/UIMultiScreen';
+import { MoveScrewHandle } from './MoveScrewHandle';
+
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MultiScreneController' )
@@ -19,6 +23,8 @@ export class MultiScreneController extends Component
 
     @property( Node )
     public listCanvas: Node[] = [];
+    @property( [Camera] )
+    public listCamera: Camera[] = [];
 
     @property( Sprite )
     public BGSprite: Sprite = null;
@@ -31,40 +37,29 @@ export class MultiScreneController extends Component
 
     public ScreenType: ScreenType = 0;
 
-    private uiController: UIController = null;
+    @property( UIMultiScreen )
+    public uimulti: UIMultiScreen = null;
 
     protected onEnable (): void
     {
         this.baseCanvas.node.on( Node.EventType.SIZE_CHANGED, this.onSizeChanged, this );
-        this.uiController = UIController.Instance;
     }
+
+
 
     protected start (): void
     {
         this.getScreenSize();
         this.onSizeChanged();
+        
     }
 
     public onSizeChanged (): void
     {
         console.log( "Size Changed" );
-        let view = View.instance.getVisibleSize();
-        let width = view.width;
-        let height = view.height;
-
-        let ratio = width / height;
-
-        if ( ratio < 1.4 )
-        {
-            //console.log( "Portrait" );
-            this.BGSprite.spriteFrame = this.bgPortrains;
-
-        } else if ( ratio > 1.4 )
-        {
-            //console.log( "Landscape" );
-            this.BGSprite.spriteFrame = this.bgLanscape;
-        }
+        this.UpdateSize();
     }
+
     getScreenSize (): void
     {
         let width = screen.windowSize.width;
@@ -86,10 +81,10 @@ export class MultiScreneController extends Component
         //this.tutorialController.updatePosition();
     }
 
-    protected update ( dt: number ): void
+    protected UpdateSize(): void
     {
         let ratio = screen.windowSize.width / screen.windowSize.height;
-        console.log( "Ratio: ", ratio );
+        //console.log( "Ratio: ", ratio );
         let targetSize: Size = new Size( 1920, 1080 );
         let screenType = ScreenType.Landscape;
 
@@ -152,8 +147,8 @@ export class MultiScreneController extends Component
         this.listCanvas[ type ].getComponent( UITransform ).contentSize = targetSize;
         this.listCanvas[ type ].getComponent( Widget ).updateAlignment();
         //this.UICamera.orthoHeight = targetSize.height / 2;
-        this.CameraController.setCameraOthorSize( targetSize );
-
+        this.uimulti.SetUIElements( this.ScreenType );
+        MoveScrewHandle.Instance.camera = this.listCamera[ this.ScreenType ];
     }
 }
 
