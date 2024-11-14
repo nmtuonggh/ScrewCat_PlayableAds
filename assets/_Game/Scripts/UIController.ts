@@ -7,16 +7,13 @@ const { ccclass, property } = _decorator;
 @ccclass('UIController')
 export class UIController extends Component {
 
-    @property(Node)
-    public boxContainer: Node = null;
-    @property(Node)
-    public GamePlayHolder: Node = null;
-    @property(Node)
-    public IconGame : Node = null;
-    @property(Node)
-    public StarCollection : Node = null;
+    
     @property(Node)
     public FailUI : Node = null;
+    @property(Node)
+    public CanvasList : Node[] = [];
+
+    private canvasIndex : number = 0;
 
 
     protected static _instance: UIController = null;
