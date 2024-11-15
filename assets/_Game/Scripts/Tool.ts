@@ -117,10 +117,9 @@ export class Tool extends Component
         for ( let i = 0; i < this.listScrew.length; i++ ) 
         {
             const node = this.listScrew[ i ];
-            if(node.ScrewRenderer.colorIndex ===4){
-                node.ScrewRenderer.colorIndex =7;
-            }
+            let child2 = node.node.children[ 1 ];
             
+            node.ScrewRenderer.botSprite = child2.getComponent( Sprite );
             
         }
     }

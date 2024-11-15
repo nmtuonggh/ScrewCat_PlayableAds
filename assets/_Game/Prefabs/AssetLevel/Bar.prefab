@@ -123,7 +123,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 33554432,
+    "_layer": 1024,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -177,7 +177,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 33554432,
+    "_layer": 1024,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -224,7 +224,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 33554432,
+    "_layer": 1024,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -312,7 +312,7 @@
       "z": 1
     },
     "_mobility": 0,
-    "_layer": 33554432,
+    "_layer": 1024,
     "_euler": {
       "__type__": "cc.Vec3",
       "x": 0,
@@ -2175,8 +2175,6 @@
     "__prefab": {
       "__id__": 35
     },
-    "idFirstScrew": 0,
-    "screwCount": 0,
     "listScrews": [],
     "barPhysic": null,
     "collider": {

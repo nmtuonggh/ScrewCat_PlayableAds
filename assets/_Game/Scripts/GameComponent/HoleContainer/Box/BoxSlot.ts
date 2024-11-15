@@ -10,6 +10,7 @@ import { Vec3 } from 'cc';
 import { set } from '../../../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
 import { AudioController, AudioType } from '../../../AudioController/AudioController';
 import { MoveScrewHandle } from '../../../Controller/MoveScrewHandle';
+import { GameManager } from '../../../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxSlot' )
@@ -19,6 +20,8 @@ export class BoxSlot extends Component
     private box: Box = null;
     @property( CCBoolean )
     public isAds: boolean = false;
+    @property( CCBoolean )
+    public isBlock: boolean = false;
     @property( Node )
     public boxHolder: Node = null;
     @property( Node )
@@ -46,22 +49,28 @@ export class BoxSlot extends Component
     private randomTime: number = 0;
     private accumulatedTime: number = 0;
 
-    protected update(dt: number): void {
-        if (this.lockAnim.node.active && MoveScrewHandle.Instance.isFirstTouch) {
-            if (this.randomTime === 0) {
+    protected update ( dt: number ): void
+    {
+        if ( this.lockAnim.node.active && MoveScrewHandle.Instance.isFirstTouch && !GameManager.Instance.lose && !GameManager.Instance.win )
+        {
+            
+            if ( this.randomTime === 0 )
+            {
                 this.randomTime = Math.random() * 15000; // Random time between 0 and 10000 milliseconds (10 seconds)
             }
 
             this.accumulatedTime += dt * 1000; // Convert dt to milliseconds
 
-            if (this.accumulatedTime >= this.randomTime) {
+            if ( this.accumulatedTime >= this.randomTime )
+            {
                 this.ActAnimation();
                 this.resetTimers();
             }
         }
     }
 
-    private resetTimers(): void {
+    private resetTimers (): void
+    {
         this.randomTime = 0;
         this.accumulatedTime = 0;
     }
@@ -95,12 +104,12 @@ export class BoxSlot extends Component
         this.lockAnim.setAnimation( 0, 'Unlock', false );
     }
 
-    public TextLockBoxAnim(): void
+    public TextLockBoxAnim (): void
     {
         tween( this.lockText.node )
-        .to( 0.25, { scale: new Vec3( 1.2, 1.2, 1.2 ) } )
-        .to( 0.25, { scale: new Vec3( 1, 1, 1 ) })
-        .start();
+            .to( 0.25, { scale: new Vec3( 1.2, 1.2, 1.2 ) } )
+            .to( 0.25, { scale: new Vec3( 1, 1, 1 ) } )
+            .start();
     }
 }
 

@@ -9,10 +9,10 @@ import { BoxContainer } from '../../../Controller/BoxContainer';
 import { CahedContainer } from '../../../Controller/CahedContainer';
 import { AudioController, AudioType } from '../../../AudioController/AudioController';
 import { GameConfig } from '../../../GameConfig/GameConfig';
-import { MeowAnimation } from '../../../MeowAnimation';
 import { StarController } from '../../../Star/StarController';
 import { GameManager } from '../../../Manager/GameManager';
 import { UnlockBoxController } from '../../../UnlockBoxConcept/UnlockBoxController';
+import { TestIQController } from '../../../TestIQ/TestIQController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -72,6 +72,7 @@ export class Box extends HoleContainer
     }
 
     private starList: Node[] = [];
+    private iqNode: Node = null;
 
     public CloseBox (): void
     {
@@ -85,13 +86,15 @@ export class Box extends HoleContainer
                 //MeowAnimation.Instance.MoveIn(this.node.parent);
                 AudioController.Instance.PlayAudio( AudioType.boxComplete );
                 AudioController.Instance.PlayMewoComplete();
-                this.starList = StarController.Instance.SpawnStar( this.listHoles.length, this.listHoles );
+                //this.starList = StarController.Instance.SpawnStar( this.listHoles.length, this.listHoles );
                 StarController.Instance.PlayParticle( this.node.worldPosition );
+                this.iqNode = TestIQController.Instance.SpawnIQ( this );
             } )
-            .delay( 0.4 )
+            .delay( 0.3 )
             .call( () =>
             {
-                StarController.Instance.Move( this.starList );
+                //StarController.Instance.Move( this.starList );
+                TestIQController.Instance.MoveIQ( this.iqNode );
                 this.MoveOut();
             } )
             .start();

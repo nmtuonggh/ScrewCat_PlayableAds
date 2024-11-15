@@ -10,6 +10,10 @@ import { Camera } from 'cc';
 import { Vec3 } from 'cc';
 import { UIMultiScreen } from '../MultiScreen/UIMultiScreen';
 import { MoveScrewHandle } from './MoveScrewHandle';
+import { TestIQController } from '../TestIQ/TestIQController';
+import { Game } from 'cc';
+import { GameManager } from '../Manager/GameManager';
+import { PlayableAdsManager } from '../../../PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 
 const { ccclass, property } = _decorator;
 
@@ -21,12 +25,6 @@ export class MultiScreneController extends Component
     @property( [ Camera ] )
     public listCamera: Camera[] = [];
 
-    @property( Sprite )
-    public BGSprite: Sprite = null;
-    @property( SpriteFrame )
-    public bgPortrains: SpriteFrame = null;
-    @property( SpriteFrame )
-    public bgLanscape: SpriteFrame = null;
     @property( Canvas )
     public baseCanvas: Canvas = null;
 
@@ -66,7 +64,8 @@ export class MultiScreneController extends Component
         console.log( "Size Changed" );
         this.UpdateSize();
         this.tutorialController.handTutorial();
-
+        TestIQController.Instance.SetupIQUI( this.ScreenType );
+        UIController.Instance.onChangedScreen();
     }
 
     getScreenSize (): void
@@ -161,6 +160,7 @@ export class MultiScreneController extends Component
         //this.UICamera.orthoHeight = targetSize.height / 2;
         this.uimulti.SetUIElements( this.ScreenType );
         MoveScrewHandle.Instance.camera = this.listCamera[ this.ScreenType ];
+
     }
 }
 

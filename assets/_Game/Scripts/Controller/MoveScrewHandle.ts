@@ -21,6 +21,8 @@ import { instantiate } from 'cc';
 import { Prefab } from 'cc';
 import { PlayableAdsManager } from '../../../PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 import { TrackingManager } from '../../../PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
+import { TestIQController } from '../TestIQ/TestIQController';
+import { MultiScreneController } from './MultiScreneController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -34,7 +36,7 @@ export class MoveScrewHandle extends Component
     @property( PoolTouch )
     private poolTouch: PoolTouch = null;
     @property( PlayableAdsManager )
-    private playableAdsManager: PlayableAdsManager = null;
+    public playableAdsManager: PlayableAdsManager = null;
 
     private _lastMousePosition: Vec2 = new Vec2();
 
@@ -54,7 +56,7 @@ export class MoveScrewHandle extends Component
         {
             MoveScrewHandle._instance = this;
         }
-        
+
         this.poolTouch.initializePool( 15 );
         input.on( Input.EventType.TOUCH_START, this.onTouchStart, this );
     }
@@ -84,26 +86,30 @@ export class MoveScrewHandle extends Component
 
             this.tutorialController.stopTutorial();
             AudioController.Instance.PlayerBG();
+            TestIQController.Instance.TweenIQUI( MultiScreneController.Instance.ScreenType );
         }
-        
+
         if ( GameManager.Instance.currentScrew <= 1 ) 
         {
             this.playableAdsManager.ForceOpenStore();
+            GameManager.Instance.win = true;
             TrackingManager.WinLevel();
             return;
         }
 
         if ( GameManager.Instance.lose === true )
         {
+            
             this.playableAdsManager.ForceOpenStore();
-            TrackingManager.LoseLevel();
-            return;
+                TrackingManager.LoseLevel();
+                return;
+
         }
-        let ratio =1;
+        let ratio = 1;
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x * ratio, mousePosition.y * ratio, 0 ) );
-        this._lastMousePosition = new Vec2( worldPosition.x , worldPosition.y);
-        this.pointSpawnTouchEffect( this._lastMousePosition  );
+        this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
+        this.pointSpawnTouchEffect( this._lastMousePosition );
         this.checkClickScrew();
     }
 
@@ -115,7 +121,7 @@ export class MoveScrewHandle extends Component
         if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
-            if ( screw.State === eScrewState.IN_CACHED || screw.State === eScrewState.IS_HIDING) return;
+            if ( screw.State === eScrewState.IN_CACHED || screw.State === eScrewState.IS_HIDING ) return;
             screw.CheckMove();
         }
     }
@@ -238,10 +244,10 @@ export class MoveScrewHandle extends Component
     {
         const touch = this.poolTouch.getFromPool();
         touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
-    
+
         setTimeout( () =>
         {
-           this.poolTouch.returnToPool( touch );
+            this.poolTouch.returnToPool( touch );
         }, 2000 );
 
         // const particle = instantiate( this.touchEffect );

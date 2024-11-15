@@ -39,7 +39,7 @@ export class UnlockBoxController extends Component
         this.boxSlot = this.boxContainer.getComponentsInChildren( BoxSlot );
         for ( const slot of this.boxSlot )
         {
-            if ( slot.isAds )
+            if ( slot.isAds && slot.isBlock )
             {
                 this.lockBoxSlot.push( slot );
             }
@@ -49,6 +49,7 @@ export class UnlockBoxController extends Component
 
     public AddLockCount (): void
     {
+        if( this.currentLockBoxSlot.lockCount <= 0 ) return;
         this.currentLockBoxSlot.currentCount += 1;
         this.currentLockBoxSlot.lockText.string = this.currentLockBoxSlot.currentCount + "/" + this.currentLockBoxSlot.lockCount;
         this.currentLockBoxSlot.TextLockBoxAnim();
@@ -68,13 +69,13 @@ export class UnlockBoxController extends Component
         if ( this.lockBoxSlot.length === 0 ) return;
         this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
 
-        AudioController.Instance.PlayAudio( AudioType.unlockChain);
+        AudioController.Instance.PlayAudio( AudioType.unlockChain );
         this.currentLockBoxSlot.UnlockAnimation();
-            setTimeout( () =>
-            {
-                this.currentLockBoxSlot.lockAnim.node.active = false;
-                this.currentLockBoxSlot.SetTextLockBox();
-            }, 1000 );
+        setTimeout( () =>
+        {
+            this.currentLockBoxSlot.lockAnim.node.active = false;
+            this.currentLockBoxSlot.SetTextLockBox();
+        }, 1000 );
     }
 
     public InitBlockBox (): void
@@ -93,7 +94,15 @@ export class UnlockBoxController extends Component
             this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
         }
 
-        this.currentLockBoxSlot.SetTextLockBox();
+        if ( this.currentLockBoxSlot.lockCount > 0 )
+        {
+            this.currentLockBoxSlot.SetTextLockBox();
+        }
+        else
+        {
+            this.currentLockBoxSlot.SetLock();
+        }
+
     }
 }
 

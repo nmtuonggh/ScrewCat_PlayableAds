@@ -45,23 +45,27 @@ export class ScrewRenderer extends Component
 
     public HideScrew (): void
     {
-        //this.topSprite.node.active = false;
-        //this.topSprite.color = color( 255, 255, 255, 0 );
-        this.topOpacity.opacity = 0;
+        if ( this.topOpacity !== null )
+        {
+            this.topOpacity.opacity = 0;
+        }
         this.botSprite.node.active = false;
     }
 
     public ShowScrew (): void
     {
-        //this.topSprite.node.active = true;
-        tween( this.topOpacity )
-        .delay( 0.5 )
-            .to( 0.5, { opacity: 255 } )
-            .call( () =>
-            {
-                this.botSprite.node.active = true;
-            } )
-            .start();
+        if ( this.topOpacity !== null )
+        {
+            tween( this.topOpacity )
+                .delay( 0.5 )
+                .to( 0.5, { opacity: 255 } )
+                .call( () =>
+                {
+                    this.botSprite.node.active = true;
+                } )
+                .start();
+        }
+        this.botSprite.node.active = true;
     }
 
 }

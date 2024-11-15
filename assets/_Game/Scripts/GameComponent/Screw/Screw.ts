@@ -13,6 +13,8 @@ import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameManager } from '../../Manager/GameManager';
 import { BarController } from '../Bar/BarController';
 import { LevelController } from '../../Controller/LevelController';
+import { RigidBody2D } from 'cc';
+import { ERigidBody2DType } from 'cc';
 
 
 const { ccclass, property } = _decorator;
@@ -55,6 +57,10 @@ export class Screw extends GameLayerComponent
     private FreeJoints (): void 
     {
         this.hingeJoint.enabled = false;
+        if ( this.hingeJoint.node.getComponent( RigidBody2D ).type === ERigidBody2DType.Kinematic )
+        {
+            this.hingeJoint.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Dynamic;
+        }
     }
 
     //#region CheckMove
@@ -70,6 +76,7 @@ export class Screw extends GameLayerComponent
             this.BlockedTween();
             return;
         }
+
 
         switch ( this.State )
         {
@@ -87,6 +94,8 @@ export class Screw extends GameLayerComponent
                     this.State = eScrewState.MOVING;
                     moveSuccess = true;
                     AudioController.Instance.PlayAudio( AudioType.screwOut );
+                    CahedContainer.Instance.currentScrewCount++;
+
                 }
 
                 if ( moveSuccess === true )
@@ -103,11 +112,15 @@ export class Screw extends GameLayerComponent
                 if ( this.CheckMoveBox() )
                 {
                     AudioController.Instance.PlayAudio( AudioType.screwOut );
+                    
+
                 }
                 break;
             case eScrewState.IN_BOX:
                 break;
         }
+        console.log( "Current Screw" + CahedContainer.Instance.currentScrewCount );
+
 
     }
 
@@ -259,6 +272,8 @@ export class Screw extends GameLayerComponent
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
                 CahedContainer.Instance.CheckWarning();
                 GameManager.Instance.CheckLose();
+
+                console.log(this.State);
             } );
     }
 

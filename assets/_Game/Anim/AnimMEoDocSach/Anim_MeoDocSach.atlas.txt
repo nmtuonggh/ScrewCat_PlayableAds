@@ -1,0 +1,202 @@
+
+Anim_MeoDocSach.png
+size: 1340,208
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ARM_1
+  rotate: false
+  xy: 1131, 2
+  size: 58, 53
+  orig: 60, 55
+  offset: 1, 1
+  index: -1
+ARM_2
+  rotate: true
+  xy: 945, 2
+  size: 99, 68
+  orig: 101, 70
+  offset: 1, 1
+  index: -1
+Chan P
+  rotate: false
+  xy: 945, 103
+  size: 128, 103
+  orig: 130, 105
+  offset: 1, 1
+  index: -1
+Chan Trai
+  rotate: false
+  xy: 1075, 135
+  size: 112, 71
+  orig: 114, 73
+  offset: 1, 1
+  index: -1
+Ellipse 4
+  rotate: true
+  xy: 736, 23
+  size: 67, 42
+  orig: 69, 44
+  offset: 1, 1
+  index: -1
+GLASSES
+  rotate: false
+  xy: 248, 139
+  size: 228, 67
+  orig: 230, 69
+  offset: 1, 1
+  index: -1
+Group 10
+  rotate: true
+  xy: 633, 23
+  size: 67, 101
+  orig: 69, 103
+  offset: 1, 1
+  index: -1
+Group 10 copy
+  rotate: true
+  xy: 1189, 140
+  size: 66, 103
+  orig: 68, 105
+  offset: 1, 1
+  index: -1
+Group 11 copy
+  rotate: false
+  xy: 1015, 11
+  size: 66, 90
+  orig: 68, 92
+  offset: 1, 1
+  index: -1
+Group 11 copy 3
+  rotate: false
+  xy: 555, 9
+  size: 76, 86
+  orig: 78, 88
+  offset: 1, 1
+  index: -1
+Group 13 copy
+  rotate: false
+  xy: 1200, 71
+  size: 75, 67
+  orig: 77, 69
+  offset: 1, 1
+  index: -1
+Group 13_01
+  rotate: true
+  xy: 1131, 57
+  size: 76, 67
+  orig: 78, 69
+  offset: 1, 1
+  index: -1
+Group 13_02
+  rotate: true
+  xy: 420, 2
+  size: 93, 133
+  orig: 93, 133
+  offset: 0, 0
+  index: -1
+Group 17
+  rotate: false
+  xy: 1294, 168
+  size: 44, 38
+  orig: 46, 40
+  offset: 1, 1
+  index: -1
+Group 4
+  rotate: true
+  xy: 638, 92
+  size: 114, 153
+  orig: 116, 155
+  offset: 1, 1
+  index: -1
+Group 5
+  rotate: true
+  xy: 478, 97
+  size: 109, 158
+  orig: 111, 160
+  offset: 1, 1
+  index: -1
+Group 7 copy
+  rotate: true
+  xy: 838, 4
+  size: 56, 59
+  orig: 58, 61
+  offset: 1, 1
+  index: -1
+Group 7 copy 3
+  rotate: false
+  xy: 1261, 10
+  size: 56, 59
+  orig: 58, 61
+  offset: 1, 1
+  index: -1
+Group 8
+  rotate: true
+  xy: 793, 62
+  size: 144, 150
+  orig: 144, 150
+  offset: 0, 0
+  index: -1
+Layer 1
+  rotate: false
+  xy: 2, 22
+  size: 244, 184
+  orig: 246, 186
+  offset: 1, 1
+  index: -1
+Layer 29
+  rotate: true
+  xy: 1083, 17
+  size: 116, 46
+  orig: 118, 48
+  offset: 1, 1
+  index: -1
+Shape 3
+  rotate: false
+  xy: 2, 3
+  size: 46, 17
+  orig: 48, 19
+  offset: 1, 1
+  index: -1
+Shape 5
+  rotate: false
+  xy: 420, 120
+  size: 28, 17
+  orig: 30, 19
+  offset: 1, 1
+  index: -1
+Shape 8
+  rotate: true
+  xy: 899, 28
+  size: 32, 44
+  orig: 34, 46
+  offset: 1, 1
+  index: -1
+UI_vfx_bling
+  rotate: false
+  xy: 780, 2
+  size: 56, 58
+  orig: 58, 60
+  offset: 1, 1
+  index: -1
+UI_vfx_bling copy
+  rotate: true
+  xy: 1200, 13
+  size: 56, 59
+  orig: 58, 61
+  offset: 1, 1
+  index: -1
+book
+  rotate: false
+  xy: 248, 20
+  size: 170, 117
+  orig: 172, 119
+  offset: 1, 1
+  index: -1
+sparkle
+  rotate: true
+  xy: 1277, 78
+  size: 60, 61
+  orig: 62, 63
+  offset: 1, 1
+  index: -1

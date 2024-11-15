@@ -1,6 +1,7 @@
 import { Button } from 'cc';
+import { Label } from 'cc';
 import { _decorator, Component, Node } from 'cc';
-import { PlayableAdsManager } from '../../../PA_iKame/base-script/PlayableAds/PlayableAdsManager';
+
 import { tween } from 'cc';
 import { Vec3 } from 'cc';
 const { ccclass, property } = _decorator;
@@ -14,6 +15,9 @@ export class UILose extends Component
     public installButton: Node = null!;
     @property( Node )
     public loseUI: Node = null!;
+    @property( Label )
+    textIQ: Label = null;
+
     protected onEnable (): void
     {
         this.TweenBtn();
@@ -33,6 +37,11 @@ export class UILose extends Component
                 .to( 0.7, { scale: new Vec3( 1.1, 1.1, 1.1 ) } )
                 .to( 0.7, { scale: new Vec3( 1, 1, 1 ) } )
         ).start();
+    }
+
+    public setIQtext ( text: string ): void
+    {
+        this.textIQ.string = text;
     }
 
 }

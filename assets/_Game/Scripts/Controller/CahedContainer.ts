@@ -2,6 +2,7 @@ import { _decorator, CCInteger, Component, Node } from 'cc';
 import { HorizontalGrid } from '../GameComponent/HoleContainer/Cache/HorizontalGrid';
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
+import { Screw } from '../GameComponent/Screw/Screw';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'CahedContainer' )
@@ -9,10 +10,12 @@ export class CahedContainer extends Component
 {
     @property( CCInteger )
     private holeCount: number = 0;
+    @property(CCInteger)
+    public currentScrewCount: number = 0;
 
     private horizontalGrid: HorizontalGrid = null;
     private listHole: Hole[] = [];
-    private listActiveHole: Hole[] = [];
+    public listActiveHole: Hole[] = [];
 
     private static _instance: CahedContainer = null;
 
@@ -60,6 +63,20 @@ export class CahedContainer extends Component
         return null;
     }
 
+    public GetScrewOnCached (): Screw[]
+    {
+        let screwList: Screw [] = [];
+        for ( const hole of this.listActiveHole )
+        {
+            if ( hole.linkingScrew && hole.linkingScrew.isValid )
+            {
+                screwList.push( hole.linkingScrew );
+            }
+        }
+
+        return screwList;
+    }
+
     public CheckMoveScrewFromCachedToBox (): void 
     {
         for ( let i = 0; i < this.listActiveHole.length; i++ )
@@ -70,6 +87,7 @@ export class CahedContainer extends Component
                 if ( hole.linkingScrew.CheckMoveBox() )
                 {
                     hole.isLinked = false;
+                    this.currentScrewCount--;
                 }
             }
         }

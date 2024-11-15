@@ -18,10 +18,17 @@ export class TutorialController extends Component
     
     @property( [Node] )
     public tapToPlay: Node[] = [];
+    @property( [Node] )
+    public iconGame: Node[] = [];
+
+    private handPosition: Vec3 = new Vec3();
+    private handScale: Vec3 = new Vec3();
 
     protected start (): void
     {
-        //this.handTutorial();
+        
+        this.handPosition = this.handPortrait.getPosition().clone();
+        this.handScale = this.handPortrait.getScale().clone();
     }
 
     public stopTutorial (): void
@@ -29,6 +36,7 @@ export class TutorialController extends Component
         this.screw.getComponent( Screw ).screwAnimation.PlayTutorial();
         this.handPortrait.active = false;
         this.tapToPlay[MultiScreneController.Instance.ScreenType].active = false;
+        if(this.iconGame[MultiScreneController.Instance.ScreenType] !== null) this.iconGame[MultiScreneController.Instance.ScreenType].active = false;
         Tween.stopAllByTarget( this.handPortrait );
     }
 
@@ -48,11 +56,22 @@ export class TutorialController extends Component
                 this.tapToPlay[i].active = false;
             }
         }
+
+        for ( let i = 0; i < this.iconGame.length; i++ )
+        {
+            if(this.iconGame[i] === null) continue;
+            if ( i === MultiScreneController.Instance.ScreenType )
+            {
+                this.iconGame[i].active = true;
+            }
+            else
+            {
+                this.iconGame[i].active = false;
+            }
+        }
         
-
-
-        let handPosition = this.handPortrait.getPosition().clone();
-        let handScale = this.handPortrait.getScale().clone();
+        //let handPosition = this.handPortrait.getPosition().clone();
+        //let handScale = this.handPortrait.getScale().clone();
 
         tween( this.handPortrait ).repeatForever
             (
@@ -63,8 +82,8 @@ export class TutorialController extends Component
                     )
                     .call( () => this.screw.getComponent( Screw ).screwAnimation.ScrewOut() )
                     .parallel(
-                        tween().to( 0.5, { position: handPosition }, { easing: 'cubicOut' } ),
-                        tween().to( 0.5, { scale: handScale }, { easing: 'cubicOut' } )
+                        tween().to( 0.5, { position: this.handPosition }, { easing: 'cubicOut' } ),
+                        tween().to( 0.5, { scale: this.handScale }, { easing: 'cubicOut' } )
                     )
                     .call( () =>
                     {
