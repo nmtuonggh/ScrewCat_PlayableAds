@@ -34,6 +34,28 @@ export class UIMultiScreen extends Component
     //#endregion
 
     //#region Landscape Position
+    @property( { type: Vec3, group: "Square" } )
+    public LevelContainerPosSquare: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Square" } )
+    public BoxContainerPosSquare: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Square" } )
+    public CacheContainerPosSquare: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Square" } )
+    public StarPosSquare: Vec3 = new Vec3( 0, 0, 0 );
+    //#endregion
+
+    //#region Landscape Position
+    @property( { type: Vec3, group: "Mix" } )
+    public LevelContainerPosMix: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Mix" } )
+    public BoxContainerPosMix: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Mix" } )
+    public CacheContainerPosMix: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Mix" } )
+    public StarPosMix: Vec3 = new Vec3( 0, 0, 0 );
+    //#endregion
+
+    //#region Landscape Position
     @property( { type: Vec3, group: "Landscape" } )
     public LevelContainerPosLandscape: Vec3 = new Vec3( 0, 0, 0 );
     @property( { type: Vec3, group: "Landscape" } )
@@ -44,22 +66,30 @@ export class UIMultiScreen extends Component
     public StarPosLandscape: Vec3 = new Vec3( 0, 0, 0 );
     //#endregion
 
+    
+
     public SetUIElements (screenType : ScreenType): void
     {
         console.log("SetUIElements" + screenType);
         switch (screenType) {
             case ScreenType.Portrait:
-                this.SetGPortrainElementsPosition();
+                this.SetPortrainElementsPosition();
                 break;
             case ScreenType.Landscape:
-                this.SetGLandscapeElementsPosition();
+                this.SetLandscapeElementsPosition();
+                break;
+            case ScreenType.Square:
+                this.SetSquareElementsPosition();
+                break;
+            case ScreenType.Mixed:
+                this.SetMixElementsPosition();
                 break;
             default:
                 break;
         }
     }
 
-    public SetGPortrainElementsPosition (): void 
+    public SetPortrainElementsPosition (): void 
     {
         this.LevelContainer.setPosition( this.LevelContainerPosPortrai );
         this.BoxContainer.setPosition( this.BoxContainerPosPortrai );
@@ -67,12 +97,28 @@ export class UIMultiScreen extends Component
         this.Star.setPosition( this.StarPosPortrai );
     }
 
-    public SetGLandscapeElementsPosition (): void 
+    public SetLandscapeElementsPosition (): void 
     {
         this.LevelContainer.setPosition( this.LevelContainerPosLandscape );
         this.BoxContainer.setPosition( this.BoxContainerPosLandscape );
         this.CacheContainer.setPosition( this.CacheContainerPosLandscape );
         this.Star.setPosition( this.StarPosLandscape );
+    }
+
+    public SetSquareElementsPosition (): void 
+    {
+        this.LevelContainer.setPosition( this.LevelContainerPosSquare );
+        this.BoxContainer.setPosition( this.BoxContainerPosSquare );
+        this.CacheContainer.setPosition( this.CacheContainerPosSquare );
+        this.Star.setPosition( this.StarPosSquare );
+    }
+
+    public SetMixElementsPosition (): void 
+    {
+        this.LevelContainer.setPosition( this.LevelContainerPosMix );
+        this.BoxContainer.setPosition( this.BoxContainerPosMix );
+        this.CacheContainer.setPosition( this.CacheContainerPosMix );
+        this.Star.setPosition( this.StarPosMix );
     }
 }
 

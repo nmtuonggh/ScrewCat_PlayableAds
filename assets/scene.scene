@@ -4332,7 +4332,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1080,
+      "width": 1920,
       "height": 1920
     },
     "_anchorPoint": {
@@ -6369,8 +6369,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1080,
-      "height": 1920
+      "width": 1920,
+      "height": 1324
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -62380,6 +62380,54 @@
       "z": 0
     },
     "StarPosPortrai": {
+      "__type__": "cc.Vec3",
+      "x": 370,
+      "y": -400,
+      "z": 0
+    },
+    "LevelContainerPosSquare": {
+      "__type__": "cc.Vec3",
+      "x": 440,
+      "y": 50,
+      "z": 0
+    },
+    "BoxContainerPosSquare": {
+      "__type__": "cc.Vec3",
+      "x": -440,
+      "y": -480,
+      "z": 0
+    },
+    "CacheContainerPosSquare": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": -200,
+      "z": 0
+    },
+    "StarPosSquare": {
+      "__type__": "cc.Vec3",
+      "x": -890,
+      "y": -750,
+      "z": 0
+    },
+    "LevelContainerPosMix": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "BoxContainerPosMix": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": -100,
+      "z": 0
+    },
+    "CacheContainerPosMix": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": -200,
+      "z": 0
+    },
+    "StarPosMix": {
       "__type__": "cc.Vec3",
       "x": 370,
       "y": -400,
