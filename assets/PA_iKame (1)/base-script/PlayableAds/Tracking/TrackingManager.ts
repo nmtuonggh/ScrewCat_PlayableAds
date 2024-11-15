@@ -12,11 +12,11 @@ export class TrackingManager extends Component {
 
     static api_secret : string = `ymcwxS12SSi6IavS3-Jj-Q`;
     static firebase_app_id : string= `1:444377725360:android:b0bef9148a16a69aa27e75`;
+    
+    static currentScreen : string = "_level_Unlock";
+    static returnGame : USER_RETURN = USER_RETURN._false;
     static package_name : string = `com.ig.screw.cat`;
     static os : OPERATING_SYSTEM = OPERATING_SYSTEM.NONE;
-
-    static returnGame : USER_RETURN = USER_RETURN._false;
-
     protected onLoad(): void {
         TrackingManager.userPseudoID = this.generateUniqueString();
         TrackingManager.SetOS();
@@ -37,11 +37,15 @@ export class TrackingManager extends Component {
 
     //#region LISTEN EVENT
     static gameStart(){
-        this.LogEvent(ACTION_NAME._start);
+        this.LogEvent(ACTION_NAME._start, ACTION_TYPE._start);
     }
 
     static FirstClick(){
-        this.LogEvent(ACTION_NAME._first_click);
+        this.LogEvent(ACTION_NAME._first_click, ACTION_TYPE._action);
+    }
+
+    static Click(){
+        this.LogEvent(ACTION_NAME._click, ACTION_TYPE._action);
     }
 
     static UserEngagement(time : number){
@@ -53,19 +57,30 @@ export class TrackingManager extends Component {
 
     static WinLevel(){
         this.LogEvent_Result(RESULT._win);
+        this.currentScreen = "_Win_Screen";
+        this.LogEvent_ShowScreen();
+        
+        // setTimeout(() => {
+        //     PlayableAdsManager.Instance().ForceOpenStore();
+        // }, 2000);
     }
 
     static LoseLevel(){
         this.LogEvent_Result(RESULT._lose);
+        this.currentScreen = "_Lose_Screen";
+        this.LogEvent_ShowScreen();
+        // setTimeout(() => {
+        //     PlayableAdsManager.Instance().ForceOpenStore();
+        // }, 2000);
     }
 
     static ClickConversion(){
-        this.LogEvent_Button(ACTION_NAME._click_conversion);
+        this.LogEvent_Button("_click");
         this.returnGame = USER_RETURN._true;
     }
 
     static ForceConversion(){
-        TrackingManager.LogEvent_Button(ACTION_NAME._force_conversion);
+        TrackingManager.LogEvent_Button("_force");
         this.returnGame = USER_RETURN._true;
     }
     
@@ -80,16 +95,15 @@ export class TrackingManager extends Component {
         const currentTime = new Date().getTime();
         const timeString = currentTime.toString(16);
         const timeStringLength = timeString.length;
-        for (let i = 0; i < 32 - timeStringLength; i++) 
-        {
+        for (let i = 0; i < 32 - timeStringLength; i++) {
             randomStr += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return timeString + randomStr;
     }
     static LogEvent(
         action_name : ACTION_NAME, 
-        action_type : ACTION_TYPE = ACTION_TYPE._start,
-        object : OBJECT = OBJECT._level_status)
+        action_type : ACTION_TYPE,
+        object : OBJECT = OBJECT.level_status)
         {
         var jsonInput = JSON.stringify({
             app_instance_id: this.userPseudoID,
@@ -98,43 +112,12 @@ export class TrackingManager extends Component {
                 params: {
                     "action_type": ACTION_TYPE[action_type], // "start", "action", "end"
                     "action_name": ACTION_NAME[action_name],
+                    "screen": this.currentScreen,
                     "user_return": USER_RETURN[this.returnGame],
                     "object": OBJECT[object],
-                    "screen": "_level_1",
-                    "package_name": this.package_name,
-                    "operating_system": OPERATING_SYSTEM[this.os],
                     "playable_ad_id": PlayableAdsManager.Instance().playableAdsName,
-                },
-            }]
-        });
-        this.PostEvent(jsonInput);
-    }
-    static LogEvent_Click(
-        action_type : ACTION_TYPE, 
-        action_name : ACTION_NAME, 
-        position_name: string,
-        positionX : string, 
-        positionY : string, 
-        user_return : USER_RETURN,
-        object : OBJECT)
-        {
-
-        var jsonInput = JSON.stringify({
-            app_instance_id: this.userPseudoID,
-            events: [{
-                name: 'playable_level',
-                params: {
-                    "action_type": ACTION_TYPE[action_type], // "start", "action", "end"
-                    "action_name": ACTION_NAME[action_name],
-                    "position_name": position_name,
-                    "positionX": positionX,
-                    "positionY": positionY,
-                    "screen": "_level_1",
-                    "user_return": USER_RETURN[this.returnGame],
-                    "object": OBJECT[object],
-                    "package_name": this.package_name,
                     "operating_system": OPERATING_SYSTEM[this.os],
-                    "playable_ad_id": PlayableAdsManager.Instance().playableAdsName,
+                    "package_name": this.package_name,
                 },
             }]
         });
@@ -144,7 +127,7 @@ export class TrackingManager extends Component {
         result : RESULT,
         action_type : ACTION_TYPE = ACTION_TYPE._end, 
         action_name : ACTION_NAME = ACTION_NAME._finish,
-        object : OBJECT = OBJECT._level_status)
+        object : OBJECT = OBJECT.level_status)
         {
         var jsonInput = JSON.stringify({
             app_instance_id: this.userPseudoID,
@@ -153,22 +136,50 @@ export class TrackingManager extends Component {
                 params: {
                     "action_type": ACTION_TYPE[action_type], // "start", "action", "end"
                     "action_name": ACTION_NAME[action_name],
+                    "screen": this.currentScreen,
                     "user_return": USER_RETURN[this.returnGame],
                     "result": RESULT[result],
                     "object": OBJECT[object],
-                    "screen": "_level_1",
-                    "package_name": this.package_name,
-                    "operating_system": OPERATING_SYSTEM[this.os],
                     "playable_ad_id": PlayableAdsManager.Instance().playableAdsName,
+                    "operating_system": OPERATING_SYSTEM[this.os],
+                    "package_name": this.package_name,
+                    
                 },
             }]
         });
         this.PostEvent(jsonInput);
     }
+
+    static LogEvent_ShowScreen(
+        action_type : ACTION_TYPE = ACTION_TYPE._action,
+        action_name : ACTION_NAME = ACTION_NAME._show_screen,
+        object : OBJECT = OBJECT.conversion)
+        {
+        var jsonInput = JSON.stringify({
+            app_instance_id: this.userPseudoID,
+            events: [{
+                name: 'playable_level',
+                params: {
+                    "action_type": ACTION_TYPE[action_type], // "start", "action", "end"
+                    "action_name": ACTION_NAME[action_name],
+                    "screen": this.currentScreen,
+                    "user_return": USER_RETURN[this.returnGame],
+                    "object": OBJECT[object],
+                    "playable_ad_id": PlayableAdsManager.Instance().playableAdsName,
+                    "operating_system": OPERATING_SYSTEM[this.os],
+                    "package_name": this.package_name,
+                },
+            }]
+        });
+        this.PostEvent(jsonInput);
+    }
+
+    
     static LogEvent_Button(
-        action_name : ACTION_NAME,
-        action_type : ACTION_TYPE = ACTION_TYPE._action,    
-        object : OBJECT = OBJECT._conversion)
+        button_name : string,
+        action_type : ACTION_TYPE = ACTION_TYPE._action,
+        action_name : ACTION_NAME = ACTION_NAME._click_conversion,
+        object : OBJECT = OBJECT.conversion)
         {
         var jsonInput = JSON.stringify({
             app_instance_id: this.userPseudoID,
@@ -178,11 +189,13 @@ export class TrackingManager extends Component {
                     "action_type": ACTION_TYPE[action_type], // "start", "action", "end"
                     "action_name": ACTION_NAME[action_name],
                     "user_return": USER_RETURN[this.returnGame],
+                    "screen": this.currentScreen,
+                    "button_name" : button_name,
                     "object": OBJECT[object],
-                    "screen": "_level_1",
-                    "package_name": this.package_name,
-                    "operating_system": OPERATING_SYSTEM[this.os],
                     "playable_ad_id": PlayableAdsManager.Instance().playableAdsName,
+                    "operating_system": OPERATING_SYSTEM[this.os],
+                    "package_name": this.package_name,
+                    
                 },
             }]
         });
@@ -193,7 +206,7 @@ export class TrackingManager extends Component {
         fps : string,
         action_type : ACTION_TYPE = ACTION_TYPE._action, 
         action_name : ACTION_NAME = ACTION_NAME._users_engagement, 
-        object : OBJECT = OBJECT._users_engagement)
+        object : OBJECT = OBJECT.users_engagement)
         {
         var jsonInput = JSON.stringify({
             app_instance_id: this.userPseudoID,
@@ -205,10 +218,10 @@ export class TrackingManager extends Component {
                     "engagement_time": engagement_time,
                     "fps": fps,
                     "object": OBJECT[object],
-                    "screen": "_level_1",
-                    "package_name": this.package_name,
-                    "operating_system": OPERATING_SYSTEM[this.os],
                     "playable_ad_id": PlayableAdsManager.Instance().playableAdsName,
+                    "operating_system": OPERATING_SYSTEM[this.os],
+                    "package_name": this.package_name,
+                    
                 },
             }]
         });

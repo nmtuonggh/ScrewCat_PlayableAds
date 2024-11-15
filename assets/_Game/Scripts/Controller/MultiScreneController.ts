@@ -34,9 +34,22 @@ export class MultiScreneController extends Component
 
     @property( UIMultiScreen )
     public uimulti: UIMultiScreen = null;
+    @property( TutorialController )
+    public tutorialController: TutorialController = null;
+
+    private static _instance: MultiScreneController = null;
+
+    public static get Instance (): MultiScreneController
+    {
+        return this._instance;
+    }
 
     protected onEnable (): void
     {
+        if ( MultiScreneController._instance === null )
+        {
+            MultiScreneController._instance = this;
+        }
         this.baseCanvas.node.on( Node.EventType.SIZE_CHANGED, this.onSizeChanged, this );
     }
 
@@ -45,13 +58,15 @@ export class MultiScreneController extends Component
     protected start (): void
     {
         this.getScreenSize();
-        
+        this.tutorialController.handTutorial();
     }
 
     public onSizeChanged (): void
     {
         console.log( "Size Changed" );
         this.UpdateSize();
+        this.tutorialController.handTutorial();
+
     }
 
     getScreenSize (): void
@@ -112,7 +127,7 @@ export class MultiScreneController extends Component
             targetSize = new Size( 1920, 1080 );
             screenType = ScreenType.Landscape;
         }
-        
+
 
 
         if ( screenType != this.ScreenType )
@@ -134,7 +149,7 @@ export class MultiScreneController extends Component
             }
         }
 
-        console.log("Ratio: ", ratio);
+        console.log( "Ratio: ", ratio );
     }
 
     setupCanvas ( type: ScreenType, targetSize: Size, ratio: number ): void

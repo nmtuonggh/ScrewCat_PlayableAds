@@ -11,7 +11,7 @@ import { TutorialController } from '../TutorialController';
 import { AudioController } from '../AudioController/AudioController';
 import { PoolTouch } from '../PoolTouch';
 import { tween } from 'cc';
-import { PlayableAdsManager } from '../../../PA_iKame/base-script/PlayableAds/PlayableAdsManager';
+
 import { GameManager } from '../Manager/GameManager';
 import { Game } from 'cc';
 import { EventTouch } from 'cc';
@@ -19,6 +19,8 @@ import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/
 import { ParticleSystem } from 'cc';
 import { instantiate } from 'cc';
 import { Prefab } from 'cc';
+import { PlayableAdsManager } from '../../../PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
+import { TrackingManager } from '../../../PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -87,12 +89,14 @@ export class MoveScrewHandle extends Component
         if ( GameManager.Instance.currentScrew <= 1 ) 
         {
             this.playableAdsManager.ForceOpenStore();
+            TrackingManager.WinLevel();
             return;
         }
 
         if ( GameManager.Instance.lose === true )
         {
             this.playableAdsManager.ForceOpenStore();
+            TrackingManager.LoseLevel();
             return;
         }
         let ratio =1;

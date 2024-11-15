@@ -3,6 +3,9 @@ import { Screw } from './GameComponent/Screw/Screw';
 import { tween } from 'cc';
 import { Tween } from 'cc';
 import { Vec3 } from 'cc';
+import { UIMultiScreen } from './MultiScreen/UIMultiScreen';
+import { MultiScreneController } from './Controller/MultiScreneController';
+import { MoveScrewHandle } from './Controller/MoveScrewHandle';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'TutorialController' )
@@ -12,27 +15,40 @@ export class TutorialController extends Component
     public screw: Node = null;
     @property( Node )
     public handPortrait: Node = null;
-    @property( Node )
-    public textTapToPlay: Node = null;
+    
+    @property( [Node] )
+    public tapToPlay: Node[] = [];
 
     protected start (): void
     {
-        this.handTutorial();
+        //this.handTutorial();
     }
 
     public stopTutorial (): void
     {
         this.screw.getComponent( Screw ).screwAnimation.PlayTutorial();
         this.handPortrait.active = false;
-        this.textTapToPlay.active = false;
+        this.tapToPlay[MultiScreneController.Instance.ScreenType].active = false;
         Tween.stopAllByTarget( this.handPortrait );
     }
 
     public handTutorial (): void
     {
+        if(MoveScrewHandle.Instance.isFirstTouch) return;
         this.stopTutorial();
         this.handPortrait.active = true;
-        this.textTapToPlay.active = true;
+        for ( let i = 0; i < this.tapToPlay.length; i++ )
+        {
+            if ( i === MultiScreneController.Instance.ScreenType )
+            {
+                this.tapToPlay[i].active = true;
+            }
+            else
+            {
+                this.tapToPlay[i].active = false;
+            }
+        }
+        
 
 
         let handPosition = this.handPortrait.getPosition().clone();
@@ -58,7 +74,7 @@ export class TutorialController extends Component
                     .delay( 0.5 )
             ).start();
 
-        tween( this.textTapToPlay ).repeatForever
+        tween( this.tapToPlay[MultiScreneController.Instance.ScreenType] ).repeatForever
             (
                 tween()
                     .to( 0.5, { scale: new Vec3( 1.2, 1.2, 1 ) }, { easing: 'cubicIn' } )

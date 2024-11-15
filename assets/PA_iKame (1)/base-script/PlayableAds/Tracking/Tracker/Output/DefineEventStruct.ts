@@ -13,7 +13,6 @@
 		 _finish,
 		 _show_screen,
 		 _click_conversion,
-		 _force_conversion,
 		 _click,
 		 _users_engagement,
 		 _click_button_reset,
@@ -28,10 +27,10 @@
 
 	 export enum OBJECT {
 		NONE,
-		 _level_status,
-		 _conversion,
-		 _ui,
-		 _users_engagement
+		 level_status,
+		 conversion,
+		 ui,
+		 users_engagement
 }
 
 	 export enum OPERATING_SYSTEM {

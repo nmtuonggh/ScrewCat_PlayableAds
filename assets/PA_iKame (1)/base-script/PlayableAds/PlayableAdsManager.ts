@@ -34,13 +34,13 @@ export class PlayableAdsManager extends SingletonInSceneComponent {
 
         // Sau khi đã set lại biến titleDefault, mở comment đoạn này để lấy network
 
-        const paName = pageTitle.split("|")[1].trim();
-        this.network = window['super_html_channel'];
-        this.playableAdsName = paName +"_"+ this.network;
+        // const paName = pageTitle.split("|")[1].trim();
+        // this.network = window['super_html_channel'];
+        // this.playableAdsName = paName +"_"+ this.network;
 
-        if(this.network == 'google'){
-            this.activeTracking = false;
-        }
+        // if(this.network == 'google'){
+        //     this.activeTracking = false;
+        // }
     }
     
     protected start(): void {
@@ -78,7 +78,6 @@ export class PlayableAdsManager extends SingletonInSceneComponent {
         console.log("iKame AppStore:" + this.urlAppStore)
                
     }
-    
     ActionFirstClicked(){
         if(!this.firstClicked){
             TrackingManager.FirstClick();
@@ -89,7 +88,6 @@ export class PlayableAdsManager extends SingletonInSceneComponent {
         }
        
     }
-
     countTimeTracking : number = 3;
     totalTimePlay :  number = 0;
     protected update(dt: number): void {
@@ -116,7 +114,6 @@ export class PlayableAdsManager extends SingletonInSceneComponent {
         super_html_playable.download();
         super_html_playable.game_end();
     }
-
     static LogDebug(message : string){
         if(PlayableAdsManager.Instance().logDebug){
             console.log(message);

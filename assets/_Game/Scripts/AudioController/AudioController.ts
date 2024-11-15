@@ -59,12 +59,10 @@ export enum AudioType
 {
     screwIn = 0,
     screwOut = 1,
-    screwInBox = 2,
-    boxComplete = 3,
-    lose = 4,
-    bgm = 5,
-    chainVibrate = 6,
-    unlockChain = 7,
+    boxComplete = 2,
+    lose = 3,
+    chainVibrate = 4,
+    unlockChain = 5,
 }
 
 
