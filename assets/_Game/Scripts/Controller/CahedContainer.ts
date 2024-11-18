@@ -13,7 +13,7 @@ export class CahedContainer extends Component
     @property( CCInteger )
     public currentScrewCount: number = 0;
 
-    private horizontalGrid: HorizontalGrid = null;
+    public horizontalGrid: HorizontalGrid = null;
     private listHole: Hole[] = [];
     public listActiveHole: Hole[] = [];
 
@@ -48,6 +48,11 @@ export class CahedContainer extends Component
         }
 
         this.horizontalGrid.RepositionHoleChange();
+    }
+
+    public AddNewHole (): Hole
+    {
+       return this.horizontalGrid.AddNewHole();
     }
 
     public GetFreeHole (): Hole
@@ -95,27 +100,6 @@ export class CahedContainer extends Component
 
     public CheckWarning ()
     {
-        // let holeHasScrew = [];
-
-        // for ( let i = 0; i < this.listActiveHole.length; i++ )
-        // {
-        //     const hole = this.listActiveHole[ i ];
-        //     if ( hole.isLinked && hole.linkingScrew && hole.linkingScrew.isValid )
-        //     {
-        //         holeHasScrew.push( hole );
-        //     }
-        // }
-
-        // if ( this.listActiveHole.length - holeHasScrew.length <= 2 )
-        // {
-        //     for ( let i = 0; i < this.listActiveHole.length; i++ )
-        //     {
-        //         const hole = this.listActiveHole[ i ];
-
-        //         hole.ShowWarning();
-
-        //     } 
-        // }
         if ( this.currentScrewCount >= this.listActiveHole.length - 1 )
         {
             for ( let i = 0; i < this.listActiveHole.length; i++ )

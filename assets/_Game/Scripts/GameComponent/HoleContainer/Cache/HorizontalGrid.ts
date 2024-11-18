@@ -7,7 +7,7 @@ export class HorizontalGrid extends Component
 {
     @property( CCFloat )
     private space: number = 5;
-    @property(Node)
+    @property( Node )
     private listActiveChild: Node[] = [];
 
     protected onLoad (): void
@@ -26,6 +26,29 @@ export class HorizontalGrid extends Component
         } );
     }
 
+    public AddNewHole (): Hole
+    {
+        let listchild = this.node.getComponentsInChildren( Hole );
+        let listUnActiveChild: Hole[] = [];
+        let hole: Hole = null;
+        listchild.forEach( child => 
+        {
+            if ( child.node.active === false )
+            {
+                listUnActiveChild.push( child );
+            }
+        } );
+
+        if ( listUnActiveChild.length > 0 )
+        {
+            hole = listUnActiveChild[ 0 ];
+            hole.node.active = true;
+            this.RepositionHoleChange();
+            return hole;
+        }
+        return hole;
+    }
+
     public RepositionHoleChange (): void
     {
         this.GetActiveChild();
@@ -36,8 +59,8 @@ export class HorizontalGrid extends Component
         {
             const hole = this.listActiveChild[ i ];
 
-            tween(hole).stop();
-            tween(hole)
+            tween( hole ).stop();
+            tween( hole )
                 .to( 0.2, { position: new Vec3( firstLeftPos + i * this.space, 0, 0 ) } )
                 .start();
         }

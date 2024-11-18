@@ -5,6 +5,7 @@ import { tween } from 'cc';
 import { Vec3 } from 'cc';
 import { AudioManager } from '../../../../PA_iKame (1)/base-script/Manager/AudioManager';
 import { AudioController, AudioType } from '../../AudioController/AudioController';
+import { eColorType } from '../../GameConfig/GameColorConfig';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Hole' )
@@ -22,6 +23,12 @@ export class Hole extends Component
     @property( { type: Screw } )
     public linkingScrew: Screw = null;
 
+    private _colorType: eColorType;
+
+    public get ColorType (): eColorType
+    {
+        return this._colorType;
+    }
 
     public IsFree (): boolean 
     {
