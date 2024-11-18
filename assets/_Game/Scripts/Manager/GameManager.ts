@@ -32,6 +32,9 @@ export class GameManager extends Component
     @property( MultiScreneController )
     private multiScreenController: MultiScreneController = null;
 
+    @property( Node )
+    public loseUI: Node = null;
+
     @property( ScrewData )
     public screwData: ScrewData = null;
 
