@@ -7,21 +7,15 @@ import { OutOfMove } from './OutOfMove';
 import { GameManager } from './Manager/GameManager';
 import { UILose } from './UI/UILose';
 import { TestIQController } from './TestIQ/TestIQController';
+import { CanvasScreenController } from './MultiScreen/CanvasScreenController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'UIController' )
 export class UIController extends Component
 {
 
-
-
-    @property( [ Node ] )
-    public fail: Node[] = [];
-    @property( [ Node ] )
-    public LoseUI: Node[] = [];
-    @property( [ OutOfMove ] )
-    public listOFM: OutOfMove[] = [];
-
+    @property([CanvasScreenController])
+    public canvasScreenController: CanvasScreenController[] = [];
 
     protected static _instance: UIController = null;
 
@@ -38,36 +32,21 @@ export class UIController extends Component
         }
     }
 
-    public TweenFail ( index: number ): void
-    {
-        this.fail[ index ].active = true;
-        this.fail[ index ].scale = new Vec3( 5, 5, 0 );
-        tween( this.fail[ index ] )
-            .to( 0.5, { scale: new Vec3( 1.5, 1.5, 1 ) } )
-            .start();
-    }
-
     public onChangedScreen ( ): void
     {
         if(!GameManager.Instance.lose) return;
-        //this.LoseUI[ index ].active = true;
-        this.listOFM.forEach(element => {
-            element.node.active = false;
-        });
-        this.fail.forEach(element => {
-            element.active = false;
-        });
-        this.LoseUI.forEach(element => {
-            element.active = true;
-            element.getComponent(UILose).setIQtext(TestIQController.Instance.currentIQ.toString());
+
+        this.canvasScreenController.forEach(element => {  //UI Canvas
+            element.uiCanvasScreen.setOutOfMoveUIStatus(false);
+            element.uiCanvasScreen.setFailUIStatus(false);
+            element.uiCanvasScreen.setLoseUIStatus(true);
         });
     }
 
     public ShowOutOfMove ( ): void
     {
-        console.log('ShowOutOfMove' + this.listOFM.length);
-        this.listOFM.forEach(element => {
-            element.node.active = true;
+        this.canvasScreenController.forEach(element => {
+            element.uiCanvasScreen.setOutOfMoveUIStatus(true);
         });
     }
 }

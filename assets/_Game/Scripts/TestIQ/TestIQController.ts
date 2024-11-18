@@ -106,7 +106,7 @@ export class TestIQController extends Component
     {
         tween( iq )
         // tween().to( 0.7, { scale: new Vec3( 2, 2, 2 ) }, { easing: 'backIn' } )
-            .to( 0.25, { scale: new Vec3( 1.75, 1.75, 2 ) }, { easing: 'backIn' } )
+            .to( 0.25, { scale: new Vec3( 1.65, 1.65, 2 ) }, { easing: 'cubicIn' } )
             .to( 0.7, { worldPosition: this.text.node.worldPosition }, { easing: 'backIn' } )
 
             // .parallel(

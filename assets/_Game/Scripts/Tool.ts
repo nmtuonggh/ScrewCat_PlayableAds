@@ -20,7 +20,9 @@ export class Tool extends Component
     @property( CCBoolean )
     public setScrewToBar: boolean = false;
     @property( CCBoolean )
-    public setPosScreen: boolean = false;
+    public setPosScreenData: boolean = false;
+    @property( CCBoolean )
+    public testPosScreen: boolean = false;
 
     @property( CCBoolean )
     public runSetCollider2222222: boolean = false;
@@ -34,17 +36,19 @@ export class Tool extends Component
 
     @property(UIMultiScreen)
     public uiMultiScreen: UIMultiScreen = null;
+    
     @property({type: Node, group: "Element"})
-    public LevelContainer: Node = null;
+    public LevelContainer: Node;
 
     @property({type: Node, group: "Element"})
-    public BoxContainer: Node = null;
+    public BoxContainer: Node;
 
     @property({type: Node, group: "Element"})
-    public CacheContainer: Node = null;
+    public CacheContainer: Node;
+    
 
     @property({type: Node, group: "Element"})
-    public Star: Node = null;
+    public Star: Node;
 
     protected onLoad (): void
     {
@@ -69,9 +73,14 @@ export class Tool extends Component
 
         }
 
-        if ( this.setPosScreen )
+        if ( this.setPosScreenData )
         {
             this.SetScreenElements();
+        }
+
+        if ( this.testPosScreen )
+        {
+            this.TestPosScreen();
         }
 
     }
@@ -180,6 +189,30 @@ export class Tool extends Component
         this.uiMultiScreen.CacheContainerPosPortrai  = this.CacheContainer.position;
         this.uiMultiScreen.StarPosPortrai  = this.Star.position;
 
+    }
+
+    public TestPosScreen (): void
+    {
+        // //Portrait
+        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosPortrai;
+        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosPortrai;
+        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosPortrai;
+        // this.Star.position = this.uiMultiScreen.StarPosPortrai;
+        //Square
+        this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosSquare;
+        this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosSquare;
+        this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosSquare;
+        this.Star.position = this.uiMultiScreen.StarPosSquare;
+        //Mixed
+        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosMix;
+        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosMix;
+        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosMix;
+        // this.Star.position = this.uiMultiScreen.StarPosMix;
+        // //Landscape
+        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosLandscape;
+        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosLandscape;
+        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosLandscape;
+        // this.Star.position = this.uiMultiScreen.StarPosLandscape;
     }
 
 }

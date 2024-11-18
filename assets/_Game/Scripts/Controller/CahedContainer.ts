@@ -10,7 +10,7 @@ export class CahedContainer extends Component
 {
     @property( CCInteger )
     private holeCount: number = 0;
-    @property(CCInteger)
+    @property( CCInteger )
     public currentScrewCount: number = 0;
 
     private horizontalGrid: HorizontalGrid = null;
@@ -65,7 +65,7 @@ export class CahedContainer extends Component
 
     public GetScrewOnCached (): Screw[]
     {
-        let screwList: Screw [] = [];
+        let screwList: Screw[] = [];
         for ( const hole of this.listActiveHole )
         {
             if ( hole.linkingScrew && hole.linkingScrew.isValid )
@@ -95,25 +95,34 @@ export class CahedContainer extends Component
 
     public CheckWarning ()
     {
-        let holeHasScrew = [];
+        // let holeHasScrew = [];
 
-        for ( let i = 0; i < this.listActiveHole.length; i++ )
-        {
-            const hole = this.listActiveHole[ i ];
-            if ( hole.isLinked && hole.linkingScrew && hole.linkingScrew.isValid )
-            {
-                holeHasScrew.push( hole );
-            }
-        }
-        if ( this.listActiveHole.length - holeHasScrew.length <= 2 )
+        // for ( let i = 0; i < this.listActiveHole.length; i++ )
+        // {
+        //     const hole = this.listActiveHole[ i ];
+        //     if ( hole.isLinked && hole.linkingScrew && hole.linkingScrew.isValid )
+        //     {
+        //         holeHasScrew.push( hole );
+        //     }
+        // }
+
+        // if ( this.listActiveHole.length - holeHasScrew.length <= 2 )
+        // {
+        //     for ( let i = 0; i < this.listActiveHole.length; i++ )
+        //     {
+        //         const hole = this.listActiveHole[ i ];
+
+        //         hole.ShowWarning();
+
+        //     } 
+        // }
+        if ( this.currentScrewCount >= this.listActiveHole.length - 1 )
         {
             for ( let i = 0; i < this.listActiveHole.length; i++ )
             {
                 const hole = this.listActiveHole[ i ];
-
                 hole.ShowWarning();
-
-            } 
+            }
         }
     }
 

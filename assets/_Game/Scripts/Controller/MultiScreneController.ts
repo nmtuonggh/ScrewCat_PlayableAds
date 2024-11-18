@@ -7,23 +7,18 @@ import { ResolutionPolicy } from 'cc';
 import { UITransform } from 'cc';
 import { Widget } from 'cc';
 import { Camera } from 'cc';
-import { Vec3 } from 'cc';
 import { UIMultiScreen } from '../MultiScreen/UIMultiScreen';
 import { MoveScrewHandle } from './MoveScrewHandle';
 import { TestIQController } from '../TestIQ/TestIQController';
-import { Game } from 'cc';
-import { GameManager } from '../Manager/GameManager';
-import { PlayableAdsManager } from '../../../PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
+import { CanvasScreenController } from '../MultiScreen/CanvasScreenController';
 
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MultiScreneController' )
 export class MultiScreneController extends Component
 {
-    @property( Node )
-    public listCanvas: Node[] = [];
-    @property( [ Camera ] )
-    public listCamera: Camera[] = [];
+    @property(CanvasScreenController)
+    public canvasScreenController: CanvasScreenController[] = [];
 
     @property( Canvas )
     public baseCanvas: Canvas = null;
@@ -63,9 +58,7 @@ export class MultiScreneController extends Component
     {
         console.log( "Size Changed" );
         this.UpdateSize();
-        this.tutorialController.handTutorial();
-        TestIQController.Instance.SetupIQUI( this.ScreenType );
-        UIController.Instance.onChangedScreen();
+        
     }
 
     getScreenSize (): void
@@ -136,31 +129,32 @@ export class MultiScreneController extends Component
 
         view.setDesignResolutionSize( targetSize.width, targetSize.height, ResolutionPolicy.FIXED_HEIGHT );
 
-        for ( let i = 0; i < this.listCanvas.length; i++ )
-        {
-            if ( i != this.ScreenType )
+        for ( let i = 0; i < this.canvasScreenController.length; i++ )
             {
-                this.listCanvas[ i ].active = false;
+                if ( i != this.ScreenType )
+                {
+                    this.canvasScreenController[ i ].node.active = false;
+                }
+                else
+                {
+                    this.setupScreen( this.ScreenType, targetSize, ratio );
+                }
             }
-            else
-            {
-                this.setupCanvas( this.ScreenType, targetSize, ratio );
-            }
-        }
 
         console.log( "Ratio: ", ratio );
     }
 
-    setupCanvas ( type: ScreenType, targetSize: Size, ratio: number ): void
+    setupScreen ( type: ScreenType, targetSize: Size, ratio: number ): void
     {
-        //console.log("Target Size: ", targetSize);
-        this.listCanvas[ type ].active = true;
-        this.listCanvas[ type ].getComponent( UITransform ).contentSize = targetSize;
-        this.listCanvas[ type ].getComponent( Widget ).updateAlignment();
-        //this.UICamera.orthoHeight = targetSize.height / 2;
-        this.uimulti.SetUIElements( this.ScreenType );
-        MoveScrewHandle.Instance.camera = this.listCamera[ this.ScreenType ];
+        this.canvasScreenController[ type ].node.active = true;
+        this.canvasScreenController[ type ].getComponent( UITransform ).contentSize = targetSize;
+        this.canvasScreenController[ type ].getComponent( Widget ).updateAlignment();
+        MoveScrewHandle.Instance.camera = this.canvasScreenController[ type ].cameraGamePlay;
 
+        this.uimulti.SetComponentPosition( type );  //set vi tri cac thanh phan
+        this.tutorialController.handTutorial();
+        TestIQController.Instance.SetupIQUI(type );
+        UIController.Instance.onChangedScreen();
     }
 }
 

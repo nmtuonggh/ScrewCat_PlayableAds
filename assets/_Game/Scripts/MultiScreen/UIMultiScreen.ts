@@ -68,9 +68,9 @@ export class UIMultiScreen extends Component
 
     
 
-    public SetUIElements (screenType : ScreenType): void
+    public SetComponentPosition (screenType : ScreenType): void
     {
-        console.log("SetUIElements" + screenType);
+        console.log("SetUIElements " + screenType.toString());
         switch (screenType) {
             case ScreenType.Portrait:
                 this.SetPortrainElementsPosition();

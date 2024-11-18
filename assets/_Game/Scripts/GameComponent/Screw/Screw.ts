@@ -272,6 +272,7 @@ export class Screw extends GameLayerComponent
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
                 CahedContainer.Instance.CheckWarning();
                 GameManager.Instance.CheckLose();
+                
 
                 console.log(this.State);
             } );

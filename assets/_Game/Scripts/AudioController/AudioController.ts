@@ -17,6 +17,8 @@ export class AudioController extends Component
     public bg: AudioSource = null;
     @property( AudioSource )
     public Chain: AudioSource = null;
+    @property( AudioSource )
+    public Waning: AudioSource = null;
 
     private static _instance: AudioController = null;
 
@@ -52,6 +54,10 @@ export class AudioController extends Component
 
     public PlayChain(){
         this.Chain.play();
+    }
+
+    public PlayWarning(){
+        this.Waning.play();
     }
 }
 

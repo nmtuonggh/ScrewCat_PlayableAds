@@ -97,7 +97,7 @@ export class MoveScrewHandle extends Component
             return;
         }
 
-        if ( GameManager.Instance.lose === true )
+        if ( GameManager.Instance.forceStore === true )
         {
             
             this.playableAdsManager.ForceOpenStore();

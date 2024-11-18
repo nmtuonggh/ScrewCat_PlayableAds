@@ -42,6 +42,8 @@ export class GameManager extends Component
 
     public win: boolean = false;
 
+    public forceStore: boolean = false;
+
     private static _instance: GameManager = null;
 
     public static get Instance (): GameManager
@@ -57,30 +59,30 @@ export class GameManager extends Component
         }
     }
 
-    protected start (): void
-    {
-
-    }
-
-
     public CheckLose (): void
     {
-        if ( CahedContainer.Instance.currentScrewCount >= CahedContainer.Instance.listActiveHole.length && this.lose === false )
+        const cacheContainer = CahedContainer.Instance;
+        const audioController = AudioController.Instance;
+        const uiController = UIController.Instance;
+        let screenType = this.multiScreenController.ScreenType;
+
+        if ( cacheContainer.currentScrewCount >= cacheContainer.listActiveHole.length && this.lose === false )
         {
             this.lose = true;
-            AudioController.Instance.PlayAudio( AudioType.lose );
-            AudioController.Instance.bg.stop();
-            UIController.Instance.TweenFail( this.multiScreenController.ScreenType );
-            UIController.Instance.ShowOutOfMove();
+            audioController.PlayAudio( AudioType.lose );
+            audioController.bg.stop();
+            uiController.canvasScreenController[ screenType ].uiCanvasScreen.TweenFail();
+            uiController.ShowOutOfMove();
 
             //wait for 2s
             setTimeout( () =>
             {
-                UIController.Instance.listOFM[ this.multiScreenController.ScreenType ].node.active = false;
-                UIController.Instance.fail[ this.multiScreenController.ScreenType ].active = false;
-                UIController.Instance.LoseUI[ this.multiScreenController.ScreenType ].active = true;
-                UIController.Instance.LoseUI[ this.multiScreenController.ScreenType ]
-                    .getComponent( UILose ).setIQtext( TestIQController.Instance.currentIQ.toString() );
+                uiController.canvasScreenController[ screenType ].uiCanvasScreen.setOutOfMoveUIStatus( false );
+                uiController.canvasScreenController[ screenType ].uiCanvasScreen.setFailUIStatus( false );
+                uiController.canvasScreenController[ screenType ].uiCanvasScreen.setLoseUIStatus( true );
+                uiController.canvasScreenController[ screenType ].uiCanvasScreen.SetIQText( TestIQController.Instance.currentIQ.toString() );
+
+                this.forceStore = true;
 
             }, 2000 );
         }
