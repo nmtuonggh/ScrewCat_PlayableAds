@@ -21,13 +21,18 @@ export class HorizontalGrid extends Component
         {
             if ( child.node.active === true )
             {
-                this.listActiveChild.push( child.node );
+                //nếu chưa có trong listActiveChild thì thêm vào
+                if ( this.listActiveChild.indexOf( child.node ) === -1 )
+                {
+                    this.listActiveChild.push( child.node );
+                }
             }
         } );
     }
 
-    public AddNewHole (): Hole
+    public AddNewHole (count : number): Hole
     {
+        if (count <= 0) return null;
         let listchild = this.node.getComponentsInChildren( Hole );
         let listUnActiveChild: Hole[] = [];
         let hole: Hole = null;
@@ -43,10 +48,14 @@ export class HorizontalGrid extends Component
         {
             hole = listUnActiveChild[ 0 ];
             hole.node.active = true;
+            this.listActiveChild.push( hole.node );
             this.RepositionHoleChange();
             return hole;
         }
-        return hole;
+        else
+        {
+            return null;
+        }
     }
 
     public RepositionHoleChange (): void

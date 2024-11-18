@@ -11,16 +11,12 @@ const { ccclass, property } = _decorator;
 @ccclass( 'Hole' )
 export class Hole extends Component
 {
-
-    @property( { type: [ Sprite ] } )
-    private sprite: Sprite;
     @property( Node )
     warning: Node = null;
 
     public Box: Box = null;
 
     public isLinked: boolean = false;
-    @property( { type: Screw } )
     public linkingScrew: Screw = null;
 
     private _colorType: eColorType;

@@ -36,6 +36,7 @@ export class CahedContainer extends Component
 
     protected start (): void
     {
+        this.holeCount = 5;
         this.ActiveHole( this.holeCount );
     }
 
@@ -50,9 +51,18 @@ export class CahedContainer extends Component
         this.horizontalGrid.RepositionHoleChange();
     }
 
-    public AddNewHole (): Hole
+    public AddNewHole ( count: number ): Hole
     {
-       return this.horizontalGrid.AddNewHole();
+        let hole = this.horizontalGrid.AddNewHole( count );
+        if ( hole !== null )
+        {
+            this.listActiveHole.push( hole );
+            return hole;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public GetFreeHole (): Hole
