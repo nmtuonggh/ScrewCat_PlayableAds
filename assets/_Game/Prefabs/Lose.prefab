@@ -286,7 +286,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 13
@@ -300,8 +300,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 216.257,
+      "x": 527.325,
+      "y": -216.124,
       "z": 0
     },
     "_lrot": {
@@ -437,7 +437,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -17.118,
+      "y": 79.585,
       "z": 0
     },
     "_lrot": {
@@ -477,8 +477,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 763,
-      "height": 762
+      "width": 648,
+      "height": 576
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -514,7 +514,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "703fe5bb-e634-40ef-ae97-472d3fe73de8@f9941",
+      "__uuid__": "ff83d1f0-4474-4e89-989e-8e963182ed49@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -558,7 +558,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 25
@@ -795,8 +795,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 9.697,
-      "y": 101.557,
+      "x": -214.479,
+      "y": 338.92,
       "z": 0
     },
     "_lrot": {
@@ -998,7 +998,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 400,
+      "width": 300,
       "height": 120
     },
     "_anchorPoint": {
@@ -1083,7 +1083,7 @@
         "__id__": 44
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 50
@@ -1097,8 +1097,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 180,
-      "y": -90,
+      "x": 210.77,
+      "y": 336.374,
       "z": 0
     },
     "_lrot": {
@@ -1458,7 +1458,7 @@
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 61

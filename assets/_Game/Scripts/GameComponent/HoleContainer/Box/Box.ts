@@ -83,13 +83,17 @@ export class Box extends HoleContainer
         }
         GameManager.Instance.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
-        this.boxRenderer.skeleton.setAnimation( 0, 'Appear', false );
+        this.boxRenderer.skeleton.setSkin( 'Close' );
+
+        ///Random tieng meo di kem voi con meo
+        let index = Math.floor(Math.random() * 5);
+        this.boxRenderer.PlayAnimCompleBox(index);
         tween( this.boxRenderer.closeBox )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
             {
                 AudioController.Instance.PlayAudio( AudioType.boxComplete );
-                AudioController.Instance.PlayMewoComplete();
+                AudioController.Instance.PlayMewoComplete(index);
                 this.starList = StarController.Instance.SpawnStar( this.listHoles.length, listHolesPos, 0 );
                 StarController.Instance.PlayParticle( this.node.worldPosition );
                 //this.iqNode = TestIQController.Instance.SpawnIQ( this );
@@ -97,7 +101,7 @@ export class Box extends HoleContainer
             .delay( 0.3 )
             .call( () =>
             {
-                StarController.Instance.Move( this.starList );
+                StarController.Instance.MoveListStart( this.starList );
                 //TestIQController.Instance.MoveIQ( this.iqNode );
                 this.MoveOut();
             } )

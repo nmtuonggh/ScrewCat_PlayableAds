@@ -142,7 +142,7 @@ export class BarController extends GameLayerComponent
         {
             GameManager.Instance.CollectedScrew += listStar.length;
 
-            StarController.Instance.Move( listStar );
+            StarController.Instance.MoveListStart( listStar );
         }
 
         this.node.destroy();

@@ -42,8 +42,8 @@ export class AudioController extends Component
         this.audioSource.playOneShot(this.audioSource.clip);
     }
 
-    public PlayMewoComplete (){
-        const index = Math.floor(Math.random() * this.audioComplete.length);
+    public PlayMewoComplete (index: number){
+        //const index = Math.floor(Math.random() * this.audioComplete.length);
         this.audioSource.clip = this.audioComplete[ index ];
         this.audioSource.playOneShot(this.audioSource.clip);
     }

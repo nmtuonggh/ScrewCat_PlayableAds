@@ -33,7 +33,7 @@ export class GameLayer extends Component
 
     public UnActiveLayer (): void
     {
-        this.node.active = false;
+        //this.node.active = false;
     }
 
     public InitDataLayer():void

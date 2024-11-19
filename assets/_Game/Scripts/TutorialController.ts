@@ -36,7 +36,7 @@ export class TutorialController extends Component
         this.screw.getComponent( Screw ).screwAnimation.PlayTutorial();
         this.handPortrait.active = false;
         this.tapToPlay[MultiScreneController.Instance.ScreenType].active = false;
-        if(this.iconGame[MultiScreneController.Instance.ScreenType] !== null) this.iconGame[MultiScreneController.Instance.ScreenType].active = false;
+        //if(this.iconGame[MultiScreneController.Instance.ScreenType] !== null) this.iconGame[MultiScreneController.Instance.ScreenType].active = false;
         Tween.stopAllByTarget( this.handPortrait );
     }
 

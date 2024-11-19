@@ -118,6 +118,7 @@ export class Tool extends Component
             //bar.collider.threshold = 5; 
             bar.modelCollider.destroy();
         }
+
     }
 
 
@@ -150,6 +151,7 @@ export class Tool extends Component
 
     public SetScrewBar (): void
     {
+        
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
             const bar = this.listBar[ i ];

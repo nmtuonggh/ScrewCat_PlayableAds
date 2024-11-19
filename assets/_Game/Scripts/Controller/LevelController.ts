@@ -227,7 +227,6 @@ export class LevelController extends Component
     //#region Show Layer
     private ActiveLayer ( layer: GameLayer ): void
     {
-
         layer.ActiveLayer();
         this.listActiveLayer.push( layer );
     }

@@ -167,16 +167,6 @@ export class BoxContainer extends Component
         return true;
     }
 
-    public GetMostColorType (): eColorType
-    {
-        let mostColorType;
-        if ( CahedContainer.Instance.GetMostColorType() !== eColorType.None )
-        {
-            mostColorType = CahedContainer.Instance.GetMostColorType();
-        }
-        return mostColorType;
-    }
-
 }
 
 

@@ -17,6 +17,9 @@ import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
 import { BarController } from '../GameComponent/Bar/BarController';
 import { MoveScrewHandle } from '../Controller/MoveScrewHandle';
 import { CCBoolean } from 'cc';
+import { Screw } from '../GameComponent/Screw/Screw';
+import { tween } from 'cc';
+import { StarController } from '../Star/StarController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoosterControll' )
@@ -28,13 +31,13 @@ export class BoosterControll extends Component
     private isUsingBooster: boolean = false;
     @property( CCBoolean )
     private isCompleteBreakBar: boolean = false;
+    @property( Node )
+    private mayhutPosiotion: Node = null;
+    @property( Node )
+    private BoosterUI: Node = null;
 
     private State: BoosterState = BoosterState.None;
     private cachedContainer: CahedContainer = null;
-
-    protected override onLoad (): void
-    {
-    }
 
     protected onDestroy (): void
     {
@@ -76,6 +79,7 @@ export class BoosterControll extends Component
         }
 
     }
+
     //#region BreakBar
     public BoosterBreakBar (): void
     {
@@ -143,6 +147,54 @@ export class BoosterControll extends Component
     public async UseHammer (): Promise<void>
     {
         console.log( "Use hammer" );
+    }
+    //#endregion
+
+    //#region RemoveScrew
+    public BoosterRemoveScrew (): void
+    {
+        console.log( "Remove screw" );
+        this.State = BoosterState.RemoveScrew;
+        let listScrewOnCached = this.cachedContainer.GetScrewForBooster();
+        if ( listScrewOnCached.length > 0 )
+        {
+            for ( let i = 0; i < listScrewOnCached.length; i++ )
+            {
+                let screw = listScrewOnCached[ i ];
+                if ( screw !== null )
+                {
+                    CahedContainer.Instance.currentScrewCount--;
+                    this.MoveScrewToBooster( screw, i );
+                }
+            }
+            this.State = BoosterState.None;
+        }
+        else
+        {
+            console.log( "Can't remove screw" );
+            this.State = BoosterState.None;
+
+        }
+    }
+
+    private MoveScrewToBooster ( screw: Screw, order: number ): void
+    {
+        let timedelay = 0.15;
+        const worldPosition = screw.node.worldPosition.clone();
+        screw.node.setParent( this.BoosterUI );
+        screw.node.worldPosition = worldPosition;
+        tween( screw.node )
+            .delay( timedelay * order )
+            .to( 0.5, { worldPosition: this.mayhutPosiotion.worldPosition } )
+            .call( () =>
+            {
+                let star = StarController.Instance.SpawnStarAtBar( screw.node.worldPosition, 0 );
+                GameManager.Instance.UpdateDataBox( screw );
+                screw.node.destroy();
+                GameManager.Instance.CollectedScrew++;
+                StarController.Instance.MoveStart( star );
+            } )
+            .start();
     }
     //#endregion
 }

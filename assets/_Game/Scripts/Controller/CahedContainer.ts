@@ -110,7 +110,7 @@ export class CahedContainer extends Component
 
     public CheckWarning ()
     {
-        if ( this.currentScrewCount >= this.listActiveHole.length - 1 )
+        if ( this.currentScrewCount == this.listActiveHole.length - 1 )
         {
             for ( let i = 0; i < this.listActiveHole.length; i++ )
             {
@@ -120,47 +120,20 @@ export class CahedContainer extends Component
         }
     }
 
-    public GetMostColorType (): eColorType
+    public GetScrewForBooster (): Screw[]
     {
-        let colorTypeCountList: colorTypeCount[] = [];
-        //lay so luong phan tu trong eColorType
-
-
-        //khoi tao list colorTypeCount
-        for ( let i = 0; i < 9; i++ )
-        {
-            let color = new colorTypeCount();
-            color.colorType = i;
-            color.count = 0;
-            colorTypeCountList.push( color );
-        }
-
+        let screwList: Screw[] = [];
         for ( const hole of this.listActiveHole )
         {
-            if ( hole.linkingScrew == null ) continue;
-
-            for ( let i = 0; i < colorTypeCountList.length; i++ )
+            if ( hole.linkingScrew && hole.linkingScrew.isValid )
             {
-                if ( colorTypeCountList[ i ].colorType === hole.linkingScrew.ScrewRenderer.colorType )
-                {
-                    colorTypeCountList[ i ].count++;
-                }
+                screwList.push( hole.linkingScrew );
+                hole.isLinked = false;
+                hole.linkingScrew = null;
             }
         }
 
-        //tim colorType co so luong lon nhat
-        let maxCount = 0;
-        let maxColorType = eColorType.None;
-        for ( let i = 0; i < colorTypeCountList.length; i++ )
-        {
-            if ( colorTypeCountList[ i ].count > maxCount )
-            {
-                maxCount = colorTypeCountList[ i ].count;
-                maxColorType = colorTypeCountList[ i ].colorType;
-            }
-        }
-
-        return maxColorType;
+        return screwList;
     }
 }
 
