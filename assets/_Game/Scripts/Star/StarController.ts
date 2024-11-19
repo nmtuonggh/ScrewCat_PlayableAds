@@ -19,10 +19,10 @@ export class StarController extends Component
     private Holder: Node = null;
     @property( Prefab )
     private starParticle: Prefab = null;
-    @property(sp.Skeleton)
+    @property( sp.Skeleton )
     public collectEff: sp.Skeleton = null
 
-    private startScale : Vec3 = null;
+    private startScale: Vec3 = null;
 
     private static _instance: StarController = null;
 
@@ -68,18 +68,31 @@ export class StarController extends Component
         }
     }
 
-    public SpawnStar ( amout: number, hole: Hole[] ): Node[]
+    public SpawnStar ( amout: number, listWorldPosition: Vec3[], delay: number ): Node[]
     {
         const starList: Node[] = [];
         for ( let index = 0; index < amout; index++ )
         {
             const star = instantiate( this.starPrefab );
             star.parent = this.Holder;
-            star.worldPosition = hole[ index ].node.worldPosition;
+            star.worldPosition = listWorldPosition[ index ];
             starList.push( star );
+            setTimeout( () =>
+            { }, delay );
         }
         return starList;
     }
+
+    public SpawnStarAtBar ( worldPosition: Vec3, delay: number ): Node
+    {
+        const star = instantiate( this.starPrefab );
+        star.parent = this.Holder;
+        star.worldPosition = worldPosition;
+        setTimeout( () =>
+        { }, delay );
+        return star;
+    }
+
 
     public Move ( starList: Node[] ): void 
     {
@@ -96,7 +109,7 @@ export class StarController extends Component
             .call( () =>
             {
                 star.destroy();
-                this.collectEff.setAnimation(0, 'animation', false);
+                this.collectEff.setAnimation( 0, 'animation', false );
                 this.SetFillAmount();
                 this.AnimGetStar();
             } )
@@ -115,13 +128,13 @@ export class StarController extends Component
     }
 
     public AnimGetStar (): void 
-    { 
-        let scale = this.startScale.clone().add(new Vec3(0.3, 0.3, 0));
+    {
+        let scale = this.startScale.clone().add( new Vec3( 0.3, 0.3, 0 ) );
         let startScale = this.startScale.clone();
-        tween(this.node)
-        .to(0.2, { scale: new Vec3( scale.x, scale.y, 1 ) } )
-        .to(0.2, { scale: new Vec3( startScale.x, startScale.y, 1 ) })
-        .start();
+        tween( this.node )
+            .to( 0.2, { scale: new Vec3( scale.x, scale.y, 1 ) } )
+            .to( 0.2, { scale: new Vec3( startScale.x, startScale.y, 1 ) } )
+            .start();
     }
 }
 

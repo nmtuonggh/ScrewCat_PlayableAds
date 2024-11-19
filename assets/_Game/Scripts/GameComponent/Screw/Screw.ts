@@ -112,7 +112,7 @@ export class Screw extends GameLayerComponent
                 if ( this.CheckMoveBox() )
                 {
                     AudioController.Instance.PlayAudio( AudioType.screwOut );
-                    
+
 
                 }
                 break;
@@ -272,13 +272,18 @@ export class Screw extends GameLayerComponent
                 CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
                 CahedContainer.Instance.CheckWarning();
                 GameManager.Instance.CheckLose();
-                
 
-                console.log(this.State);
+
+                console.log( this.State );
             } );
     }
 
     //#endregion
+
+    public CompleteScrew (): void
+    {
+        
+    }
 
     public Hide (): void
     {

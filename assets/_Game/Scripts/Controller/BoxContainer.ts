@@ -123,9 +123,9 @@ export class BoxContainer extends Component
     {
         ///
 
-        console.log( "Create Box with index : " + LevelController.Instance.currentIndex + " color: "
-            + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color + " holeCount: "
-            + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount );
+        // console.log( "Create Box with index : " + LevelController.Instance.currentIndex + " color: "
+        //     + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color + " holeCount: "
+        //     + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount );
 
         const color = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color;
         const holeCount = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount;

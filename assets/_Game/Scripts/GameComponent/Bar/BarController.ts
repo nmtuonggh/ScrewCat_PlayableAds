@@ -9,6 +9,9 @@ import { Sprite } from 'cc';
 import { Color } from 'cc';
 import { UIOpacity } from 'cc';
 import { tween } from 'cc';
+import { StarController } from '../../Star/StarController';
+import { GameManager } from '../../Manager/GameManager';
+import { Game } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -112,6 +115,37 @@ export class BarController extends GameLayerComponent
                 } )
                 .start();
         }
+    }
+
+    public BreakBar (): void
+    {
+        console.log( "Break Bar" );
+        let listStar: Node[] = [];
+        let listScrewsBreak = this.listScrews;
+        for ( let i = 0; i < listScrewsBreak.length; i++ )
+        {
+            let screw = listScrewsBreak[ i ];
+            if ( screw !== null )
+            {
+                GameManager.Instance.currentScrew--;
+                if ( !screw.CheckMoveBox() )
+                {
+                    let star = StarController.Instance.SpawnStarAtBar( screw.node.worldPosition, 0 );
+                    GameManager.Instance.UpdateDataBox( screw );
+                    screw.node.destroy();
+                    listStar.push( star );
+                }
+            }
+        }
+
+        if ( listStar.length > 0 )
+        {
+            GameManager.Instance.CollectedScrew += listStar.length;
+
+            StarController.Instance.Move( listStar );
+        }
+
+        this.node.destroy();
     }
 }
 

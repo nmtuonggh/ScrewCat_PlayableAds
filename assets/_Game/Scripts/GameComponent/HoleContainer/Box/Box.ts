@@ -76,6 +76,11 @@ export class Box extends HoleContainer
 
     public CloseBox (): void
     {
+        let listHolesPos: Vec3[] = [];
+        for ( let i = 0; i < this.listHoles.length; i++ )
+        {
+            listHolesPos.push( this.listHoles[ i ].node.worldPosition );
+        }
         GameManager.Instance.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
         this.boxRenderer.skeleton.setAnimation( 0, 'Appear', false );
@@ -83,18 +88,17 @@ export class Box extends HoleContainer
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
             {
-                //MeowAnimation.Instance.MoveIn(this.node.parent);
                 AudioController.Instance.PlayAudio( AudioType.boxComplete );
                 AudioController.Instance.PlayMewoComplete();
-                //this.starList = StarController.Instance.SpawnStar( this.listHoles.length, this.listHoles );
+                this.starList = StarController.Instance.SpawnStar( this.listHoles.length, listHolesPos, 0 );
                 StarController.Instance.PlayParticle( this.node.worldPosition );
-                this.iqNode = TestIQController.Instance.SpawnIQ( this );
+                //this.iqNode = TestIQController.Instance.SpawnIQ( this );
             } )
             .delay( 0.3 )
             .call( () =>
             {
-                //StarController.Instance.Move( this.starList );
-                TestIQController.Instance.MoveIQ( this.iqNode );
+                StarController.Instance.Move( this.starList );
+                //TestIQController.Instance.MoveIQ( this.iqNode );
                 this.MoveOut();
             } )
             .start();

@@ -149,12 +149,17 @@ export class MultiScreneController extends Component
         this.canvasScreenController[ type ].node.active = true;
         this.canvasScreenController[ type ].getComponent( UITransform ).contentSize = targetSize;
         this.canvasScreenController[ type ].getComponent( Widget ).updateAlignment();
-        MoveScrewHandle.Instance.camera = this.canvasScreenController[ type ].cameraGamePlay;
+        MoveScrewHandle.Instance.camera = this.getCameraGamePlay();
 
         this.uimulti.SetComponentPosition( type );  //set vi tri cac thanh phan
         this.tutorialController.handTutorial();
         TestIQController.Instance.SetupIQUI(type );
         UIController.Instance.onChangedScreen();
+    }
+
+    public getCameraGamePlay (): Camera
+    {
+        return this.canvasScreenController[ this.ScreenType ].cameraGamePlay;
     }
 }
 

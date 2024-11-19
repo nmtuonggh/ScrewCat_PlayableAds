@@ -58,11 +58,21 @@ export class MoveScrewHandle extends Component
         }
 
         this.poolTouch.initializePool( 15 );
-        input.on( Input.EventType.TOUCH_START, this.onTouchStart, this );
+        this.EnableTouch();
     }
 
 
     protected onDestroy (): void
+    {
+        this.DisableTouch();
+    }
+
+    public EnableTouch (): void
+    {
+        input.on( Input.EventType.TOUCH_START, this.onTouchStart, this );
+    }
+
+    public DisableTouch (): void
     {
         input.off( Input.EventType.TOUCH_START, this.onTouchStart, this );
     }
@@ -86,7 +96,7 @@ export class MoveScrewHandle extends Component
 
             this.tutorialController.stopTutorial();
             AudioController.Instance.PlayerBG();
-            TestIQController.Instance.TweenIQUI( MultiScreneController.Instance.ScreenType );
+            //TestIQController.Instance.TweenIQUI( MultiScreneController.Instance.ScreenType );
         }
 
         if ( GameManager.Instance.currentScrew <= 1 ) 
@@ -114,7 +124,7 @@ export class MoveScrewHandle extends Component
     }
 
     //#region CheckClickScrew
-    private checkClickScrew (): void
+    public checkClickScrew (): void
     {
         //console.log( "checkClickScrew" );
         let component = this.CheckClick( GameLayerMaskConfig.SCREW_LAYER_MASK );
@@ -128,7 +138,7 @@ export class MoveScrewHandle extends Component
 
     private cachedColliders: Collider2D[] = [];
 
-    private CheckClick ( layer: Layers ): GameLayerComponent
+    public CheckClick ( layer: Layers ): GameLayerComponent
     {
         this.cachedColliders = [];
         const aabb = new Rect(
