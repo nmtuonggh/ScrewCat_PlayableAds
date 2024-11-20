@@ -57,7 +57,18 @@ export class StarController extends Component
         if ( collectedScrew > 0 )
         {
             const value = collectedScrew / toltalScrew;
-            const intValue = Math.round( value * 100 ); // Làm tròn giá trị đến số nguyên gần nhất và nhân với 100
+            const intValue = Math.round( value * 100 );
+            // let lastValue = parseInt(this.text.string);
+            // tween( { amount: lastValue } )
+            //     .to( 0.1, { amount: intValue }, {
+            //         onUpdate: ( target, ratio ) =>
+            //         {
+            //             let r = Math.round( intValue * ratio );
+            //             this.text.string = `${ r }%`;
+            //         }
+            //     } )
+            //     .start();
+             // Làm tròn giá trị đến số nguyên gần nhất và nhân với 100
             this.text.string = `${ intValue }%`;
             //this.starSprite.fillRange = value; 
             tween( this.starSprite )
@@ -70,6 +81,21 @@ export class StarController extends Component
             this.starSprite.fillRange = 0;
         }
     }
+
+    // private AddIQ ( amount: number ): void
+    // {
+    //     const initialIQ = this.currentIQ;
+    //     tween( { amount: initialIQ } )
+    //         .to( 0.35, { amount: initialIQ + amount }, {
+    //             onUpdate: ( target, ratio ) =>
+    //             {
+    //                 let r = Math.round( amount * ratio );
+    //                 this.text.string = `${ initialIQ + r }`;
+    //             }
+    //         } )
+    //         .call( () => { this.currentIQ += amount; } )
+    //         .start();
+    // }
 
     public SpawnStar ( amout: number, listWorldPosition: Vec3[], delay: number ): Node[]
     {

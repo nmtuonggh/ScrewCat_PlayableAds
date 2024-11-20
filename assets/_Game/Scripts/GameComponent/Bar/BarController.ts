@@ -128,6 +128,7 @@ export class BarController extends GameLayerComponent
             if ( screw !== null )
             {
                 GameManager.Instance.currentScrew--;
+                GameManager.Instance.CollectedScrew++;
                 if ( !screw.CheckMoveBox() )
                 {
                     let star = StarController.Instance.SpawnStarAtBar( screw.node.worldPosition, 0 );
@@ -140,7 +141,7 @@ export class BarController extends GameLayerComponent
 
         if ( listStar.length > 0 )
         {
-            GameManager.Instance.CollectedScrew += listStar.length;
+            //GameManager.Instance.CollectedScrew += listStar.length;
 
             StarController.Instance.MoveListStart( listStar );
         }

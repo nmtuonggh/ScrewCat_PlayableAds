@@ -1,475 +1,468 @@
 
 skeleton.png
-size: 2012,1320
+size: 1948,744
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Mayhutbui_00000
   rotate: false
-  xy: 1859, 239
-  size: 28, 20
+  xy: 258, 254
+  size: 24, 26
   orig: 254, 400
-  offset: 113, 22
+  offset: 115, 40
   index: -1
 Mayhutbui_00001
-  rotate: false
-  xy: 1669, 2
-  size: 36, 29
+  rotate: true
+  xy: 208, 238
+  size: 42, 48
   orig: 254, 400
-  offset: 105, 22
+  offset: 105, 46
   index: -1
 Mayhutbui_00002
   rotate: false
-  xy: 159, 35
-  size: 65, 72
+  xy: 443, 240
+  size: 48, 64
   orig: 254, 400
-  offset: 96, 23
+  offset: 103, 46
   index: -1
 Mayhutbui_00003
   rotate: true
-  xy: 1892, 1062
-  size: 75, 101
+  xy: 493, 242
+  size: 62, 86
   orig: 254, 400
-  offset: 87, 30
+  offset: 97, 53
   index: -1
 Mayhutbui_00004
   rotate: true
-  xy: 2, 7
-  size: 82, 155
+  xy: 316, 239
+  size: 64, 125
   orig: 254, 400
-  offset: 86, 47
+  offset: 103, 62
   index: -1
 Mayhutbui_00005
-  rotate: false
-  xy: 1902, 1139
-  size: 91, 179
+  rotate: true
+  xy: 735, 4
+  size: 88, 139
   orig: 254, 400
-  offset: 95, 49
+  offset: 99, 64
   index: -1
 Mayhutbui_00006
-  rotate: false
-  xy: 1669, 33
-  size: 140, 189
+  rotate: true
+  xy: 1784, 23
+  size: 122, 146
   orig: 254, 400
-  offset: 78, 57
+  offset: 86, 65
   index: -1
 Mayhutbui_00007
   rotate: true
-  xy: 575, 3
-  size: 170, 196
+  xy: 1784, 147
+  size: 146, 150
   orig: 254, 400
-  offset: 68, 57
+  offset: 75, 64
   index: -1
 Mayhutbui_00008
   rotate: false
-  xy: 1464, 9
-  size: 203, 204
+  xy: 1772, 446
+  size: 161, 160
   orig: 254, 400
-  offset: 51, 50
+  offset: 71, 62
   index: -1
 Mayhutbui_00009
   rotate: true
-  xy: 1256, 10
-  size: 203, 206
+  xy: 1784, 295
+  size: 149, 161
   orig: 254, 400
-  offset: 51, 49
+  offset: 74, 61
   index: -1
 Mayhutbui_00010
   rotate: true
-  xy: 1047, 24
-  size: 191, 207
+  xy: 1772, 608
+  size: 134, 165
   orig: 254, 400
-  offset: 57, 48
+  offset: 77, 57
   index: -1
 Mayhutbui_00011
-  rotate: false
-  xy: 1859, 261
-  size: 151, 234
+  rotate: true
+  xy: 876, 4
+  size: 92, 185
   orig: 254, 400
-  offset: 69, 40
+  offset: 87, 54
   index: -1
 Mayhutbui_00012
-  rotate: true
-  xy: 294, 2
-  size: 137, 279
+  rotate: false
+  xy: 614, 526
+  size: 92, 216
   orig: 254, 400
-  offset: 83, 29
+  offset: 87, 47
   index: -1
 Mayhutbui_00013
-  rotate: true
-  xy: 725, 1169
-  size: 149, 290
+  rotate: false
+  xy: 307, 524
+  size: 95, 218
   orig: 254, 400
-  offset: 71, 27
+  offset: 84, 45
   index: -1
 Mayhutbui_00014
   rotate: false
-  xy: 415, 1024
-  size: 152, 294
+  xy: 219, 16
+  size: 101, 220
   orig: 254, 400
-  offset: 68, 23
+  offset: 78, 42
   index: -1
 Mayhutbui_00015
-  rotate: true
-  xy: 725, 1032
-  size: 135, 286
+  rotate: false
+  xy: 109, 9
+  size: 108, 222
   orig: 254, 400
-  offset: 59, 23
+  offset: 74, 37
   index: -1
 Mayhutbui_00016
   rotate: false
-  xy: 138, 397
-  size: 152, 287
+  xy: 316, 305
+  size: 109, 217
   orig: 254, 400
-  offset: 51, 13
+  offset: 74, 35
   index: -1
 Mayhutbui_00017
-  rotate: true
-  xy: 1317, 1179
-  size: 139, 291
+  rotate: false
+  xy: 322, 21
+  size: 108, 216
   orig: 254, 400
-  offset: 56, 10
+  offset: 75, 34
   index: -1
 Mayhutbui_00018
   rotate: false
-  xy: 138, 686
-  size: 137, 290
+  xy: 404, 525
+  size: 106, 217
   orig: 254, 400
-  offset: 58, 9
+  offset: 75, 33
   index: -1
 Mayhutbui_00019
-  rotate: true
-  xy: 1610, 1180
-  size: 138, 290
+  rotate: false
+  xy: 708, 528
+  size: 102, 214
   orig: 254, 400
-  offset: 56, 9
+  offset: 78, 33
   index: -1
 Mayhutbui_00020
   rotate: false
-  xy: 430, 169
-  size: 132, 283
+  xy: 512, 525
+  size: 100, 217
   orig: 254, 400
-  offset: 62, 8
+  offset: 79, 33
   index: -1
 Mayhutbui_00021
   rotate: false
-  xy: 2, 379
-  size: 134, 291
+  xy: 427, 306
+  size: 105, 217
   orig: 254, 400
-  offset: 61, 8
+  offset: 79, 33
   index: -1
 Mayhutbui_00022
   rotate: false
-  xy: 2, 91
-  size: 142, 286
+  xy: 629, 91
+  size: 104, 214
   orig: 254, 400
-  offset: 61, 5
+  offset: 79, 33
   index: -1
 Mayhutbui_00023
   rotate: false
-  xy: 292, 427
-  size: 134, 285
+  xy: 735, 94
+  size: 100, 214
   orig: 254, 400
-  offset: 60, 5
+  offset: 79, 33
   index: -1
 Mayhutbui_00024
-  rotate: true
-  xy: 1001, 637
-  size: 135, 277
+  rotate: false
+  xy: 1376, 327
+  size: 110, 205
   orig: 254, 400
-  offset: 59, 5
+  offset: 71, 33
   index: -1
 Mayhutbui_00025
   rotate: false
-  xy: 1141, 217
-  size: 137, 271
+  xy: 1662, 541
+  size: 108, 201
   orig: 254, 400
-  offset: 59, 9
+  offset: 74, 33
   index: -1
 Mayhutbui_00026
   rotate: false
-  xy: 1709, 229
-  size: 148, 266
+  xy: 1587, 334
+  size: 110, 202
   orig: 254, 400
-  offset: 54, 8
+  offset: 73, 33
   index: -1
 Mayhutbui_00027
   rotate: false
-  xy: 988, 222
-  size: 151, 266
+  xy: 1437, 537
+  size: 110, 205
   orig: 254, 400
-  offset: 51, 8
+  offset: 73, 33
   index: -1
 Mayhutbui_00028
   rotate: false
-  xy: 704, 190
-  size: 144, 277
+  xy: 1269, 323
+  size: 105, 208
   orig: 254, 400
-  offset: 56, 8
+  offset: 75, 34
   index: -1
 Mayhutbui_00029
   rotate: false
-  xy: 562, 740
-  size: 138, 282
+  xy: 2, 2
+  size: 105, 212
   orig: 254, 400
-  offset: 58, 8
+  offset: 74, 34
   index: -1
 Mayhutbui_00030
   rotate: false
-  xy: 415, 740
-  size: 145, 282
+  xy: 738, 313
+  size: 110, 213
   orig: 254, 400
-  offset: 51, 8
+  offset: 67, 33
   index: -1
 Mayhutbui_00031
-  rotate: true
-  xy: 1013, 922
-  size: 143, 283
+  rotate: false
+  xy: 632, 310
+  size: 104, 214
   orig: 254, 400
-  offset: 50, 8
+  offset: 75, 33
   index: -1
 Mayhutbui_00032
   rotate: false
-  xy: 564, 457
-  size: 138, 281
+  xy: 950, 316
+  size: 95, 212
   orig: 254, 400
-  offset: 56, 10
+  offset: 81, 34
   index: -1
 Mayhutbui_00033
   rotate: false
-  xy: 564, 175
-  size: 138, 280
+  xy: 1033, 104
+  size: 95, 210
   orig: 254, 400
-  offset: 56, 10
+  offset: 80, 33
   index: -1
 Mayhutbui_00034
   rotate: false
-  xy: 850, 187
-  size: 136, 280
+  xy: 1488, 330
+  size: 97, 205
   orig: 254, 400
-  offset: 58, 10
+  offset: 79, 34
   index: -1
 Mayhutbui_00035
   rotate: false
-  xy: 1427, 215
-  size: 133, 275
+  xy: 1569, 124
+  size: 104, 204
   orig: 254, 400
-  offset: 61, 10
+  offset: 75, 34
   index: -1
 Mayhutbui_00036
-  rotate: false
-  xy: 1280, 218
-  size: 145, 272
+  rotate: true
+  xy: 1274, 2
+  size: 107, 204
   orig: 254, 400
-  offset: 51, 10
+  offset: 74, 34
   index: -1
 Mayhutbui_00037
   rotate: false
-  xy: 1686, 772
-  size: 146, 271
+  xy: 1459, 120
+  size: 108, 205
   orig: 254, 400
-  offset: 51, 10
+  offset: 74, 34
   index: -1
 Mayhutbui_00038
-  rotate: true
-  xy: 1001, 774
-  size: 146, 273
+  rotate: false
+  xy: 1549, 538
+  size: 111, 204
   orig: 254, 400
-  offset: 51, 10
+  offset: 71, 34
   index: -1
 Mayhutbui_00039
   rotate: false
-  xy: 848, 758
-  size: 151, 272
+  xy: 1346, 116
+  size: 111, 205
   orig: 254, 400
-  offset: 52, 10
+  offset: 72, 34
   index: -1
 Mayhutbui_00040
   rotate: false
-  xy: 704, 469
-  size: 141, 279
+  xy: 1331, 534
+  size: 104, 208
   orig: 254, 400
-  offset: 54, 10
+  offset: 75, 34
   index: -1
 Mayhutbui_00041
   rotate: false
-  xy: 847, 469
-  size: 136, 279
+  xy: 850, 315
+  size: 98, 212
   orig: 254, 400
-  offset: 59, 10
+  offset: 78, 34
   index: -1
 Mayhutbui_00042
-  rotate: true
-  xy: 1317, 1043
-  size: 134, 281
+  rotate: false
+  xy: 812, 529
+  size: 97, 213
   orig: 254, 400
-  offset: 59, 10
+  offset: 79, 33
   index: -1
 Mayhutbui_00043
   rotate: false
-  xy: 428, 454
-  size: 134, 284
+  xy: 837, 98
+  size: 96, 213
   orig: 254, 400
-  offset: 60, 6
+  offset: 79, 33
   index: -1
 Mayhutbui_00044
-  rotate: true
-  xy: 1261, 492
-  size: 134, 280
+  rotate: false
+  xy: 1010, 532
+  size: 100, 210
   orig: 254, 400
-  offset: 60, 10
+  offset: 79, 33
   index: -1
 Mayhutbui_00045
-  rotate: false
-  xy: 1834, 771
-  size: 133, 272
+  rotate: true
+  xy: 1063, 5
+  size: 97, 209
   orig: 254, 400
-  offset: 58, 10
+  offset: 79, 30
   index: -1
 Mayhutbui_00046
   rotate: false
-  xy: 1833, 497
-  size: 141, 272
+  xy: 1240, 111
+  size: 104, 209
   orig: 254, 400
-  offset: 54, 10
+  offset: 75, 30
   index: -1
 Mayhutbui_00047
-  rotate: true
-  xy: 773, 45
-  size: 140, 272
+  rotate: false
+  xy: 1160, 322
+  size: 107, 209
   orig: 254, 400
-  offset: 54, 10
+  offset: 75, 30
   index: -1
 Mayhutbui_00048
   rotate: false
-  xy: 1686, 498
-  size: 145, 272
+  xy: 1130, 110
+  size: 108, 209
   orig: 254, 400
-  offset: 52, 10
+  offset: 74, 30
   index: -1
 Mayhutbui_00049
-  rotate: true
-  xy: 985, 490
-  size: 145, 274
+  rotate: false
+  xy: 1047, 321
+  size: 111, 209
   orig: 254, 400
-  offset: 53, 10
+  offset: 72, 30
   index: -1
 Mayhutbui_00050
-  rotate: true
-  xy: 1280, 628
-  size: 144, 273
+  rotate: false
+  xy: 1112, 533
+  size: 109, 209
   orig: 254, 400
-  offset: 53, 10
+  offset: 73, 30
   index: -1
 Mayhutbui_00051
   rotate: false
-  xy: 1562, 224
-  size: 145, 272
+  xy: 1223, 533
+  size: 106, 209
   orig: 254, 400
-  offset: 57, 10
+  offset: 75, 30
   index: -1
 Mayhutbui_00052
-  rotate: true
-  xy: 1276, 774
-  size: 136, 277
+  rotate: false
+  xy: 935, 101
+  size: 96, 212
   orig: 254, 400
-  offset: 59, 10
+  offset: 79, 30
   index: -1
 Mayhutbui_00053
   rotate: false
-  xy: 1555, 630
-  size: 129, 280
+  xy: 531, 25
+  size: 96, 215
   orig: 254, 400
-  offset: 60, 10
+  offset: 79, 30
   index: -1
 Mayhutbui_00054
-  rotate: true
-  xy: 1610, 1045
-  size: 133, 280
+  rotate: false
+  xy: 534, 307
+  size: 96, 216
   orig: 254, 400
-  offset: 61, 10
+  offset: 79, 30
   index: -1
 Mayhutbui_00055
-  rotate: true
-  xy: 1298, 912
-  size: 129, 281
+  rotate: false
+  xy: 432, 21
+  size: 97, 216
   orig: 254, 400
-  offset: 60, 10
+  offset: 79, 30
   index: -1
 Mayhutbui_00056
   rotate: false
-  xy: 702, 750
-  size: 144, 280
+  xy: 208, 282
+  size: 106, 221
   orig: 254, 400
-  offset: 51, 10
+  offset: 75, 33
   index: -1
 Mayhutbui_00057
   rotate: false
-  xy: 146, 109
-  size: 146, 286
+  xy: 100, 233
+  size: 106, 245
   orig: 254, 400
-  offset: 51, 13
+  offset: 75, 37
   index: -1
 Mayhutbui_00058
-  rotate: true
-  xy: 1017, 1178
-  size: 140, 298
+  rotate: false
+  xy: 201, 505
+  size: 104, 237
   orig: 254, 400
-  offset: 57, 21
+  offset: 75, 45
   index: -1
 Mayhutbui_00059
   rotate: false
-  xy: 275, 1002
-  size: 138, 316
+  xy: 2, 480
+  size: 98, 262
   orig: 254, 400
-  offset: 56, 28
+  offset: 78, 52
   index: -1
 Mayhutbui_00060
   rotate: false
-  xy: 2, 977
-  size: 134, 341
+  xy: 2, 216
+  size: 96, 262
   orig: 254, 400
-  offset: 60, 39
+  offset: 79, 56
   index: -1
 Mayhutbui_00061
   rotate: false
-  xy: 138, 978
-  size: 135, 340
+  xy: 102, 501
+  size: 97, 241
   orig: 254, 400
-  offset: 59, 39
+  offset: 79, 54
   index: -1
 Mayhutbui_00062
   rotate: false
-  xy: 2, 672
-  size: 134, 303
+  xy: 911, 530
+  size: 97, 212
   orig: 254, 400
-  offset: 60, 31
+  offset: 79, 46
   index: -1
 Mayhutbui_00063
-  rotate: false
-  xy: 294, 141
-  size: 134, 284
+  rotate: true
+  xy: 1602, 17
+  size: 105, 180
   orig: 254, 400
-  offset: 60, 23
+  offset: 70, 38
   index: -1
 Mayhutbui_00064
   rotate: false
-  xy: 569, 1032
-  size: 154, 286
+  xy: 1480, 2
+  size: 120, 116
   orig: 254, 400
-  offset: 23, 21
+  offset: 47, 38
   index: -1
 Mayhutbui_00065
   rotate: false
-  xy: 277, 714
-  size: 136, 286
+  xy: 629, 6
+  size: 97, 83
   orig: 254, 400
-  offset: 32, 21
-  index: -1
-Mayhutbui_00066
-  rotate: true
-  xy: 1017, 1067
-  size: 109, 288
-  orig: 254, 400
-  offset: 51, 19
+  offset: 62, 38
   index: -1

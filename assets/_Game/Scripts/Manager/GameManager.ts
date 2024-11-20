@@ -75,7 +75,7 @@ export class GameManager extends Component
         {
             this.lose = true;
             audioController.PlayAudio( AudioType.lose );
-            audioController.bg.stop();
+            audioController.CheckLose();
             uiController.canvasScreenController[ screenType ].uiCanvasScreen.TweenFail();
             uiController.ShowOutOfMove();
 

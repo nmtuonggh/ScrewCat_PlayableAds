@@ -13294,7 +13294,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -15457,7 +15457,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -18064,7 +18064,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -19883,7 +19883,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -22313,7 +22313,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -24611,7 +24611,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -26909,7 +26909,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -29207,7 +29207,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -31486,7 +31486,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -33125,7 +33125,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -34764,7 +34764,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -36546,7 +36546,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -38317,7 +38317,7 @@
     "_group": 8192,
     "_type": 1,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -39477,7 +39477,7 @@
     "_group": 8192,
     "_type": 1,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -40642,7 +40642,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -42281,7 +42281,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -43920,7 +43920,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -45559,7 +45559,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -47297,7 +47297,7 @@
     "_group": 8192,
     "_type": 1,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -48751,7 +48751,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -50864,7 +50864,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 2.5,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
@@ -53261,7 +53261,7 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 0.05207499980926514
     },
     "_id": "f0I4aPhM1M6aC+EsEIx8eA"
   },

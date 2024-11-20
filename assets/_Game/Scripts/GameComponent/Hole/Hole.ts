@@ -38,11 +38,10 @@ export class Hole extends Component
 
         for ( let i = 0; i < 3; i++ )
         {
-            
             tweenSequence
                 .to( 0.5, { scale: new Vec3( 1.5, 1.5, 1.5 ) } )
-                .to( 0.5, { scale: new Vec3( 0.3, 0.3, 0.3 ) } )
                 .call( () => { AudioController.Instance.PlayWarning(); } )
+                .to( 0.5, { scale: new Vec3( 0.3, 0.3, 0.3 ) } )
         }
 
         tweenSequence.start();

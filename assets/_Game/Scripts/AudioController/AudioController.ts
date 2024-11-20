@@ -1,5 +1,6 @@
 import { _decorator, AudioClip, AudioSource, Component, Node } from 'cc';
 import * as exp from 'constants';
+import { GameManager } from '../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'AudioController' )
@@ -36,27 +37,40 @@ export class AudioController extends Component
         //this.PlayerBG( );
     }
 
+
+    public CheckLose (): void
+    {
+        if ( GameManager.Instance.lose === false ) return;
+        this.bg.stop();
+        this.Chain.stop();
+        this.Waning.stop();
+    }
+
     public PlayAudio ( type: AudioType )
     {
         this.audioSource.clip = this.audioClip[ type ];
-        this.audioSource.playOneShot(this.audioSource.clip);
+        this.audioSource.playOneShot( this.audioSource.clip );
     }
 
-    public PlayMewoComplete (index: number){
+    public PlayMewoComplete ( index: number )
+    {
         //const index = Math.floor(Math.random() * this.audioComplete.length);
         this.audioSource.clip = this.audioComplete[ index ];
-        this.audioSource.playOneShot(this.audioSource.clip);
+        this.audioSource.playOneShot( this.audioSource.clip );
     }
 
-    public PlayerBG(){
+    public PlayerBG ()
+    {
         this.bg.play();
     }
 
-    public PlayChain(){
+    public PlayChain ()
+    {
         this.Chain.play();
     }
 
-    public PlayWarning(){
+    public PlayWarning ()
+    {
         this.Waning.play();
     }
 }

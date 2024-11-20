@@ -65,7 +65,10 @@ export class ScrewRenderer extends Component
                 } )
                 .start();
         }
-        this.botSprite.node.active = true;
+        else
+        {
+            this.botSprite.node.active = true;
+        }
     }
 
 }
