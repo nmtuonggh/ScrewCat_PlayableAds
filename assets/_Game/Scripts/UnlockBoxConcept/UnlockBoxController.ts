@@ -49,6 +49,7 @@ export class UnlockBoxController extends Component
 
     public AddLockCount (): void
     {
+        if( this.currentLockBoxSlot === null ) return;
         if( this.currentLockBoxSlot.lockCount <= 0 ) return;
         this.currentLockBoxSlot.currentCount += 1;
         this.currentLockBoxSlot.lockText.string = this.currentLockBoxSlot.currentCount + "/" + this.currentLockBoxSlot.lockCount;
@@ -94,6 +95,7 @@ export class UnlockBoxController extends Component
             this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
         }
 
+        if( this.currentLockBoxSlot === null ) return;
         if ( this.currentLockBoxSlot.lockCount > 0 )
         {
             this.currentLockBoxSlot.SetTextLockBox();

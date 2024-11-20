@@ -1,0 +1,181 @@
+
+skeleton.png
+size: 164,940
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Khoan_00000
+  rotate: false
+  xy: 103, 847
+  size: 59, 91
+  orig: 254, 400
+  offset: 90, 163
+  index: -1
+Khoan_00001
+  rotate: false
+  xy: 103, 847
+  size: 59, 91
+  orig: 254, 400
+  offset: 90, 163
+  index: -1
+Khoan_00002
+  rotate: true
+  xy: 80, 2
+  size: 54, 71
+  orig: 254, 400
+  offset: 128, 165
+  index: -1
+Khoan_00003
+  rotate: false
+  xy: 102, 491
+  size: 55, 71
+  orig: 254, 400
+  offset: 128, 165
+  index: -1
+Khoan_00004
+  rotate: false
+  xy: 99, 434
+  size: 63, 55
+  orig: 254, 400
+  offset: 128, 181
+  index: -1
+Khoan_00005
+  rotate: true
+  xy: 103, 633
+  size: 68, 56
+  orig: 254, 400
+  offset: 127, 180
+  index: -1
+Khoan_00006
+  rotate: true
+  xy: 95, 282
+  size: 74, 67
+  orig: 254, 400
+  offset: 126, 170
+  index: -1
+Khoan_00007
+  rotate: false
+  xy: 2, 137
+  size: 83, 81
+  orig: 254, 400
+  offset: 126, 164
+  index: -1
+Khoan_00008
+  rotate: false
+  xy: 2, 463
+  size: 95, 84
+  orig: 254, 400
+  offset: 119, 163
+  index: -1
+Khoan_00009
+  rotate: false
+  xy: 2, 647
+  size: 99, 92
+  orig: 254, 400
+  offset: 118, 155
+  index: -1
+Khoan_00010
+  rotate: false
+  xy: 2, 840
+  size: 99, 98
+  orig: 254, 400
+  offset: 118, 149
+  index: -1
+Khoan_00011
+  rotate: false
+  xy: 2, 741
+  size: 99, 97
+  orig: 254, 400
+  offset: 118, 148
+  index: -1
+Khoan_00012
+  rotate: true
+  xy: 2, 549
+  size: 96, 98
+  orig: 254, 400
+  offset: 117, 146
+  index: -1
+Khoan_00013
+  rotate: true
+  xy: 2, 295
+  size: 90, 91
+  orig: 254, 400
+  offset: 109, 146
+  index: -1
+Khoan_00014
+  rotate: false
+  xy: 95, 142
+  size: 65, 83
+  orig: 254, 400
+  offset: 117, 152
+  index: -1
+Khoan_00015
+  rotate: true
+  xy: 2, 3
+  size: 61, 76
+  orig: 254, 400
+  offset: 117, 155
+  index: -1
+Khoan_00016
+  rotate: false
+  xy: 103, 771
+  size: 58, 74
+  orig: 254, 400
+  offset: 117, 155
+  index: -1
+Khoan_00017
+  rotate: false
+  xy: 103, 703
+  size: 57, 66
+  orig: 254, 400
+  offset: 112, 163
+  index: -1
+Khoan_00018
+  rotate: true
+  xy: 95, 227
+  size: 53, 67
+  orig: 254, 400
+  offset: 112, 163
+  index: -1
+Khoan_00019
+  rotate: false
+  xy: 102, 564
+  size: 56, 67
+  orig: 254, 400
+  offset: 110, 163
+  index: -1
+Khoan_00020
+  rotate: false
+  xy: 98, 358
+  size: 62, 74
+  orig: 254, 400
+  offset: 110, 156
+  index: -1
+Khoan_00021
+  rotate: true
+  xy: 2, 66
+  size: 69, 78
+  orig: 254, 400
+  offset: 109, 156
+  index: -1
+Khoan_00022
+  rotate: false
+  xy: 87, 58
+  size: 73, 82
+  orig: 254, 400
+  offset: 109, 155
+  index: -1
+Khoan_00023
+  rotate: true
+  xy: 2, 220
+  size: 73, 91
+  orig: 254, 400
+  offset: 108, 146
+  index: -1
+Khoan_00024
+  rotate: true
+  xy: 2, 387
+  size: 74, 94
+  orig: 254, 400
+  offset: 108, 146
+  index: -1

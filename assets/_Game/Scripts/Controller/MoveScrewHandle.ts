@@ -56,10 +56,13 @@ export class MoveScrewHandle extends Component
         {
             MoveScrewHandle._instance = this;
         }
-
+        // let node = instantiate(this.test);
+        // node.parent = this.parentt;
         this.poolTouch.initializePool( 15 );
         this.EnableTouch();
     }
+
+
 
 
     protected onDestroy (): void

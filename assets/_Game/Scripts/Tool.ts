@@ -34,20 +34,20 @@ export class Tool extends Component
     @property( Node )
     barparent: Node = null;
 
-    @property(UIMultiScreen)
+    @property( UIMultiScreen )
     public uiMultiScreen: UIMultiScreen = null;
-    
-    @property({type: Node, group: "Element"})
+
+    @property( { type: Node, group: "Element" } )
     public LevelContainer: Node;
 
-    @property({type: Node, group: "Element"})
+    @property( { type: Node, group: "Element" } )
     public BoxContainer: Node;
 
-    @property({type: Node, group: "Element"})
+    @property( { type: Node, group: "Element" } )
     public CacheContainer: Node;
-    
 
-    @property({type: Node, group: "Element"})
+
+    @property( { type: Node, group: "Element" } )
     public Star: Node;
 
     protected onLoad (): void
@@ -124,13 +124,16 @@ export class Tool extends Component
 
     public setCollider2222222 (): void    
     {
-        for ( let i = 0; i < this.listScrew.length; i++ ) 
+        for ( let i = 0; i < this.listBar.length; i++ ) 
         {
-            const node = this.listScrew[ i ];
-            let child2 = node.node.children[ 1 ];
-            
-            node.ScrewRenderer.botSprite = child2.getComponent( Sprite );
-            
+            const bar = this.listBar[ i ];
+            if ( bar.modelCollider )
+            {
+                bar.SetCollider();
+                //bar.collider.threshold = 5; 
+                bar.modelCollider.destroy();
+            }
+
         }
     }
 
@@ -143,7 +146,6 @@ export class Tool extends Component
         }
         for ( let i = 0; i < this.listScrew.length; i++ ) 
         {
-
             const screw = this.listScrew[ i ];
             screw.node.layer = 1 << 11;
         }
@@ -151,7 +153,7 @@ export class Tool extends Component
 
     public SetScrewBar (): void
     {
-        
+
         for ( let i = 0; i < this.listBar.length; i++ ) 
         {
             const bar = this.listBar[ i ];
@@ -187,9 +189,9 @@ export class Tool extends Component
     public SetScreenElements (): void
     {
         this.uiMultiScreen.LevelContainerPosPortrai = this.LevelContainer.position;
-        this.uiMultiScreen.BoxContainerPosPortrai  = this.BoxContainer.position;
-        this.uiMultiScreen.CacheContainerPosPortrai  = this.CacheContainer.position;
-        this.uiMultiScreen.StarPosPortrai  = this.Star.position;
+        this.uiMultiScreen.BoxContainerPosPortrai = this.BoxContainer.position;
+        this.uiMultiScreen.CacheContainerPosPortrai = this.CacheContainer.position;
+        this.uiMultiScreen.StarPosPortrai = this.Star.position;
 
     }
 

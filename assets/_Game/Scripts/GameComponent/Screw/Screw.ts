@@ -15,6 +15,7 @@ import { BarController } from '../Bar/BarController';
 import { LevelController } from '../../Controller/LevelController';
 import { RigidBody2D } from 'cc';
 import { ERigidBody2DType } from 'cc';
+import { MoveScrewHandle } from '../../Controller/MoveScrewHandle';
 
 
 const { ccclass, property } = _decorator;
@@ -164,13 +165,27 @@ export class Screw extends GameLayerComponent
         const barLayer = GameLayerMaskConfig.BAR_LAYER_MASK;
         const screwPosition = this.node.getWorldPosition();
 
-        const aabb = new Rect(
-            screwPosition.x - GameConfig.SCREW_RADIUS,
-            screwPosition.y - GameConfig.SCREW_RADIUS,
-            GameConfig.SCREW_RADIUS * 2,
-            GameConfig.SCREW_RADIUS * 2 );
+        const screwPosition2D = new Vec2( screwPosition.x, screwPosition.y );
+        const radius = GameConfig.SCREW_RADIUS;
 
-        let cachedCollider = PhysicsSystem2D.instance.testAABB( aabb );
+        const points = [];
+        for ( let i = 0; i < 8; i++ )
+        {
+            const angle = ( i * Math.PI ) / 4; // 45 degrees in radians
+            const x = screwPosition2D.x + radius * Math.cos( angle );
+            const y = screwPosition2D.y + radius * Math.sin( angle );
+            points.push( new Vec2( x, y ) );
+        }
+
+        const cachedColliders = [];
+        for ( const point of points )
+        {
+            const colliders = PhysicsSystem2D.instance.testPoint( point );
+            cachedColliders.push( ...colliders );
+        }
+
+        // Loại bỏ các phần tử trùng lặp
+        const cachedCollider = Array.from( new Set( cachedColliders ) );
 
         if ( cachedCollider.length === 0 ) return false;
 
@@ -192,12 +207,10 @@ export class Screw extends GameLayerComponent
             let bar = this.cachedBarLayer[ i ].node.getComponent( BarController );
             if ( bar !== null )
             {
-
                 //console.log( "Bar Layer: ", bar.Layer );
                 if ( bar.Layer > this.Layer )
                 {
                     console.log( "Is blocked" + bar.node.name );
-
                     return true;
                 }
             }
@@ -282,7 +295,7 @@ export class Screw extends GameLayerComponent
 
     public CompleteScrew (): void
     {
-        
+
     }
 
     public Hide (): void
