@@ -75,6 +75,7 @@ export class Screw extends GameLayerComponent
         if ( this.State === eScrewState.IN_BAR && this.IsBlocked() )
         {
             this.BlockedTween();
+            AudioController.Instance.PlayBlock();
             return;
         }
 
@@ -102,6 +103,7 @@ export class Screw extends GameLayerComponent
                 if ( moveSuccess === true )
                 {
                     this.FreeJoints();
+                    MoveScrewHandle.Instance.pointSpawnTouchEffect( MoveScrewHandle.Instance._lastMousePosition );
                     LevelController.Instance.RemoveScrewInLayer( this );
                     GameManager.Instance.currentScrew--;
 

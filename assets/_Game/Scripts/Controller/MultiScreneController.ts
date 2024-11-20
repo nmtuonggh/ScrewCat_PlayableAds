@@ -161,6 +161,14 @@ export class MultiScreneController extends Component
     {
         return this.canvasScreenController[ this.ScreenType ].cameraGamePlay;
     }
+
+    public SetPopUpWarningStatus ( status: boolean ): void
+    {
+        for ( let i = 0; i < this.canvasScreenController.length; i++ )
+        {
+            this.canvasScreenController[ i ].uiCanvasScreen.Warning.active = status;
+        }
+    }
 }
 
 export enum ScreenType

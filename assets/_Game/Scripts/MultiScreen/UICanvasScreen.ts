@@ -15,6 +15,8 @@ export class UICanvasScreen extends Component {
     public uiFail: Node = null;
     @property(Node)
     public textTapToPlay: Node = null;
+    @property(Node)
+    public Warning: Node = null;
 
     public TweenFail ( ): void
     {

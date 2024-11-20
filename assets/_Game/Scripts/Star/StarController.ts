@@ -6,6 +6,7 @@ import { Label } from 'cc';
 import { sp } from 'cc';
 import { Tween } from 'cc';
 import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
+import { AudioController } from '../AudioController/AudioController';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'StarController' )
@@ -187,6 +188,7 @@ export class StarController extends Component
             }
         } );
         starSkeleton.setAnimation( 0, 'animation', false );
+        AudioController.Instance.PlayProgessStar();
 
         this.currentIndexEff++;
         if ( this.currentIndexEff >= this.listCollectEff.length )

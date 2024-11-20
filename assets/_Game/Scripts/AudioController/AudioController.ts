@@ -10,16 +10,28 @@ export class AudioController extends Component
     public audioClip: AudioClip[] = [];
     @property( AudioClip )
     public audioComplete: AudioClip[] = [];
+    @property( AudioClip )
+    public audioWarning: AudioClip = null;
 
     @property( AudioSource )
     public audioSource: AudioSource = null;
 
     @property( AudioSource )
     public bg: AudioSource = null;
+
     @property( AudioSource )
     public Chain: AudioSource = null;
+
     @property( AudioSource )
     public Waning: AudioSource = null;
+
+    @property( AudioSource )
+    public ProgessStar: AudioSource = null;
+    @property( AudioClip )
+    public star: AudioClip = null;
+
+    @property( AudioSource )
+    public Block: AudioSource = null;
 
     private static _instance: AudioController = null;
 
@@ -69,9 +81,19 @@ export class AudioController extends Component
         this.Chain.play();
     }
 
+    public PlayBlock ()
+    {
+        this.Block.play();
+    }
+
     public PlayWarning ()
     {
-        this.Waning.play();
+        this.Waning.playOneShot( this.audioWarning );
+    }
+
+    public PlayProgessStar ()
+    {
+        this.ProgessStar.playOneShot(this.star);
     }
 }
 

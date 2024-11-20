@@ -3,6 +3,9 @@ import { HorizontalGrid } from '../GameComponent/HoleContainer/Cache/HorizontalG
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { Screw } from '../GameComponent/Screw/Screw';
+import { CanvasScreenController } from '../MultiScreen/CanvasScreenController';
+import { MultiScreneController } from './MultiScreneController';
+import { MoveScrewHandle } from './MoveScrewHandle';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'CahedContainer' )
@@ -12,10 +15,14 @@ export class CahedContainer extends Component
     private holeCount: number = 0;
     @property( CCInteger )
     public currentScrewCount: number = 0;
+    @property(Node)
+    public popUpWarning: Node = null;
 
     public horizontalGrid: HorizontalGrid = null;
     private listHole: Hole[] = [];
     public listActiveHole: Hole[] = [];
+    public isFirstTime4Screw: boolean = false;
+    public showingWarning: boolean = false;
 
     private static _instance: CahedContainer = null;
 
@@ -117,7 +124,23 @@ export class CahedContainer extends Component
                 const hole = this.listActiveHole[ i ];
                 hole.ShowWarning();
             }
+
+            if (this.isFirstTime4Screw === false)
+                {
+                    this.isFirstTime4Screw = true;
+                    this.showingWarning = true;
+                    MultiScreneController.Instance.SetPopUpWarningStatus(true);
+                    MoveScrewHandle.Instance.DisableTouch();
+                }
         }
+
+    }
+
+    public StopShowingWarning ()
+    {
+        this.showingWarning = false;
+        MultiScreneController.Instance.SetPopUpWarningStatus(false);
+        MoveScrewHandle.Instance.EnableTouch();
     }
 
     public GetScrewForBooster (): Screw[]

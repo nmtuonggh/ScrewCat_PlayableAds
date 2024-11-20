@@ -38,7 +38,7 @@ export class MoveScrewHandle extends Component
     @property( PlayableAdsManager )
     public playableAdsManager: PlayableAdsManager = null;
 
-    private _lastMousePosition: Vec2 = new Vec2();
+    public _lastMousePosition: Vec2 = new Vec2();
 
     public isFirstTouch: boolean = false;
     //#endregion
@@ -122,7 +122,7 @@ export class MoveScrewHandle extends Component
         const mousePosition = event.getLocation();
         const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x * ratio, mousePosition.y * ratio, 0 ) );
         this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
-        this.pointSpawnTouchEffect( this._lastMousePosition );
+       
         this.checkClickScrew();
     }
 
@@ -136,6 +136,7 @@ export class MoveScrewHandle extends Component
             let screw = component.node.getComponent( Screw );
             if ( screw.State === eScrewState.IN_CACHED || screw.State === eScrewState.IS_HIDING ) return;
             screw.CheckMove();
+            //this.pointSpawnTouchEffect( this._lastMousePosition );
         }
     }
 
@@ -253,7 +254,7 @@ export class MoveScrewHandle extends Component
     //#endregion
 
 
-    private pointSpawnTouchEffect ( pos: Vec2 ): void
+    public pointSpawnTouchEffect ( pos: Vec2 ): void
     {
         const touch = this.poolTouch.getFromPool();
         touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
@@ -263,12 +264,5 @@ export class MoveScrewHandle extends Component
             this.poolTouch.returnToPool( touch );
         }, 2000 );
 
-        // const particle = instantiate( this.touchEffect );
-        // particle.parent = this.touchHolder;
-        // particle.worldPosition = new Vec3( pos.x, pos.y, 0 );
-        // setTimeout( () =>
-        // {
-        //     particle.destroy();
-        // }, 2000 );
     }
 }

@@ -16,7 +16,6 @@ export class CanvasScreenController extends Component {
 
     @property(UICanvasScreen)
     public uiCanvasScreen: UICanvasScreen = null;
-
 }
 
 
