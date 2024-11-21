@@ -57,18 +57,18 @@ export class TutorialController extends Component
             }
         }
 
-        for ( let i = 0; i < this.iconGame.length; i++ )
-        {
-            if(this.iconGame[i] === null) continue;
-            if ( i === MultiScreneController.Instance.ScreenType )
-            {
-                this.iconGame[i].active = true;
-            }
-            else
-            {
-                this.iconGame[i].active = false;
-            }
-        }
+        // for ( let i = 0; i < this.iconGame.length; i++ )
+        // {
+        //     if(this.iconGame[i] === null) continue;
+        //     if ( i === MultiScreneController.Instance.ScreenType )
+        //     {
+        //         this.iconGame[i].active = true;
+        //     }
+        //     else
+        //     {
+        //         this.iconGame[i].active = false;
+        //     }
+        // }
         
         //let handPosition = this.handPortrait.getPosition().clone();
         //let handScale = this.handPortrait.getScale().clone();
