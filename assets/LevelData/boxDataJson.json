@@ -1,1 +1,40 @@
-{"BoxData":[{"Color":3,"HoleCount":3},{"Color":6,"HoleCount":3},{"Color":0,"HoleCount":3},{"Color":8,"HoleCount":3},{"Color":6,"HoleCount":3},{"Color":3,"HoleCount":3},{"Color":0,"HoleCount":3},{"Color":8,"HoleCount":3},{"Color":3,"HoleCount":3},{"Color":6,"HoleCount":3},{"Color":0,"HoleCount":3},{"Color":8,"HoleCount":3},{"Color":6,"HoleCount":3},{"Color":8,"HoleCount":3},{"Color":3,"HoleCount":3},{"Color":8,"HoleCount":1},{"Color":6,"HoleCount":3}]}
+{
+    "BoxData": [
+        {
+            "Color": 1,
+            "HoleCount": 3
+        },
+        {
+            "Color": 6,
+            "HoleCount": 3
+        },
+        {
+            "Color": 0,
+            "HoleCount": 3
+        },
+        {
+            "Color": 1,
+            "HoleCount": 3
+        },
+        {
+            "Color": 0,
+            "HoleCount": 3
+        },
+        {
+            "Color": 6,
+            "HoleCount": 3
+        },
+        {
+            "Color": 6,
+            "HoleCount": 2
+        },
+        {
+            "Color": 1,
+            "HoleCount": 3
+        },
+        {
+            "Color": 1,
+            "HoleCount": 1
+        }
+    ]
+}

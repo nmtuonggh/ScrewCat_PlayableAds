@@ -124,14 +124,15 @@ export class CahedContainer extends Component
                 const hole = this.listActiveHole[ i ];
                 hole.ShowWarning();
             }
-
-            if (this.isFirstTime4Screw === false)
-                {
-                    this.isFirstTime4Screw = true;
-                    this.showingWarning = true;
-                    MultiScreneController.Instance.SetPopUpWarningStatus(true);
-                    MoveScrewHandle.Instance.DisableTouch();
-                }
+            
+            //Pop up warning lan dau tien 4 screw
+            // if (this.isFirstTime4Screw === false)
+            //     {
+            //         this.isFirstTime4Screw = true;
+            //         this.showingWarning = true;
+            //         MultiScreneController.Instance.SetPopUpWarningStatus(true);
+            //         MoveScrewHandle.Instance.DisableTouch();
+            //     }
         }
 
     }

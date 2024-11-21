@@ -118,20 +118,35 @@ export class Tool extends Component
             //bar.collider.threshold = 5; 
             bar.modelCollider.destroy();
         }
-
     }
+
 
 
     public setCollider2222222 (): void    
     {
-        for ( let i = 0; i < this.listBar.length; i++ ) 
+        // for ( let i = 0; i < this.listBar.length; i++ ) 
+        // {
+        //     const bar = this.listBar[ i ];
+        //     if ( bar.modelCollider )
+        //     {
+        //         bar.SetCollider();
+        //         //bar.collider.threshold = 5; 
+        //         bar.modelCollider.destroy();
+        //     }
+
+        // }
+        ////
+        for ( let i = 0; i < this.listScrew.length; i++ ) 
         {
-            const bar = this.listBar[ i ];
-            if ( bar.modelCollider )
+            const screw = this.listScrew[ i ];
+            if ( screw.ScrewRenderer.colorIndex === 5 )
             {
-                bar.SetCollider();
-                //bar.collider.threshold = 5; 
-                bar.modelCollider.destroy();
+                screw.ScrewRenderer.colorIndex = 0;
+            }
+
+            if ( screw.ScrewRenderer.colorIndex === 7 )
+            {
+                screw.ScrewRenderer.colorIndex = 1;
             }
 
         }

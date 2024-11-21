@@ -48,13 +48,6 @@ export class Screw extends GameLayerComponent
         this.screwAnimation = this.getComponent( ScrewAnim );
     }
 
-    public InitSCrewData ( colorType: eColorType, data: ScrewData ): void
-    {
-        this.State = eScrewState.IN_BAR;
-        this.screwRenderer.SetSprite( colorType, data );
-
-    }
-
     private FreeJoints (): void 
     {
         this.hingeJoint.enabled = false;
