@@ -6,6 +6,10 @@ import { Screw } from '../GameComponent/Screw/Screw';
 import { CanvasScreenController } from '../MultiScreen/CanvasScreenController';
 import { MultiScreneController } from './MultiScreneController';
 import { MoveScrewHandle } from './MoveScrewHandle';
+import { BoosterControll } from '../Booster/BoosterControll';
+import { UIOpacity } from 'cc';
+import { BoosterType } from '../Booster/HightlightBooster';
+import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'CahedContainer' )
@@ -15,7 +19,7 @@ export class CahedContainer extends Component
     private holeCount: number = 0;
     @property( CCInteger )
     public currentScrewCount: number = 0;
-    @property(Node)
+    @property( Node )
     public popUpWarning: Node = null;
 
     public horizontalGrid: HorizontalGrid = null;
@@ -124,7 +128,7 @@ export class CahedContainer extends Component
                 const hole = this.listActiveHole[ i ];
                 hole.ShowWarning();
             }
-            
+
             //Pop up warning lan dau tien 4 screw
             // if (this.isFirstTime4Screw === false)
             //     {
@@ -133,6 +137,18 @@ export class CahedContainer extends Component
             //         MultiScreneController.Instance.SetPopUpWarningStatus(true);
             //         MoveScrewHandle.Instance.DisableTouch();
             //     }
+            //cutom cho booster tutorial
+            if ( this.isFirstTime4Screw === false )
+            {
+                MoveScrewHandle.Instance.DisableTouch();
+                this.isFirstTime4Screw = true;
+                this.showingWarning = true;
+                setTimeout( () =>
+                {
+                    MultiScreneController.Instance.SetPopUpWarningStatus( true );
+                    BoosterControll.Instance.hightlightBooster.HLBooster( BoosterType.Drill );
+                },1000 );
+            }
         }
 
     }
@@ -140,8 +156,11 @@ export class CahedContainer extends Component
     public StopShowingWarning ()
     {
         this.showingWarning = false;
-        MultiScreneController.Instance.SetPopUpWarningStatus(false);
+        MultiScreneController.Instance.SetPopUpWarningStatus( false );
         MoveScrewHandle.Instance.EnableTouch();
+        ///
+        //BoosterControll.Instance.BoosterUI.getComponent(UIOpacity).opacity = 255;
+
     }
 
     public GetScrewForBooster (): Screw[]

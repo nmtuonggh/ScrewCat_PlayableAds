@@ -15,6 +15,8 @@ import { MoveScrewHandle } from '../Controller/MoveScrewHandle';
 import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
 import { Screw } from '../GameComponent/Screw/Screw';
 import { LevelController } from '../Controller/LevelController';
+import { BoosterControll } from '../Booster/BoosterControll';
+import { UIOpacity } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameManager' )
@@ -36,9 +38,6 @@ export class GameManager extends Component
     public LevelContainer: Node = null;
     @property( MultiScreneController )
     private multiScreenController: MultiScreneController = null;
-
-    @property( Node )
-    public loseUI: Node = null;
 
     @property( ScrewData )
     public screwData: ScrewData = null;
@@ -78,7 +77,7 @@ export class GameManager extends Component
             audioController.CheckLose();
             uiController.canvasScreenController[ screenType ].uiCanvasScreen.TweenFail();
             uiController.ShowOutOfMove();
-
+            BoosterControll.Instance.BoosterUI.getComponent(UIOpacity).opacity = 0;
             //wait for 2s
             setTimeout( () =>
             {

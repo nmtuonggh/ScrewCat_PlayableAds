@@ -1,5 +1,7 @@
 import { _decorator, CCFloat, Component, Node, tween, Vec3 } from 'cc';
 import { Hole } from '../../Hole/Hole';
+import { BoosterControll } from '../../../Booster/BoosterControll';
+import { set } from '../../../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'HorizontalGrid' )
@@ -30,9 +32,9 @@ export class HorizontalGrid extends Component
         } );
     }
 
-    public AddNewHole (count : number): Hole
+    public AddNewHole ( count: number ): Hole
     {
-        if (count <= 0) return null;
+        if ( count <= 0 ) return null;
         let listchild = this.node.getComponentsInChildren( Hole );
         let listUnActiveChild: Hole[] = [];
         let hole: Hole = null;
@@ -47,9 +49,15 @@ export class HorizontalGrid extends Component
         if ( listUnActiveChild.length > 0 )
         {
             hole = listUnActiveChild[ 0 ];
-            hole.node.active = true;
             this.listActiveChild.push( hole.node );
             this.RepositionHoleChange();
+            BoosterControll.Instance.hightlightBooster.StopHLBooster();
+            setTimeout( () =>
+            {
+                BoosterControll.Instance.DrillAnimation( hole );
+                
+            }, 200 );
+            //hole.node.active = true;
             return hole;
         }
         else

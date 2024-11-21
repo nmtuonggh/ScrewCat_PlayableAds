@@ -70,8 +70,8 @@ export class TutorialController extends Component
         //     }
         // }
         
-        //let handPosition = this.handPortrait.getPosition().clone();
-        //let handScale = this.handPortrait.getScale().clone();
+        let handPosition = this.handPortrait.getPosition().clone();
+        let handScale = this.handPortrait.getScale().clone();
 
         tween( this.handPortrait ).repeatForever
             (

@@ -1,6 +1,7 @@
 import { Label } from 'cc';
 import { CCInteger } from 'cc';
 import { _decorator, Component, Node } from 'cc';
+import { CahedContainer } from '../Controller/CahedContainer';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BtnBooster' )
@@ -15,6 +16,11 @@ export class BtnBooster extends Component
     @property( CCInteger )
     public count: number = 0;
 
+    protected start (): void
+    {
+        this.setCount();
+    }
+    
     public updateBtn ()
     {
         if ( this.count > 0 )
@@ -32,6 +38,13 @@ export class BtnBooster extends Component
     {
         this.textCount.string = `${ this.count }`;
         this.updateBtn();
+    }
+
+    public UseBtn()
+    {
+        if(CahedContainer.Instance.isFirstTime4Screw === false) return;
+        this.count--;
+        this.setCount();
     }
 }
 

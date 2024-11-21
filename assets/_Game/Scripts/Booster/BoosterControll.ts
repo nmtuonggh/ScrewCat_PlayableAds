@@ -20,11 +20,18 @@ import { CCBoolean } from 'cc';
 import { Screw } from '../GameComponent/Screw/Screw';
 import { tween } from 'cc';
 import { StarController } from '../Star/StarController';
+import { sp } from 'cc';
+import { Hole } from '../GameComponent/Hole/Hole';
+import { HightlightBooster } from './HightlightBooster';
+import { AudioController, AudioType } from '../AudioController/AudioController';
+import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoosterControll' )
 export class BoosterControll extends Component 
 {
+    @property( HightlightBooster )
+    public hightlightBooster: HightlightBooster = null;
     @property( CCInteger )
     public addHoleBoosterCount: number = 0;
     @property( CCBoolean )
@@ -34,10 +41,32 @@ export class BoosterControll extends Component
     @property( Node )
     private mayhutPosiotion: Node = null;
     @property( Node )
-    private BoosterUI: Node = null;
+    public BoosterUI: Node = null;
+
+    @property( { type: sp.Skeleton, group: "Skeleton" } )
+    private drillSkeleton: sp.Skeleton = null;
+    @property( { type: sp.Skeleton, group: "Skeleton" } )
+    private hammerSkeleton: sp.Skeleton = null;
+    @property( { type: sp.Skeleton, group: "Skeleton" } )
+    private vacuumSkeleton: sp.Skeleton = null;
 
     private State: BoosterState = BoosterState.None;
     private cachedContainer: CahedContainer = null;
+
+    private static _instance: BoosterControll = null;
+
+    public static get Instance (): BoosterControll
+    {
+        return this._instance;
+    }
+
+    protected onLoad (): void
+    {
+        if ( BoosterControll._instance === null )
+        {
+            BoosterControll._instance = this;
+        }
+    }
 
     protected onDestroy (): void
     {
@@ -65,21 +94,61 @@ export class BoosterControll extends Component
     {
         this.State = state;
     }
-
+    //#region AddNewHole
     public BoosterAddNewHole (): void
     {
-        if ( this.cachedContainer.AddNewHole( this.addHoleBoosterCount ) != null && this.addHoleBoosterCount > 0 )
+        if ( CahedContainer.Instance.isFirstTime4Screw === false ) return;
+        if ( this.cachedContainer.AddNewHole( this.addHoleBoosterCount ) != null &&
+            this.addHoleBoosterCount > 0 )
         {
             console.log( "Add new hole" );
             this.addHoleBoosterCount--;
+            //BoosterControll.Instance.hightlightBooster.StopHLBooster();
+            //MoveScrewHandle.Instance.EnableTouch();
+            CahedContainer.Instance.StopShowingWarning();
         }
         else
         {
             console.log( "Can't add new hole" );
         }
-
     }
 
+    public DrillAnimation ( hole: Hole ): void
+    {
+        const startPos = this.drillSkeleton.node.getWorldPosition();
+        const worldPosition = hole.node.getWorldPosition();
+        this.drillSkeleton.node.active = true;
+        // tween( this.drillSkeleton.node )
+        //     .to( 1, { worldPosition: worldPosition } )
+        //     .call( () => 
+        //     {
+        //         this.drillSkeleton.node.active = false;
+        //         this.drillSkeleton.node.worldPosition = startPos;
+        //         this.drillSkeleton.setAnimation( 0, "animation", false );
+
+        //         hole.node.active = true;
+        //     } )
+        //     .start();
+        //this.drillSkeleton.node.active = false;
+        this.drillSkeleton.node.worldPosition = worldPosition.add3f( 10, -10, 0 );
+        this.drillSkeleton.setAnimation( 0, "animation", false );
+        setTimeout( () =>
+        {
+            AudioController.Instance.PlayDrill();
+        }, 300 );
+        this.drillSkeleton.setCompleteListener( ( trackListener: sp.spine.TrackEntry ) =>
+        {
+            if ( trackListener.animation.name === 'animation' )
+            {
+                hole.node.active = true;
+                this.drillSkeleton.node.active = false;
+                this.drillSkeleton.node.worldPosition = startPos;
+
+            }
+        } );
+
+    }
+    //endregion
     //#region BreakBar
     public BoosterBreakBar (): void
     {

@@ -33,6 +33,9 @@ export class AudioController extends Component
     @property( AudioSource )
     public Block: AudioSource = null;
 
+    @property( AudioSource )
+    public Drill: AudioSource = null;
+
     private static _instance: AudioController = null;
 
     public static get Instance (): AudioController
@@ -94,6 +97,11 @@ export class AudioController extends Component
     public PlayProgessStar ()
     {
         this.ProgessStar.playOneShot(this.star);
+    }
+
+    public PlayDrill ()
+    {
+        this.Drill.play();
     }
 }
 

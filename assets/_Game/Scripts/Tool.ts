@@ -166,6 +166,7 @@ export class Tool extends Component
         }
     }
 
+
     public SetScrewBar (): void
     {
 
@@ -218,20 +219,22 @@ export class Tool extends Component
         // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosPortrai;
         // this.Star.position = this.uiMultiScreen.StarPosPortrai;
         //Square
-        this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosSquare;
-        this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosSquare;
-        this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosSquare;
-        this.Star.position = this.uiMultiScreen.StarPosSquare;
+        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosSquare;
+        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosSquare;
+        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosSquare;
+        // this.Star.position = this.uiMultiScreen.StarPosSquare;
+
         //Mixed
         // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosMix;
         // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosMix;
         // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosMix;
         // this.Star.position = this.uiMultiScreen.StarPosMix;
+        
         // //Landscape
-        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosLandscape;
-        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosLandscape;
-        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosLandscape;
-        // this.Star.position = this.uiMultiScreen.StarPosLandscape;
+        this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosLandscape;
+        this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosLandscape;
+        this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosLandscape;
+        this.Star.position = this.uiMultiScreen.StarPosLandscape;
     }
 
 }
