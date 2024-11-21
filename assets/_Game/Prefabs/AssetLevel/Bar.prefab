@@ -2169,7 +2169,7 @@
     "_group": 8192,
     "_type": 2,
     "_allowSleep": true,
-    "_gravityScale": 1,
+    "_gravityScale": 2,
     "_linearDamping": 0,
     "_angularDamping": 0,
     "_linearVelocity": {
