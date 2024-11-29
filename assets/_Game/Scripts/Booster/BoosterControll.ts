@@ -34,6 +34,10 @@ export class BoosterControll extends Component
     public hightlightBooster: HightlightBooster = null;
     @property( CCInteger )
     public addHoleBoosterCount: number = 0;
+    @property( CCInteger )
+    public breakBarBoosterCount: number = 0;
+    @property( CCInteger )
+    public hutBuiBoosterCount: number = 0;
     @property( CCBoolean )
     private isUsingBooster: boolean = false;
     @property( CCBoolean )
@@ -222,7 +226,7 @@ export class BoosterControll extends Component
     //#region RemoveScrew
     public BoosterRemoveScrew (): void
     {
-        console.log( "Remove screw" );
+        if(this.hutBuiBoosterCount <= 0) return;
         this.State = BoosterState.RemoveScrew;
         let listScrewOnCached = this.cachedContainer.GetScrewForBooster();
         if ( listScrewOnCached.length > 0 )
