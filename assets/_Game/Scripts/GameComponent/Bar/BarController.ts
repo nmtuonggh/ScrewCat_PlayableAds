@@ -43,14 +43,7 @@ export class BarController extends GameLayerComponent
 
     protected start (): void
     {
-        // this.collider.points = this.modelCollider.points.map(point => {
-        //     return new Vec2(
-        //         point.x * 0.7,
-        //         point.y * 0.7
-        //     );
-        // });
-        //log ten cua cac screw trong listScrews
-
+        
     }
 
 

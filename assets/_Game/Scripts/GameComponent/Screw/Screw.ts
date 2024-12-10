@@ -28,11 +28,11 @@ export class Screw extends GameLayerComponent
     public hingeJoint: HingeJoint2D = null;
     @property( ScrewRenderer )
     private screwRenderer: ScrewRenderer = null;
+    
     public screwAnimation: ScrewAnim = null;
-
     private linkingHole: Hole = null;
     public State: eScrewState = eScrewState.IN_BAR;
-    //#region Encapsulation
+    //#region PROPERTIES
 
     public get ScrewRenderer (): ScrewRenderer
     {

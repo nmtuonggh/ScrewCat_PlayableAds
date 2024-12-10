@@ -17,6 +17,7 @@ import { Screw } from '../GameComponent/Screw/Screw';
 import { LevelController } from '../Controller/LevelController';
 import { BoosterControll } from '../Booster/BoosterControll';
 import { UIOpacity } from 'cc';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameManager' )
@@ -67,7 +68,7 @@ export class GameManager extends Component
     {
         const cacheContainer = CahedContainer.Instance;
         const audioController = AudioController.Instance;
-        const uiController = UIController.Instance;
+        const uiController = getGameSystem().UIController;
         let screenType = this.multiScreenController.ScreenType;
 
         if ( cacheContainer.currentScrewCount >= cacheContainer.listActiveHole.length && this.lose === false )
@@ -77,7 +78,7 @@ export class GameManager extends Component
             audioController.CheckLose();
             uiController.canvasScreenController[ screenType ].uiCanvasScreen.TweenFail();
             uiController.ShowOutOfMove();
-            BoosterControll.Instance.BoosterUI.getComponent(UIOpacity).opacity = 0;
+            getGameSystem().BoosterControll.BoosterUI.getComponent(UIOpacity).opacity = 0;
             //wait for 2s
             setTimeout( () =>
             {
@@ -99,7 +100,7 @@ export class GameManager extends Component
 
     public GetClickBar (): BarController
     {
-        let component = MoveScrewHandle.Instance.CheckClick( GameLayerMaskConfig.BAR_LAYER_MASK );
+        let component = getGameSystem().MoveScrewHandle.CheckClick( GameLayerMaskConfig.BAR_LAYER_MASK );
         if ( component !== null )
         {
             let bar = component.node.getComponent( BarController );

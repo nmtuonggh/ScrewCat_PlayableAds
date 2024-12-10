@@ -1,50 +1,54 @@
 import { Label } from 'cc';
-import { CCInteger } from 'cc';
 import { _decorator, Component, Node } from 'cc';
 import { CahedContainer } from '../Controller/CahedContainer';
+import { BoosterType } from './HightlightBooster';
+import { Enum } from 'cc';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BtnBooster' )
 export class BtnBooster extends Component
 {
+    @property( { type: Enum( BoosterType ) } )
+    private boosterType: BoosterType = BoosterType.None;
     @property( Node )
-    private cong: Node = null;
+    private addMoreUI: Node = null;
     @property( Node )
     private haveCount: Node = null;
-    @property(Label)
+    @property( Label )
     private textCount: Label = null;
-    @property( CCInteger )
-    public count: number = 0;
 
     protected start (): void
     {
-        this.setCount();
+        this.setCountUI();
     }
-    
-    public updateBtn ()
+
+    private updateBtn ()
     {
-        if ( this.count > 0 )
+        if ( getGameSystem().BoosterControll.ListBoosterCount[ this.boosterType ] > 0 ) 
         {
-            this.cong.active = false;
+            this.addMoreUI.active = false;
             this.haveCount.active = true;
         } else
         {
-            this.cong.active = true;
+            this.addMoreUI.active = true;
             this.haveCount.active = false;
         }
     }
 
-    public setCount ()
+    private setCountUI ()
     {
-        this.textCount.string = `${ this.count }`;
+        this.textCount.string = `${ getGameSystem().BoosterControll.ListBoosterCount[ this.boosterType ] }`;
         this.updateBtn();
     }
 
-    public UseBtn()
+    public UseBtn ()
     {
-        if(CahedContainer.Instance.isFirstTime4Screw === false) return;
-        this.count--;
-        this.setCount();
+        if ( getGameSystem().CahedContainer.isFirstTime4Screw === false ) return;
+
+        this.setCountUI();
+        getGameSystem().BoosterControll.BoosterHammer();
+        getGameSystem().BoosterControll.ListBoosterCount[ this.boosterType ]--;
     }
 }
 

@@ -22,7 +22,7 @@ import { tween } from 'cc';
 import { StarController } from '../Star/StarController';
 import { sp } from 'cc';
 import { Hole } from '../GameComponent/Hole/Hole';
-import { HightlightBooster } from './HightlightBooster';
+import { BoosterType, HightlightBooster } from './HightlightBooster';
 import { AudioController, AudioType } from '../AudioController/AudioController';
 import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
 const { ccclass, property } = _decorator;
@@ -30,14 +30,11 @@ const { ccclass, property } = _decorator;
 @ccclass( 'BoosterControll' )
 export class BoosterControll extends Component 
 {
+    //#region EDITOR EXPOSED FIELDS
     @property( HightlightBooster )
-    public hightlightBooster: HightlightBooster = null;
-    @property( CCInteger )
-    public addHoleBoosterCount: number = 0;
-    @property( CCInteger )
-    public breakBarBoosterCount: number = 0;
-    @property( CCInteger )
-    public hutBuiBoosterCount: number = 0;
+    private hightlightBooster: HightlightBooster = null;
+    @property( [CCInteger] )
+    public listBoosterCount: number[] = [];
     @property( CCBoolean )
     private isUsingBooster: boolean = false;
     @property( CCBoolean )
@@ -53,10 +50,23 @@ export class BoosterControll extends Component
     private hammerSkeleton: sp.Skeleton = null;
     @property( { type: sp.Skeleton, group: "Skeleton" } )
     private vacuumSkeleton: sp.Skeleton = null;
+    //#endregion
 
+    //#region PRIVATE FIELDS
     private State: BoosterState = BoosterState.None;
     private cachedContainer: CahedContainer = null;
+    //#endregion
 
+    //#region  PROPERTIES
+    public get ListBoosterCount (): number[]
+    {
+        return this.listBoosterCount;
+    }
+    public get HightlightBooster ()
+    {
+        return this.hightlightBooster;
+    }
+    //#endregion
     private static _instance: BoosterControll = null;
 
     public static get Instance (): BoosterControll
@@ -64,6 +74,7 @@ export class BoosterControll extends Component
         return this._instance;
     }
 
+    //#region CC_METHODS
     protected onLoad (): void
     {
         if ( BoosterControll._instance === null )
@@ -88,25 +99,26 @@ export class BoosterControll extends Component
         {
             case BoosterState.None:
                 break;
-            case BoosterState.BreakBar:
+            case BoosterState.Hammer:
                 input.on( Input.EventType.TOUCH_START, this.GetBarState, this );
                 break;
         }
     }
+    //#endregion
 
     private SetState ( state: BoosterState ): void
     {
         this.State = state;
     }
     //#region AddNewHole
-    public BoosterAddNewHole (): void
+    public BoosterHammer (): void
     {
         if ( CahedContainer.Instance.isFirstTime4Screw === false ) return;
-        if ( this.cachedContainer.AddNewHole( this.addHoleBoosterCount ) != null &&
-            this.addHoleBoosterCount > 0 )
+        if ( this.cachedContainer.AddNewHole( this.listBoosterCount[BoosterType.Hammer] ) != null &&
+        this.listBoosterCount[BoosterType.Hammer] > 0 )
         {
             console.log( "Add new hole" );
-            this.addHoleBoosterCount--;
+            this.listBoosterCount[BoosterType.Hammer]--;
             //BoosterControll.Instance.hightlightBooster.StopHLBooster();
             //MoveScrewHandle.Instance.EnableTouch();
             CahedContainer.Instance.StopShowingWarning();
@@ -156,7 +168,7 @@ export class BoosterControll extends Component
     //#region BreakBar
     public BoosterBreakBar (): void
     {
-        this.SetState( BoosterState.BreakBar );
+        this.SetState( BoosterState.Hammer );
         this.isCompleteBreakBar = false;
         MoveScrewHandle.Instance.DisableTouch();
         console.log( "Break bar" );
@@ -226,8 +238,8 @@ export class BoosterControll extends Component
     //#region RemoveScrew
     public BoosterRemoveScrew (): void
     {
-        if(this.hutBuiBoosterCount <= 0) return;
-        this.State = BoosterState.RemoveScrew;
+        if ( this.listBoosterCount[BoosterType.Vacuum] <= 0 ) return;
+        this.State = BoosterState.Vaccum;
         let listScrewOnCached = this.cachedContainer.GetScrewForBooster();
         if ( listScrewOnCached.length > 0 )
         {
@@ -274,10 +286,10 @@ export class BoosterControll extends Component
 
 export enum BoosterState
 {
-    None = -1,
-    AddNewHole = 0,
-    BreakBar = 1,
-    RemoveScrew = 2,
+    None = 0,
+    Drill = 1,
+    Hammer = 2,
+    Vaccum = 3,
 }
 
 

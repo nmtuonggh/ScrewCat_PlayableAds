@@ -10,11 +10,13 @@ import { BoosterControll } from '../Booster/BoosterControll';
 import { UIOpacity } from 'cc';
 import { BoosterType } from '../Booster/HightlightBooster';
 import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'CahedContainer' )
 export class CahedContainer extends Component
 {
+    //#region EDITOR EXPOSED FIELDS
     @property( CCInteger )
     private holeCount: number = 0;
     @property( CCInteger )
@@ -22,11 +24,19 @@ export class CahedContainer extends Component
     @property( Node )
     public popUpWarning: Node = null;
 
+    //#endregion
+
+    //#region PRIVATE FIELDS
     public horizontalGrid: HorizontalGrid = null;
     private listHole: Hole[] = [];
     public listActiveHole: Hole[] = [];
     public isFirstTime4Screw: boolean = false;
     public showingWarning: boolean = false;
+    private get gameSystem ()
+    {
+        return getGameSystem();
+    }
+    //#endregion
 
     private static _instance: CahedContainer = null;
 
@@ -35,6 +45,7 @@ export class CahedContainer extends Component
         return this._instance;
     }
 
+    //#region CC METHODS
     protected onLoad (): void
     {
         if ( CahedContainer._instance === null )
@@ -50,7 +61,9 @@ export class CahedContainer extends Component
         this.holeCount = 5;
         this.ActiveHole( this.holeCount );
     }
+    //#endregion
 
+    //#region PUBLIC METHODS
     ActiveHole ( holeCount: number ): void
     {
         for ( let i = 0; i < holeCount; i++ )
@@ -138,17 +151,20 @@ export class CahedContainer extends Component
             //         MoveScrewHandle.Instance.DisableTouch();
             //     }
             //cutom cho booster tutorial
-            if ( this.isFirstTime4Screw === false )
-            {
-                MoveScrewHandle.Instance.DisableTouch();
-                this.isFirstTime4Screw = true;
-                this.showingWarning = true;
-                setTimeout( () =>
-                {
-                    MultiScreneController.Instance.SetPopUpWarningStatus( true );
-                    BoosterControll.Instance.hightlightBooster.HLBooster( BoosterType.Drill );
-                },1000 );
-            }
+            // if ( this.isFirstTime4Screw === false )
+            // {
+            //     MoveScrewHandle.Instance.DisableTouch();
+            //     this.isFirstTime4Screw = true;
+            //     this.showingWarning = true;
+            //     setTimeout( () =>
+            //     {
+            //         getGameSystem().MultiScreneController.SetPopUpWarningStatus( true );
+            //         if ( getGameSystem().BoosterControll && getGameSystem().BoosterControll.node && getGameSystem().BoosterControll.node.active )
+            //         {
+            //             getGameSystem().BoosterControll.HightlightBooster.HLBooster( BoosterType.Drill );
+            //         }
+            //     }, 1000 );
+            // }
         }
 
     }
@@ -156,8 +172,8 @@ export class CahedContainer extends Component
     public StopShowingWarning ()
     {
         this.showingWarning = false;
-        MultiScreneController.Instance.SetPopUpWarningStatus( false );
-        MoveScrewHandle.Instance.EnableTouch();
+        getGameSystem().MultiScreneController.SetPopUpWarningStatus( false );
+        getGameSystem().MoveScrewHandle.EnableTouch();
         ///
         //BoosterControll.Instance.BoosterUI.getComponent(UIOpacity).opacity = 255;
 
@@ -178,6 +194,7 @@ export class CahedContainer extends Component
 
         return screwList;
     }
+    //#endregion
 }
 
 export class colorTypeCount

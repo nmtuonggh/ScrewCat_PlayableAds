@@ -56,9 +56,10 @@ export class HightlightBooster extends Component
 
 export enum BoosterType
 {
-    Drill = 0,
-    Hammer = 1,
-    Vacuum = 2,
+    None = 0,
+    Drill = 1,
+    Hammer = 2,
+    Vacuum = 3,
 }
 
 

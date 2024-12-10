@@ -23,6 +23,7 @@ import { PlayableAdsManager } from '../../../PA_iKame (1)/base-script/PlayableAd
 import { TrackingManager } from '../../../PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
 import { TestIQController } from '../TestIQ/TestIQController';
 import { MultiScreneController } from './MultiScreneController';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'MoveScrewHandle' )
@@ -112,7 +113,6 @@ export class MoveScrewHandle extends Component
 
         if ( GameManager.Instance.forceStore === true )
         {
-            
             this.playableAdsManager.ForceOpenStore();
                 TrackingManager.LoseLevel();
                 return;
@@ -244,12 +244,12 @@ export class MoveScrewHandle extends Component
     //#region GetFreeHole
     public GetFreeHoleBox ( colorType: eColorType ): Hole
     {
-        return BoxContainer.Instance.GetFreeBoxSlot( colorType );
+        return getGameSystem().BoxContainer.GetFreeBoxSlot( colorType );
     }
 
     public GetFreeHoleCache (): Hole
     {
-        return CahedContainer.Instance.GetFreeHole();
+        return getGameSystem().CahedContainer.GetFreeHole();
     }
     //#endregion
 
