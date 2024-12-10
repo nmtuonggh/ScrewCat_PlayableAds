@@ -12,6 +12,8 @@ import { boxSpawnData } from '../BoxSpawndata/boxSpawnData';
 import { CCInteger } from 'cc';
 import { GameLayer } from '../GameComponent/GameLayer';
 import { JsonAsset } from 'cc';
+import { getGameSystem } from '../GameSystem';
+import { GameLayerOder } from '../GameComponent/GameLayerOder';
 
 const { ccclass, property } = _decorator;
 
@@ -50,19 +52,8 @@ export class LevelController extends Component
     public listPlayingLayer: GameLayer[] = [];
     public listUnActiveLayer: GameLayer[] = [];
 
-    private static _instance: LevelController = null;
-
-    public static get Instance (): LevelController
-    {
-        return this._instance;
-    }
-
     protected onLoad (): void
     {
-        if ( LevelController._instance === null )
-        {
-            LevelController._instance = this;
-        }
 
         this.listBar = this.Holder.getComponentsInChildren( BarController );
         this.listScrew = this.Holder.getComponentsInChildren( Screw );
@@ -74,9 +65,9 @@ export class LevelController extends Component
         this.loadBoxDataFromJson();
         this.InitBarAndScrewColor();
         this.InitBox();
-        BoxContainer.Instance.InitQueue();
-        GameManager.Instance.currentScrew = this.listScrew.length;
-        GameManager.Instance.TotalScrew = this.listScrew.length;
+        getGameSystem().BoxContainer.InitQueue();
+        getGameSystem().GameManager.currentScrew = this.listScrew.length;
+        getGameSystem().GameManager.TotalScrew = this.listScrew.length;
         this.InitLayer();
     }
 
@@ -93,7 +84,7 @@ export class LevelController extends Component
 
     public InitBox (): void
     {
-        const listBoxSlot = BoxContainer.Instance.boxSlots;
+        const listBoxSlot = getGameSystem().BoxContainer.boxSlots;
 
         for ( let i = 0; i < listBoxSlot.length; i++ )
         {
@@ -106,7 +97,7 @@ export class LevelController extends Component
             {
                 const color = this.colorBoxSpawnData[ this.currentIndex ].color;
                 const holeCount = this.colorBoxSpawnData[ this.currentIndex ].holeCount;
-                BoxContainer.Instance.InitBox( color, boxSlot.boxHolder, this.BoxData, holeCount );
+                getGameSystem().BoxContainer.InitBox( color, boxSlot.boxHolder, this.BoxData, holeCount );
                 boxSlot.InitBoxSlotData();
                 this.currentIndex++;
             }
@@ -191,7 +182,7 @@ export class LevelController extends Component
     {
         for ( let i = 0; i < this.listLayer.length; i++ )
         {
-            if ( screw.Layer === this.listLayer[ i ].layerOrder )
+            if ( screw.Layer === this.listLayer[ i ].node.getComponent( GameLayerOder ).getLayer() )
             {
                 this.listLayer[ i ].RemoveScrew();
                 if ( this.listLayer[ i ].screwCount <= 0 )
@@ -238,7 +229,6 @@ export class LevelController extends Component
         layer.SetNormalSpriteBarInLayer();
         //layer.SetDynamicBarLayer();
         this.listPlayingLayer.push( layer );
-        console.log( "Playing Layer: ", layer.layerOrder );
     }
     //#endregion
 }

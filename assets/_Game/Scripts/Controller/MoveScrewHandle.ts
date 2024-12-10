@@ -44,19 +44,8 @@ export class MoveScrewHandle extends Component
     public isFirstTouch: boolean = false;
     //#endregion
 
-    private static _instance: MoveScrewHandle = null;
-
-    public static get Instance (): MoveScrewHandle
-    {
-        return this._instance;
-    }
-
     protected override onLoad (): void
     {
-        if ( MoveScrewHandle._instance === null )
-        {
-            MoveScrewHandle._instance = this;
-        }
         // let node = instantiate(this.test);
         // node.parent = this.parentt;
         this.poolTouch.initializePool( 15 );
@@ -99,21 +88,21 @@ export class MoveScrewHandle extends Component
             this.playableAdsManager.ActionFirstClicked();
 
             this.tutorialController.stopTutorial();
-            AudioController.Instance.PlayerBG();
-            //TestIQController.Instance.TweenIQUI( MultiScreneController.Instance.ScreenType );
+            getGameSystem().AudioController.playerBGMusic();
+            //getGameSystem().TestIQController.TweenIQUI( getGameSystem().MultiScreneController.ScreenType );
         }
 
-        if ( GameManager.Instance.currentScrew <= 1 ) 
+        if ( getGameSystem().GameManager.currentScrew <= 1 ) 
         {
             this.playableAdsManager.ForceOpenStore();
-            GameManager.Instance.win = true;
+            getGameSystem().GameManager.win = true;
             TrackingManager.WinLevel();
             return;
         }
 
-        if ( GameManager.Instance.forceStore === true )
+        if ( getGameSystem().GameManager.forceStore === true )
         {
-            this.playableAdsManager.ForceOpenStore();
+            //this.playableAdsManager.ForceOpenStore();
                 TrackingManager.LoseLevel();
                 return;
 
@@ -129,7 +118,7 @@ export class MoveScrewHandle extends Component
     //#region CheckClickScrew
     public checkClickScrew (): void
     {
-        //console.log( "checkClickScrew" );
+        
         let component = this.CheckClick( GameLayerMaskConfig.SCREW_LAYER_MASK );
         if ( component !== null )
         {
@@ -209,7 +198,7 @@ export class MoveScrewHandle extends Component
                 }
             }
 
-            //console.log( "Tallest Layer: ", tallestLayer );
+           
 
             //Tim node gan nhat trong layer cao nhat
             let collider: Collider2D | null = null;

@@ -58,7 +58,7 @@ export class HorizontalGrid extends Component
             }
             setTimeout( () =>
             {
-                BoosterControll.Instance.DrillAnimation( hole );
+                getGameSystem().BoosterControll.DrillAnimation( hole );
 
             }, 200 );
             //hole.node.active = true;

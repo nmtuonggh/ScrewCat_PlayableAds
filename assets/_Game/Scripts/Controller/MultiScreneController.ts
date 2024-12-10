@@ -11,6 +11,7 @@ import { UIMultiScreen } from '../MultiScreen/UIMultiScreen';
 import { MoveScrewHandle } from './MoveScrewHandle';
 import { TestIQController } from '../TestIQ/TestIQController';
 import { CanvasScreenController } from '../MultiScreen/CanvasScreenController';
+import { getGameSystem } from '../GameSystem';
 
 const { ccclass, property } = _decorator;
 
@@ -30,19 +31,8 @@ export class MultiScreneController extends Component
     @property( TutorialController )
     public tutorialController: TutorialController = null;
 
-    private static _instance: MultiScreneController = null;
-
-    public static get Instance (): MultiScreneController
-    {
-        return this._instance;
-    }
-
     protected onEnable (): void
     {
-        if ( MultiScreneController._instance === null )
-        {
-            MultiScreneController._instance = this;
-        }
         this.baseCanvas.node.on( Node.EventType.SIZE_CHANGED, this.onSizeChanged, this );
     }
 
@@ -56,7 +46,7 @@ export class MultiScreneController extends Component
 
     public onSizeChanged (): void
     {
-        console.log( "Size Changed" );
+      
         this.UpdateSize();
         
     }
@@ -70,22 +60,22 @@ export class MultiScreneController extends Component
 
         if ( ratio < 0.69 )
         {
-            //console.log( "Portrait" );
+           
             this.ScreenType = ScreenType.Portrait;
 
         } else if ( ratio > 0.69 && ratio < 1.4 )
         {
-            //console.log( "Landscape" );
+            
             this.ScreenType = ScreenType.Square;
         }
         else if ( ratio > 1.4 && ratio < 1.65 )
         {
-            //console.log( "Landscape" );
+            
             this.ScreenType = ScreenType.Mixed;
         }
         else if ( ratio > 1.65 )
         {
-            //console.log( "Landscape" );
+           
             this.ScreenType = ScreenType.Landscape;
         }
 
@@ -95,7 +85,7 @@ export class MultiScreneController extends Component
     protected UpdateSize (): void
     {
         let ratio = screen.windowSize.width / screen.windowSize.height;
-        //console.log( "Ratio: ", ratio );
+        
         let targetSize: Size = new Size( 1920, 1080 );
         let screenType = ScreenType.Landscape;
 
@@ -140,8 +130,6 @@ export class MultiScreneController extends Component
                     this.setupScreen( this.ScreenType, targetSize, ratio );
                 }
             }
-
-        console.log( "Ratio: ", ratio );
     }
 
     setupScreen ( type: ScreenType, targetSize: Size, ratio: number ): void
@@ -149,12 +137,12 @@ export class MultiScreneController extends Component
         this.canvasScreenController[ type ].node.active = true;
         this.canvasScreenController[ type ].getComponent( UITransform ).contentSize = targetSize;
         this.canvasScreenController[ type ].getComponent( Widget ).updateAlignment();
-        MoveScrewHandle.Instance.camera = this.getCameraGamePlay();
+        getGameSystem().MoveScrewHandle.camera = this.getCameraGamePlay();
 
         this.uimulti.SetComponentPosition( type );  //set vi tri cac thanh phan
         this.tutorialController.handTutorial();
-        TestIQController.Instance.SetupIQUI(type );
-        UIController.Instance.onChangedScreen();
+        getGameSystem().TestIQController.SetupIQUI(type );
+        getGameSystem().UIController.onChangedScreen();
     }
 
     public getCameraGamePlay (): Camera

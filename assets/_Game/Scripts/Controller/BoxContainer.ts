@@ -9,6 +9,7 @@ import { GameManager } from '../Manager/GameManager';
 import { CahedContainer } from './CahedContainer';
 import { LevelController } from './LevelController';
 import { Graphics } from 'cc';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxContainer' )
@@ -23,19 +24,8 @@ export class BoxContainer extends Component
 
     public boxIsActive: Box[] = [];
 
-    private static _instance: BoxContainer = null;
-
-    public static get Instance (): BoxContainer
-    {
-        return this._instance;
-    }
-
     protected override onLoad (): void
     {
-        if ( BoxContainer._instance === null )
-        {
-            BoxContainer._instance = this;
-        }
         this.boxSlots = this.getComponentsInChildren( BoxSlot );
     }
 
@@ -105,7 +95,7 @@ export class BoxContainer extends Component
         //     return;
         // }
 
-        if ( LevelController.Instance.currentIndex >= LevelController.Instance.colorBoxSpawnData.length ) return;
+        if ( getGameSystem().LevelController.currentIndex >= getGameSystem().LevelController.colorBoxSpawnData.length ) return;
 
         for ( const boxSlot of this.boxSlots )
         {
@@ -123,12 +113,12 @@ export class BoxContainer extends Component
     {
         ///
 
-        // console.log( "Create Box with index : " + LevelController.Instance.currentIndex + " color: "
-        //     + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color + " holeCount: "
-        //     + LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount );
+        // console.log( "Create Box with index : " + getGameSystem().LevelController.currentIndex + " color: "
+        //     + getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].color + " holeCount: "
+        //     + getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].holeCount );
 
-        const color = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].color;
-        const holeCount = LevelController.Instance.colorBoxSpawnData[ LevelController.Instance.currentIndex ].holeCount;
+        const color = getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].color;
+        const holeCount = getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].holeCount;
 
         if ( color === eColorType.None ) return null;
 
@@ -140,7 +130,7 @@ export class BoxContainer extends Component
         box.boxRenderer.SetBoxData( color, this.BoxData );
         box.MoveIn();
         this.boxIsActive.push( box );
-        LevelController.Instance.currentIndex++;
+        getGameSystem().LevelController.currentIndex++;
         return box;
     }
 
@@ -152,7 +142,7 @@ export class BoxContainer extends Component
 
     public needMoreBox (): boolean
     {
-        let screwRemain = GameManager.Instance.GetRemainningScrew();
+        let screwRemain = getGameSystem().GameManager.getRemainningScrew();
 
         for ( const box of this.boxIsActive )
         {

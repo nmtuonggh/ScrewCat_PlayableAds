@@ -4,6 +4,7 @@ import { BoxContainer } from './BoxContainer';
 import { CahedContainer } from './CahedContainer';
 import { Box } from '../GameComponent/HoleContainer/Box/Box';
 import { Screw } from '../GameComponent/Screw/Screw';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameDifficultyHandler' )
@@ -17,8 +18,8 @@ export class GameDifficultyHandler extends Component
 
     protected start (): void
     {
-        this.boxContainer = BoxContainer.Instance;
-        this.cachedContainer = CahedContainer.Instance;
+        this.boxContainer = getGameSystem().BoxContainer;
+        this.cachedContainer = getGameSystem().CahedContainer;
     }
 
     public GetAvailableBoxes (): Box[] 

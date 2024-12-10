@@ -38,20 +38,9 @@ export class CahedContainer extends Component
     }
     //#endregion
 
-    private static _instance: CahedContainer = null;
-
-    public static get Instance (): CahedContainer
-    {
-        return this._instance;
-    }
-
     //#region CC METHODS
     protected onLoad (): void
     {
-        if ( CahedContainer._instance === null )
-        {
-            CahedContainer._instance = this;
-        }
         this.listHole = this.node.getComponentsInChildren( Hole );
         this.horizontalGrid = this.node.getComponent( HorizontalGrid );
     }
@@ -147,13 +136,13 @@ export class CahedContainer extends Component
             //     {
             //         this.isFirstTime4Screw = true;
             //         this.showingWarning = true;
-            //         MultiScreneController.Instance.SetPopUpWarningStatus(true);
-            //         MoveScrewHandle.Instance.DisableTouch();
+            //         getGameSystem().MultiScreneController.SetPopUpWarningStatus(true);
+            //         getGameSystem().MoveScrewHandle.DisableTouch();
             //     }
             //cutom cho booster tutorial
             // if ( this.isFirstTime4Screw === false )
             // {
-            //     MoveScrewHandle.Instance.DisableTouch();
+            //     getGameSystem().MoveScrewHandle.DisableTouch();
             //     this.isFirstTime4Screw = true;
             //     this.showingWarning = true;
             //     setTimeout( () =>
@@ -175,7 +164,7 @@ export class CahedContainer extends Component
         getGameSystem().MultiScreneController.SetPopUpWarningStatus( false );
         getGameSystem().MoveScrewHandle.EnableTouch();
         ///
-        //BoosterControll.Instance.BoosterUI.getComponent(UIOpacity).opacity = 255;
+        //getGameSystem().BoosterControll.BoosterUI.getComponent(UIOpacity).opacity = 255;
 
     }
 

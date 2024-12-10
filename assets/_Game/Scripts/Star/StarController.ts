@@ -7,6 +7,7 @@ import { sp } from 'cc';
 import { Tween } from 'cc';
 import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
 import { AudioController } from '../AudioController/AudioController';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'StarController' )
@@ -28,33 +29,16 @@ export class StarController extends Component
 
     private startScale: Vec3 = null;
 
-    private static _instance: StarController = null;
-
-    public static get Instance (): StarController
-    {
-        return this._instance;
-    }
-
-    protected override onLoad (): void
-    {
-        if ( StarController._instance === null )
-        {
-            StarController._instance = this;
-        }
-        // let prop = {v: 0};
-        // tween(prop).to(1, {v: 1}, {onUpdate: (target, ratio) => console.log(ratio)}).start();
-    }
-
     protected start (): void
     {
-        this.SetFillAmount();
+        this.setFillAmount();
         this.startScale = this.node.scale;
     }
 
-    public SetFillAmount (): void
+    public setFillAmount (): void
     {
-        const collectedScrew = GameManager.Instance.CollectedScrew;
-        const toltalScrew = GameManager.Instance.TotalScrew;
+        const collectedScrew = getGameSystem().GameManager.CollectedScrew;
+        const toltalScrew = getGameSystem().GameManager.TotalScrew;
         if ( collectedScrew > 0 )
         {
             const value = collectedScrew / toltalScrew;
@@ -98,7 +82,7 @@ export class StarController extends Component
     //         .start();
     // }
 
-    public SpawnStar ( amout: number, listWorldPosition: Vec3[], delay: number ): Node[]
+    public spawnStar ( amout: number, listWorldPosition: Vec3[], delay: number ): Node[]
     {
         const starList: Node[] = [];
         for ( let index = 0; index < amout; index++ )
@@ -113,7 +97,7 @@ export class StarController extends Component
         return starList;
     }
 
-    public SpawnStarAtBar ( worldPosition: Vec3, delay: number ): Node
+    public spawnStarAtBar ( worldPosition: Vec3, delay: number ): Node
     {
         const star = instantiate( this.starPrefab );
         star.parent = this.Holder;
@@ -122,21 +106,21 @@ export class StarController extends Component
     }
 
 
-    public MoveListStart ( starList: Node[] ): void 
+    public moveListStart ( starList: Node[] ): void 
     {
         for ( let index = 0; index < starList.length; index++ )
         {
-            this.TweenMove( starList[ index ], index );
+            this.tweenMove( starList[ index ], index );
         }
     }
 
-    public MoveStart ( star: Node ): void 
+    public moveStart ( star: Node ): void 
     {
-        this.TweenMove( star, 0 );
+        this.tweenMove( star, 0 );
     }
 
 
-    public TweenMove ( star: Node, order: number ): void
+    public tweenMove ( star: Node, order: number ): void
     {
         tween( star )
             .delay( 0.15 * order )
@@ -144,14 +128,14 @@ export class StarController extends Component
             .call( () =>
             {
                 star.destroy();
-                this.CollectEffect();
-                this.SetFillAmount();
-                this.AnimGetStar();
+                this.collectEffect();
+                this.setFillAmount();
+                this.animGetStar();
             } )
             .start();
     }
 
-    public PlayParticle ( pos: Vec3 ): void
+    public playParticle ( pos: Vec3 ): void
     {
         const particle = instantiate( this.starParticle );
         particle.parent = this.Holder;
@@ -162,7 +146,7 @@ export class StarController extends Component
         }, 2000 );
     }
 
-    public AnimGetStar (): void 
+    public animGetStar (): void 
     {
         let scale = new Vec3( 1.3, 1.3, 1 );
         let startScale = new Vec3( 1, 1, 1 );
@@ -174,7 +158,7 @@ export class StarController extends Component
             .start();
     }
 
-    public CollectEffect (): void
+    public collectEffect (): void
     {
         //mỗi khi hàm này được gọi thì active 1 skeleton đang unactive trong listCollectEff, 
         //sau đó chạy animation của skeleton đó, chạy xong thì unactive skeleton đó
@@ -188,7 +172,7 @@ export class StarController extends Component
             }
         } );
         starSkeleton.setAnimation( 0, 'animation', false );
-        AudioController.Instance.PlayProgessStar();
+        getGameSystem().AudioController.playProgessStar();
 
         this.currentIndexEff++;
         if ( this.currentIndexEff >= this.listCollectEff.length )

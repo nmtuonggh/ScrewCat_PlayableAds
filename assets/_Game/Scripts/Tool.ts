@@ -196,9 +196,6 @@ export class Tool extends Component
                 screw.ScrewRenderer.colorIndex = parseInt( colorIndex );
 
             }
-
-
-            console.log( "Screw: ", bar.listScrews.length );
         }
     }
 

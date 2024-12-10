@@ -1,21 +1,21 @@
 import { _decorator, Component, Node } from 'cc';
-import { GameLayer } from './GameLayer';
+import { GameLayerOder } from './GameLayerOder';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'GameLayerComponent' )
 export class GameLayerComponent extends Component
 {
-    private gameLayer: GameLayer | null = null;
+    private gameLayerOder: GameLayerOder | null = null;
 
-    public get gameLayerContainer (): GameLayer | null
+    public get gameLayerContainer (): GameLayerOder | null
     {
-        if ( this.gameLayer === null ) 
+        if ( this.gameLayerOder === null ) 
         {
             const parent = this.node.parent;
 
-            this.gameLayer = parent?.getComponent( GameLayer ) || null;
+            this.gameLayerOder = parent?.getComponent( GameLayerOder ) || null;
         }
-        return this.gameLayer;
+        return this.gameLayerOder;
     }
 
     public get Layer (): number

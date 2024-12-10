@@ -9,6 +9,7 @@ import { Vec3 } from 'cc';
 import { MultiScreneController, ScreenType } from '../Controller/MultiScreneController';
 import { MoveScrewHandle } from '../Controller/MoveScrewHandle';
 import { sp } from 'cc';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'TestIQController' )
@@ -84,7 +85,7 @@ export class TestIQController extends Component
 
     public SetupIQUI ( screenType: ScreenType ): void
     {
-        if ( !MoveScrewHandle.Instance.isFirstTouch )
+        if ( !getGameSystem().MoveScrewHandle.isFirstTouch )
         {
             this.SetStartPosition( screenType );
         }

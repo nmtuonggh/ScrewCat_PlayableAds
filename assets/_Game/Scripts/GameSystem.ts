@@ -4,13 +4,14 @@ import { CahedContainer } from './Controller/CahedContainer';
 import { StarController } from './Star/StarController';
 import { MoveScrewHandle } from './Controller/MoveScrewHandle';
 import { LevelController } from './Controller/LevelController';
-import { AudioController } from './AudioController/AudioController';
+import { AudioController, AudioType } from './AudioController/AudioController';
 import { MultiScreneController } from './Controller/MultiScreneController';
 import { GameManager } from './Manager/GameManager';
 import { TutorialController } from './TutorialController';
 import { UnlockBoxController } from './UnlockBoxConcept/UnlockBoxController';
 import { BoosterControll } from './Booster/BoosterControll';
 import { UIController } from './UIController';
+import { TestIQController } from './TestIQ/TestIQController';
 const { ccclass, property } = _decorator;
 
 var gameSystem: GameSystem;
@@ -31,8 +32,6 @@ export class GameSystem extends Component
     private moveScrewHandle: MoveScrewHandle = null;
     @property( { type: LevelController, group: "Controller" } )
     private levelController: LevelController = null;
-    @property( { type: AudioController, group: "Controller" } )
-    private audioController: AudioController = null;
     @property( { type: MultiScreneController, group: "Controller" } )
     private multiScreneController: MultiScreneController = null;
     @property( { type: GameManager, group: "Controller" } )
@@ -45,11 +44,17 @@ export class GameSystem extends Component
     private boosterControll: BoosterControll = null;
     @property( { type: UIController, group: "Controller" } )
     private uiController: UIController = null;
+    @property( { type: TestIQController, group: "Controller" } )
+    private tesIQController: TestIQController = null;
     @property( { type: AudioController, group: "Controller" } )
-    private audioController2222: AudioController = null;
+    private audioController: AudioController = null;
     //#endregion
 
     //#region PROPERTIES
+    public get TestIQController ()
+    {
+        return this.tesIQController;
+    }
     public get UIController ()
     {
         return this.uiController;
@@ -105,6 +110,17 @@ export class GameSystem extends Component
     {
         gameSystem = this;
     }
+
+    //#region PUBLIC METHODS
+    public lose ()
+    {
+        if ( this.gameManager.lose )
+        {
+            this.audioController.playAudio( AudioType.lose );
+            this.audioController.checkLose();
+        }
+    }
+    //#endregion
 }
 
 export function getGameSystem (): GameSystem

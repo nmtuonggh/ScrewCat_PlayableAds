@@ -13,6 +13,7 @@ import { StarController } from '../../../Star/StarController';
 import { GameManager } from '../../../Manager/GameManager';
 import { UnlockBoxController } from '../../../UnlockBoxConcept/UnlockBoxController';
 import { TestIQController } from '../../../TestIQ/TestIQController';
+import { getGameSystem } from '../../../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -45,7 +46,6 @@ export class Box extends HoleContainer
         {
             if ( hole.IsFree() && hole.isLinked === false )
             {
-                //console.log( "Tim duoc hole: " + hole );
                 return hole;
             }
         }
@@ -81,7 +81,7 @@ export class Box extends HoleContainer
         {
             listHolesPos.push( this.listHoles[ i ].node.worldPosition );
         }
-        GameManager.Instance.CollectedScrew += this.listHoles.length;
+        getGameSystem().GameManager.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
         this.boxRenderer.skeleton.setSkin( 'Close' );
 
@@ -92,17 +92,17 @@ export class Box extends HoleContainer
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
             {
-                AudioController.Instance.PlayAudio( AudioType.boxComplete );
-                AudioController.Instance.PlayMewoComplete(index);
-                this.starList = StarController.Instance.SpawnStar( this.listHoles.length, listHolesPos, 0 );
-                StarController.Instance.PlayParticle( this.node.worldPosition );
-                //this.iqNode = TestIQController.Instance.SpawnIQ( this );
+                getGameSystem().AudioController.playAudio( AudioType.boxComplete );
+                getGameSystem().AudioController.playMewoComplete(index);
+                this.starList = getGameSystem().StarController.spawnStar( this.listHoles.length, listHolesPos, 0 );
+                getGameSystem().StarController.playParticle( this.node.worldPosition );
+                //this.iqNode = getGameSystem().TestIQController.SpawnIQ( this );
             } )
             .delay( 0.3 )
             .call( () =>
             {
-                StarController.Instance.MoveListStart( this.starList );
-                //TestIQController.Instance.MoveIQ( this.iqNode );
+                getGameSystem().StarController.moveListStart( this.starList );
+                //getGameSystem().TestIQController.MoveIQ( this.iqNode );
                 this.MoveOut();
             } )
             .start();
@@ -118,9 +118,9 @@ export class Box extends HoleContainer
             {
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
-                UnlockBoxController.Instance.AddLockCount();
-                BoxContainer.Instance.CheckCreateBox();
-                BoxContainer.Instance.RemoveActiveBox( this );
+                getGameSystem().UnlockBoxController.AddLockCount();
+                getGameSystem().BoxContainer.CheckCreateBox();
+                getGameSystem().BoxContainer.RemoveActiveBox( this );
             } )
             .start();
     }
@@ -135,7 +135,7 @@ export class Box extends HoleContainer
             .call( () => 
             {
                 this.IS_ANIMATING = false;
-                CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
+                getGameSystem().CahedContainer.CheckMoveScrewFromCachedToBox();
             } )
             .start();
     }

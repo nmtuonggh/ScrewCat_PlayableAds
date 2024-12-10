@@ -8,6 +8,7 @@ import { RigidBody2D } from 'cc';
 import { ERigidBody2DType } from 'cc';
 import { JsonAsset } from 'cc';
 import { LevelController } from './Controller/LevelController';
+import { GameLayerOder } from './GameComponent/GameLayerOder';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Level' )
@@ -75,7 +76,7 @@ export class Level extends Component
 
     updateGameLayer ()
     {
-        var gamelayers = this.node.getComponentsInChildren( GameLayer );
+        var gamelayers = this.node.getComponentsInChildren( GameLayerOder );
         for ( let i = 0; i < gamelayers.length; i++ )
         {
             gamelayers[ i ].layerOrder = i;
@@ -120,8 +121,6 @@ export class Level extends Component
                 for ( let i = 0; i < data.BoxData.length; i++ )
                 {
                     const item = data.BoxData[ i ];
-                    console.log("Color: ", item.Color)
-                    console.log("HoleCount: ", item.HoleCount)
                     this.levelController.colorBoxSpawnData.push( {
                         color: item.Color,
                         holeCount: item.HoleCount   

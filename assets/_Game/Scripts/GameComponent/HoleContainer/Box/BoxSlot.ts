@@ -11,6 +11,9 @@ import { set } from '../../../../../../extensions/nvthan/@types/packages/scene/@
 import { AudioController, AudioType } from '../../../AudioController/AudioController';
 import { MoveScrewHandle } from '../../../Controller/MoveScrewHandle';
 import { GameManager } from '../../../Manager/GameManager';
+import { getGameSystem } from '../../../GameSystem';
+import { TrackingManager } from '../../../../../PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
+import { PlayableAdsManager } from '../../../../../PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxSlot' )
@@ -51,7 +54,7 @@ export class BoxSlot extends Component
 
     protected update ( dt: number ): void
     {
-        if ( this.lockAnim.node.active && MoveScrewHandle.Instance.isFirstTouch && !GameManager.Instance.lose && !GameManager.Instance.win )
+        if ( this.lockAnim.node.active && getGameSystem().MoveScrewHandle.isFirstTouch && !getGameSystem().GameManager.lose && !getGameSystem().GameManager.win )
         {
             
             if ( this.randomTime === 0 )
@@ -96,7 +99,7 @@ export class BoxSlot extends Component
     public ActAnimation (): void
     {
         this.lockAnim.setAnimation( 0, 'Act', false );
-        AudioController.Instance.PlayChain();
+        getGameSystem().AudioController.playChain();
     }
 
     public UnlockAnimation (): void
@@ -110,6 +113,11 @@ export class BoxSlot extends Component
             .to( 0.25, { scale: new Vec3( 1.2, 1.2, 1.2 ) } )
             .to( 0.25, { scale: new Vec3( 1, 1, 1 ) } )
             .start();
+    }
+
+    public openStore()
+    {
+        PlayableAdsManager.Instance().OpenStore();
     }
 }
 

@@ -6,6 +6,8 @@ import { Vec3 } from 'cc';
 import { UIMultiScreen } from './MultiScreen/UIMultiScreen';
 import { MultiScreneController } from './Controller/MultiScreneController';
 import { MoveScrewHandle } from './Controller/MoveScrewHandle';
+import { getGameSystem } from './GameSystem';
+import { log } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'TutorialController' )
@@ -35,19 +37,19 @@ export class TutorialController extends Component
     {
         this.screw.getComponent( Screw ).screwAnimation.PlayTutorial();
         this.handPortrait.active = false;
-        this.tapToPlay[MultiScreneController.Instance.ScreenType].active = false;
-        //if(this.iconGame[MultiScreneController.Instance.ScreenType] !== null) this.iconGame[MultiScreneController.Instance.ScreenType].active = false;
+        this.tapToPlay[getGameSystem().MultiScreneController.ScreenType].active = false;
+        //if(this.iconGame[getGameSystem().MultiScreneController.ScreenType] !== null) this.iconGame[getGameSystem().MultiScreneController.ScreenType].active = false;
         Tween.stopAllByTarget( this.handPortrait );
     }
 
     public handTutorial (): void
     {
-        if(MoveScrewHandle.Instance.isFirstTouch) return;
+        if(getGameSystem().MoveScrewHandle.isFirstTouch) return;
         this.stopTutorial();
         this.handPortrait.active = true;
         for ( let i = 0; i < this.tapToPlay.length; i++ )
         {
-            if ( i === MultiScreneController.Instance.ScreenType )
+            if ( i === getGameSystem().MultiScreneController.ScreenType )
             {
                 this.tapToPlay[i].active = true;
             }
@@ -60,7 +62,7 @@ export class TutorialController extends Component
         // for ( let i = 0; i < this.iconGame.length; i++ )
         // {
         //     if(this.iconGame[i] === null) continue;
-        //     if ( i === MultiScreneController.Instance.ScreenType )
+        //     if ( i === getGameSystem().MultiScreneController.ScreenType )
         //     {
         //         this.iconGame[i].active = true;
         //     }
@@ -88,12 +90,11 @@ export class TutorialController extends Component
                     .call( () =>
                     {
                         this.screw.getComponent( Screw ).screwAnimation.ScrewIn();
-                        console.log( "ScrewIn" );
                     } )
                     .delay( 0.5 )
             ).start();
 
-        tween( this.tapToPlay[MultiScreneController.Instance.ScreenType] ).repeatForever
+        tween( this.tapToPlay[getGameSystem().MultiScreneController.ScreenType] ).repeatForever
             (
                 tween()
                     .to( 0.5, { scale: new Vec3( 1.2, 1.2, 1 ) }, { easing: 'cubicIn' } )

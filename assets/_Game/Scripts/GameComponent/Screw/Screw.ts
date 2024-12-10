@@ -1,21 +1,15 @@
 import { _decorator, Collider2D, HingeJoint2D, instantiate, Node, PhysicsSystem2D, Prefab, random, Rect, Tween, tween, Vec2, Vec3 } from 'cc';
 import { GameLayerComponent } from '../GameLayerComponent';
-import { eColorType } from '../../GameConfig/GameColorConfig';
 import { Hole } from '../Hole/Hole';
 import { GameConfig } from '../../GameConfig/GameConfig';
 import { GameLayerMaskConfig } from '../../GameConfig/GameLayerMaskConfig';
 import { ScrewRenderer } from './ScrewRenderer';
-import { BoxContainer } from '../../Controller/BoxContainer';
-import { CahedContainer } from '../../Controller/CahedContainer';
 import { ScrewAnim } from './ScrewAnim';
-import { AudioController, AudioType } from '../../AudioController/AudioController';
-import { ScrewData } from '../../FakeSO/ScrewData';
-import { GameManager } from '../../Manager/GameManager';
+import { AudioType } from '../../AudioController/AudioController';
 import { BarController } from '../Bar/BarController';
-import { LevelController } from '../../Controller/LevelController';
 import { RigidBody2D } from 'cc';
 import { ERigidBody2DType } from 'cc';
-import { MoveScrewHandle } from '../../Controller/MoveScrewHandle';
+import { getGameSystem } from '../../GameSystem';
 
 
 const { ccclass, property } = _decorator;
@@ -68,7 +62,7 @@ export class Screw extends GameLayerComponent
         if ( this.State === eScrewState.IN_BAR && this.IsBlocked() )
         {
             this.BlockedTween();
-            AudioController.Instance.PlayBlock();
+            getGameSystem().AudioController.playBlock();
             return;
         }
 
@@ -82,23 +76,23 @@ export class Screw extends GameLayerComponent
                 {
                     this.State = eScrewState.MOVING;
                     moveSuccess = true;
-                    AudioController.Instance.PlayAudio( AudioType.screwOut );
+                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
                 }
                 else if ( this.CheckMoveCache() )
                 {
                     this.State = eScrewState.MOVING;
                     moveSuccess = true;
-                    AudioController.Instance.PlayAudio( AudioType.screwOut );
-                    CahedContainer.Instance.currentScrewCount++;
+                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
+                    getGameSystem().CahedContainer.currentScrewCount++;
 
                 }
 
                 if ( moveSuccess === true )
                 {
                     this.FreeJoints();
-                    MoveScrewHandle.Instance.pointSpawnTouchEffect( MoveScrewHandle.Instance._lastMousePosition );
-                    LevelController.Instance.RemoveScrewInLayer( this );
-                    GameManager.Instance.currentScrew--;
+                    getGameSystem().MoveScrewHandle.pointSpawnTouchEffect( getGameSystem().MoveScrewHandle._lastMousePosition );
+                    getGameSystem().LevelController.RemoveScrewInLayer( this );
+                    getGameSystem().GameManager.currentScrew--;
 
                 }
 
@@ -107,7 +101,7 @@ export class Screw extends GameLayerComponent
             case eScrewState.IN_CACHED:
                 if ( this.CheckMoveBox() )
                 {
-                    AudioController.Instance.PlayAudio( AudioType.screwOut );
+                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
 
 
                 }
@@ -115,8 +109,6 @@ export class Screw extends GameLayerComponent
             case eScrewState.IN_BOX:
                 break;
         }
-        console.log( "Current Screw" + CahedContainer.Instance.currentScrewCount );
-
 
     }
 
@@ -124,7 +116,7 @@ export class Screw extends GameLayerComponent
     {
         //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
 
-        let freeBox = BoxContainer.Instance.GetFreeBoxSlot( this.screwRenderer.colorType );
+        let freeBox = getGameSystem().BoxContainer.GetFreeBoxSlot( this.screwRenderer.colorType );
 
         if ( freeBox !== null )
         {
@@ -137,7 +129,7 @@ export class Screw extends GameLayerComponent
 
     public CheckMoveCache (): boolean
     {
-        let freeHole = CahedContainer.Instance.GetFreeHole();
+        let freeHole = getGameSystem().CahedContainer.GetFreeHole();
         if ( freeHole !== null )
         {
             this.MoveToCacheSlot( freeHole );
@@ -184,8 +176,6 @@ export class Screw extends GameLayerComponent
 
         if ( cachedCollider.length === 0 ) return false;
 
-        //console.log( "Cached Collider: ", cachedCollider.length );
-
         for ( let i = 0; i < cachedCollider.length; i++ )
         {
             //neu cung layer voi BAR_LAYER
@@ -195,14 +185,11 @@ export class Screw extends GameLayerComponent
             }
         }
 
-        // console.log( "Cached BarLayer: ", this.cachedBarLayer.length );
-
         for ( let i = 0; i < this.cachedBarLayer.length; i++ )
         {
             let bar = this.cachedBarLayer[ i ].node.getComponent( BarController );
             if ( bar !== null )
             {
-                //console.log( "Bar Layer: ", bar.Layer );
                 if ( bar.Layer > this.Layer )
                 {
                     console.log( "Is blocked" + bar.node.name );
@@ -240,7 +227,7 @@ export class Screw extends GameLayerComponent
             .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition }, { easing: 'sineInOut' } )
             .call( () =>
             {
-                AudioController.Instance.PlayAudio( AudioType.screwIn );
+                getGameSystem().AudioController.playAudio( AudioType.screwIn );
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
@@ -271,18 +258,15 @@ export class Screw extends GameLayerComponent
             .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition }, { easing: 'sineInOut' } )
             .call( () =>
             {
-                AudioController.Instance.PlayAudio( AudioType.screwIn );
+                getGameSystem().AudioController.playAudio( AudioType.screwIn );
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
                 this.State = eScrewState.IN_CACHED;
                 this.screwAnimation.ScrewIn();
-                CahedContainer.Instance.CheckMoveScrewFromCachedToBox();
-                CahedContainer.Instance.CheckWarning();
-                GameManager.Instance.CheckLose();
-
-
-                console.log( this.State );
+                getGameSystem().CahedContainer.CheckMoveScrewFromCachedToBox();
+                getGameSystem().CahedContainer.CheckWarning();
+                getGameSystem().GameManager.CheckLose();
             } );
     }
 

@@ -25,6 +25,8 @@ import { Hole } from '../GameComponent/Hole/Hole';
 import { BoosterType, HightlightBooster } from './HightlightBooster';
 import { AudioController, AudioType } from '../AudioController/AudioController';
 import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
+import { getGameSystem } from '../GameSystem';
+import { log } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoosterControll' )
@@ -67,21 +69,8 @@ export class BoosterControll extends Component
         return this.hightlightBooster;
     }
     //#endregion
-    private static _instance: BoosterControll = null;
-
-    public static get Instance (): BoosterControll
-    {
-        return this._instance;
-    }
 
     //#region CC_METHODS
-    protected onLoad (): void
-    {
-        if ( BoosterControll._instance === null )
-        {
-            BoosterControll._instance = this;
-        }
-    }
 
     protected onDestroy (): void
     {
@@ -90,7 +79,7 @@ export class BoosterControll extends Component
 
     protected start (): void
     {
-        this.cachedContainer = CahedContainer.Instance;
+        this.cachedContainer = getGameSystem().CahedContainer;
     }
 
     protected update ( dt: number ): void
@@ -113,19 +102,18 @@ export class BoosterControll extends Component
     //#region AddNewHole
     public BoosterHammer (): void
     {
-        if ( CahedContainer.Instance.isFirstTime4Screw === false ) return;
+        if ( getGameSystem().CahedContainer.isFirstTime4Screw === false ) return;
         if ( this.cachedContainer.AddNewHole( this.listBoosterCount[BoosterType.Hammer] ) != null &&
         this.listBoosterCount[BoosterType.Hammer] > 0 )
         {
-            console.log( "Add new hole" );
             this.listBoosterCount[BoosterType.Hammer]--;
-            //BoosterControll.Instance.hightlightBooster.StopHLBooster();
-            //MoveScrewHandle.Instance.EnableTouch();
-            CahedContainer.Instance.StopShowingWarning();
+            //getGameSystem().BoosterControll.hightlightBooster.StopHLBooster();
+            //getGameSystem().MoveScrewHandle.EnableTouch();
+            getGameSystem().CahedContainer.StopShowingWarning();
         }
         else
         {
-            console.log( "Can't add new hole" );
+            log( "Can't add new hole" );
         }
     }
 
@@ -150,7 +138,7 @@ export class BoosterControll extends Component
         this.drillSkeleton.setAnimation( 0, "animation", false );
         setTimeout( () =>
         {
-            AudioController.Instance.PlayDrill();
+            getGameSystem().AudioController.playDrill();
         }, 300 );
         this.drillSkeleton.setCompleteListener( ( trackListener: sp.spine.TrackEntry ) =>
         {
@@ -170,16 +158,16 @@ export class BoosterControll extends Component
     {
         this.SetState( BoosterState.Hammer );
         this.isCompleteBreakBar = false;
-        MoveScrewHandle.Instance.DisableTouch();
-        console.log( "Break bar" );
+        getGameSystem().MoveScrewHandle.DisableTouch();
+       
     }
     private cachedBarCollider: Collider2D[] = [];
 
     public GetBarState ( event: EventTouch ): void
     {
-        console.log( "Get bar state" );
+        
         if ( this.isCompleteBreakBar ) return;
-        let camera = MultiScreneController.Instance.getCameraGamePlay();
+        let camera = getGameSystem().MultiScreneController.getCameraGamePlay();
         let mousePosition = event.getLocation();
         let worldPosition = camera.screenToWorld( new Vec3( mousePosition.x, mousePosition.y, 0 ) );
         let lastMousePositon = new Vec2( worldPosition.x, worldPosition.y );
@@ -225,13 +213,13 @@ export class BoosterControll extends Component
         await this.UseHammer();
         bar.BreakBar();
         input.off( Input.EventType.TOUCH_START, this.GetBarState, this );
-        MoveScrewHandle.Instance.EnableTouch();
+        getGameSystem().MoveScrewHandle.EnableTouch();
         this.SetState( BoosterState.None );
     }
 
     public async UseHammer (): Promise<void>
     {
-        console.log( "Use hammer" );
+    
     }
     //#endregion
 
@@ -248,7 +236,7 @@ export class BoosterControll extends Component
                 let screw = listScrewOnCached[ i ];
                 if ( screw !== null )
                 {
-                    CahedContainer.Instance.currentScrewCount--;
+                    getGameSystem().CahedContainer.currentScrewCount--;
                     this.MoveScrewToBooster( screw, i );
                 }
             }
@@ -256,7 +244,7 @@ export class BoosterControll extends Component
         }
         else
         {
-            console.log( "Can't remove screw" );
+            log( "Can't remove screw" );
             this.State = BoosterState.None;
 
         }
@@ -273,11 +261,11 @@ export class BoosterControll extends Component
             .to( 0.5, { worldPosition: this.mayhutPosiotion.worldPosition } )
             .call( () =>
             {
-                let star = StarController.Instance.SpawnStarAtBar( screw.node.worldPosition, 0 );
-                GameManager.Instance.UpdateDataBox( screw );
+                let star = getGameSystem().StarController.spawnStarAtBar( screw.node.worldPosition, 0 );
+                getGameSystem().GameManager.updateDataBox( screw );
                 screw.node.destroy();
-                GameManager.Instance.CollectedScrew++;
-                StarController.Instance.MoveStart( star );
+                getGameSystem().GameManager.CollectedScrew++;
+                getGameSystem().StarController.moveStart( star );
             } )
             .start();
     }

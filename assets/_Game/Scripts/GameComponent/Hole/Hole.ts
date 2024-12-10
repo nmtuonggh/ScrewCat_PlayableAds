@@ -6,6 +6,7 @@ import { Vec3 } from 'cc';
 import { AudioManager } from '../../../../PA_iKame (1)/base-script/Manager/AudioManager';
 import { AudioController, AudioType } from '../../AudioController/AudioController';
 import { eColorType } from '../../GameConfig/GameColorConfig';
+import { getGameSystem } from '../../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Hole' )
@@ -28,7 +29,6 @@ export class Hole extends Component
 
     public IsFree (): boolean 
     {
-        console.log( "Hole IsFree" );
         return this !== null;
     }
 
@@ -40,7 +40,7 @@ export class Hole extends Component
         {
             tweenSequence
                 .to( 0.25, { scale: new Vec3( 1.5, 1.5, 1.5 ) } )
-                .call( () => { AudioController.Instance.PlayWarning(); } )
+                .call( () => { getGameSystem().AudioController.playWarning(); } )
                 .to( 0.25, { scale: new Vec3( 0.3, 0.3, 0.3 ) } )
         }
 

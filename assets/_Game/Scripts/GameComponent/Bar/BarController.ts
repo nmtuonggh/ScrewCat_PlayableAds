@@ -9,9 +9,7 @@ import { Sprite } from 'cc';
 import { Color } from 'cc';
 import { UIOpacity } from 'cc';
 import { tween } from 'cc';
-import { StarController } from '../../Star/StarController';
-import { GameManager } from '../../Manager/GameManager';
-import { Game } from 'cc';
+import { getGameSystem } from '../../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarController' )
@@ -64,9 +62,8 @@ export class BarController extends GameLayerComponent
 
     //#region Spawn Screw
 
-
     public InitScrewColor ( screwData: ScrewData ): void
-    {
+    { 
         for ( let i = 0; i < this.listScrews.length; i++ )
         {
             this.listScrews[ i ].getComponent( Screw ).ScrewRenderer.SetSelfColor( screwData );
@@ -112,7 +109,7 @@ export class BarController extends GameLayerComponent
 
     public BreakBar (): void
     {
-        console.log( "Break Bar" );
+        
         let listStar: Node[] = [];
         let listScrewsBreak = this.listScrews;
         for ( let i = 0; i < listScrewsBreak.length; i++ )
@@ -120,23 +117,24 @@ export class BarController extends GameLayerComponent
             let screw = listScrewsBreak[ i ];
             if ( screw !== null )
             {
-                GameManager.Instance.currentScrew--;
-                GameManager.Instance.CollectedScrew++;
+                getGameSystem().GameManager.currentScrew--;
+                getGameSystem().GameManager.CollectedScrew++;
                 if ( !screw.CheckMoveBox() )
                 {
-                    let star = StarController.Instance.SpawnStarAtBar( screw.node.worldPosition, 0 );
-                    GameManager.Instance.UpdateDataBox( screw );
+                    let star = getGameSystem().StarController.spawnStarAtBar( screw.node.worldPosition, 0 );
+                    getGameSystem().GameManager.updateDataBox( screw );
                     screw.node.destroy();
                     listStar.push( star );
                 }
+                
             }
         }
 
         if ( listStar.length > 0 )
         {
-            //GameManager.Instance.CollectedScrew += listStar.length;
+            //getGameSystem().GameManager.CollectedScrew += listStar.length;
 
-            StarController.Instance.MoveListStart( listStar );
+            getGameSystem().StarController.moveListStart( listStar );
         }
 
         this.node.destroy();

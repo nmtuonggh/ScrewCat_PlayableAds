@@ -49,33 +49,16 @@ export class GameManager extends Component
 
     public forceStore: boolean = false;
 
-    private static _instance: GameManager = null;
-
-    public static get Instance (): GameManager
-    {
-        return this._instance;
-    }
-
-    protected override onLoad (): void
-    {
-        if ( !GameManager._instance )
-        {
-            GameManager._instance = this;
-        }
-    }
-
     public CheckLose (): void
     {
-        const cacheContainer = CahedContainer.Instance;
-        const audioController = AudioController.Instance;
+        const cacheContainer = getGameSystem().CahedContainer;
         const uiController = getGameSystem().UIController;
         let screenType = this.multiScreenController.ScreenType;
 
         if ( cacheContainer.currentScrewCount >= cacheContainer.listActiveHole.length && this.lose === false )
         {
             this.lose = true;
-            audioController.PlayAudio( AudioType.lose );
-            audioController.CheckLose();
+            getGameSystem().lose();
             uiController.canvasScreenController[ screenType ].uiCanvasScreen.TweenFail();
             uiController.ShowOutOfMove();
             getGameSystem().BoosterControll.BoosterUI.getComponent(UIOpacity).opacity = 0;
@@ -85,20 +68,18 @@ export class GameManager extends Component
                 uiController.canvasScreenController[ screenType ].uiCanvasScreen.setOutOfMoveUIStatus( false );
                 uiController.canvasScreenController[ screenType ].uiCanvasScreen.setFailUIStatus( false );
                 uiController.canvasScreenController[ screenType ].uiCanvasScreen.setLoseUIStatus( true );
-                uiController.canvasScreenController[ screenType ].uiCanvasScreen.SetIQText( TestIQController.Instance.currentIQ.toString() );
-
+                uiController.canvasScreenController[ screenType ].uiCanvasScreen.SetIQText( getGameSystem().TestIQController.currentIQ.toString() );
                 this.forceStore = true;
-
             }, 2000 );
         }
     }
 
-    public GetRemainningScrew (): number
+    public getRemainningScrew (): number
     {
         return this.currentScrew;
     }
 
-    public GetClickBar (): BarController
+    public getClickBar (): BarController
     {
         let component = getGameSystem().MoveScrewHandle.CheckClick( GameLayerMaskConfig.BAR_LAYER_MASK );
         if ( component !== null )
@@ -108,16 +89,16 @@ export class GameManager extends Component
         }
     }
 
-    public DisableClick (): void
+    public disableClick (): void
     {   
-        MoveScrewHandle.Instance.DisableTouch();
+        getGameSystem().MoveScrewHandle.DisableTouch();
     }
 
-    public UpdateDataBox(screw : Screw): void
+    public updateDataBox(screw : Screw): void
     {
         //duyệt ngược colorBoxdata của levelcontroller, tìm ra colorBoxData đầu tiên có cùng màu với screw và trừ đi 1 holecount nếu holecount = 0 thì xóa luôn phần tử đó
-        console.log("UpdateDataBox");
-        let colorBoxData = LevelController.Instance.colorBoxSpawnData;
+      
+        let colorBoxData = getGameSystem().LevelController.colorBoxSpawnData;
         for (let i = colorBoxData.length - 1; i >= 0; i--)
         {
             if (colorBoxData[i].color === screw.ScrewRenderer.colorType)

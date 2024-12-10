@@ -2,6 +2,7 @@ import { _decorator, Component, Node } from 'cc';
 import { BoxSlot } from '../GameComponent/HoleContainer/Box/BoxSlot';
 import { BoxContainer } from '../Controller/BoxContainer';
 import { AudioController, AudioType } from '../AudioController/AudioController';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'UnlockBoxController' )
@@ -17,22 +18,6 @@ export class UnlockBoxController extends Component
 
     @property( BoxSlot )
     currentLockBoxSlot: BoxSlot = null;
-
-
-    private static _instance: UnlockBoxController = null;
-
-    public static get Instance (): UnlockBoxController
-    {
-        return this._instance;
-    }
-
-    protected override onLoad (): void
-    {
-        if ( UnlockBoxController._instance === null )
-        {
-            UnlockBoxController._instance = this;
-        }
-    }
 
     protected start (): void
     {
@@ -70,7 +55,7 @@ export class UnlockBoxController extends Component
         if ( this.lockBoxSlot.length === 0 ) return;
         this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
 
-        AudioController.Instance.PlayAudio( AudioType.unlockChain );
+        getGameSystem().AudioController.playAudio( AudioType.unlockChain );
         this.currentLockBoxSlot.UnlockAnimation();
         setTimeout( () =>
         {
