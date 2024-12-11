@@ -41,7 +41,6 @@ export class MultiScreneController extends Component
     protected start (): void
     {
         this.getScreenSize();
-        this.tutorialController.handTutorial();
     }
 
     public onSizeChanged (): void
@@ -140,7 +139,7 @@ export class MultiScreneController extends Component
         getGameSystem().MoveScrewHandle.camera = this.getCameraGamePlay();
 
         this.uimulti.SetComponentPosition( type );  //set vi tri cac thanh phan
-        this.tutorialController.handTutorial();
+        
         getGameSystem().TestIQController.SetupIQUI(type );
         getGameSystem().UIController.onChangedScreen();
     }

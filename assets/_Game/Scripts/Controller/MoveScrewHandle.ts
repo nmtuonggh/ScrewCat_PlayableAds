@@ -86,10 +86,7 @@ export class MoveScrewHandle extends Component
         {
             this.isFirstTouch = true;
             this.playableAdsManager.ActionFirstClicked();
-
-            this.tutorialController.stopTutorial();
             getGameSystem().AudioController.playerBGMusic();
-            //getGameSystem().TestIQController.TweenIQUI( getGameSystem().MultiScreneController.ScreenType );
         }
 
         if ( getGameSystem().GameManager.currentScrew <= 1 ) 

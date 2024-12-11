@@ -3,11 +3,7 @@ import { Screw } from './GameComponent/Screw/Screw';
 import { tween } from 'cc';
 import { Tween } from 'cc';
 import { Vec3 } from 'cc';
-import { UIMultiScreen } from './MultiScreen/UIMultiScreen';
-import { MultiScreneController } from './Controller/MultiScreneController';
-import { MoveScrewHandle } from './Controller/MoveScrewHandle';
 import { getGameSystem } from './GameSystem';
-import { log } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'TutorialController' )
@@ -17,63 +13,33 @@ export class TutorialController extends Component
     public screw: Node = null;
     @property( Node )
     public handPortrait: Node = null;
-    
+    @property( Vec3 )
+    public offset: Vec3 = new Vec3( 0, 0, 0 );
+
     @property( [Node] )
     public tapToPlay: Node[] = [];
     @property( [Node] )
     public iconGame: Node[] = [];
 
-    private handPosition: Vec3 = new Vec3();
-    private handScale: Vec3 = new Vec3();
-
-    protected start (): void
+    protected onEnable (): void
     {
-        
-        this.handPosition = this.handPortrait.getPosition().clone();
-        this.handScale = this.handPortrait.getScale().clone();
+        this.handTutorial();
     }
-
-    public stopTutorial (): void
+    protected onDisable (): void
     {
-        this.screw.getComponent( Screw ).screwAnimation.PlayTutorial();
-        this.handPortrait.active = false;
-        this.tapToPlay[getGameSystem().MultiScreneController.ScreenType].active = false;
-        //if(this.iconGame[getGameSystem().MultiScreneController.ScreenType] !== null) this.iconGame[getGameSystem().MultiScreneController.ScreenType].active = false;
+        this.screw.getComponent( Screw ).screwAnimation.stopPlayTutorial();
         Tween.stopAllByTarget( this.handPortrait );
     }
 
     public handTutorial (): void
     {
         if(getGameSystem().MoveScrewHandle.isFirstTouch) return;
-        this.stopTutorial();
-        this.handPortrait.active = true;
-        for ( let i = 0; i < this.tapToPlay.length; i++ )
-        {
-            if ( i === getGameSystem().MultiScreneController.ScreenType )
-            {
-                this.tapToPlay[i].active = true;
-            }
-            else
-            {
-                this.tapToPlay[i].active = false;
-            }
-        }
-
-        // for ( let i = 0; i < this.iconGame.length; i++ )
-        // {
-        //     if(this.iconGame[i] === null) continue;
-        //     if ( i === getGameSystem().MultiScreneController.ScreenType )
-        //     {
-        //         this.iconGame[i].active = true;
-        //     }
-        //     else
-        //     {
-        //         this.iconGame[i].active = false;
-        //     }
-        // }
         
-        let handPosition = this.handPortrait.getPosition().clone();
-        let handScale = this.handPortrait.getScale().clone();
+        this.handPortrait.parent = this.screw;
+        var startPos = new Vec3( 0, 0, 0 );
+        let offset = this.offset.clone();
+        Vec3.add( startPos, this.handPortrait.getPosition(), offset );
+        this.handPortrait.position = startPos;
 
         tween( this.handPortrait ).repeatForever
             (
@@ -84,21 +50,14 @@ export class TutorialController extends Component
                     )
                     .call( () => this.screw.getComponent( Screw ).screwAnimation.ScrewOut() )
                     .parallel(
-                        tween().to( 0.5, { position: this.handPosition }, { easing: 'cubicOut' } ),
-                        tween().to( 0.5, { scale: this.handScale }, { easing: 'cubicOut' } )
+                        tween().to( 0.5, { position: startPos }, { easing: 'cubicOut' } ),
+                        tween().to( 0.5, { scale: new Vec3( 1, 1, 1 ) }, { easing: 'cubicOut' } )
                     )
                     .call( () =>
                     {
                         this.screw.getComponent( Screw ).screwAnimation.ScrewIn();
                     } )
                     .delay( 0.5 )
-            ).start();
-
-        tween( this.tapToPlay[getGameSystem().MultiScreneController.ScreenType] ).repeatForever
-            (
-                tween()
-                    .to( 0.5, { scale: new Vec3( 1.2, 1.2, 1 ) }, { easing: 'cubicIn' } )
-                    .to( 0.5, { scale: new Vec3( 1, 1, 1 ) }, { easing: 'cubicOut' } )
             ).start();
     }
 }

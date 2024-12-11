@@ -11,22 +11,19 @@ export class ScrewAnim extends Component
     protected onLoad (): void
     {
         this.anim = this.getComponent( Animation );
-        // this.anim.on("finished", this.onAnimCompleted, this);
     }
 
     public ScrewOut (): void
     {
-        //this._callback = callback;
         this.anim.play( 'ScrewOut' );
     }
 
     public ScrewIn (): void
     {
-        //this._callback = callback;
         this.anim.play( 'ScrewIn' );
     }
 
-    public PlayTutorial (): void
+    public stopPlayTutorial (): void
     {
         if ( this.anim.clips.length > 6 )
         {
