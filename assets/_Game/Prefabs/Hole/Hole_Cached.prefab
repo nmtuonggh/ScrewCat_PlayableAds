@@ -172,7 +172,7 @@
     },
     "_type": 0,
     "_fillType": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -238,8 +238,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.65,
-      "y": 0.65,
+      "x": 0.75,
+      "y": 0.75,
       "z": 0.65
     },
     "_mobility": 0,
@@ -378,13 +378,9 @@
     "__prefab": {
       "__id__": 17
     },
-    "sprite": {
-      "__id__": 11
-    },
     "warning": {
       "__id__": 2
     },
-    "linkingScrew": null,
     "_id": ""
   },
   {

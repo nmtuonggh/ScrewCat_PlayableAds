@@ -222,7 +222,10 @@ exports.methods = {
             pattern: this.$.textureFolder.value + "/" + this.$.levelName.value + "/**/*",
         } );
 
-        console.log( assets.length );
+        const assetsHideImage = await Editor.Message.request( 'asset-db', 'query-assets', {
+            type: 'image',
+            pattern: this.$.textureFolder.value + "/" + this.$.levelName.value + "_hideImage" + "/**/*",
+        } );
 
         var uuidLayer = [];
         let targetParent = parentNode;
@@ -287,10 +290,17 @@ exports.methods = {
                     {
 
                         var uuidChildren = node.children[ 0 ].value.uuid
+                        var hideImageUuid = node.children[ 1 ].value.uuid
                         let newNode = await Editor.Message.request( 'scene', 'query-node', uuidChildren );
+                        let hideImageNode = await Editor.Message.request( 'scene', 'query-node', hideImageUuid );
+
                         let posBar = splitName[ 2 ];
+
                         const comps = newNode.__comps__;
+                        const compsHideImage = hideImageNode.__comps__;
+
                         let textures = 0;
+                        let texturesHideImage = 0;
 
                         for ( let i = 0; i < assets.length; i++ )
                         {
@@ -299,6 +309,7 @@ exports.methods = {
                                 if ( assets[ i ].name.split( '.' )[ 0 ] == child.shapeName )
                                 {
                                     textures = assets[ i ].subAssets.f9941.uuid;
+                                    texturesHideImage = assetsHideImage[ i ].subAssets.f9941.uuid;
                                     break;
                                 }
                             }
@@ -319,8 +330,22 @@ exports.methods = {
                                 } );
                             }
                         }
-
-
+                        for ( let i = 0; i < compsHideImage.length; i++ )
+                            {
+                                if ( compsHideImage[ i ].type === 'cc.Sprite' )
+                                {
+                                    Editor.Message.send( 'scene', 'set-property', {
+                                        "uuid": hideImageUuid,
+                                        "path": `__comps__.${ i }.spriteFrame`,
+                                        "dump": {
+                                            "type": 'cc.SpriteFrame',
+                                            "value": {
+                                                "uuid": texturesHideImage
+                                            }
+                                        }
+                                    } );
+                                }
+                            }
                     }
 
                 };

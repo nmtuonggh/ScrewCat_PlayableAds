@@ -9,6 +9,10 @@ import { ERigidBody2DType } from 'cc';
 import { JsonAsset } from 'cc';
 import { LevelController } from './Controller/LevelController';
 import { GameLayerOder } from './GameComponent/GameLayerOder';
+import { resources } from 'cc';
+import { SpriteFrame } from 'cc';
+import { Sprite } from 'cc';
+
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Level' )
@@ -16,16 +20,13 @@ export class Level extends Component
 {
     //#region PRIVATE FIELDS
     private _updatedGamePlayer = false;
+    private updatedHideLayer = false;
     private flex = false;
     private syncDataBox = false;
 
-    @property( JsonAsset )
-    public jsonFile: JsonAsset = null;
-    @property( LevelController )
-    public levelController: LevelController = null;
-
     private barLayer: 10;
     private screwLayer: 11;
+    @property()
     //#endregion
 
     //#region PROPERTIES
@@ -41,10 +42,12 @@ export class Level extends Component
             this.setScrewToBar();
         }
     }
+
     get UpdatedGamePlayer ()
     {
         return this._updatedGamePlayer;
     }
+
     @property
     set Flex ( value: boolean )
     {
@@ -54,6 +57,7 @@ export class Level extends Component
             this.setKinematic();
         }
     }
+
     get Flex ()
     {
         return this.flex;
@@ -65,13 +69,29 @@ export class Level extends Component
         if ( !this.syncDataBox )
         {
             this.syncDataBox = value;
-            this.getDataBoxSpawn();
+
         }
     }
+
     get SyncDataBox ()
     {
         return this.syncDataBox;
     }
+    @property
+    set UpdatedHideLayer ( value: boolean )
+    {
+        if ( !this.updatedHideLayer )
+        {
+            this.updatedHideLayer = value;
+            this.setHideLayer();
+        }
+    }
+
+    get UpdatedHideLayer ()
+    {
+        return this.updatedHideLayer;
+    }
+
     //#endregion
 
     updateGameLayer ()
@@ -87,13 +107,24 @@ export class Level extends Component
     {
         var bars = this.node.getComponentsInChildren( BarController );
         var screws = this.node.getComponentsInChildren( Screw );
+
         bars.forEach( element =>
         {
             element.node.layer = 1 << 10;
+            var child = element.node.children;
+            child.forEach( element =>
+            {
+                element.layer = 1 << 10;
+            } );
         } );
         screws.forEach( element =>
         {
             element.node.layer = 1 << 11;
+            var child = element.node.children;
+            child.forEach( element =>
+            {
+                element.layer = 1 << 11;
+            } );
         } );
     }
 
@@ -110,34 +141,43 @@ export class Level extends Component
         } );
     }
 
-    getDataBoxSpawn ()
+    setHideLayer ()
     {
-        try
-        {
-            const data = this.jsonFile.json;
-            this.levelController.colorBoxSpawnData = [];
-            if ( data.BoxData && Array.isArray( data.BoxData ) )
+        // if ( Editor )
+        // {
+           
+            const assetPath = 'db://assets/_Game/Images/hideImage';
+
+            resources.loadDir(assetPath, SpriteFrame, (err, assets) => 
             {
-                for ( let i = 0; i < data.BoxData.length; i++ )
+                if ( err )
                 {
-                    const item = data.BoxData[ i ];
-                    this.levelController.colorBoxSpawnData.push( {
-                        color: item.Color,
-                        holeCount: item.HoleCount   
-                    } );
+                    console.error( err );
+                    return;
                 }
+                var bars = this.node.getComponentsInChildren( BarController );
+                assets.forEach( image =>
+                {
+                    bars.forEach( element =>
+                    {
+                        if ( element.node.name = image.name )
+                        {
+                            var hideImage = element.node.children[ 1 ].getComponent( Sprite );
+                            hideImage.spriteFrame = image;
+                        }
+                    } );
+                } );
             }
-        } catch ( error )
-        {
-            console.error( "Failed to load box data:", error );
-        }
+            );
+        //};
     }
+
 
     setScrewToBar ()
     {
         var bars = this.node.getComponentsInChildren( BarController );
 
-        for ( let i = 0; i < bars.length; i++ ) 
+        for ( let i = 0; i < bars.length; i++ )
         {
             if ( bars[ i ].listScrews.length !== 0 ) continue;
             const bar = bars[ i ];
@@ -167,19 +207,8 @@ export class Level extends Component
         }
     }
 
-    setchildScrew ()
-    {
-        var screws = this.node.getComponentsInChildren( Screw );
-        for ( let i = 0; i < screws.length; i++ ) 
-        {
-            var childs = screws[ i ].node.children;
-            childs.forEach( element =>
-            {
-                element.layer = 1 << 11;
-            } );
 
-        }
-    }
+
     setKinematic ()
     {
         var bars = this.node.getComponentsInChildren( BarController );
