@@ -85,6 +85,7 @@ export class PlayableAdsManager extends SingletonInSceneComponent {
 
             // Bật background Music sau lần đầu play PA. Đây là Policy của web nên bắt buộc phải follow.
             //AudioManager.instance.playBackgroundMusic();
+            
         }
        
     }

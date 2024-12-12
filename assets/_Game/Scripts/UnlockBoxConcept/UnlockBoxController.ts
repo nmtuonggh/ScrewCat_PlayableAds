@@ -1,6 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
 import { BoxSlot } from '../GameComponent/HoleContainer/Box/BoxSlot';
-import { BoxContainer } from '../Controller/BoxContainer';
 import { AudioController, AudioType } from '../AudioController/AudioController';
 import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
@@ -10,21 +9,19 @@ export class UnlockBoxController extends Component
 {
     @property( Node )
     public boxContainer: Node = null;
-
-    public boxSlot: BoxSlot[] = [];
-
     @property( [ BoxSlot ] )
     public lockBoxSlot: BoxSlot[] = [];
-
     @property( BoxSlot )
     currentLockBoxSlot: BoxSlot = null;
+
+    public boxSlot: BoxSlot[] = [];
 
     protected start (): void
     {
         this.boxSlot = this.boxContainer.getComponentsInChildren( BoxSlot );
         for ( const slot of this.boxSlot )
         {
-            if ( slot.isAds && slot.isBlock )
+            if ( slot.IsLock && slot.IsBlockByChain )
             {
                 this.lockBoxSlot.push( slot );
             }
@@ -34,34 +31,17 @@ export class UnlockBoxController extends Component
 
     public AddLockCount (): void
     {
-        if( this.currentLockBoxSlot === null ) return;
-        if( this.currentLockBoxSlot.lockCount <= 0 ) return;
-        this.currentLockBoxSlot.currentCount += 1;
-        this.currentLockBoxSlot.lockText.string = this.currentLockBoxSlot.currentCount + "/" + this.currentLockBoxSlot.lockCount;
+        if( !this.currentLockBoxSlot) return;
+        if( this.currentLockBoxSlot.LockCount <= 0 ) return;
+        this.currentLockBoxSlot.CurrentCount += 1;
+        //this.currentLockBoxSlot.LockText.string = this.currentLockBoxSlot.CurrentCount + "/" + this.currentLockBoxSlot.LockCount;
         this.currentLockBoxSlot.TextLockBoxAnim();
-
-        if ( this.currentLockBoxSlot.currentCount >= this.currentLockBoxSlot.lockCount )
+        if ( this.currentLockBoxSlot.CurrentCount >= this.currentLockBoxSlot.LockCount )
         {
-            this.currentLockBoxSlot.isAds = false;
-            this.currentLockBoxSlot.lockText.node.active = false;
-            this.currentLockBoxSlot.boxAdsPrefab.active = false;
             this.lockBoxSlot.shift();
-            this.SetCurrentBlockBox();
+            if ( this.lockBoxSlot.length === 0 ) return;
+            this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
         }
-    }
-
-    public SetCurrentBlockBox (): void
-    {
-        if ( this.lockBoxSlot.length === 0 ) return;
-        this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
-
-        getGameSystem().AudioController.playAudio( AudioType.unlockChain );
-        this.currentLockBoxSlot.UnlockAnimation();
-        setTimeout( () =>
-        {
-            this.currentLockBoxSlot.lockAnim.node.active = false;
-            this.currentLockBoxSlot.SetTextLockBox();
-        }, 1000 );
     }
 
     public InitBlockBox (): void
@@ -69,27 +49,11 @@ export class UnlockBoxController extends Component
         if ( this.lockBoxSlot.length >= 2 )
         {
             this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
-            for ( let i = 1; i < this.lockBoxSlot.length; i++ )
-            {
-                const boxSlot = this.lockBoxSlot[ i ];
-                boxSlot.SetLock();
-            }
         }
         else if ( this.lockBoxSlot.length === 1 )
         {
             this.currentLockBoxSlot = this.lockBoxSlot[ 0 ];
         }
-
-        if( this.currentLockBoxSlot === null ) return;
-        if ( this.currentLockBoxSlot.lockCount > 0 )
-        {
-            this.currentLockBoxSlot.SetTextLockBox();
-        }
-        else
-        {
-            this.currentLockBoxSlot.SetLock();
-        }
-
     }
 }
 

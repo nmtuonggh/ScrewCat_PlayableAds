@@ -27,7 +27,7 @@ export class TutorialController extends Component
     }
     protected onDisable (): void
     {
-        this.screw.getComponent( Screw ).screwAnimation.stopPlayTutorial();
+        this.screw.getComponent( Screw ).ScrewAnimation.stopPlayTutorial();
         Tween.stopAllByTarget( this.handPortrait );
     }
 
@@ -48,14 +48,14 @@ export class TutorialController extends Component
                         tween().to( 0.5, { position: new Vec3( 0, 0, 0 ) }, { easing: 'cubicIn' } ),
                         tween().to( 0.5, { scale: new Vec3( 1.2, 1.2, 1.2 ) }, { easing: 'cubicIn' } )
                     )
-                    .call( () => this.screw.getComponent( Screw ).screwAnimation.ScrewOut() )
+                    .call( () => this.screw.getComponent( Screw ).ScrewAnimation.ScrewOut() )
                     .parallel(
                         tween().to( 0.5, { position: startPos }, { easing: 'cubicOut' } ),
                         tween().to( 0.5, { scale: new Vec3( 1, 1, 1 ) }, { easing: 'cubicOut' } )
                     )
                     .call( () =>
                     {
-                        this.screw.getComponent( Screw ).screwAnimation.ScrewIn();
+                        this.screw.getComponent( Screw ).ScrewAnimation.ScrewIn();
                     } )
                     .delay( 0.5 )
             ).start();

@@ -10,6 +10,7 @@ import { BarController } from '../Bar/BarController';
 import { RigidBody2D } from 'cc';
 import { ERigidBody2DType } from 'cc';
 import { getGameSystem } from '../../GameSystem';
+import { ParticleSystem } from 'cc';
 
 
 const { ccclass, property } = _decorator;
@@ -17,23 +18,38 @@ const { ccclass, property } = _decorator;
 @ccclass( 'Screw' )
 export class Screw extends GameLayerComponent
 {
-
+    //#region EDITOR EXPOSED FIELD
     @property( { type: HingeJoint2D } )
-    public hingeJoint: HingeJoint2D = null;
+    private hingeJoint: HingeJoint2D = null;
     @property( ScrewRenderer )
     private screwRenderer: ScrewRenderer = null;
-    
-    public screwAnimation: ScrewAnim = null;
+    //#endregion
+
+    private screwAnimation: ScrewAnim = null;
     private linkingHole: Hole = null;
+
     public State: eScrewState = eScrewState.IN_BAR;
     //#region PROPERTIES
-
     public get ScrewRenderer (): ScrewRenderer
     {
         return this.screwRenderer;
     }
-
-
+    public get HingeJoint (): HingeJoint2D
+    {
+        return this.hingeJoint;
+    }
+    public set HingeJoint ( value: HingeJoint2D )
+    {
+        this.hingeJoint = value;
+    }
+    public get ScrewAnimation (): ScrewAnim
+    {
+        return this.screwAnimation;
+    }
+    public set ScrewAnimation ( value: ScrewAnim )
+    {
+        this.screwAnimation = value;
+    }
     //#endregion
 
     protected onLoad (): void
@@ -41,8 +57,8 @@ export class Screw extends GameLayerComponent
         //this.screwRenderer = this.getComponent( ScrewRenderer );
         this.screwAnimation = this.getComponent( ScrewAnim );
     }
-
-    private FreeJoints (): void 
+    //#region PRIVATE METHOD
+    private freeJoints (): void 
     {
         this.hingeJoint.enabled = false;
         if ( this.hingeJoint.node.getComponent( RigidBody2D ).type === ERigidBody2DType.Kinematic )
@@ -50,89 +66,12 @@ export class Screw extends GameLayerComponent
             this.hingeJoint.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Dynamic;
         }
     }
-
-    //#region CheckMove
-    public CheckMove (): void
-    {
-        if ( this.State === eScrewState.MOVING )
-        {
-            return;
-        }
-
-        if ( this.State === eScrewState.IN_BAR && this.IsBlocked() )
-        {
-            this.BlockedTween();
-            getGameSystem().AudioController.playBlock();
-            return;
-        }
-
-
-        switch ( this.State )
-        {
-            case eScrewState.IN_BAR:
-                let moveSuccess: boolean = false;
-
-                if ( this.CheckMoveBox() )
-                {
-                    this.State = eScrewState.MOVING;
-                    moveSuccess = true;
-                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
-                }
-                else if ( this.CheckMoveCache() )
-                {
-                    this.State = eScrewState.MOVING;
-                    moveSuccess = true;
-                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
-                    getGameSystem().CahedContainer.currentScrewCount++;
-
-                }
-
-                if ( moveSuccess === true )
-                {
-                    this.FreeJoints();
-                    getGameSystem().MoveScrewHandle.pointSpawnTouchEffect( getGameSystem().MoveScrewHandle._lastMousePosition );
-                    getGameSystem().LevelController.RemoveScrewInLayer( this );
-                    getGameSystem().GameManager.currentScrew--;
-
-                }
-
-                break;
-
-            case eScrewState.IN_CACHED:
-                if ( this.CheckMoveBox() )
-                {
-                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
-
-
-                }
-                break;
-            case eScrewState.IN_BOX:
-                break;
-        }
-
-    }
-
-    public CheckMoveBox (): boolean
-    {
-        //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
-
-        let freeBox = getGameSystem().BoxContainer.GetFreeBoxSlot( this.screwRenderer.colorType );
-
-        if ( freeBox !== null )
-        {
-            this.MoveToBoxSlot( freeBox );
-            return true;
-        }
-
-        return false;
-    }
-
-    public CheckMoveCache (): boolean
+    private CheckMoveCache (): boolean
     {
         let freeHole = getGameSystem().CahedContainer.GetFreeHole();
         if ( freeHole !== null )
         {
-            this.MoveToCacheSlot( freeHole );
+            this.moveToCacheSlot( freeHole );
             return true;
         }
 
@@ -140,9 +79,6 @@ export class Screw extends GameLayerComponent
     }
 
     private cachedBarLayer: Collider2D[] = [];
-
-    //#endregion
-
     //#region Blocked
 
     private IsBlocked (): boolean
@@ -208,7 +144,6 @@ export class Screw extends GameLayerComponent
     }
 
     //#endregion
-
     //#region MoveToBoxSlot
     private MoveToBoxSlot ( hole: Hole ): void 
     {
@@ -217,41 +152,48 @@ export class Screw extends GameLayerComponent
         this.linkingHole = hole;
 
         this.screwAnimation.ScrewOut();
-        this.TweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
+        this.tweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
 
-    private TweenMoveBox ( node: Node, hole: Hole, delayTime: number ): Tween<Node>
+    private tweenMoveBox ( node: Node, hole: Hole, delayTime: number ): Tween<Node>
     {
         return tween( node )
             .delay( delayTime )
             .to( GameConfig.SCREW_MOVE_DURATION, { worldPosition: this.linkingHole.node.worldPosition }, { easing: 'sineInOut' } )
             .call( () =>
             {
+                //play fx
                 getGameSystem().AudioController.playAudio( AudioType.screwIn );
+                var vfxs = hole.VFX.getComponentsInChildren( ParticleSystem );
+                for ( let i = 0; i < vfxs.length; i++ )
+                {
+                    vfxs[ i ].stop();
+                    vfxs[ i ].play();
+                }
+                //set child and world position screw to hole
                 const worldPosition = this.node.worldPosition;
                 this.node.parent = this.linkingHole.node;
                 this.node.worldPosition = worldPosition;
+                //set state and value
                 this.State = eScrewState.IN_BOX;
-                hole.Box.CheckFullBox();
+                hole.Box.checkFullBox();
                 this.screwAnimation.ScrewIn();
             } );
     }
-
     //#endregion
-
     //#region MoveToCacheSlot
 
-    private MoveToCacheSlot ( hole: Hole ): void
+    private moveToCacheSlot ( hole: Hole ): void
     {
         hole.isLinked = true;
         this.linkingHole = hole;
         hole.linkingScrew = this;
         this.screwAnimation.ScrewOut();
 
-        this.TweenMoveCached( this.node, hole, GameConfig.SCREW_IN_DURATION ).start();
+        this.tweenMoveCached( this.node, GameConfig.SCREW_IN_DURATION ).start();
     }
 
-    private TweenMoveCached ( node: Node, hole: Hole, delayTime: number ): Tween<Node>
+    private tweenMoveCached ( node: Node, delayTime: number ): Tween<Node>
     {
         return tween( node )
             .delay( delayTime )
@@ -266,17 +208,88 @@ export class Screw extends GameLayerComponent
                 this.screwAnimation.ScrewIn();
                 getGameSystem().CahedContainer.CheckMoveScrewFromCachedToBox();
                 getGameSystem().CahedContainer.CheckWarning();
-                getGameSystem().GameManager.CheckLose();
+                getGameSystem().GameManager.checkLose();
             } );
     }
 
     //#endregion
+    //#endregion
 
-    public CompleteScrew (): void
+    //#region PUBLIC METHOD
+    //#region CheckMove
+    public checkMove (): void
     {
+        if ( this.State === eScrewState.MOVING )
+        {
+            return;
+        }
+
+        if ( this.State === eScrewState.IN_BAR && this.IsBlocked() )
+        {
+            this.BlockedTween();
+            getGameSystem().AudioController.playBlock();
+            return;
+        }
+
+
+        switch ( this.State )
+        {
+            case eScrewState.IN_BAR:
+                let moveSuccess: boolean = false;
+
+                if ( this.CheckMoveBox() )
+                {
+                    this.State = eScrewState.MOVING;
+                    moveSuccess = true;
+                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
+                }
+                else if ( this.CheckMoveCache() )
+                {
+                    this.State = eScrewState.MOVING;
+                    moveSuccess = true;
+                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
+                    getGameSystem().CahedContainer.CurrentScrewCount++;
+
+                }
+
+                if ( moveSuccess === true )
+                {
+                    this.freeJoints();
+                    //getGameSystem().MoveScrewHandle.pointSpawnTouchEffect( getGameSystem().MoveScrewHandle._lastMousePosition );
+                    getGameSystem().LevelController.RemoveScrewInLayer( this );
+                    getGameSystem().GameManager.CurrentScrew--;
+
+                }
+
+                break;
+
+            case eScrewState.IN_CACHED:
+                if ( this.CheckMoveBox() )
+                {
+                    getGameSystem().AudioController.playAudio( AudioType.screwOut );
+                }
+                break;
+            case eScrewState.IN_BOX:
+                break;
+        }
 
     }
 
+    public CheckMoveBox (): boolean
+    {
+        //let freeBox = this.GameLogic.GetFreeHoleBox( this.screwRenderer.ColorType );
+
+        let freeBox = getGameSystem().BoxContainer.GetFreeBoxSlot( this.screwRenderer.colorType );
+
+        if ( freeBox !== null )
+        {
+            this.MoveToBoxSlot( freeBox );
+            return true;
+        }
+
+        return false;
+    }
+    //#endregion
     public Hide (): void
     {
         this.screwRenderer.HideScrew();
@@ -288,6 +301,7 @@ export class Screw extends GameLayerComponent
         this.screwRenderer.ShowScrew();
         this.State = eScrewState.IN_BAR;
     }
+    //#endregion
 }
 
 export enum eScrewState
@@ -298,12 +312,6 @@ export enum eScrewState
     IS_HIDING = 3,
     MOVING = 999
 }
-
-//how to drawn const aabb = new Rect(
-// screwPosition.x - GameConfig.SCREW_RADIUS,
-// screwPosition.y - GameConfig.SCREW_RADIUS,
-// GameConfig.SCREW_RADIUS * 2,
-// GameConfig.SCREW_RADIUS * 2 );
 
 
 

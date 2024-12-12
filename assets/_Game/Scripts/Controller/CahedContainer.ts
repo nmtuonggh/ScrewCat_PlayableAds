@@ -3,41 +3,37 @@ import { HorizontalGrid } from '../GameComponent/HoleContainer/Cache/HorizontalG
 import { Hole } from '../GameComponent/Hole/Hole';
 import { eColorType } from '../GameConfig/GameColorConfig';
 import { Screw } from '../GameComponent/Screw/Screw';
-import { CanvasScreenController } from '../MultiScreen/CanvasScreenController';
-import { MultiScreneController } from './MultiScreneController';
-import { MoveScrewHandle } from './MoveScrewHandle';
-import { BoosterControll } from '../Booster/BoosterControll';
-import { UIOpacity } from 'cc';
-import { BoosterType } from '../Booster/HightlightBooster';
-import { set } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
+
 import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'CahedContainer' )
 export class CahedContainer extends Component
 {
-    //#region EDITOR EXPOSED FIELDS
+    //#region EDITOR EXPOSED FIELDS 
     @property( CCInteger )
     private holeCount: number = 0;
     @property( CCInteger )
-    public currentScrewCount: number = 0;
-    @property( Node )
-    public popUpWarning: Node = null;
-
+    private currentScrewCount: number = 0;
     //#endregion
 
     //#region PRIVATE FIELDS
-    public horizontalGrid: HorizontalGrid = null;
+    private horizontalGrid: HorizontalGrid = null;
     private listHole: Hole[] = [];
     public listActiveHole: Hole[] = [];
     public isFirstTime4Screw: boolean = false;
     public showingWarning: boolean = false;
-    private get gameSystem ()
+    //#endregion
+    //#region PROPERTIES
+    public get CurrentScrewCount (): number
     {
-        return getGameSystem();
+        return this.currentScrewCount;
+    }
+    public set CurrentScrewCount ( value: number )
+    {
+        this.currentScrewCount = value;
     }
     //#endregion
-
     //#region CC METHODS
     protected onLoad (): void
     {

@@ -14,26 +14,58 @@ const { ccclass, property } = _decorator;
 @ccclass( 'UIController' )
 export class UIController extends Component
 {
-
-    @property([CanvasScreenController])
+    @property( [ CanvasScreenController ] )
     public canvasScreenController: CanvasScreenController[] = [];
 
-    public onChangedScreen ( ): void
+    public onChangedScreen (): void
     {
-        if(!getGameSystem().GameManager.lose) return;
-
-        this.canvasScreenController.forEach(element => {  //UI Canvas
-            element.uiCanvasScreen.setOutOfMoveUIStatus(false);
-            element.uiCanvasScreen.setFailUIStatus(false);
-            element.uiCanvasScreen.setLoseUIStatus(true);
-        });
+        if ( !getGameSystem().GameManager.lose ) return;
+        this.canvasScreenController.forEach( element =>
+        {  //UI Canvas
+            element.uiCanvasScreen.setOutOfMoveUIStatus( false );
+            element.uiCanvasScreen.setFailUIStatus( false );
+        } );
     }
 
-    public ShowOutOfMove ( ): void
+    public showOutOfMove (): void
     {
-        this.canvasScreenController.forEach(element => {
-            element.uiCanvasScreen.setOutOfMoveUIStatus(true);
-        });
+        this.canvasScreenController.forEach( element =>
+        {
+            element.uiCanvasScreen.setOutOfMoveUIStatus( true );
+        } );
+    }
+
+    public showFail (): void
+    {
+        this.canvasScreenController.forEach( element =>
+        {
+            element.uiCanvasScreen.setFailUIStatus( true );
+        } );
+    }
+
+    public showLose (): void
+    {
+        this.canvasScreenController.forEach( element =>
+        {
+            element.uiCanvasScreen.setLoseUIStatus( true );
+        } );
+    }
+    public tweenFail (): void
+    {
+        this.canvasScreenController.forEach( element =>
+        {
+            element.uiCanvasScreen.tweenFail();
+        } );
+    }
+    public setIQText ( text: string ): void
+    {
+        if ( getGameSystem().TestIQController && getGameSystem().TestIQController.node && getGameSystem().TestIQController.node.active )
+        {
+            this.canvasScreenController.forEach( element =>
+            {
+                element.uiCanvasScreen.SetIQText( text );
+            } );
+        }
     }
 }
 

@@ -1,21 +1,5 @@
 import { _decorator, CCInteger, Component, Node } from 'cc';
-import { CahedContainer } from '../Controller/CahedContainer';
-import { StarController } from '../Star/StarController';
-import { GameLayer } from '../GameComponent/GameLayer';
-import { group } from 'console';
-import { AudioController, AudioType } from '../AudioController/AudioController';
-import { UIManager } from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/3d/manager/ui';
-import { UIController } from '../UIController';
-import { MultiScreneController } from '../Controller/MultiScreneController';
-import { ScrewData } from '../FakeSO/ScrewData';
-import { UILose } from '../UI/UILose';
-import { TestIQController } from '../TestIQ/TestIQController';
-import { BarController } from '../GameComponent/Bar/BarController';
-import { MoveScrewHandle } from '../Controller/MoveScrewHandle';
-import { GameLayerMaskConfig } from '../GameConfig/GameLayerMaskConfig';
 import { Screw } from '../GameComponent/Screw/Screw';
-import { LevelController } from '../Controller/LevelController';
-import { BoosterControll } from '../Booster/BoosterControll';
 import { UIOpacity } from 'cc';
 import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
@@ -23,95 +7,96 @@ const { ccclass, property } = _decorator;
 @ccclass( 'GameManager' )
 export class GameManager extends Component
 {
+    //#region EDITOR EXPOSED FIELDS
     @property( CCInteger )
-    public activeLayer: number = 0;
+    private collectedScrew: number = 0;
     @property( CCInteger )
-    public toltalShowLayer: number = 0;
+    private currentScrew: number = 0;
+    @property( CCInteger )
+    private totalScrew: number = 0;
+    //#endregion
 
-    @property( CCInteger )
-    public CollectedScrew: number = 0;
-    @property( CCInteger )
-    public currentScrew: number = 0;
-    @property( CCInteger )
-    public TotalScrew: number = 0;
+    //#endregion PROPERTIES
+    public get CollectedScrew (): number
+    {
+        return this.collectedScrew;
+    }
+    public set CollectedScrew ( value: number )
+    {
+        this.collectedScrew = value;
+    }
+    public get CurrentScrew (): number
+    {
+        return this.currentScrew;
+    }
+    public set CurrentScrew ( value: number )
+    {
+        this.currentScrew = value;
+    }
+    public get TotalScrew (): number
+    {
+        return this.totalScrew;
+    }
+    public set TotalScrew ( value: number )
+    {
+        this.totalScrew = value;
+    }
+    //#endregion
 
-    @property( Node )
-    public LevelContainer: Node = null;
-    @property( MultiScreneController )
-    private multiScreenController: MultiScreneController = null;
-
-    @property( ScrewData )
-    public screwData: ScrewData = null;
-
+    //#region PUBLIC FIELDS
     public lose: boolean = false;
-
     public win: boolean = false;
+    //#endregion
 
-    public forceStore: boolean = false;
-
-    public CheckLose (): void
+    //#region PUBLIC METHOD
+    public checkLose (): void
     {
         const cacheContainer = getGameSystem().CahedContainer;
         const uiController = getGameSystem().UIController;
-        let screenType = this.multiScreenController.ScreenType;
 
-        if ( cacheContainer.currentScrewCount >= cacheContainer.listActiveHole.length && this.lose === false )
+        if ( cacheContainer.CurrentScrewCount >= cacheContainer.listActiveHole.length && this.lose === false )
         {
-            this.lose = true;
-            getGameSystem().lose();
-            uiController.canvasScreenController[ screenType ].uiCanvasScreen.TweenFail();
-            uiController.ShowOutOfMove();
-            getGameSystem().BoosterControll.BoosterUI.getComponent(UIOpacity).opacity = 0;
-            //wait for 2s
-            setTimeout( () =>
+            this.scheduleOnce( () =>
             {
-                uiController.canvasScreenController[ screenType ].uiCanvasScreen.setOutOfMoveUIStatus( false );
-                uiController.canvasScreenController[ screenType ].uiCanvasScreen.setFailUIStatus( false );
-                uiController.canvasScreenController[ screenType ].uiCanvasScreen.setLoseUIStatus( true );
-                uiController.canvasScreenController[ screenType ].uiCanvasScreen.SetIQText( getGameSystem().TestIQController.currentIQ.toString() );
-                this.forceStore = true;
-            }, 2000 );
+                this.lose = true;
+                getGameSystem().lose();
+                uiController.tweenFail();
+                uiController.showOutOfMove();
+                getGameSystem().BoosterControll.BoosterUI.getComponent( UIOpacity ).opacity = 0;
+                //wait for 2s
+                setTimeout( () =>
+                {
+                    uiController.showLose();
+                    uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+                }, 2000 );
+            }, 1 );
         }
     }
 
     public getRemainningScrew (): number
     {
-        return this.currentScrew;
+        return this.CurrentScrew;
     }
 
-    public getClickBar (): BarController
-    {
-        let component = getGameSystem().MoveScrewHandle.CheckClick( GameLayerMaskConfig.BAR_LAYER_MASK );
-        if ( component !== null )
-        {
-            let bar = component.node.getComponent( BarController );
-            return bar;
-        }
-    }
-
-    public disableClick (): void
-    {   
-        getGameSystem().MoveScrewHandle.DisableTouch();
-    }
-
-    public updateDataBox(screw : Screw): void
+    public updateDataBox ( screw: Screw ): void
     {
         //duyệt ngược colorBoxdata của levelcontroller, tìm ra colorBoxData đầu tiên có cùng màu với screw và trừ đi 1 holecount nếu holecount = 0 thì xóa luôn phần tử đó
-      
+
         let colorBoxData = getGameSystem().LevelController.colorBoxSpawnData;
-        for (let i = colorBoxData.length - 1; i >= 0; i--)
+        for ( let i = colorBoxData.length - 1; i >= 0; i-- )
         {
-            if (colorBoxData[i].color === screw.ScrewRenderer.colorType)
+            if ( colorBoxData[ i ].color === screw.ScrewRenderer.colorType )
             {
-                colorBoxData[i].holeCount--;
-                if (colorBoxData[i].holeCount <= 0)
+                colorBoxData[ i ].holeCount--;
+                if ( colorBoxData[ i ].holeCount <= 0 )
                 {
-                    colorBoxData.splice(i, 1);
+                    colorBoxData.splice( i, 1 );
                 }
                 break;
             }
         }
     }
+    //#endregion
 
 }
 

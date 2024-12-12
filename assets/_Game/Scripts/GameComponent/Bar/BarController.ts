@@ -15,41 +15,46 @@ const { ccclass, property } = _decorator;
 @ccclass( 'BarController' )
 export class BarController extends GameLayerComponent
 {
-    //#region Fields
+    //#region EDITOR EXPOSED FIELD
     @property( { type: [ Screw ], visible: true } )
-    public listScrews: Screw[] = [];
+    private listScrews: Screw[] = [];
     @property( BarPhysic )
-    public barPhysic: BarPhysic = null;
-
+    private barPhysic: BarPhysic = null;
     @property( PolygonCollider2D )
-    public collider: PolygonCollider2D = null;
+    private collider: PolygonCollider2D = null;
+    @property( Sprite )
+    private hideSprite: Sprite = null;
+    @property( UIOpacity )
+    private hideOpacity: UIOpacity = null;
+    //#endregion
     @property( PolygonCollider2D )
     public modelCollider: PolygonCollider2D = null;
 
-    public modelSprite: Sprite = null;
-    @property( Sprite )
-    public hideSprite: Sprite = null;
-    @property( UIOpacity )
-    public hideOpacity: UIOpacity = null;
+    private modelSprite: Sprite = null;
+
+    //#region PROPERTY
+    public get ListScrews (): Screw[]
+    {
+        return this.listScrews;
+    }
+    public set ListScrews ( value: Screw[] )
+    {
+        this.listScrews = value;
+    }
+    public get BarPhysic (): BarPhysic
+    {
+        return this.barPhysic;
+    }
+    public set BarPhysic ( value: BarPhysic )
+    {
+        this.barPhysic = value;
+    }
     //#endregion
 
     protected onLoad (): void
     {
         this.barPhysic = this.getComponent( BarPhysic );
         this.modelSprite = this.node.children[ 0 ].getComponent( Sprite );
-    }
-
-    protected start (): void
-    {
-        
-    }
-
-
-
-    public SetCollider ()
-    {
-        this.collider.points = this.modelCollider.points;
-        this.collider.apply();
     }
 
     protected update ( dt: number ): void
@@ -60,6 +65,7 @@ export class BarController extends GameLayerComponent
         }
     }
 
+    //#region PUBLIC METHOD
     //#region Spawn Screw
 
     public InitScrewColor ( screwData: ScrewData ): void
@@ -117,7 +123,7 @@ export class BarController extends GameLayerComponent
             let screw = listScrewsBreak[ i ];
             if ( screw !== null )
             {
-                getGameSystem().GameManager.currentScrew--;
+                getGameSystem().GameManager.CurrentScrew--;
                 getGameSystem().GameManager.CollectedScrew++;
                 if ( !screw.CheckMoveBox() )
                 {
@@ -139,6 +145,7 @@ export class BarController extends GameLayerComponent
 
         this.node.destroy();
     }
+    //#endregion
 }
 
 

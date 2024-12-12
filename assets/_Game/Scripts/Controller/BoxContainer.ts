@@ -15,25 +15,33 @@ const { ccclass, property } = _decorator;
 @ccclass( 'BoxContainer' )
 export class BoxContainer extends Component
 {
+    //#region EDITOR EXPOSED FIELD
     @property( BoxData )
     private BoxData: BoxData = null;
-    @property( Prefab )
-    public grap: Prefab = null;
+    //#endregion
 
-    public boxSlots: BoxSlot[] = [];
+    //#region PRIVATE FIELD
+    private boxSlots: BoxSlot[] = [];
+    private boxIsActive: Box[] = [];
+    //#endregion
 
-    public boxIsActive: Box[] = [];
+    //#region PROPERTY
+    public get BoxSlots (): BoxSlot[]
+    {
+        return this.boxSlots;
+    }
+    //#endregion
 
     protected override onLoad (): void
     {
         this.boxSlots = this.getComponentsInChildren( BoxSlot );
     }
-
+    //#region PUBLIC METHOD
     public InitQueue (): void
     {
         for ( const boxSlot of this.boxSlots )
         {
-            if ( boxSlot.isAds ) continue;
+            if ( boxSlot.IsLock ) continue;
 
             const box = boxSlot.Box;
             if ( box !== null )
@@ -49,7 +57,7 @@ export class BoxContainer extends Component
         for ( const box of this.boxIsActive )
         {
             if ( box === null || box.IS_ANIMATING ) continue;
-            const hole = box.GetFreeHole( colorType );
+            const hole = box.getFreeHole( colorType );
             if ( hole !== null )
             {
                 return hole;
@@ -78,28 +86,15 @@ export class BoxContainer extends Component
         box.parent = parent;
         box.setPosition( new Vec3( 0, 0, 0 ) );
         const boxComponent = box.getComponent( Box );
-        boxComponent.boxRenderer.SetBoxData( colorType, data );
-    }
-
-    public InitAdsBox ( parent: Node, data: BoxData ): void
-    {
-        const box = instantiate( data.boxAdsPrefab );
-        box.parent = parent;
-        //box.setPosition( new Vec3( 0, 0, 0 ) );
+        boxComponent.BoxRenderer.SetBoxData( colorType, data );
     }
 
     public CheckCreateBox (): void
     {
-        // if ( !this.needMoreBox() )
-        // {
-        //     return;
-        // }
-
         if ( getGameSystem().LevelController.currentIndex >= getGameSystem().LevelController.colorBoxSpawnData.length ) return;
-
         for ( const boxSlot of this.boxSlots )
         {
-            if ( boxSlot.isAds ) continue;
+            if ( boxSlot.IsLock ) continue;
             const box = boxSlot.Box;
             if ( box === null )
             {
@@ -108,15 +103,16 @@ export class BoxContainer extends Component
             }
         }
     }
-
-    public CreatBox ( boxSlot: BoxSlot ): Box
+    public RemoveActiveBox ( box: Box ): void
     {
-        ///
+        const index = this.boxIsActive.indexOf( box );
+        this.boxIsActive.splice( index, 1 );
+    }
+    //#endregion
 
-        // console.log( "Create Box with index : " + getGameSystem().LevelController.currentIndex + " color: "
-        //     + getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].color + " holeCount: "
-        //     + getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].holeCount );
-
+    //#region PRIVATE METHOD
+    private CreatBox ( boxSlot: BoxSlot ): Box
+    {
         const color = getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].color;
         const holeCount = getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].holeCount;
 
@@ -127,35 +123,13 @@ export class BoxContainer extends Component
         boxNode.parent = boxSlot.boxHolder;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
-        box.boxRenderer.SetBoxData( color, this.BoxData );
+        box.BoxRenderer.SetBoxData( color, this.BoxData );
         box.MoveIn();
         this.boxIsActive.push( box );
         getGameSystem().LevelController.currentIndex++;
         return box;
     }
-
-    public RemoveActiveBox ( box: Box ): void
-    {
-        const index = this.boxIsActive.indexOf( box );
-        this.boxIsActive.splice( index, 1 );
-    }
-
-    public needMoreBox (): boolean
-    {
-        let screwRemain = getGameSystem().GameManager.getRemainningScrew();
-
-        for ( const box of this.boxIsActive )
-        {
-            screwRemain -= box.GetFreeHoleCount();
-        }
-
-        if ( screwRemain <= 0 )
-        {
-            return false;
-        }
-
-        return true;
-    }
+    //#endregion
 
 }
 

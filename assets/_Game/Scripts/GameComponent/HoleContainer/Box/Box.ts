@@ -5,27 +5,35 @@ import { eColorType } from '../../../GameConfig/GameColorConfig';
 import { Hole } from '../../Hole/Hole';
 import { BoxRenderer } from './BoxRenderer';
 import { BoxSlot } from './BoxSlot';
-import { BoxContainer } from '../../../Controller/BoxContainer';
-import { CahedContainer } from '../../../Controller/CahedContainer';
-import { AudioController, AudioType } from '../../../AudioController/AudioController';
+import {  AudioType } from '../../../AudioController/AudioController';
 import { GameConfig } from '../../../GameConfig/GameConfig';
-import { StarController } from '../../../Star/StarController';
-import { GameManager } from '../../../Manager/GameManager';
-import { UnlockBoxController } from '../../../UnlockBoxConcept/UnlockBoxController';
-import { TestIQController } from '../../../TestIQ/TestIQController';
 import { getGameSystem } from '../../../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
 export class Box extends HoleContainer
 {
-
-    public boxRenderer: BoxRenderer = null;
+    //#region PRIVATE FIELD
+    private boxRenderer: BoxRenderer = null;
     private currentScrew: number = 0;
     private boxSlotOwner: BoxSlot = null;
+    private starList: Node[] = [];
 
+    //#endregion
+    //#region PROPERTY
+    public get BoxRenderer (): BoxRenderer
+    {
+        return this.boxRenderer;
+    }
+    public set BoxRenderer ( value: BoxRenderer )
+    {
+        this.boxRenderer = value;
+    }
+    //#endregion
+    //#region PUBLIC FIELD
     public IS_ANIMATING: boolean = false;
-
+    //#endregion
+    //#region CC METHODS
     protected onLoad (): void
     {
         this.listHoles = this.getComponentsInChildren( HoleColor );
@@ -37,8 +45,9 @@ export class Box extends HoleContainer
     {
         this.setHoleData();
     }
-
-    public GetFreeHole ( colorType: eColorType ): Hole
+    //#endregion
+    //#region PUBLIC METHOD
+    public getFreeHole ( colorType: eColorType ): Hole
     {
         if ( this.boxRenderer.colorType != colorType ) return null;
 
@@ -53,16 +62,8 @@ export class Box extends HoleContainer
         return null;
     }
 
-    private setHoleData (): void
-    {
-        for ( const hole of this.listHoles )
-        {
-            hole.Box = this;
-        }
-    }
-
     //#region BoxComplete
-    public CheckFullBox (): void
+    public checkFullBox (): void
     {
         this.currentScrew++;
         if ( this.currentScrew >= this.listHoles.length )
@@ -70,11 +71,41 @@ export class Box extends HoleContainer
             this.CloseBox();
         }
     }
+    //#endregion
+    //#endregion
 
-    private starList: Node[] = [];
-    private iqNode: Node = null;
+    public MoveIn (): void
+    {
+        this.IS_ANIMATING = true;
+        tween( this.node )
+            .to( GameConfig.BOX_MOVEIN_DURATION, { position: new Vec3( 0, 0, 0 ) } )
+            .call( () => 
+            {
+                this.IS_ANIMATING = false;
+                getGameSystem().CahedContainer.CheckMoveScrewFromCachedToBox();
+            } )
+            .start();
+    }
+    //#endregion
 
-    public CloseBox (): void
+    //#region PRIVATE METHOD
+    private MoveOut (): void
+    {
+        const pos = this.node.position.clone().add( new Vec3( 0, 200, 0 ) );
+        this.boxRenderer.skeleton.setAnimation( 0, 'Appear2', true );
+        tween( this.node )
+            .to( GameConfig.BOX_MOVEOUT_DURATION, { position: pos } )
+            .call( () =>
+            {
+                this.boxSlotOwner.Box = null;
+                this.node.destroy();
+                getGameSystem().UnlockBoxController.AddLockCount();
+                getGameSystem().BoxContainer.CheckCreateBox();
+                getGameSystem().BoxContainer.RemoveActiveBox( this );
+            } )
+            .start();
+    }
+    private CloseBox (): void
     {
         let listHolesPos: Vec3[] = [];
         for ( let i = 0; i < this.listHoles.length; i++ )
@@ -107,51 +138,14 @@ export class Box extends HoleContainer
             } )
             .start();
     }
-
-    public MoveOut (): void
+    private setHoleData (): void
     {
-        const pos = this.node.position.clone().add( new Vec3( 0, 200, 0 ) );
-        this.boxRenderer.skeleton.setAnimation( 0, 'Appear2', true );
-        tween( this.node )
-            .to( GameConfig.BOX_MOVEOUT_DURATION, { position: pos } )
-            .call( () =>
-            {
-                this.boxSlotOwner.Box = null;
-                this.node.destroy();
-                getGameSystem().UnlockBoxController.AddLockCount();
-                getGameSystem().BoxContainer.CheckCreateBox();
-                getGameSystem().BoxContainer.RemoveActiveBox( this );
-            } )
-            .start();
-    }
-
-    //#endregion
-
-    public MoveIn (): void
-    {
-        this.IS_ANIMATING = true;
-        tween( this.node )
-            .to( GameConfig.BOX_MOVEIN_DURATION, { position: new Vec3( 0, 0, 0 ) } )
-            .call( () => 
-            {
-                this.IS_ANIMATING = false;
-                getGameSystem().CahedContainer.CheckMoveScrewFromCachedToBox();
-            } )
-            .start();
-    }
-
-    public GetFreeHoleCount (): number
-    {
-        let count = 0;
         for ( const hole of this.listHoles )
         {
-            if ( hole.IsFree() && hole.isLinked === false )
-            {
-                count++;
-            }
+            hole.Box = this;
         }
-        return count;
     }
+    //#endregion
 }
 
 

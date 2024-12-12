@@ -179,9 +179,9 @@ export class Level extends Component
 
         for ( let i = 0; i < bars.length; i++ )
         {
-            if ( bars[ i ].listScrews.length !== 0 ) continue;
+            if ( bars[ i ].ListScrews.length !== 0 ) continue;
             const bar = bars[ i ];
-            bar.listScrews.length = 0;
+            bar.ListScrews.length = 0;
 
             let listScrewInLayer = bar.node.parent.getComponentsInChildren( Screw );
 
@@ -194,7 +194,7 @@ export class Level extends Component
 
                 if ( extractedName === barName )
                 {
-                    bar.listScrews.push( screw );
+                    bar.ListScrews.push( screw );
                 }
 
                 //lay colorIndex

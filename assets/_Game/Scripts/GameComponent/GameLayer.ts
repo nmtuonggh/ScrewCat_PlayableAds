@@ -73,7 +73,7 @@ export class GameLayer extends Component
         for ( let i = 0; i < this.listBar.length; i++ )
         {
             const bar = this.listBar[ i ];
-            bar.barPhysic.SetKinematic();
+            bar.BarPhysic.SetKinematic();
         }
     }
 
@@ -82,7 +82,7 @@ export class GameLayer extends Component
         for ( let i = 0; i < this.listBar.length; i++ )
         {
             const bar = this.listBar[ i ];
-            bar.barPhysic.SetDynamic();
+            bar.BarPhysic.SetDynamic();
         }
     }
 }

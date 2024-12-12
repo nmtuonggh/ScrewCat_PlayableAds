@@ -14,6 +14,7 @@ import { GameLayer } from '../GameComponent/GameLayer';
 import { JsonAsset } from 'cc';
 import { getGameSystem } from '../GameSystem';
 import { GameLayerOder } from '../GameComponent/GameLayerOder';
+import { Box } from '../GameComponent/HoleContainer/Box/Box';
 
 const { ccclass, property } = _decorator;
 
@@ -66,7 +67,7 @@ export class LevelController extends Component
         this.InitBarAndScrewColor();
         this.InitBox();
         getGameSystem().BoxContainer.InitQueue();
-        getGameSystem().GameManager.currentScrew = this.listScrew.length;
+        getGameSystem().GameManager.CurrentScrew = this.listScrew.length;
         getGameSystem().GameManager.TotalScrew = this.listScrew.length;
         this.InitLayer();
     }
@@ -76,20 +77,20 @@ export class LevelController extends Component
         this.listBar.forEach( bar => 
         {
             bar.InitScrewColor( this.ScrewData );
-            bar.barPhysic.SetGroupLayer();
-            bar.barPhysic.CreatHGJoint();
-            bar.barPhysic.EnableHGJoin();
+            bar.BarPhysic.SetGroupLayer();
+            bar.BarPhysic.CreatHGJoint();
+            bar.BarPhysic.EnableHGJoin();
         } );
     }
 
     public InitBox (): void
     {
-        const listBoxSlot = getGameSystem().BoxContainer.boxSlots;
+        const listBoxSlot = getGameSystem().BoxContainer.BoxSlots;
 
         for ( let i = 0; i < listBoxSlot.length; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
-            if ( boxSlot.isAds )
+            if ( boxSlot.IsLock )
             {
                 boxSlot.boxAdsPrefab.active = true;
             }

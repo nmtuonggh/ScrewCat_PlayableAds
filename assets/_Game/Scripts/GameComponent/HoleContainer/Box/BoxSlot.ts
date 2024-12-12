@@ -1,44 +1,100 @@
 import { _decorator, Component, Node } from 'cc';
 import { Box } from './Box';
-import { CCBoolean } from 'cc';
-import { CCInteger } from 'cc';
 import { Label } from 'cc';
 import { sp } from 'cc';
 import { Color } from 'cc';
 import { tween } from 'cc';
 import { Vec3 } from 'cc';
-import { set } from '../../../../../../extensions/nvthan/@types/packages/scene/@types/cce/utils/lodash';
 import { AudioController, AudioType } from '../../../AudioController/AudioController';
-import { MoveScrewHandle } from '../../../Controller/MoveScrewHandle';
-import { GameManager } from '../../../Manager/GameManager';
 import { getGameSystem } from '../../../GameSystem';
-import { TrackingManager } from '../../../../../PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
 import { PlayableAdsManager } from '../../../../../PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BoxSlot' )
 export class BoxSlot extends Component
 {
-    @property( { type: Box } )
+    @property( { type: Box, readonly: true } )
     private box: Box = null;
-    @property( CCBoolean )
-    public isAds: boolean = false;
-    @property( CCBoolean )
-    public isBlock: boolean = false;
     @property( Node )
     public boxHolder: Node = null;
     @property( Node )
     public boxAdsPrefab: Node = null;
     @property( sp.Skeleton )
-    public lockAnim: sp.Skeleton = null;
-
-    @property( CCInteger )
-    public lockCount: number = 0;
-    @property( CCInteger )
-    public currentCount: number = 0;
+    private lockAnim: sp.Skeleton = null;
     @property( Label )
-    public lockText: Label = null;
+    private lockText: Label = null;
+    //#region PROPERTY EXPOSED 
+    public get LockText (): Label
+    {
+        return this.lockText;
+    }
+    public set LockText ( value: Label )
+    {
+        this.lockText = value;
+    }
+    @property( { group: "Lock" } )
+    public get IsBlockByChain (): boolean
+    {
+        return this.isBlockByChain;
+    }
+    public set IsBlockByChain ( value: boolean )
+    {
+        this.isBlockByChain = value;
+        this.isLock = value;
+        this.lockAnim.node.active = value;
+        this.lockAnim.setAnimation( 0, 'Idle', false );
+        this.lockText.node.active = this.lockCount !== -5 && this.lockCount > 0;
+    }
+    @property( { group: "Lock" } )
+    public get IsLock (): boolean
+    {
+        return this.isLock;
+    }
+    public set IsLock ( value: boolean )
+    {
+        this.isLock = value;
+    }
+    @property( { group: "Lock" } )
+    public get LockCount (): number
+    {
+        return this.lockCount;
+    }
+    public set LockCount ( value: number )
+    {
+        this.lockCount = value;
+        if ( this.lockCount <= 0 && this.lockCount !== -5 ) this.lockAnim.node.active = false;
+        this.lockText.color = new Color( 255, 255, 255 );
+        this.lockText.string = this.currentCount + "/" + this.lockCount;
+    }
+    @property( { readonly: true, group: "Lock" } )
+    public get CurrentCount (): number
+    {
+        return this.currentCount;
+    }
+    public set CurrentCount ( value: number )
+    {
+        this.currentCount = value;
+        if ( this.currentCount >= this.lockCount && this.lockCount !== -5 )
+        {
+            this.IsLock = false;
+            this.lockText.node.active = false;
+            this.boxAdsPrefab.active = false;
+            getGameSystem().AudioController.playAudio( AudioType.unlockChain );
+            this.lockAnim.setAnimation( 0, 'Unlock', false );
+        }
+    }
+    //#endregion
+    //#region PRIVATE FIELD
+    @property( { visible: false, readonly: true, group: "Lock" } )
+    private isBlockByChain: boolean = false;
+    @property( { visible: false, readonly: true, group: "Lock" } )
+    private isLock: boolean = false;
+    @property( { visible: false, group: "Lock" } )
+    private lockCount: number = 0;
+    @property( { visible: false, readonly: true, group: "Lock" } )
+    private currentCount: number = 0;
 
+    //#endregion
     public get Box (): Box
     {
         return this.box;
@@ -49,24 +105,26 @@ export class BoxSlot extends Component
         this.box = value;
     }
 
+
     private randomTime: number = 0;
     private accumulatedTime: number = 0;
 
     protected update ( dt: number ): void
     {
-        if ( this.lockAnim.node.active && getGameSystem().MoveScrewHandle.isFirstTouch && !getGameSystem().GameManager.lose && !getGameSystem().GameManager.win )
+        if ( this.lockAnim.node.active
+            && PlayableAdsManager.Instance().firstClicked
+            && !getGameSystem().GameManager.lose
+            && !getGameSystem().GameManager.win )
         {
-            
             if ( this.randomTime === 0 )
             {
-                this.randomTime = Math.random() * 15000; // Random time between 0 and 10000 milliseconds (10 seconds)
+                this.randomTime = Math.random() * 15000;
             }
-
-            this.accumulatedTime += dt * 1000; // Convert dt to milliseconds
-
+            this.accumulatedTime += dt * 1000;
             if ( this.accumulatedTime >= this.randomTime )
             {
-                this.ActAnimation();
+                this.lockAnim.setAnimation( 0, 'Act', false );
+                getGameSystem().AudioController.playChain();
                 this.resetTimers();
             }
         }
@@ -83,30 +141,6 @@ export class BoxSlot extends Component
         this.box = this.getComponentInChildren( Box );
     }
 
-    public SetTextLockBox (): void
-    {
-        this.lockText.node.active = true;
-        this.lockText.color = new Color( 255, 255, 255 );
-        this.lockText.string = this.currentCount + "/" + this.lockCount;
-    }
-
-    public SetLock (): void
-    {
-        this.lockAnim.node.active = true;
-        this.lockAnim.setAnimation( 0, 'Act', false );
-    }
-
-    public ActAnimation (): void
-    {
-        this.lockAnim.setAnimation( 0, 'Act', false );
-        getGameSystem().AudioController.playChain();
-    }
-
-    public UnlockAnimation (): void
-    {
-        this.lockAnim.setAnimation( 0, 'Unlock', false );
-    }
-
     public TextLockBoxAnim (): void
     {
         tween( this.lockText.node )
@@ -115,7 +149,7 @@ export class BoxSlot extends Component
             .start();
     }
 
-    public openStore()
+    public openStore ()
     {
         PlayableAdsManager.Instance().OpenStore();
     }

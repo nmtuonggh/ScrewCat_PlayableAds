@@ -13,226 +13,193 @@ const { ccclass, property, executeInEditMode } = _decorator;
 @executeInEditMode( true )
 export class Tool extends Component
 {
-    @property( CCBoolean )
-    public runSetCollider: boolean = false;
-    @property( CCBoolean )
-    public setlayer: boolean = false;
-    @property( CCBoolean )
-    public setScrewToBar: boolean = false;
-    @property( CCBoolean )
-    public setPosScreenData: boolean = false;
-    @property( CCBoolean )
-    public testPosScreen: boolean = false;
+    // @property( CCBoolean )
+    // public runSetCollider: boolean = false;
+    // @property( CCBoolean )
+    // public setlayer: boolean = false;
+    // @property( CCBoolean )
+    // public setScrewToBar: boolean = false;
+    // @property( CCBoolean )
+    // public setPosScreenData: boolean = false;
+    // @property( CCBoolean )
+    // public testPosScreen: boolean = false;
 
-    @property( CCBoolean )
-    public runSetCollider2222222: boolean = false;
+    // @property( CCBoolean )
+    // public runSetCollider2222222: boolean = false;
 
-    @property( BarController )
-    public listBar: BarController[] = [];
-    @property( Screw )
-    public listScrew: Screw[] = [];
-    @property( Node )
-    barparent: Node = null;
+    // @property( BarController )
+    // public listBar: BarController[] = [];
+    // @property( Screw )
+    // public listScrew: Screw[] = [];
+    // @property( Node )
+    // barparent: Node = null;
 
-    @property( UIMultiScreen )
-    public uiMultiScreen: UIMultiScreen = null;
+    // @property( UIMultiScreen )
+    // public uiMultiScreen: UIMultiScreen = null;
 
-    @property( { type: Node, group: "Element" } )
-    public LevelContainer: Node;
+    // @property( { type: Node, group: "Element" } )
+    // public LevelContainer: Node;
 
-    @property( { type: Node, group: "Element" } )
-    public BoxContainer: Node;
+    // @property( { type: Node, group: "Element" } )
+    // public BoxContainer: Node;
 
-    @property( { type: Node, group: "Element" } )
-    public CacheContainer: Node;
-
-
-    @property( { type: Node, group: "Element" } )
-    public Star: Node;
-
-    protected onLoad (): void
-    {
-        this.listBar.length = 0;
-        this.listScrew.length = 0;
-
-        if ( this.runSetCollider || this.setScrewToBar )
-        {
-            this.listBar = this.barparent.getComponentsInChildren( BarController );
-        }
-
-        if ( this.setlayer )
-        {
-            this.listBar = this.barparent.getComponentsInChildren( BarController );
-            this.listScrew = this.barparent.getComponentsInChildren( Screw );
-        }
-
-        if ( this.setCollider2222222 )
-        {
-            this.listBar = this.barparent.getComponentsInChildren( BarController );
-            this.listScrew = this.barparent.getComponentsInChildren( Screw );
-
-        }
-
-        if ( this.setPosScreenData )
-        {
-            this.SetScreenElements();
-        }
-
-        if ( this.testPosScreen )
-        {
-            this.TestPosScreen();
-        }
-
-    }
-
-    protected start (): void
-    {
-        if ( this.runSetCollider )
-        {
-            this.setCollider();
-        }
-
-        if ( this.setlayer )
-        {
-            this.setLayer();
-        }
-
-        if ( this.setScrewToBar )
-        {
-            this.SetScrewBar();
-        }
-
-        if ( this.runSetCollider2222222 )
-        {
-            this.setCollider2222222();
-        }
-    }
-
-    public setCollider (): void    
-    {
-        for ( let i = 0; i < this.listBar.length; i++ ) 
-        {
-
-            const bar = this.listBar[ i ];
-            bar.SetCollider();
-            //bar.collider.threshold = 5; 
-            bar.modelCollider.destroy();
-        }
-    }
+    // @property( { type: Node, group: "Element" } )
+    // public CacheContainer: Node;
 
 
+    // @property( { type: Node, group: "Element" } )
+    // public Star: Node;
 
-    public setCollider2222222 (): void    
-    {
-        // for ( let i = 0; i < this.listBar.length; i++ ) 
-        // {
-        //     const bar = this.listBar[ i ];
-        //     if ( bar.modelCollider )
-        //     {
-        //         bar.SetCollider();
-        //         //bar.collider.threshold = 5; 
-        //         bar.modelCollider.destroy();
-        //     }
+    // protected onLoad (): void
+    // {
+    //     this.listBar.length = 0;
+    //     this.listScrew.length = 0;
 
-        // }
-        //////
-        for ( let i = 0; i < this.listScrew.length; i++ ) 
-        {
-            const screw = this.listScrew[ i ];
-            if ( screw.ScrewRenderer.colorIndex === 5 )
-            {
-                screw.ScrewRenderer.colorIndex = 0;
-            }
+    //     if ( this.runSetCollider || this.setScrewToBar )
+    //     {
+    //         this.listBar = this.barparent.getComponentsInChildren( BarController );
+    //     }
 
-            if ( screw.ScrewRenderer.colorIndex === 7 )
-            {
-                screw.ScrewRenderer.colorIndex = 1;
-            }
+    //     if ( this.setlayer )
+    //     {
+    //         this.listBar = this.barparent.getComponentsInChildren( BarController );
+    //         this.listScrew = this.barparent.getComponentsInChildren( Screw );
+    //     }
 
-        }
-    }
+    //     if ( this.setCollider2222222 )
+    //     {
+    //         this.listBar = this.barparent.getComponentsInChildren( BarController );
+    //         this.listScrew = this.barparent.getComponentsInChildren( Screw );
 
-    public setLayer (): void
-    {
-        for ( let i = 0; i < this.listBar.length; i++ ) 
-        {
-            const bar = this.listBar[ i ];
-            bar.node.layer = 1 << 10;
-        }
-        for ( let i = 0; i < this.listScrew.length; i++ ) 
-        {
-            const screw = this.listScrew[ i ];
-            screw.node.layer = 1 << 11;
-        }
-    }
+    //     }
+
+    //     if ( this.setPosScreenData )
+    //     {
+    //         this.SetScreenElements();
+    //     }
+
+    //     if ( this.testPosScreen )
+    //     {
+    //         this.TestPosScreen();
+    //     }
+
+    // }
+
+    // protected start (): void
+    // {
+    //     if ( this.runSetCollider )
+    //     {
+    //         this.setCollider();
+    //     }
+
+    //     if ( this.setlayer )
+    //     {
+    //         this.setLayer();
+    //     }
+
+    //     if ( this.setScrewToBar )
+    //     {
+    //         this.SetScrewBar();
+    //     }
+
+    //     if ( this.runSetCollider2222222 )
+    //     {
+            
+    //     }
+    // }
+
+    // public setCollider (): void    
+    // {
+    //     for ( let i = 0; i < this.listBar.length; i++ ) 
+    //     {
+
+    //         const bar = this.listBar[ i ];
+    //         bar.SetCollider();
+    //         bar.modelCollider.destroy();
+    //     }
+    // }
+
+    // public setLayer (): void
+    // {
+    //     for ( let i = 0; i < this.listBar.length; i++ ) 
+    //     {
+    //         const bar = this.listBar[ i ];
+    //         bar.node.layer = 1 << 10;
+    //     }
+    //     for ( let i = 0; i < this.listScrew.length; i++ ) 
+    //     {
+    //         const screw = this.listScrew[ i ];
+    //         screw.node.layer = 1 << 11;
+    //     }
+    // }
 
 
-    public SetScrewBar (): void
-    {
+    // public SetScrewBar (): void
+    // {
 
-        for ( let i = 0; i < this.listBar.length; i++ ) 
-        {
-            const bar = this.listBar[ i ];
-            bar.listScrews.length = 0;
+    //     for ( let i = 0; i < this.listBar.length; i++ ) 
+    //     {
+    //         const bar = this.listBar[ i ];
+    //         bar.ListScrews.length = 0;
 
-            let listScrewInLayer = bar.node.parent.getComponentsInChildren( Screw );
+    //         let listScrewInLayer = bar.node.parent.getComponentsInChildren( Screw );
 
-            for ( let j = 0; j < listScrewInLayer.length; j++ )
-            {
-                const screw = listScrewInLayer[ j ];
-                const fullName = screw.node.name;
-                const extractedName = fullName.substring( fullName.indexOf( "Bar_" ) );
-                const barName = bar.node.name;
+    //         for ( let j = 0; j < listScrewInLayer.length; j++ )
+    //         {
+    //             const screw = listScrewInLayer[ j ];
+    //             const fullName = screw.node.name;
+    //             const extractedName = fullName.substring( fullName.indexOf( "Bar_" ) );
+    //             const barName = bar.node.name;
 
-                if ( extractedName === barName )
-                {
-                    bar.listScrews.push( screw );
-                }
+    //             if ( extractedName === barName )
+    //             {
+    //                 bar.ListScrews.push( screw );
+    //             }
 
-                //lay colorIndex
-                const parts = fullName.split( "_" );
-                const colorIndex = parts[ 1 ];
+    //             //lay colorIndex
+    //             const parts = fullName.split( "_" );
+    //             const colorIndex = parts[ 1 ];
 
-                screw.ScrewRenderer.colorIndex = parseInt( colorIndex );
+    //             screw.ScrewRenderer.colorIndex = parseInt( colorIndex );
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
-    public SetScreenElements (): void
-    {
-        this.uiMultiScreen.LevelContainerPosPortrai = this.LevelContainer.position;
-        this.uiMultiScreen.BoxContainerPosPortrai = this.BoxContainer.position;
-        this.uiMultiScreen.CacheContainerPosPortrai = this.CacheContainer.position;
-        this.uiMultiScreen.StarPosPortrai = this.Star.position;
+    // public SetScreenElements (): void
+    // {
+    //     this.uiMultiScreen.LevelContainerPosPortrai = this.LevelContainer.position;
+    //     this.uiMultiScreen.BoxContainerPosPortrai = this.BoxContainer.position;
+    //     this.uiMultiScreen.CacheContainerPosPortrai = this.CacheContainer.position;
+    //     this.uiMultiScreen.StarPosPortrai = this.Star.position;
 
-    }
+    // }
 
-    public TestPosScreen (): void
-    {
-        // //Portrait
-        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosPortrai;
-        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosPortrai;
-        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosPortrai;
-        // this.Star.position = this.uiMultiScreen.StarPosPortrai;
-        //Square
-        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosSquare;
-        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosSquare;
-        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosSquare;
-        // this.Star.position = this.uiMultiScreen.StarPosSquare;
+    // public TestPosScreen (): void
+    // {
+    //     // //Portrait
+    //     // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosPortrai;
+    //     // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosPortrai;
+    //     // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosPortrai;
+    //     // this.Star.position = this.uiMultiScreen.StarPosPortrai;
+    //     //Square
+    //     // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosSquare;
+    //     // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosSquare;
+    //     // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosSquare;
+    //     // this.Star.position = this.uiMultiScreen.StarPosSquare;
 
-        //Mixed
-        // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosMix;
-        // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosMix;
-        // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosMix;
-        // this.Star.position = this.uiMultiScreen.StarPosMix;
+    //     //Mixed
+    //     // this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosMix;
+    //     // this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosMix;
+    //     // this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosMix;
+    //     // this.Star.position = this.uiMultiScreen.StarPosMix;
         
-        // //Landscape
-        this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosLandscape;
-        this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosLandscape;
-        this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosLandscape;
-        this.Star.position = this.uiMultiScreen.StarPosLandscape;
-    }
+    //     // //Landscape
+    //     this.LevelContainer.position = this.uiMultiScreen.LevelContainerPosLandscape;
+    //     this.BoxContainer.position = this.uiMultiScreen.BoxContainerPosLandscape;
+    //     this.CacheContainer.position = this.uiMultiScreen.CacheContainerPosLandscape;
+    //     this.Star.position = this.uiMultiScreen.StarPosLandscape;
+    // }
 
 }
 

@@ -1,13 +1,11 @@
 import { instantiate } from 'cc';
 import { Prefab } from 'cc';
 import { _decorator, Component, Node } from 'cc';
-import BoxController from '../../../../extensions/nvthan/@types/packages/scene/@types/cce/public/gizmos/3d/elements/controller/box-controller';
 import { Box } from '../GameComponent/HoleContainer/Box/Box';
 import { tween } from 'cc';
 import { Label } from 'cc';
 import { Vec3 } from 'cc';
-import { MultiScreneController, ScreenType } from '../Controller/MultiScreneController';
-import { MoveScrewHandle } from '../Controller/MoveScrewHandle';
+import { ScreenType } from '../Controller/MultiScreneController';
 import { sp } from 'cc';
 import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
@@ -15,6 +13,7 @@ const { ccclass, property } = _decorator;
 @ccclass( 'TestIQController' )
 export class TestIQController extends Component 
 {
+    //#region EDITOR EXPOSED FIELD
     @property( [ Node ] )
     private uiTestIQ: Node = null;
     @property( [ Vec3 ] )
@@ -24,28 +23,12 @@ export class TestIQController extends Component
     @property( Node )
     private holder: Node = null;
     @property( Label )
-    public text: Label = null;
+    private text: Label = null;
     @property( sp.Skeleton )
-    public iqAnim: sp.Skeleton = null;
-
-
+    private iqAnim: sp.Skeleton = null;
+    //#endregion
 
     public currentIQ: number = 0;
-
-    private static _instance: TestIQController = null;
-
-    public static get Instance (): TestIQController
-    {
-        return this._instance;
-    }
-
-    protected override onLoad (): void
-    {
-        if ( TestIQController._instance === null )
-        {
-            TestIQController._instance = this;
-        }
-    }
 
     protected start (): void
     {

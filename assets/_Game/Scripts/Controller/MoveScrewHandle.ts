@@ -29,37 +29,47 @@ const { ccclass, property } = _decorator;
 @ccclass( 'MoveScrewHandle' )
 export class MoveScrewHandle extends Component
 {
-    //#region Properties
+    //#region EDITOR EXPOSED FIELD
     @property( { type: Camera } )
-    public camera: Camera = null;
-    @property( TutorialController )
-    private tutorialController: TutorialController = null;
+    private camera: Camera = null;
     @property( PoolTouch )
     private poolTouch: PoolTouch = null;
     @property( PlayableAdsManager )
-    public playableAdsManager: PlayableAdsManager = null;
+    private playableAdsManager: PlayableAdsManager = null;
+    @property(Node)
+    private touchVFX: Node = null;
+    //#endregion
 
+    //#region PUBLIC FIELD
     public _lastMousePosition: Vec2 = new Vec2();
-
     public isFirstTouch: boolean = false;
     //#endregion
 
+    //#region PROPERTIES
+    public get Camera (): Camera
+    {
+        return this.camera;
+    }
+    public set Camera ( value: Camera )
+    {
+        this.camera = value;
+    }
+    //#endregion
+
+    //#region CC METHOD
     protected override onLoad (): void
     {
-        // let node = instantiate(this.test);
-        // node.parent = this.parentt;
         this.poolTouch.initializePool( 15 );
         this.EnableTouch();
     }
-
-
-
 
     protected onDestroy (): void
     {
         this.DisableTouch();
     }
+    //#endregion
 
+    //#region PUBLIC METHOD
     public EnableTouch (): void
     {
         input.on( Input.EventType.TOUCH_START, this.onTouchStart, this );
@@ -69,59 +79,27 @@ export class MoveScrewHandle extends Component
     {
         input.off( Input.EventType.TOUCH_START, this.onTouchStart, this );
     }
-
-
-    private onTouchStart ( event: EventTouch ): void
+    //#region GetFreeHole
+    public GetFreeHoleBox ( colorType: eColorType ): Hole
     {
-
-        this.onClickHandle( event );
-
+        return getGameSystem().BoxContainer.GetFreeBoxSlot( colorType );
     }
 
-    private onClickHandle ( event: EventTouch ): void
+    public GetFreeHoleCache (): Hole
     {
-        if ( !this.camera ) return;
-
-        if ( this.isFirstTouch === false )
-        {
-            this.isFirstTouch = true;
-            this.playableAdsManager.ActionFirstClicked();
-            getGameSystem().AudioController.playerBGMusic();
-        }
-
-        if ( getGameSystem().GameManager.currentScrew <= 1 ) 
-        {
-            this.playableAdsManager.ForceOpenStore();
-            getGameSystem().GameManager.win = true;
-            TrackingManager.WinLevel();
-            return;
-        }
-
-        if ( getGameSystem().GameManager.forceStore === true )
-        {
-            //this.playableAdsManager.ForceOpenStore();
-                TrackingManager.LoseLevel();
-                return;
-
-        }
-        let ratio = 1;
-        const mousePosition = event.getLocation();
-        const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x * ratio, mousePosition.y * ratio, 0 ) );
-        this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
-       
-        this.checkClickScrew();
+        return getGameSystem().CahedContainer.GetFreeHole();
     }
-
+    //#endregion
     //#region CheckClickScrew
     public checkClickScrew (): void
     {
-        
+
         let component = this.CheckClick( GameLayerMaskConfig.SCREW_LAYER_MASK );
         if ( component !== null )
         {
             let screw = component.node.getComponent( Screw );
             if ( screw.State === eScrewState.IN_CACHED || screw.State === eScrewState.IS_HIDING ) return;
-            screw.CheckMove();
+            screw.checkMove();
             //this.pointSpawnTouchEffect( this._lastMousePosition );
         }
     }
@@ -195,7 +173,7 @@ export class MoveScrewHandle extends Component
                 }
             }
 
-           
+
 
             //Tim node gan nhat trong layer cao nhat
             let collider: Collider2D | null = null;
@@ -226,29 +204,60 @@ export class MoveScrewHandle extends Component
         return null;
     }
     //#endregion
+    //#endregion
 
-    //#region GetFreeHole
-    public GetFreeHoleBox ( colorType: eColorType ): Hole
+    //#region PRIVATE METHOD
+    private onTouchStart ( event: EventTouch ): void
     {
-        return getGameSystem().BoxContainer.GetFreeBoxSlot( colorType );
+        this.onClickHandle( event );
     }
 
-    public GetFreeHoleCache (): Hole
+    private onClickHandle ( event: EventTouch ): void
     {
-        return getGameSystem().CahedContainer.GetFreeHole();
+        if ( !this.camera ) return;
+
+        if ( this.isFirstTouch === false )
+        {
+            this.isFirstTouch = true;
+            this.playableAdsManager.ActionFirstClicked();
+            getGameSystem().AudioController.playerBGMusic();
+        }
+
+        if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
+        {
+            this.playableAdsManager.ForceOpenStore();
+            getGameSystem().GameManager.win = true;
+            TrackingManager.WinLevel();
+            return;
+        }
+
+        let ratio = 1;
+        const mousePosition = event.getLocation();
+        const worldPosition = this.camera.screenToWorld( new Vec3( mousePosition.x * ratio, mousePosition.y * ratio, 0 ) );
+        this._lastMousePosition = new Vec2( worldPosition.x, worldPosition.y );
+
+        ///Touch effect
+        this.touchVFX.setWorldPosition( new Vec3( this._lastMousePosition.x, this._lastMousePosition.y, 0 ) );
+        var childs = this.touchVFX.getComponentsInChildren(ParticleSystem);
+        childs.forEach(element => {
+            element.stop();
+            element.play();
+        });
+
+        this.checkClickScrew();
     }
     //#endregion
 
+    // public pointSpawnTouchEffect ( pos: Vec2 ): void
+    // {
+    //     const touch = this.poolTouch.getFromPool();
+    //     touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
 
-    public pointSpawnTouchEffect ( pos: Vec2 ): void
-    {
-        const touch = this.poolTouch.getFromPool();
-        touch.worldPosition = new Vec3( pos.x, pos.y, 0 );
+    //     setTimeout( () =>
+    //     {
+    //         this.poolTouch.returnToPool( touch );
+    //     }, 2000 );
 
-        setTimeout( () =>
-        {
-            this.poolTouch.returnToPool( touch );
-        }, 2000 );
 
-    }
+    // }
 }

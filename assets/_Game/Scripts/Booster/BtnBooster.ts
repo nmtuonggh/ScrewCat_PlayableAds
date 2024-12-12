@@ -42,6 +42,7 @@ export class BtnBooster extends Component
         this.updateBtn();
     }
 
+    //event button
     public UseBtn ()
     {
         if ( getGameSystem().CahedContainer.isFirstTime4Screw === false ) return;

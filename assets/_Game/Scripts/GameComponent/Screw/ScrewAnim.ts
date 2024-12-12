@@ -4,14 +4,13 @@ const { ccclass, property } = _decorator;
 @ccclass( 'ScrewAnim' )
 export class ScrewAnim extends Component
 {
-    public anim: Animation | null = null;
-
-    private _callback: Function = null;
+    private anim: Animation | null = null;
 
     protected onLoad (): void
     {
         this.anim = this.getComponent( Animation );
     }
+
 
     public ScrewOut (): void
     {
@@ -48,11 +47,6 @@ export class ScrewAnim extends Component
                 this.anim.play( 'right' );
                 break;
         }
-    }
-
-    private onAnimCompleted (): void
-    {
-        this._callback && this._callback();
     }
 }
 

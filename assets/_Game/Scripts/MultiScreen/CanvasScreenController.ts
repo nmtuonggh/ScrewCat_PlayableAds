@@ -16,6 +16,11 @@ export class CanvasScreenController extends Component {
 
     @property(UICanvasScreen)
     public uiCanvasScreen: UICanvasScreen = null;
+
+    protected onLoad (): void
+    {
+        this.cameraParticle.orthoHeight = this.cameraGamePlay.orthoHeight;
+    }
 }
 
 

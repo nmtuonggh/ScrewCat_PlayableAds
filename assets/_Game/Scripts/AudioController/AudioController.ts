@@ -29,7 +29,7 @@ export class AudioController extends Component
 
     //#endregion
 
-    public checkLose (): void
+    public lose (): void
     {
         this.audioSource.stop();
         this.backGroudSource.stop();

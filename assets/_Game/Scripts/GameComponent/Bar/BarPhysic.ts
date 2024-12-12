@@ -25,14 +25,14 @@ export class BarPhysic extends Component {
 
     public CreatHGJoint (): void
     {
-        for ( let i = 0; i < this.barController.listScrews.length; i++ ) 
+        for ( let i = 0; i < this.barController.ListScrews.length; i++ ) 
         {
-            const screw = this.barController.listScrews[ i ];
+            const screw = this.barController.ListScrews[ i ];
             //const worldPos = screw.node.getWorldPosition();
             const worldPos = screw.node.getWorldPosition();
             const localPos = this.node.getComponent(UITransform).convertToNodeSpaceAR(worldPos);
             const screwRb = screw.node.getComponent( RigidBody2D );
-            screw.hingeJoint = this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb );
+            screw.HingeJoint = this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb );
         }
     }
 
@@ -47,17 +47,17 @@ export class BarPhysic extends Component {
 
     public EnableHGJoin (): void
     {
-        for ( let i = 0; i < this.barController.listScrews.length; i++ ) 
+        for ( let i = 0; i < this.barController.ListScrews.length; i++ ) 
         {
-            this.barController.listScrews[ i ].hingeJoint.enabled = true;
+            this.barController.ListScrews[ i ].HingeJoint.enabled = true;
         }
     }
 
     public DisableHGJoin (): void
     {
-        for ( let i = 0; i < this.barController.listScrews.length; i++ ) 
+        for ( let i = 0; i < this.barController.ListScrews.length; i++ ) 
         {
-            this.barController.listScrews[ i ].hingeJoint.enabled = false;
+            this.barController.ListScrews[ i ].HingeJoint.enabled = false;
         }
     }
 

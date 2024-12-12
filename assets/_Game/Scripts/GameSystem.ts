@@ -117,7 +117,7 @@ export class GameSystem extends Component
         if ( this.gameManager.lose )
         {
             this.audioController.playAudio( AudioType.lose );
-            this.audioController.checkLose();
+            this.audioController.lose();
         }
     }
     //#endregion

@@ -35,16 +35,14 @@ export class BoosterControll extends Component
     //#region EDITOR EXPOSED FIELDS
     @property( HightlightBooster )
     private hightlightBooster: HightlightBooster = null;
-    @property( [CCInteger] )
-    public listBoosterCount: number[] = [];
-    @property( CCBoolean )
-    private isUsingBooster: boolean = false;
-    @property( CCBoolean )
+    @property( )
+    private listBoosterCount: number[] = [];
+    @property()
     private isCompleteBreakBar: boolean = false;
     @property( Node )
     private mayhutPosiotion: Node = null;
     @property( Node )
-    public BoosterUI: Node = null;
+    private boosterUI: Node = null;
 
     @property( { type: sp.Skeleton, group: "Skeleton" } )
     private drillSkeleton: sp.Skeleton = null;
@@ -67,6 +65,14 @@ export class BoosterControll extends Component
     public get HightlightBooster ()
     {
         return this.hightlightBooster;
+    }
+    public get BoosterUI (): Node
+    {
+        return this.boosterUI;
+    }
+    public set BoosterUI ( value: Node )
+    {
+        this.boosterUI = value;
     }
     //#endregion
 
@@ -236,7 +242,7 @@ export class BoosterControll extends Component
                 let screw = listScrewOnCached[ i ];
                 if ( screw !== null )
                 {
-                    getGameSystem().CahedContainer.currentScrewCount--;
+                    getGameSystem().CahedContainer.CurrentScrewCount--;
                     this.MoveScrewToBooster( screw, i );
                 }
             }
@@ -254,7 +260,7 @@ export class BoosterControll extends Component
     {
         let timedelay = 0.15;
         const worldPosition = screw.node.worldPosition.clone();
-        screw.node.setParent( this.BoosterUI );
+        screw.node.setParent( this.boosterUI );
         screw.node.worldPosition = worldPosition;
         tween( screw.node )
             .delay( timedelay * order )
