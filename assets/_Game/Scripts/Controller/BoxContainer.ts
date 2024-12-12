@@ -17,7 +17,7 @@ export class BoxContainer extends Component
 {
     //#region EDITOR EXPOSED FIELD
     @property( BoxData )
-    private BoxData: BoxData = null;
+    private boxData: BoxData = null;
     //#endregion
 
     //#region PRIVATE FIELD
@@ -29,6 +29,10 @@ export class BoxContainer extends Component
     public get BoxSlots (): BoxSlot[]
     {
         return this.boxSlots;
+    }
+    public get BoxData (): BoxData
+    {
+        return this.boxData;
     }
     //#endregion
 
@@ -65,6 +69,19 @@ export class BoxContainer extends Component
         }
 
         return null;
+    }
+
+    public getBoxForTutorial (): Box[]
+    {
+        var box = [];
+        for ( const slot of this.boxSlots )
+        {
+            if ( slot.Box !== null )
+            {
+                box.push( slot.Box );
+            }
+        }
+        return box;
     }
 
     public GetBoxAvailable (): Box[]
@@ -119,11 +136,11 @@ export class BoxContainer extends Component
         if ( color === eColorType.None ) return null;
 
         ///
-        const boxNode = instantiate( this.BoxData.boxPrefab[ holeCount - 1 ] );
+        const boxNode = instantiate( this.boxData.boxPrefab[ holeCount - 1 ] );
         boxNode.parent = boxSlot.boxHolder;
         boxNode.setPosition( new Vec3( 0, 200, 0 ) );
         const box = boxNode.getComponent( Box );
-        box.BoxRenderer.SetBoxData( color, this.BoxData );
+        box.BoxRenderer.SetBoxData( color, this.boxData );
         box.MoveIn();
         this.boxIsActive.push( box );
         getGameSystem().LevelController.currentIndex++;

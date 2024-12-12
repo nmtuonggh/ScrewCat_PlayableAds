@@ -12,6 +12,7 @@ import { UnlockBoxController } from './UnlockBoxConcept/UnlockBoxController';
 import { BoosterControll } from './Booster/BoosterControll';
 import { UIController } from './UIController';
 import { TestIQController } from './TestIQ/TestIQController';
+import { RealTimeTutorial } from './Controller/RealTimeTutorial';
 const { ccclass, property } = _decorator;
 
 var gameSystem: GameSystem;
@@ -48,9 +49,15 @@ export class GameSystem extends Component
     private tesIQController: TestIQController = null;
     @property( { type: AudioController, group: "Controller" } )
     private audioController: AudioController = null;
+    @property( { type: RealTimeTutorial, group: "Controller" } )
+    private realTimeTutorial: RealTimeTutorial = null;
     //#endregion
 
     //#region PROPERTIES
+    public get RealTimeTutorial ()
+    {
+        return this.realTimeTutorial
+    }
     public get TestIQController ()
     {
         return this.tesIQController;

@@ -81,7 +81,7 @@ export class Screw extends GameLayerComponent
     private cachedBarLayer: Collider2D[] = [];
     //#region Blocked
 
-    private IsBlocked (): boolean
+    public IsBlocked (): boolean
     {
         this.cachedBarLayer = [];
 
@@ -128,7 +128,7 @@ export class Screw extends GameLayerComponent
             {
                 if ( bar.Layer > this.Layer )
                 {
-                    console.log( "Is blocked" + bar.node.name );
+                    //console.log( "Is blocked" + bar.node.name );
                     return true;
                 }
             }
@@ -228,6 +228,7 @@ export class Screw extends GameLayerComponent
         {
             this.BlockedTween();
             getGameSystem().AudioController.playBlock();
+            getGameSystem().RealTimeTutorial.updateTutorial();
             return;
         }
 
@@ -258,7 +259,7 @@ export class Screw extends GameLayerComponent
                     //getGameSystem().MoveScrewHandle.pointSpawnTouchEffect( getGameSystem().MoveScrewHandle._lastMousePosition );
                     getGameSystem().LevelController.RemoveScrewInLayer( this );
                     getGameSystem().GameManager.CurrentScrew--;
-
+                    getGameSystem().RealTimeTutorial.updateTutorial();
                 }
 
                 break;

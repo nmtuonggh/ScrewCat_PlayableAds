@@ -29,6 +29,8 @@ export class TutorialController extends Component
     {
         this.screw.getComponent( Screw ).ScrewAnimation.stopPlayTutorial();
         Tween.stopAllByTarget( this.handPortrait );
+        getGameSystem().RealTimeTutorial.node.active = true;
+        this.handPortrait.active = false;
     }
 
     public handTutorial (): void
@@ -46,7 +48,7 @@ export class TutorialController extends Component
                 tween()
                     .parallel(
                         tween().to( 0.5, { position: new Vec3( 0, 0, 0 ) }, { easing: 'cubicIn' } ),
-                        tween().to( 0.5, { scale: new Vec3( 1.2, 1.2, 1.2 ) }, { easing: 'cubicIn' } )
+                        tween().to( 0.5, { scale: new Vec3( 1, 1, 1 ) }, { easing: 'cubicIn' } )
                     )
                     .call( () => this.screw.getComponent( Screw ).ScrewAnimation.ScrewOut() )
                     .parallel(
