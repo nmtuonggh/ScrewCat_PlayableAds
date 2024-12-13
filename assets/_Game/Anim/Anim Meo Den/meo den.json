@@ -1,0 +1,76 @@
+{
+"skeleton": {
+	"hash": "pVMqlblhYYeivEwizsQocQ/RoXI",
+	"spine": "3.8.99",
+	"x": -1.39,
+	"y": 1.38,
+	"width": 478.11,
+	"height": 554.9,
+	"images": "./images/",
+	"audio": "D:/Work/14.ScrewCat/241212/1.MeoDen/Anim meo den"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "Main", "parent": "root", "x": 24.72, "y": -78.06 },
+	{ "name": "Ban", "parent": "Main" },
+	{ "name": "bone", "parent": "Main", "x": 195.26, "y": 412.34, "scaleX": -1 }
+],
+"slots": [
+	{ "name": "Main", "bone": "root", "attachment": "Main" },
+	{ "name": "table", "bone": "Ban", "attachment": "table" },
+	{ "name": "bone2", "bone": "bone", "attachment": "bone" },
+	{ "name": "Meo", "bone": "bone", "attachment": "1" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Main": {
+				"Main": {
+					"type": "clipping",
+					"end": "table",
+					"vertexCount": 4,
+					"vertices": [ 1.21, 798.05, -1.39, 3.14, 706.35, 0.54, 698.54, 800.65 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"Meo": {
+				"1": { "width": 378, "height": 444 },
+				"2": { "width": 378, "height": 444 },
+				"3": { "width": 378, "height": 444 },
+				"4": { "width": 378, "height": 444 },
+				"5": { "width": 378, "height": 444 },
+				"6": { "width": 378, "height": 444 }
+			},
+			"bone2": {
+				"bone": {
+					"type": "clipping",
+					"end": "bone2",
+					"vertexCount": 25,
+					"vertices": [ 171.48, -199.99, 163.18, -206.96, 154.22, -211.28, 139.28, -211.94, 123.01, -206.96, 113.38, -200.65, 96.45, -188.37, 85.49, -178.08, 79.85, -171.77, 62.92, -170.44, 46.98, -174.43, 12.12, -185.05, -36.68, -209.29, -45.45, -207.06, -82.44, -174.9, -90.55, -177.2, -108.47, -182.15, -121.86, -186.89, -130.1, -189.98, -204.07, -202.79, -340.66, -48.82, -256.1, 206.17, 114.69, 316.76, 268.21, 289.44, 374.89, 35.74 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"table": {
+				"table": { "x": 0.5, "y": 115.28, "width": 903, "height": 289 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"Meo": {
+				"attachment": [
+					{ "time": 0.1, "name": "2" },
+					{ "time": 0.2333, "name": "3" },
+					{ "time": 0.3333, "name": "4" },
+					{ "time": 0.4333, "name": "5" },
+					{ "time": 0.5333, "name": "6" },
+					{ "time": 1.2333, "name": "6" }
+				]
+			}
+		}
+	}
+}
+}

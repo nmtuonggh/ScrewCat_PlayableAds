@@ -47,8 +47,6 @@ export class BoxRenderer extends Component
 
     public PlayAnimCompleBox (index : number): void
     {
-        //random skin cho skeleton
-        //let skinIndex = Math.floor(Math.random() * 5);
         this.skeleton.setSkin(eAnimMeowSkin[index]);
         this.skeleton.setAnimation(0, "Appear", false);
     }

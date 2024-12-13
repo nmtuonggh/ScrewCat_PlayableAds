@@ -108,7 +108,7 @@ export class BoxContainer extends Component
 
     public CheckCreateBox (): void
     {
-        if ( getGameSystem().LevelController.currentIndex >= getGameSystem().LevelController.colorBoxSpawnData.length ) return;
+        if ( getGameSystem().LevelController.CurrentIndex >= getGameSystem().LevelController.ColorBoxSpawnData.length ) return;
         for ( const boxSlot of this.boxSlots )
         {
             if ( boxSlot.IsLock ) continue;
@@ -130,8 +130,8 @@ export class BoxContainer extends Component
     //#region PRIVATE METHOD
     private CreatBox ( boxSlot: BoxSlot ): Box
     {
-        const color = getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].color;
-        const holeCount = getGameSystem().LevelController.colorBoxSpawnData[ getGameSystem().LevelController.currentIndex ].holeCount;
+        const color = getGameSystem().LevelController.ColorBoxSpawnData[ getGameSystem().LevelController.CurrentIndex ].color;
+        const holeCount = getGameSystem().LevelController.ColorBoxSpawnData[ getGameSystem().LevelController.CurrentIndex ].holeCount;
 
         if ( color === eColorType.None ) return null;
 
@@ -143,7 +143,7 @@ export class BoxContainer extends Component
         box.BoxRenderer.SetBoxData( color, this.boxData );
         box.MoveIn();
         this.boxIsActive.push( box );
-        getGameSystem().LevelController.currentIndex++;
+        getGameSystem().LevelController.CurrentIndex++;
         return box;
     }
     //#endregion

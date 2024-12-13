@@ -54,7 +54,7 @@ export class GameManager extends Component
         const cacheContainer = getGameSystem().CahedContainer;
         const uiController = getGameSystem().UIController;
 
-        if ( cacheContainer.CurrentScrewCount >= cacheContainer.listActiveHole.length && this.lose === false )
+        if ( cacheContainer.CurrentScrewCount >= cacheContainer.listActiveHole.length && !this.lose)
         {
             this.scheduleOnce( () =>
             {
@@ -62,7 +62,6 @@ export class GameManager extends Component
                 getGameSystem().lose();
                 uiController.tweenFail();
                 uiController.showOutOfMove();
-                getGameSystem().BoosterControll.BoosterUI.getComponent( UIOpacity ).opacity = 0;
                 //wait for 2s
                 setTimeout( () =>
                 {
@@ -82,7 +81,7 @@ export class GameManager extends Component
     {
         //duyệt ngược colorBoxdata của levelcontroller, tìm ra colorBoxData đầu tiên có cùng màu với screw và trừ đi 1 holecount nếu holecount = 0 thì xóa luôn phần tử đó
 
-        let colorBoxData = getGameSystem().LevelController.colorBoxSpawnData;
+        let colorBoxData = getGameSystem().LevelController.ColorBoxSpawnData;
         for ( let i = colorBoxData.length - 1; i >= 0; i-- )
         {
             if ( colorBoxData[ i ].color === screw.ScrewRenderer.colorType )

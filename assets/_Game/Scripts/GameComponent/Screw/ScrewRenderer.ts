@@ -1,6 +1,5 @@
 import { _decorator, CCInteger, color, Component, Node, Sprite } from 'cc';
 import { eColorType } from '../../GameConfig/GameColorConfig';
-import { GameColorData } from '../../GameConfig/GameColorData';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { Enum } from 'cc';
 import { tween } from 'cc';
@@ -13,13 +12,11 @@ export class ScrewRenderer extends Component
     @property( Sprite )
     private topSprite: Sprite = null
     @property( Sprite )
-    public botSprite: Sprite = null
+    private botSprite: Sprite = null
     @property( UIOpacity )
-    public topOpacity: UIOpacity = null;
-
+    private topOpacity: UIOpacity = null;
     @property( { type: Enum( eColorType ) } )
     public colorType: eColorType = eColorType.Green;
-
     @property( Number )
     public colorIndex: number = 0;
 
@@ -31,19 +28,19 @@ export class ScrewRenderer extends Component
         //this.screwSprite.color = GameColorData.GetColorByType( this.colorType );
     }
 
-    public SetSprite ( colorType: eColorType, data: ScrewData ): void
+    public setSprite ( colorType: eColorType, data: ScrewData ): void
     {
         this.colorType = colorType;
         this.topSprite.spriteFrame = data.ScrewTopSprite[ colorType ];
     }
 
-    public SetSelfColor ( data: ScrewData )
+    public setSelfColor ( data: ScrewData )
     {
         this.topSprite.spriteFrame = data.ScrewTopSprite[ this.colorIndex ];
         this.colorType = this.colorIndex;
     }
 
-    public HideScrew (): void
+    public hideScrew (): void
     {
         if ( this.topOpacity !== null )
         {
@@ -52,7 +49,7 @@ export class ScrewRenderer extends Component
         this.botSprite.node.active = false;
     }
 
-    public ShowScrew (): void
+    public showScrew (): void
     {
         if ( this.topOpacity !== null )
         {

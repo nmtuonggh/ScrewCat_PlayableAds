@@ -217,7 +217,7 @@ export class BoosterControll extends Component
     {
         this.isCompleteBreakBar = true;
         await this.UseHammer();
-        bar.BreakBar();
+        bar.breakBar();
         input.off( Input.EventType.TOUCH_START, this.GetBarState, this );
         getGameSystem().MoveScrewHandle.EnableTouch();
         this.SetState( BoosterState.None );

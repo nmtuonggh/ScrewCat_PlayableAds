@@ -111,23 +111,23 @@ export class BoxSlot extends Component
 
     protected update ( dt: number ): void
     {
-        if ( this.lockAnim.node.active
-            && PlayableAdsManager.Instance().firstClicked
-            && !getGameSystem().GameManager.lose
-            && !getGameSystem().GameManager.win )
-        {
-            if ( this.randomTime === 0 )
-            {
-                this.randomTime = Math.random() * 15000;
-            }
-            this.accumulatedTime += dt * 1000;
-            if ( this.accumulatedTime >= this.randomTime )
-            {
-                this.lockAnim.setAnimation( 0, 'Act', false );
-                getGameSystem().AudioController.playChain();
-                this.resetTimers();
-            }
-        }
+        // if ( this.lockAnim.node.active
+        //     && PlayableAdsManager.Instance().firstClicked
+        //     && !getGameSystem().GameManager.lose
+        //     && !getGameSystem().GameManager.win )
+        // {
+        //     if ( this.randomTime === 0 )
+        //     {
+        //         this.randomTime = Math.random() * 15000;
+        //     }
+        //     this.accumulatedTime += dt * 1000;
+        //     if ( this.accumulatedTime >= this.randomTime )
+        //     {
+        //         this.lockAnim.setAnimation( 0, 'Act', false );
+        //         getGameSystem().AudioController.playChain();
+        //         this.resetTimers();
+        //     }
+        // }
     }
 
     private resetTimers (): void

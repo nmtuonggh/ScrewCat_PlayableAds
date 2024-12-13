@@ -5,7 +5,7 @@ import { eColorType } from '../../../GameConfig/GameColorConfig';
 import { Hole } from '../../Hole/Hole';
 import { BoxRenderer } from './BoxRenderer';
 import { BoxSlot } from './BoxSlot';
-import {  AudioType } from '../../../AudioController/AudioController';
+import { AudioType } from '../../../AudioController/AudioController';
 import { GameConfig } from '../../../GameConfig/GameConfig';
 import { getGameSystem } from '../../../GameSystem';
 const { ccclass, property } = _decorator;
@@ -92,11 +92,12 @@ export class Box extends HoleContainer
     private MoveOut (): void
     {
         const pos = this.node.position.clone().add( new Vec3( 0, 200, 0 ) );
-        this.boxRenderer.skeleton.setAnimation( 0, 'Appear2', true );
+        this.boxRenderer.skeleton.setAnimation( 0, 'Appear2', false );
         tween( this.node )
             .to( GameConfig.BOX_MOVEOUT_DURATION, { position: pos } )
             .call( () =>
             {
+                this.boxRenderer.skeleton.enabled = false;
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
                 getGameSystem().UnlockBoxController.AddLockCount();
@@ -107,6 +108,7 @@ export class Box extends HoleContainer
     }
     private CloseBox (): void
     {
+        if ( getGameSystem().GameManager.lose ) return;
         let listHolesPos: Vec3[] = [];
         for ( let i = 0; i < this.listHoles.length; i++ )
         {
@@ -114,26 +116,25 @@ export class Box extends HoleContainer
         }
         getGameSystem().GameManager.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
-        this.boxRenderer.skeleton.setSkin( 'Close' );
-
         ///Random tieng meo di kem voi con meo
-        let index = Math.floor(Math.random() * 5);
-        this.boxRenderer.PlayAnimCompleBox(index);
+        let index = Math.floor( Math.random() * 5 );
+        let iqNode;
+        this.boxRenderer.PlayAnimCompleBox( index );
         tween( this.boxRenderer.closeBox )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
             {
                 getGameSystem().AudioController.playAudio( AudioType.boxComplete );
-                getGameSystem().AudioController.playMewoComplete(index);
+                getGameSystem().AudioController.playMewoComplete( index );
                 this.starList = getGameSystem().StarController.spawnStar( this.listHoles.length, listHolesPos, 0 );
                 getGameSystem().StarController.playParticle( this.node.worldPosition );
-                //this.iqNode = getGameSystem().TestIQController.SpawnIQ( this );
+                iqNode = getGameSystem().TestIQController.spawnIQ( this.node, true );
             } )
             .delay( 0.3 )
             .call( () =>
             {
                 getGameSystem().StarController.moveListStart( this.starList );
-                //getGameSystem().TestIQController.MoveIQ( this.iqNode );
+                getGameSystem().TestIQController.moveIQ( iqNode, 5 );
                 this.MoveOut();
             } )
             .start();

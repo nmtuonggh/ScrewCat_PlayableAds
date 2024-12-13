@@ -117,33 +117,6 @@ export class MoveScrewHandle extends Component
 
         let cachedCols = PhysicsSystem2D.instance.testAABB( aabb );
 
-        //ban 10 diem xung quanh
-        // const points = [];
-        // const numPoints = 10;
-        // const angleStep = ( 2 * Math.PI ) / numPoints;
-
-        // for ( let i = 0; i < numPoints; i++ )
-        // {
-        //     const angle = i * angleStep;
-        //     const x = this._lastMousePosition.x + GameConfig.CLICK_RADIUS * Math.cos( angle );
-        //     const y = this._lastMousePosition.y + GameConfig.CLICK_RADIUS * Math.sin( angle );
-        //     points.push( new Vec2( x, y ) );
-        // }
-
-        // let cachedCols: Collider2D[] = [];
-
-        // for ( const point of points )
-        // {
-        //     let collider = PhysicsSystem2D.instance.testPoint( point );
-        //     if ( collider.length > 0 )
-        //     {
-        //         for ( let i = 0; i < collider.length; i++ )
-        //         {
-        //             cachedCols.push( collider[ i ] );
-        //         }
-        //     }
-        // }
-
         //loc cac collider theo layer
         if ( cachedCols.length === 0 ) return null;
 
@@ -223,13 +196,13 @@ export class MoveScrewHandle extends Component
             getGameSystem().AudioController.playerBGMusic();
         }
 
-        if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
-        {
-            this.playableAdsManager.ForceOpenStore();
-            getGameSystem().GameManager.win = true;
-            TrackingManager.WinLevel();
-            return;
-        }
+        // if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
+        // {
+        //     this.playableAdsManager.ForceOpenStore();
+        //     getGameSystem().GameManager.win = true;
+        //     TrackingManager.WinLevel();
+        //     return;
+        // }
 
         let ratio = 1;
         const mousePosition = event.getLocation();

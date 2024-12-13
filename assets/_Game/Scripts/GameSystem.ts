@@ -112,10 +112,23 @@ export class GameSystem extends Component
     }
 
     //#endregion
-
+    //#region PRIVATE FIELD
+    private isFINISH: boolean = false;
+    //#endregion
     protected onLoad (): void
     {
         gameSystem = this;
+    }
+    protected update ( dt: number ): void
+    {
+        if ( !this.isFINISH )
+        {
+            if(getGameSystem().GameManager.CurrentScrew <= 0)
+            {
+                this.isFINISH = true;
+                this.scheduleOnce( () => this.win(), 1 );
+            }
+        }
     }
 
     //#region PUBLIC METHODS
@@ -126,6 +139,11 @@ export class GameSystem extends Component
             this.audioController.playAudio( AudioType.lose );
             this.audioController.lose();
         }
+    }
+    public win ()
+    {
+        this.uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+        this.uiController.showLose();
     }
     //#endregion
 }

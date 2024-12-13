@@ -13,17 +13,17 @@ export class GameLayer extends Component
 
     public listBar: BarController[] = [];
 
-    public ActiveLayer (): void
+    public activeLayer (): void
     {
         this.node.active = true;
     }
 
-    public UnActiveLayer (): void
+    public unActiveLayer (): void
     {
         //this.node.active = false;
     }
 
-    public InitDataLayer():void
+    public initDataLayer():void
     {
         this.listScrew = this.node.getComponentsInChildren(Screw);
         this.listBar = this.node.getComponentsInChildren(BarController);
@@ -31,58 +31,40 @@ export class GameLayer extends Component
         
     }
 
-    public RemoveScrew (): void
+    public removeScrew (): void
     {
         this.screwCount--;
     }
 
-    public ShowScrew (): void{
+    public showScrew (): void{
         for ( let i = 0; i < this.listScrew.length; i++ )
         {
-            this.listScrew[i].Show();
+            this.listScrew[i].show();
         }
     }
 
-    public HideScrew (): void{
+    public hideScrew (): void{
         for ( let i = 0; i < this.listScrew.length; i++ )
         {
-            this.listScrew[i].Hide();
+            this.listScrew[i].hide();
         }
     }
 
-    public SetNormalSpriteBarInLayer (): void
+    public setNormalSpriteBarInLayer (): void
     {
         for ( let i = 0; i < this.listBar.length; i++ )
         {
             const bar = this.listBar[ i ];
-            bar.ShowBar();
+            bar.showBar();
         }
     }
 
-    public SetHideSpriteBar (): void
+    public setHideSpriteBar (): void
     {
         for ( let i = 0; i < this.listBar.length; i++ )
         {
             const bar = this.listBar[ i ];
-            bar.HideBar();
-        }
-    }
-
-    public SetKinematicBarLayer (): void
-    {
-        for ( let i = 0; i < this.listBar.length; i++ )
-        {
-            const bar = this.listBar[ i ];
-            bar.BarPhysic.SetKinematic();
-        }
-    }
-
-    public SetDynamicBarLayer (): void
-    {
-        for ( let i = 0; i < this.listBar.length; i++ )
-        {
-            const bar = this.listBar[ i ];
-            bar.BarPhysic.SetDynamic();
+            bar.hideBar();
         }
     }
 }

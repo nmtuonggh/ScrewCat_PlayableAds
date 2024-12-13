@@ -138,7 +138,7 @@ export class MultiScreneController extends Component
         this.canvasScreenController[ type ].getComponent( Widget ).updateAlignment();
         getGameSystem().MoveScrewHandle.Camera = this.getCameraGamePlay();
         this.uimulti.SetComponentPosition( type );  //set vi tri cac thanh phan
-        getGameSystem().TestIQController.SetupIQUI(type );
+        getGameSystem().TestIQController.setupIQUI(type );
         getGameSystem().UIController.onChangedScreen();
     }
 

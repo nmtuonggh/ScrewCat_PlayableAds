@@ -72,25 +72,11 @@ export class Level extends Component
 
         }
     }
-
     get SyncDataBox ()
     {
         return this.syncDataBox;
     }
-    @property
-    set UpdatedHideLayer ( value: boolean )
-    {
-        if ( !this.updatedHideLayer )
-        {
-            this.updatedHideLayer = value;
-            this.setHideLayer();
-        }
-    }
-
-    get UpdatedHideLayer ()
-    {
-        return this.updatedHideLayer;
-    }
+  
 
     //#endregion
 
@@ -140,38 +126,6 @@ export class Level extends Component
             modelCollider.destroy();
         } );
     }
-
-    setHideLayer ()
-    {
-        // if ( Editor )
-        // {
-           
-            const assetPath = 'db://assets/_Game/Images/hideImage';
-
-            resources.loadDir(assetPath, SpriteFrame, (err, assets) => 
-            {
-                if ( err )
-                {
-                    console.error( err );
-                    return;
-                }
-                var bars = this.node.getComponentsInChildren( BarController );
-                assets.forEach( image =>
-                {
-                    bars.forEach( element =>
-                    {
-                        if ( element.node.name = image.name )
-                        {
-                            var hideImage = element.node.children[ 1 ].getComponent( Sprite );
-                            hideImage.spriteFrame = image;
-                        }
-                    } );
-                } );
-            }
-            );
-        //};
-    }
-
 
     setScrewToBar ()
     {

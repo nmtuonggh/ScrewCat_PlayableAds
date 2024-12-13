@@ -19,7 +19,9 @@ export class TestIQController extends Component
     @property( [ Vec3 ] )
     private endPosition: Vec3[] = [];
     @property( Prefab )
-    private iqPrefab: Prefab = null;
+    private iqPrefabAdd: Prefab = null;
+    @property( Prefab )
+    private iqPrefabDec: Prefab = null;
     @property( Node )
     private holder: Node = null;
     @property( Label )
@@ -36,99 +38,115 @@ export class TestIQController extends Component
         this.text.string = `${ this.currentIQ }`;
     }
 
-    private SetStartPosition ( screenType: ScreenType ): void
+    private setStartPosition ( screenType: ScreenType ): void
     {
+        if ( !this.uiTestIQ ) return;
         let pos = this.endPosition[ screenType ].clone().subtract( new Vec3( 0, 800, 0 ) );
         this.uiTestIQ.position = pos;
     }
 
-    private SetEndPosition ( screenType: ScreenType ): void
+    private setEndPosition ( screenType: ScreenType ): void
     {
+        if ( !this.uiTestIQ ) return;
+        let pos = this.endPosition[ screenType ];
+        this.uiTestIQ.position = pos;
+    }
+    private setUIIQPosition ( screenType: ScreenType ): void
+    {
+        if ( !this.uiTestIQ ) return;
         let pos = this.endPosition[ screenType ];
         this.uiTestIQ.position = pos;
     }
 
-    public TweenIQUI ( screenType: ScreenType ): void
+    public tweenIQUI ( screenType: ScreenType ): void
     {
-        this.iqAnim.setAnimation( 0, "idle", true );
+        //this.iqAnim.setAnimation( 0, "idle", true );
         tween( this.uiTestIQ )
             .to( 0.5, { position: this.endPosition[ screenType ] }, { easing: 'backOut' } )
             .call( () =>
             {
-                this.TweenScaleText();
-                this.AddIQ( 75 );
-                this.iqAnim.setAnimation( 0, "Roi kinh", false );
-                this.iqAnim.setCompleteListener( () =>
-                {
-                    this.iqAnim.setAnimation( 0, "idle", true );
-                } );
+                this.tweenScaleText();
+                this.addIQ( 75 );
+                // this.iqAnim.setAnimation( 0, "Roi kinh", false );
+                // this.iqAnim.setCompleteListener( () =>
+                // {
+                //     this.iqAnim.setAnimation( 0, "idle", true );
+                // } );
             } )
             .start();
     }
 
-    public SetupIQUI ( screenType: ScreenType ): void
+    public setupIQUI ( screenType: ScreenType ): void
     {
-        if ( !getGameSystem().MoveScrewHandle.isFirstTouch )
+        this.setUIIQPosition( screenType );
+    }
+
+    public spawnIQ ( spawnNode: Node, isAdd: boolean ): Node
+    {
+        let iq;
+        if ( isAdd )
         {
-            this.SetStartPosition( screenType );
+            iq = instantiate( this.iqPrefabAdd );
         }
         else
         {
-            this.SetEndPosition( screenType );
+            iq = instantiate( this.iqPrefabDec );
         }
-    }
-
-    public SpawnIQ ( box: Box ): Node
-    {
-        const iq = instantiate( this.iqPrefab );
         iq.parent = this.holder;
-        iq.worldPosition = box.node.worldPosition;
+        var pos = new Vec3( 0, 0, 0 );
+        Vec3.add( pos, spawnNode.getWorldPosition(), new Vec3( 0, 0, 0 ) ); ///em dinh chinh nma lai k can nen thoi de lam nhu the nay
+        iq.worldPosition = pos;
         return iq;
     }
 
-    public MoveIQ ( iq: Node ): void
+    public moveIQ ( iq: Node, value: number ): void
     {
         tween( iq )
-            // tween().to( 0.7, { scale: new Vec3( 2, 2, 2 ) }, { easing: 'backIn' } )
-            .to( 0.25, { scale: new Vec3( 1.65, 1.65, 2 ) }, { easing: 'cubicIn' } )
-            .to( 0.7, { worldPosition: this.text.node.worldPosition }, { easing: 'backIn' } )
-
-            // .parallel(
-            //     tween().to( 0.7, { worldPosition: this.text.node.worldPosition }, { easing: 'backIn' } ),
-            // )
+            .to( 0.25, { scale: new Vec3( 1.65, 1.65, 2 ) }, { easing: 'smooth' } )
+            .to( 0.7, { worldPosition: this.text.node.worldPosition }, { easing: 'smooth' } )
             .call( () =>
             {
                 iq.destroy();
             } )
             .call( () =>
             {
-                this.TweenScaleText();
-                this.AddIQ( 5 );
-                this.iqAnim.setAnimation( 0, "Roi kinh", false );
-                this.iqAnim.setCompleteListener( () =>
-                {
-                    this.iqAnim.setAnimation( 0, "idle", true );
-                } );
+                this.tweenScaleText();
+                this.addIQ( value );
+                // if ( this.iqAnim )
+                // {
+                //     this.iqAnim.setAnimation( 0, "Roi kinh", false );
+                //     this.iqAnim.setCompleteListener( () =>
+                //     {
+                //         this.iqAnim.setAnimation( 0, "idle", true );
+                //     } );
+                // }
             } )
             .start();
     }
 
-    private AddIQ ( amount: number ): void
+    private addIQ ( amount: number ): void
     {
         const initialIQ = this.currentIQ;
-        tween( { amount: initialIQ } )
-            .to( 0.35, { amount: initialIQ + amount }, {
-                onUpdate: ( target, ratio ) =>
-                {
-                    let r = Math.round( amount * ratio );
-                    this.text.string = `${ initialIQ + r }`;
-                }
-            } )
-            .call( () => { this.currentIQ += amount; } )
-            .start();
+        if ( initialIQ + amount >= 0 )
+        {
+            tween( { amount: initialIQ } )
+                .to( 0.35, { amount: initialIQ + amount }, {
+                    onUpdate: ( target, ratio ) =>
+                    {
+                        let r = Math.round( amount * ratio );
+                        this.text.string = `${ initialIQ + r }`;
+                    }
+                } )
+                .call( () => { this.currentIQ += amount; } )
+                .start();
+        }
+        else
+        {
+            this.currentIQ = 0;
+        }
     }
 
-    private TweenScaleText (): void
+    private tweenScaleText (): void
     {
         tween( this.text.node )
             .to( 0.2, { scale: new Vec3( 1.2, 1.2, 1.2 ) } )

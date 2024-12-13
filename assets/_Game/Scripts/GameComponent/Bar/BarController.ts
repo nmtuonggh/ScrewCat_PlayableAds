@@ -16,7 +16,7 @@ const { ccclass, property } = _decorator;
 export class BarController extends GameLayerComponent
 {
     //#region EDITOR EXPOSED FIELD
-    @property( { type: [ Screw ], visible: true } )
+    @property( { type: [ Screw ], visible: true,  } )
     private listScrews: Screw[] = [];
     @property( BarPhysic )
     private barPhysic: BarPhysic = null;
@@ -72,13 +72,13 @@ export class BarController extends GameLayerComponent
     { 
         for ( let i = 0; i < this.listScrews.length; i++ )
         {
-            this.listScrews[ i ].getComponent( Screw ).ScrewRenderer.SetSelfColor( screwData );
+            this.listScrews[ i ].getComponent( Screw ).ScrewRenderer.setSelfColor( screwData );
         }
     }
 
     //#endregion
 
-    public HideBar (): void
+    public hideBar (): void
     {
         this.modelSprite.node.active = false;
 
@@ -96,7 +96,7 @@ export class BarController extends GameLayerComponent
 
     }
 
-    public ShowBar (): void
+    public showBar (): void
     {
         this.modelSprite.node.active = true;
 
@@ -113,9 +113,8 @@ export class BarController extends GameLayerComponent
         }
     }
 
-    public BreakBar (): void
+    public breakBar (): void
     {
-        
         let listStar: Node[] = [];
         let listScrewsBreak = this.listScrews;
         for ( let i = 0; i < listScrewsBreak.length; i++ )
@@ -125,7 +124,7 @@ export class BarController extends GameLayerComponent
             {
                 getGameSystem().GameManager.CurrentScrew--;
                 getGameSystem().GameManager.CollectedScrew++;
-                if ( !screw.CheckMoveBox() )
+                if ( !screw.checkMoveBox() )
                 {
                     let star = getGameSystem().StarController.spawnStarAtBar( screw.node.worldPosition, 0 );
                     getGameSystem().GameManager.updateDataBox( screw );
@@ -139,7 +138,6 @@ export class BarController extends GameLayerComponent
         if ( listStar.length > 0 )
         {
             //getGameSystem().GameManager.CollectedScrew += listStar.length;
-
             getGameSystem().StarController.moveListStart( listStar );
         }
 

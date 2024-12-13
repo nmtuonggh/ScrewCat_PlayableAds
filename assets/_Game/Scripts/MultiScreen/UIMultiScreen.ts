@@ -21,10 +21,10 @@ export class UIMultiScreen extends Component
     public Star: Node = null;
 
     @property( { type: Node, group: "Element" } )
-    public Booster : Node = null;
+    public Booster: Node = null;
 
     @property( { type: Node, group: "Element" } )
-    public BoosterHL : Node = null;
+    public BoosterHL: Node = null;
 
 
     //#endregion
@@ -81,12 +81,13 @@ export class UIMultiScreen extends Component
     public BoosterPosLandscape: Vec3 = new Vec3( 0, 0, 0 );
     //#endregion
 
-    
 
-    public SetComponentPosition (screenType : ScreenType): void
+
+    public SetComponentPosition ( screenType: ScreenType ): void
     {
-        console.log("SetUIElements " + screenType.toString());
-        switch (screenType) {
+        //console.log( "SetUIElements " + screenType.toString() );
+        switch ( screenType )
+        {
             case ScreenType.Portrait:
                 this.SetPortrainElementsPosition();
                 break;
@@ -110,10 +111,14 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosPortrai );
         this.CacheContainer.setPosition( this.CacheContainerPosPortrai );
         this.Star.setPosition( this.StarPosPortrai );
-        this.Booster.setPosition( this.BoosterPosPortrai );
-        this.BoosterHL.setPosition( this.BoosterPosPortrai );
-        this.Booster.setScale(1,1,1);
-        this.BoosterHL.setScale(1,1,1);
+        if ( this.Booster )
+        {
+            this.Booster.setPosition( this.BoosterPosPortrai );
+            this.BoosterHL.setPosition( this.BoosterPosPortrai );
+            this.Booster.setScale( 1, 1, 1 );
+            this.BoosterHL.setScale( 1, 1, 1 );
+        }
+
     }
 
     public SetLandscapeElementsPosition (): void 
@@ -122,10 +127,13 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosLandscape );
         this.CacheContainer.setPosition( this.CacheContainerPosLandscape );
         this.Star.setPosition( this.StarPosLandscape );
-        this.Booster.setPosition( this.BoosterPosLandscape );
-        this.Booster.setScale(0.85,0.85,1);
-        this.BoosterHL.setPosition( this.BoosterPosLandscape );
-        this.BoosterHL.setScale(0.85,0.85,1);
+        if ( this.Booster )
+        {
+            this.Booster.setPosition( this.BoosterPosLandscape );
+            this.Booster.setScale( 0.85, 0.85, 1 );
+            this.BoosterHL.setPosition( this.BoosterPosLandscape );
+            this.BoosterHL.setScale( 0.85, 0.85, 1 );
+        }
     }
 
     public SetSquareElementsPosition (): void 
@@ -134,10 +142,13 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosSquare );
         this.CacheContainer.setPosition( this.CacheContainerPosSquare );
         this.Star.setPosition( this.StarPosSquare );
-        this.Booster.setPosition( this.BoosterPosSquare );
-        this.Booster.setScale(1,1,1);
-        this.BoosterHL.setPosition( this.BoosterPosSquare );
-        this.BoosterHL.setScale(1,1,1);
+        if ( this.Booster )
+        {
+            this.Booster.setPosition( this.BoosterPosSquare );
+            this.Booster.setScale( 1, 1, 1 );
+            this.BoosterHL.setPosition( this.BoosterPosSquare );
+            this.BoosterHL.setScale( 1, 1, 1 );
+        }
     }
 
     public SetMixElementsPosition (): void 
@@ -146,10 +157,13 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosMix );
         this.CacheContainer.setPosition( this.CacheContainerPosMix );
         this.Star.setPosition( this.StarPosMix );
-        this.Booster.setPosition( this.BoosterPosMix );
-        this.Booster.setScale(1,1,1);
-        this.BoosterHL.setPosition( this.BoosterPosMix );
-        this.BoosterHL.setScale(1,1,1);
+        if ( this.Booster )
+        {
+            this.Booster.setPosition( this.BoosterPosMix );
+            this.Booster.setScale( 1, 1, 1 );
+            this.BoosterHL.setPosition( this.BoosterPosMix );
+            this.BoosterHL.setScale( 1, 1, 1 );
+        }
     }
 }
 
