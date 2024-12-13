@@ -150,7 +150,7 @@ export class Screw extends GameLayerComponent
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-
+        hole.Box.checkComplete();
         this.screwAnimation.ScrewOut();
         this.tweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
@@ -176,7 +176,7 @@ export class Screw extends GameLayerComponent
                 this.node.worldPosition = worldPosition;
                 //set state and value
                 this.State = eScrewState.IN_BOX;
-                hole.Box.checkFullBox();
+                hole.Box.checkCloseBox();
                 this.screwAnimation.ScrewIn();
             } );
     }
@@ -189,7 +189,7 @@ export class Screw extends GameLayerComponent
         this.linkingHole = hole;
         hole.linkingScrew = this;
         this.screwAnimation.ScrewOut();
-
+        //getGameSystem().GameManager.checkLose();
         this.tweenMoveCached( this.node, GameConfig.SCREW_IN_DURATION ).start();
     }
 
@@ -225,7 +225,7 @@ export class Screw extends GameLayerComponent
     //#region CheckMove
     public checkMove (): void
     {
-        if(getGameSystem().GameManager.lose) return;  
+        if(getGameSystem().GameManager.lose) return;
         if ( this.State === eScrewState.MOVING )
         {
             return;

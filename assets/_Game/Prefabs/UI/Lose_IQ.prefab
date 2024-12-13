@@ -332,7 +332,7 @@
     },
     "defaultSkin": "default",
     "defaultAnimation": "idle",
-    "_premultipliedAlpha": true,
+    "_premultipliedAlpha": false,
     "_timeScale": 1,
     "_preCacheMode": 0,
     "_cacheMode": 0,
@@ -1361,7 +1361,7 @@
     "__prefab": {
       "__id__": 60
     },
-    "_opacity": 0,
+    "_opacity": 255,
     "_id": ""
   },
   {

@@ -51,24 +51,57 @@ export class GameManager extends Component
     //#region PUBLIC METHOD
     public checkLose (): void
     {
+        let canWait = false;
         const cacheContainer = getGameSystem().CahedContainer;
         const uiController = getGameSystem().UIController;
-
-        if ( cacheContainer.CurrentScrewCount >= cacheContainer.listActiveHole.length && !this.lose)
+        const boxContainer = getGameSystem().BoxContainer;
+        if ( cacheContainer.CurrentScrewCount >= cacheContainer.listActiveHole.length )
         {
-            this.scheduleOnce( () =>
+            console.log( "full dinh" );
+            const listScrewInCached: Screw[] = [];
+            for ( const hole of cacheContainer.listActiveHole )
+            {
+                if ( hole.isLinked )
+                {
+                    listScrewInCached.push( hole.linkingScrew );
+                }
+            }
+            for ( const box of boxContainer.BoxIsActive )
+            {
+                if ( box.IsGonnaMoveOut ) 
+                {
+                    var currentBoxdataIndex = getGameSystem().LevelController.CurrentBoxDataIndex;
+                    var colorBoxData = getGameSystem().LevelController.ColorBoxSpawnData;
+                    if ( currentBoxdataIndex <= colorBoxData.length )
+                    {
+                        for ( const screw of listScrewInCached )
+                        {
+                            if ( colorBoxData[ currentBoxdataIndex].color === screw.ScrewRenderer.colorType )
+                            {
+                                canWait = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (canWait) break;
+            }
+            if ( !this.lose && !canWait )
             {
                 this.lose = true;
-                getGameSystem().lose();
-                uiController.tweenFail();
-                uiController.showOutOfMove();
-                //wait for 2s
-                setTimeout( () =>
+                this.scheduleOnce( () =>
                 {
-                    uiController.showLose();
-                    uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
-                }, 2000 );
-            }, 1 );
+                    getGameSystem().lose();
+                    uiController.tweenFail();
+                    uiController.showOutOfMove();
+                    //wait for 2s
+                    setTimeout( () =>
+                    {
+                        uiController.showLose();
+                        uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+                    }, 2000 );
+                }, 1 );
+            } 
         }
     }
 

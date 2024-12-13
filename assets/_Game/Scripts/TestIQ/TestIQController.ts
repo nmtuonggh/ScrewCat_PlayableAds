@@ -127,6 +127,7 @@ export class TestIQController extends Component
     private addIQ ( amount: number ): void
     {
         const initialIQ = this.currentIQ;
+        this.currentIQ += amount;
         if ( initialIQ + amount >= 0 )
         {
             tween( { amount: initialIQ } )
@@ -137,7 +138,6 @@ export class TestIQController extends Component
                         this.text.string = `${ initialIQ + r }`;
                     }
                 } )
-                .call( () => { this.currentIQ += amount; } )
                 .start();
         }
         else

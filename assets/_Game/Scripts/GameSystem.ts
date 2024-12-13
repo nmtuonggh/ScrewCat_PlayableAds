@@ -123,7 +123,7 @@ export class GameSystem extends Component
     {
         if ( !this.isFINISH )
         {
-            if(getGameSystem().GameManager.CurrentScrew <= 0)
+            if ( getGameSystem().GameManager.CurrentScrew <= 0 )
             {
                 this.isFINISH = true;
                 this.scheduleOnce( () => this.win(), 1 );
@@ -143,6 +143,7 @@ export class GameSystem extends Component
     public win ()
     {
         this.uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+        this.audioController.playWin();
         this.uiController.showLose();
     }
     //#endregion

@@ -61,14 +61,23 @@ export class Box extends HoleContainer
 
         return null;
     }
-
+    private isFullSlots : boolean = false;
     //#region BoxComplete
-    public checkFullBox (): void
+    public checkCloseBox (): void
+    {
+        if ( this.currentScrew >= this.listHoles.length && !this.isFullSlots )
+        {   
+            this.isFullSlots = true;
+            this.CloseBox();
+        }
+    }
+    public IsGonnaMoveOut : boolean = false;
+    public checkComplete (): void
     {
         this.currentScrew++;
         if ( this.currentScrew >= this.listHoles.length )
         {
-            this.CloseBox();
+            this.IsGonnaMoveOut = true;
         }
     }
     //#endregion
@@ -108,7 +117,6 @@ export class Box extends HoleContainer
     }
     private CloseBox (): void
     {
-        if ( getGameSystem().GameManager.lose ) return;
         let listHolesPos: Vec3[] = [];
         for ( let i = 0; i < this.listHoles.length; i++ )
         {
@@ -121,6 +129,7 @@ export class Box extends HoleContainer
         let iqNode;
         this.boxRenderer.PlayAnimCompleBox( index );
         tween( this.boxRenderer.closeBox )
+            .delay( 0.1 )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
             {

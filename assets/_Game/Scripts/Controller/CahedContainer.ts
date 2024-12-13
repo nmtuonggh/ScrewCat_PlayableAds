@@ -33,6 +33,10 @@ export class CahedContainer extends Component
     {
         this.currentScrewCount = value;
     }
+    private get ListActiveHole (): Hole[]
+    {
+        return this.listActiveHole;
+    }
     //#endregion
     //#region CC METHODS
     protected onLoad (): void
@@ -119,37 +123,13 @@ export class CahedContainer extends Component
 
     public CheckWarning ()
     {
-        if ( this.currentScrewCount == this.listActiveHole.length - 1 )
+        if ( this.currentScrewCount === this.listActiveHole.length - 1 )
         {
             for ( let i = 0; i < this.listActiveHole.length; i++ )
             {
                 const hole = this.listActiveHole[ i ];
                 hole.ShowWarning();
             }
-
-            //Pop up warning lan dau tien 4 screw
-            // if (this.isFirstTime4Screw === false)
-            //     {
-            //         this.isFirstTime4Screw = true;
-            //         this.showingWarning = true;
-            //         getGameSystem().MultiScreneController.SetPopUpWarningStatus(true);
-            //         getGameSystem().MoveScrewHandle.DisableTouch();
-            //     }
-            //cutom cho booster tutorial
-            // if ( this.isFirstTime4Screw === false )
-            // {
-            //     getGameSystem().MoveScrewHandle.DisableTouch();
-            //     this.isFirstTime4Screw = true;
-            //     this.showingWarning = true;
-            //     setTimeout( () =>
-            //     {
-            //         getGameSystem().MultiScreneController.SetPopUpWarningStatus( true );
-            //         if ( getGameSystem().BoosterControll && getGameSystem().BoosterControll.node && getGameSystem().BoosterControll.node.active )
-            //         {
-            //             getGameSystem().BoosterControll.HightlightBooster.HLBooster( BoosterType.Drill );
-            //         }
-            //     }, 1000 );
-            // }
         }
 
     }

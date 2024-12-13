@@ -54,7 +54,7 @@ export class Level extends Component
         if ( !this.flex )
         {
             this.flex = value;
-            this.setKinematic();
+            this.setFlex();
         }
     }
 
@@ -76,7 +76,7 @@ export class Level extends Component
     {
         return this.syncDataBox;
     }
-  
+
 
     //#endregion
 
@@ -121,6 +121,7 @@ export class Level extends Component
         {
             var modelCollider = element.node.children[ 0 ].getComponent( PolygonCollider2D );
             if ( modelCollider === null ) return;
+            element.getComponent( PolygonCollider2D ).points = [];
             element.getComponent( PolygonCollider2D ).points = modelCollider.points;
             element.getComponent( PolygonCollider2D ).apply();
             modelCollider.destroy();
@@ -161,15 +162,15 @@ export class Level extends Component
         }
     }
 
-
-
-    setKinematic ()
+    setFlex ()
     {
         var bars = this.node.getComponentsInChildren( BarController );
         bars.forEach( element =>
         {
-            var rigidBody = element.getComponent( RigidBody2D );
-
+            
+            var sprite = element.getComponent( Sprite );
+            if ( sprite === null ) return;
+            sprite.destroy();
         } );
     }
 }

@@ -26,13 +26,22 @@ export class AudioController extends Component
     public block: AudioClip = null;
     @property( AudioClip )
     public drill: AudioClip = null;
+    @property( AudioClip )
+    public win: AudioClip = null;
 
     //#endregion
 
-    public lose (): void
+    public lose(): void
     {
         this.audioSource.stop();
         this.backGroudSource.stop();
+    }
+
+    public playWin(): void
+    {
+        this.backGroudSource.stop();
+        this.audioSource.clip = this.win;
+        this.audioSource.playOneShot( this.audioSource.clip );
     }
 
     public playAudio ( type: AudioType )

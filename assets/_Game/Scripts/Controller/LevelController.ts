@@ -39,7 +39,7 @@ export class LevelController extends Component
     @property( { type: boxSpawnData, readonly: true } )
     private colorBoxSpawnData: boxSpawnData[] = [];
     @property( { readonly: true } )
-    private currentIndex: number = 0;
+    private currentBoxDataIndex: number = 0;
     @property()
     private activeLayerCount: number = 5;
     @property()
@@ -53,13 +53,13 @@ export class LevelController extends Component
     private listUnActiveLayer: GameLayer[] = [];
     //#endregion
     //#region PROPERTIES
-    public get CurrentIndex (): number
+    public get CurrentBoxDataIndex (): number
     {
-        return this.currentIndex;
+        return this.currentBoxDataIndex;
     }
-    public set CurrentIndex ( value: number )
+    public set CurrentBoxDataIndex ( value: number )
     {
-        this.currentIndex = value;
+        this.currentBoxDataIndex = value;
     }
     public get ColorBoxSpawnData (): boxSpawnData[]
     {
@@ -115,11 +115,11 @@ export class LevelController extends Component
             }
             else
             {
-                const color = this.colorBoxSpawnData[ this.currentIndex ].color;
-                const holeCount = this.colorBoxSpawnData[ this.currentIndex ].holeCount;
+                const color = this.colorBoxSpawnData[ this.currentBoxDataIndex ].color;
+                const holeCount = this.colorBoxSpawnData[ this.currentBoxDataIndex ].holeCount;
                 getGameSystem().BoxContainer.InitBox( color, boxSlot.boxHolder, this.BoxData, holeCount );
                 boxSlot.InitBoxSlotData();
-                this.currentIndex++;
+                this.currentBoxDataIndex++;
             }
         }
     }
