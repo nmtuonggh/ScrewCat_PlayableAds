@@ -138,7 +138,9 @@ export class MultiScreneController extends Component
         this.canvasScreenController[ type ].getComponent( Widget ).updateAlignment();
         getGameSystem().MoveScrewHandle.Camera = this.getCameraGamePlay();
         this.uimulti.SetComponentPosition( type );  //set vi tri cac thanh phan
-        getGameSystem().TestIQController.setupIQUI(type );
+        if(getGameSystem().TestIQController){
+            getGameSystem().TestIQController.setupIQUI(type );
+        }
         getGameSystem().UIController.onChangedScreen();
     }
 
@@ -147,13 +149,7 @@ export class MultiScreneController extends Component
         return this.canvasScreenController[ this.ScreenType ].cameraGamePlay;
     }
 
-    public SetPopUpWarningStatus ( status: boolean ): void
-    {
-        for ( let i = 0; i < this.canvasScreenController.length; i++ )
-        {
-            this.canvasScreenController[ i ].uiCanvasScreen.Warning.active = status;
-        }
-    }
+    
 }
 
 export enum ScreenType

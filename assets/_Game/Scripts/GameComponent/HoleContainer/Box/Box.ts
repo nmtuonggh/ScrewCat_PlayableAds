@@ -61,17 +61,18 @@ export class Box extends HoleContainer
 
         return null;
     }
-    private isFullSlots : boolean = false;
+    private isFullSlots: boolean = false;
     //#region BoxComplete
     public checkCloseBox (): void
     {
         if ( this.currentScrew >= this.listHoles.length && !this.isFullSlots )
-        {   
+        {
             this.isFullSlots = true;
-            this.CloseBox();
+            this.scheduleOnce( () =>
+                this.closeBox(), 0.2 );
         }
     }
-    public IsGonnaMoveOut : boolean = false;
+    public IsGonnaMoveOut: boolean = false;
     public checkComplete (): void
     {
         this.currentScrew++;
@@ -115,7 +116,7 @@ export class Box extends HoleContainer
             } )
             .start();
     }
-    private CloseBox (): void
+    private closeBox (): void
     {
         let listHolesPos: Vec3[] = [];
         for ( let i = 0; i < this.listHoles.length; i++ )
@@ -129,7 +130,6 @@ export class Box extends HoleContainer
         let iqNode;
         this.boxRenderer.PlayAnimCompleBox( index );
         tween( this.boxRenderer.closeBox )
-            .delay( 0.1 )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
             {
@@ -137,13 +137,19 @@ export class Box extends HoleContainer
                 getGameSystem().AudioController.playMewoComplete( index );
                 this.starList = getGameSystem().StarController.spawnStar( this.listHoles.length, listHolesPos, 0 );
                 getGameSystem().StarController.playParticle( this.node.worldPosition );
-                iqNode = getGameSystem().TestIQController.spawnIQ( this.node, true );
+                if ( getGameSystem().TestIQController )
+                {
+                    iqNode = getGameSystem().TestIQController.spawnIQ( this.node, true );
+                }
             } )
             .delay( 0.3 )
             .call( () =>
             {
                 getGameSystem().StarController.moveListStart( this.starList );
-                getGameSystem().TestIQController.moveIQ( iqNode, 5 );
+                if ( getGameSystem().TestIQController )
+                {
+                    getGameSystem().TestIQController.moveIQ( iqNode, 5 );
+                }
                 this.MoveOut();
             } )
             .start();

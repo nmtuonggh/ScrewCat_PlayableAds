@@ -100,7 +100,6 @@ export class MoveScrewHandle extends Component
             let screw = component.node.getComponent( Screw );
             if ( screw.State === eScrewState.IN_CACHED || screw.State === eScrewState.IS_HIDING ) return;
             screw.checkMove();
-            //this.pointSpawnTouchEffect( this._lastMousePosition );
         }
     }
 
@@ -196,13 +195,14 @@ export class MoveScrewHandle extends Component
             getGameSystem().AudioController.playerBGMusic();
         }
 
-        // if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
-        // {
-        //     this.playableAdsManager.ForceOpenStore();
-        //     getGameSystem().GameManager.win = true;
-        //     TrackingManager.WinLevel();
-        //     return;
-        // }
+        ///Mo comment doan nay neu muon logic con 1 screw thi vao store!!!!!!!!!!!!!!!
+        if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
+        {
+            this.playableAdsManager.ForceOpenStore();
+            //getGameSystem().GameManager.win = true;
+            TrackingManager.WinLevel();
+            return;
+        }
 
         let ratio = 1;
         const mousePosition = event.getLocation();

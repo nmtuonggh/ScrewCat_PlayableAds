@@ -19,7 +19,7 @@ const { ccclass, property } = _decorator;
 export class Screw extends GameLayerComponent
 {
     //#region EDITOR EXPOSED FIELD
-    @property( { type: HingeJoint2D, readonly:true } )
+    @property( { type: HingeJoint2D, readonly: true } )
     private hingeJoint: HingeJoint2D = null;
     @property( ScrewRenderer )
     private screwRenderer: ScrewRenderer = null;
@@ -210,11 +210,14 @@ export class Screw extends GameLayerComponent
                 getGameSystem().CahedContainer.CheckMoveScrewFromCachedToBox();
                 getGameSystem().CahedContainer.CheckWarning();
                 getGameSystem().GameManager.checkLose();
-                iqNode = getGameSystem().TestIQController.spawnIQ( this.node, false );
-                this.scheduleOnce( () =>
+                if ( getGameSystem().TestIQController )
                 {
-                    getGameSystem().TestIQController.moveIQ( iqNode, -5 );
-                }, 0.2 );
+                    iqNode = getGameSystem().TestIQController.spawnIQ( this.node, false );
+                    this.scheduleOnce( () =>
+                    {
+                        getGameSystem().TestIQController.moveIQ( iqNode, -5 );
+                    }, 0.2 );
+                }
             } );
     }
 
@@ -225,7 +228,7 @@ export class Screw extends GameLayerComponent
     //#region CheckMove
     public checkMove (): void
     {
-        if(getGameSystem().GameManager.lose) return;
+        if ( getGameSystem().GameManager.lose ) return;
         if ( this.State === eScrewState.MOVING )
         {
             return;

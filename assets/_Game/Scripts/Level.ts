@@ -170,6 +170,8 @@ export class Level extends Component
             
             var sprite = element.getComponent( Sprite );
             if ( sprite === null ) return;
+            // element.addComponent( Sprite );
+            // element.getComponent( Sprite ).spriteFrame = sprite.spriteFrame;
             sprite.destroy();
         } );
     }

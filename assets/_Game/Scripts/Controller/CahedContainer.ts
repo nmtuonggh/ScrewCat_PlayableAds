@@ -137,7 +137,6 @@ export class CahedContainer extends Component
     public StopShowingWarning ()
     {
         this.showingWarning = false;
-        getGameSystem().MultiScreneController.SetPopUpWarningStatus( false );
         getGameSystem().MoveScrewHandle.EnableTouch();
         ///
         //getGameSystem().BoosterControll.BoosterUI.getComponent(UIOpacity).opacity = 255;

@@ -121,14 +121,15 @@ export class GameSystem extends Component
     }
     protected update ( dt: number ): void
     {
-        if ( !this.isFINISH )
-        {
-            if ( getGameSystem().GameManager.CurrentScrew <= 0 )
-            {
-                this.isFINISH = true;
-                this.scheduleOnce( () => this.win(), 1 );
-            }
-        }
+        ///comment doan nay neu muon logic con 1 screw thi vao store
+        // if ( !this.isFINISH )
+        // {
+        //     if ( getGameSystem().GameManager.CurrentScrew <= 0 )
+        //     {
+        //         this.isFINISH = true;
+        //         this.scheduleOnce( () => this.win(), 1 );
+        //     }
+        // }
     }
 
     //#region PUBLIC METHODS
@@ -142,7 +143,10 @@ export class GameSystem extends Component
     }
     public win ()
     {
-        this.uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+        if ( this.tesIQController )
+        {
+            this.uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+        }
         this.audioController.playWin();
         this.uiController.showLose();
     }
