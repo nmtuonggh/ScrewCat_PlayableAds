@@ -1,6 +1,6 @@
 export class GameConfig
 {
-    public static SCREW_RADIUS = 20;
+    public static SCREW_RADIUS = 30;
     public static CLICK_RADIUS = 25;
 
     public static SCREW_OUT_DURATION = 0.2;

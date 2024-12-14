@@ -112,14 +112,14 @@ export class TestIQController extends Component
             {
                 this.tweenScaleText();
                 this.addIQ( value );
-                // if ( this.iqAnim )
-                // {
-                //     this.iqAnim.setAnimation( 0, "Roi kinh", false );
-                //     this.iqAnim.setCompleteListener( () =>
-                //     {
-                //         this.iqAnim.setAnimation( 0, "idle", true );
-                //     } );
-                // }
+                if ( this.iqAnim )
+                {
+                    this.iqAnim.setAnimation( 0, "Roi kinh", false );
+                    this.iqAnim.setCompleteListener( () =>
+                    {
+                        this.iqAnim.setAnimation( 0, "idle", true );
+                    } );
+                }
             } )
             .start();
     }
