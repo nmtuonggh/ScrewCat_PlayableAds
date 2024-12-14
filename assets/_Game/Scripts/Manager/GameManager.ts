@@ -76,7 +76,7 @@ export class GameManager extends Component
                     {
                         for ( const screw of listScrewInCached )
                         {
-                            if ( colorBoxData[ currentBoxdataIndex].color === screw.ScrewRenderer.colorType )
+                            if ( colorBoxData[ currentBoxdataIndex ].color === screw.ScrewRenderer.colorType )
                             {
                                 canWait = true;
                                 break;
@@ -84,7 +84,7 @@ export class GameManager extends Component
                         }
                     }
                 }
-                if (canWait) break;
+                if ( canWait ) break;
             }
             if ( !this.lose && !canWait )
             {
@@ -98,10 +98,13 @@ export class GameManager extends Component
                     setTimeout( () =>
                     {
                         uiController.showLose();
-                        uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+                        if ( getGameSystem().TestIQController )
+                        {
+                            uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
+                        }
                     }, 2000 );
                 }, 1 );
-            } 
+            }
         }
     }
 

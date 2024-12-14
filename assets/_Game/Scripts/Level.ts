@@ -121,6 +121,7 @@ export class Level extends Component
         {
             var modelCollider = element.node.children[ 0 ].getComponent( PolygonCollider2D );
             if ( modelCollider === null ) return;
+            element.getComponent( PolygonCollider2D ).threshold = 10;
             element.getComponent( PolygonCollider2D ).points = [];
             element.getComponent( PolygonCollider2D ).points = modelCollider.points;
             element.getComponent( PolygonCollider2D ).apply();
