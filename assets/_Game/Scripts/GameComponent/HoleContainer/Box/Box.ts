@@ -8,6 +8,7 @@ import { BoxSlot } from './BoxSlot';
 import { AudioType } from '../../../AudioController/AudioController';
 import { GameConfig } from '../../../GameConfig/GameConfig';
 import { getGameSystem } from '../../../GameSystem';
+import { get } from 'http';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -73,7 +74,7 @@ export class Box extends HoleContainer
         }
     }
     public IsGonnaMoveOut: boolean = false;
-    public checkComplete (): void
+    public checkGonnaMove (): void
     {
         this.currentScrew++;
         if ( this.currentScrew >= this.listHoles.length )
@@ -146,9 +147,13 @@ export class Box extends HoleContainer
             .call( () =>
             {
                 getGameSystem().StarController.moveListStart( this.starList );
-                if ( getGameSystem().TestIQController )
+                if ( getGameSystem().TestIQController && getGameSystem().TestIQController.node )
                 {
                     getGameSystem().TestIQController.moveIQ( iqNode, 5 );
+                }
+                if ( getGameSystem().ProgressBoxSystem && getGameSystem().ProgressBoxSystem.node )
+                {
+                    getGameSystem().ProgressBoxSystem.onBoxCollect(this.node);
                 }
                 this.MoveOut();
             } )

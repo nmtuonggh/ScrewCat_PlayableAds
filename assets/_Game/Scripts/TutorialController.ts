@@ -1,5 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
-import { Screw } from './GameComponent/Screw/Screw';
+import { eScrewState, Screw } from './GameComponent/Screw/Screw';
 import { tween } from 'cc';
 import { Tween } from 'cc';
 import { Vec3 } from 'cc';
@@ -11,57 +11,117 @@ const { ccclass, property } = _decorator;
 export class TutorialController extends Component
 {
     @property( Node )
-    public screw: Node = null;
+    private handTutorial: Node = null;
+    @property
+    private offSet: Vec3 = new Vec3( 0, 0, 0 );
     @property( Node )
-    public handPortrait: Node = null;
-    @property( Vec3 )
-    public offset: Vec3 = new Vec3( 0, 0, 0 );
+    private levelContainer: Node = null;
 
-    @property( [Node] )
-    public tapToPlay: Node[] = [];
-    @property( [Node] )
-    public iconGame: Node[] = [];
-
-    protected onEnable (): void
+    private screw: Screw = null;
+    protected start (): void
     {
-        this.handTutorial();
+        this.scheduleOnce( this.tweenHandTutorial, 1 );
     }
     protected onDisable (): void
     {
-        this.screw.getComponent( Screw ).ScrewAnimation.stopPlayTutorial();
-        Tween.stopAllByTarget( this.handPortrait );
-        getGameSystem().RealTimeTutorial.node.active = true;
-        this.handPortrait.active = false;
+        Tween.stopAllByTarget( this.handTutorial );
+        this.handTutorial.parent = this.levelContainer;
+        this.handTutorial.position = new Vec3( 0, 0, 0 );
+        this.handTutorial.active = false;
+        this.screw.ScrewAnimation.stopPlayTutorial();
     }
-
-    public handTutorial (): void
+    private tweenHandTutorial (): void
     {
-        if(getGameSystem().MoveScrewHandle.isFirstTouch) return;
-        
-        this.handPortrait.parent = this.screw;
-        var startPos = new Vec3( 0, 0, 0 );
-        let offset = this.offset.clone();
-        Vec3.add( startPos, this.handPortrait.getPosition(), offset );
-        this.handPortrait.position = startPos;
+        try
+        {
+            var screw = this.getScrew().node;
+            if ( !screw ) return;
+            this.screw = screw.getComponent( Screw );
+            this.handTutorial.active = true;
+            this.handTutorial.parent = screw;
+            var startPos = new Vec3( 0, 0, 0 );
+            let offset = this.offSet.clone();
+            Vec3.add( startPos, this.handTutorial.getPosition(), offset );
+            this.handTutorial.position = startPos;
+        } catch ( error )
+        {
+            debugger
+        }
 
-        tween( this.handPortrait ).repeatForever
+        tween( this.handTutorial ).repeatForever
             (
                 tween()
                     .parallel(
-                        tween().to( 0.5, { position: new Vec3( 0, 0, 0 ) }, { easing: 'cubicIn' } ),
+                        tween().to( 0.5, { position: new Vec3( 5, -5, 0 ) }, { easing: 'cubicIn' } ),
                         tween().to( 0.5, { scale: new Vec3( 1, 1, 1 ) }, { easing: 'cubicIn' } )
                     )
-                    .call( () => this.screw.getComponent( Screw ).ScrewAnimation.ScrewOut() )
+                    .call( () =>
+                    {
+                        screw.getComponent( Screw ).ScrewAnimation.ScrewOut();
+                    } )
                     .parallel(
                         tween().to( 0.5, { position: startPos }, { easing: 'cubicOut' } ),
                         tween().to( 0.5, { scale: new Vec3( 1, 1, 1 ) }, { easing: 'cubicOut' } )
                     )
                     .call( () =>
                     {
-                        this.screw.getComponent( Screw ).ScrewAnimation.ScrewIn();
+                        screw.getComponent( Screw ).ScrewAnimation.ScrewIn();
                     } )
                     .delay( 0.5 )
             ).start();
+    }
+    private getScrew (): Screw
+    {
+        var allScrews = this.levelContainer.getComponentsInChildren( Screw );
+        let availableScrews: Screw[] = [];
+        allScrews.forEach( screw =>
+        {
+            if ( !screw.IsBlocked() && screw.State === eScrewState.IN_BAR )
+            {
+                availableScrews.push( screw );
+            }
+        } );
+        var boxContainer = getGameSystem().BoxContainer;
+        var boxs = boxContainer.getBoxForTutorial();
+        var colors = boxs.map( box => box.BoxRenderer.colorType );
+        var screwTutos: Screw[] = [];
+        for ( const screw of availableScrews )
+        {
+            for ( const color of colors )
+            {
+                if ( screw.ScrewRenderer.colorType === color )
+                {
+                    screwTutos.push( screw );
+                }
+            }
+        }
+        //tim screw co layer cao nhat
+        let maxLayer = 0;
+        let screwMaxLayer = null;
+        if ( screwTutos.length > 0 )
+        {
+            for ( const screw of screwTutos )
+            {
+                if ( screw.Layer > maxLayer )
+                {
+                    maxLayer = screw.Layer;
+                    screwMaxLayer = screw;
+                }
+            }
+            return screwMaxLayer;
+        }
+        else
+        {
+            for ( const screw of availableScrews )
+            {
+                if ( screw.Layer > maxLayer )
+                {
+                    maxLayer = screw.Layer;
+                    screwMaxLayer = screw;
+                }
+            }
+            return screwMaxLayer;
+        }
     }
 }
 

@@ -150,12 +150,12 @@ export class Screw extends GameLayerComponent
         hole.isLinked = true;
         hole.linkingScrew = null;
         this.linkingHole = hole;
-        hole.Box.checkComplete();
+        hole.Box.checkGonnaMove();
         this.screwAnimation.ScrewOut();
-        this.tweenMoveBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
+        this.tweenMoveToBox( this.node, hole, GameConfig.SCREW_OUT_DURATION ).start();
     }
 
-    private tweenMoveBox ( node: Node, hole: Hole, delayTime: number ): Tween<Node>
+    private tweenMoveToBox ( node: Node, hole: Hole, delayTime: number ): Tween<Node>
     {
         return tween( node )
             .delay( delayTime )
@@ -215,7 +215,10 @@ export class Screw extends GameLayerComponent
                     iqNode = getGameSystem().TestIQController.spawnIQ( this.node, false );
                     this.scheduleOnce( () =>
                     {
-                        getGameSystem().TestIQController.moveIQ( iqNode, -5 );
+                        if ( getGameSystem().TestIQController )
+                        {
+                            getGameSystem().TestIQController.moveIQ( iqNode, -5 );
+                        }
                     }, 0.2 );
                 }
             } );

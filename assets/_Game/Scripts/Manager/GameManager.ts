@@ -98,7 +98,7 @@ export class GameManager extends Component
                     setTimeout( () =>
                     {
                         uiController.showLose();
-                        if ( getGameSystem().TestIQController )
+                        if ( getGameSystem().TestIQController && getGameSystem().TestIQController.node )
                         {
                             uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
                         }

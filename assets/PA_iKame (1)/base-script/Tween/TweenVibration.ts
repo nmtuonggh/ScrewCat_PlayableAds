@@ -6,7 +6,6 @@ export class TweenVibration extends Component {
 
     @property
     vibrationRate : number = 3;
-
     @property
     duration : number = 0.5;
     @property

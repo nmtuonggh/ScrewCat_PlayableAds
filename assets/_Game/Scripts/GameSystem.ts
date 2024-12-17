@@ -13,6 +13,7 @@ import { BoosterControll } from './Booster/BoosterControll';
 import { UIController } from './UIController';
 import { TestIQController } from './TestIQ/TestIQController';
 import { RealTimeTutorial } from './Controller/RealTimeTutorial';
+import { ProgressBoxSystem } from './Controller/ProgressBoxSystem';
 const { ccclass, property } = _decorator;
 
 var gameSystem: GameSystem;
@@ -51,9 +52,15 @@ export class GameSystem extends Component
     private audioController: AudioController = null;
     @property( { type: RealTimeTutorial, group: "Controller" } )
     private realTimeTutorial: RealTimeTutorial = null;
+    @property( { type: ProgressBoxSystem, group: "Controller" } )
+    private progressBox: ProgressBoxSystem = null;
     //#endregion
 
     //#region PROPERTIES
+    public get ProgressBoxSystem ()
+    {
+        return this.progressBox
+    }
     public get RealTimeTutorial ()
     {
         return this.realTimeTutorial

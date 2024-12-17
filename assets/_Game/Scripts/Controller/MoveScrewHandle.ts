@@ -32,8 +32,6 @@ export class MoveScrewHandle extends Component
     //#region EDITOR EXPOSED FIELD
     @property( { type: Camera } )
     private camera: Camera = null;
-    @property( PoolTouch )
-    private poolTouch: PoolTouch = null;
     @property( PlayableAdsManager )
     private playableAdsManager: PlayableAdsManager = null;
     @property(Node)
@@ -59,7 +57,6 @@ export class MoveScrewHandle extends Component
     //#region CC METHOD
     protected override onLoad (): void
     {
-        this.poolTouch.initializePool( 15 );
         this.EnableTouch();
     }
 

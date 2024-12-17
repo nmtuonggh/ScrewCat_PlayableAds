@@ -100,17 +100,44 @@ export class RealTimeTutorial extends Component
         var boxContainer = getGameSystem().BoxContainer;
         var boxs = boxContainer.getBoxForTutorial();
         var colors = boxs.map( box => box.BoxRenderer.colorType );
+        var screwTutos: Screw[] = [];
         for ( const screw of availableScrews )
         {
             for (const color of colors)
             {
                 if ( screw.ScrewRenderer.colorType === color )
                 {
-                    return screw;
+                    screwTutos.push( screw );
                 }
             }
         }
-        return null;
+        //
+        let maxLayer = 0;
+        let screwMaxLayer = null;
+        if ( screwTutos.length > 0 )
+        {
+            for ( const screw of screwTutos )
+            {
+                if ( screw.Layer > maxLayer )
+                {
+                    maxLayer = screw.Layer;
+                    screwMaxLayer = screw;
+                }
+            }
+            return screwMaxLayer;
+        }
+        else
+        {
+            for ( const screw of availableScrews )
+            {
+                if ( screw.Layer > maxLayer )
+                {
+                    maxLayer = screw.Layer;
+                    screwMaxLayer = screw;
+                }
+            }
+            return screwMaxLayer;
+        }
     }
     //#endregion
 }

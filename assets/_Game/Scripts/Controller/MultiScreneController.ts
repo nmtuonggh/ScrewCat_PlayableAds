@@ -141,6 +141,10 @@ export class MultiScreneController extends Component
         if(getGameSystem().TestIQController){
             getGameSystem().TestIQController.setupIQUI(type );
         }
+        if(getGameSystem().ProgressBoxSystem)
+        {
+            getGameSystem().ProgressBoxSystem.setUIPosMultiscreen(type);
+        }
         getGameSystem().UIController.onChangedScreen();
     }
 

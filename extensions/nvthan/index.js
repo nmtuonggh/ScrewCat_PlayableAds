@@ -42,7 +42,7 @@ exports.template = `
         <h3>Bar Prefab</h3>
         <ui-asset droppable="cc.Prefab" value="feb5cdc1-51c5-42a5-9f88-f4a5adcae7bf" style = "margin-top: 10px; margin-bottom: 10px;width : 100%;" class = "barPrefab"></ui-asset>
          <h3>Layer Prefab</h3>
-        <ui-asset droppable="cc.Prefab" value="16656d9e-3a95-4f0a-bc34-ab58ca58da15" style = "margin-top: 10px; margin-bottom: 10px;width : 100%;" class = "layerPrefab"></ui-asset>
+        <ui-asset droppable="cc.Prefab" value="0fc2569a-f9c7-4632-910e-614a5fea86c1" style = "margin-top: 10px; margin-bottom: 10px;width : 100%;" class = "layerPrefab"></ui-asset>
         <h3>Level Prefab</h3>
         <ui-asset droppable="cc.Prefab" value="16656d9e-3a95-4f0a-bc34-ab58ca58da15" style = "margin-top: 10px; margin-bottom: 10px;width : 100%;" class = "levelPrefab"></ui-asset>
         <h3>PATH JSON
