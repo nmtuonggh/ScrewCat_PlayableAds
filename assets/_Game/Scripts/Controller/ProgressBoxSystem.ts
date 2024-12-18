@@ -7,6 +7,7 @@ import { Prefab } from 'cc';
 import { instantiate } from 'cc';
 import { PlayableAdsManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 import { TrackingManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'ProgressBoxSystem' )
@@ -68,6 +69,7 @@ export class ProgressBoxSystem extends Component
                 }
                 if ( this.currentProgress === 9 )
                 {
+                    getGameSystem().forceStoreUI.active = true;
                     TrackingManager.WinLevel();
                     PlayableAdsManager.Instance().ForceOpenStore();
                 }

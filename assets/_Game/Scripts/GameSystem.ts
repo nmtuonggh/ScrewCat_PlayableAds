@@ -23,6 +23,8 @@ var gameSystem: GameSystem;
 export class GameSystem extends Component
 {
     //#region EDITOR EXPOSED FIELDS
+    @property(Node)
+    public forceStoreUI: Node = null;
     @property( { type: BoxContainer, group: "Container" } )
     private boxContainer: BoxContainer = null;
     @property( { type: CahedContainer, group: "Container" } )
