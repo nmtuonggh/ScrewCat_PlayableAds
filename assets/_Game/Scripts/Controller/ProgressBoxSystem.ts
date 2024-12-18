@@ -8,6 +8,7 @@ import { instantiate } from 'cc';
 import { PlayableAdsManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 import { TrackingManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
 import { getGameSystem } from '../GameSystem';
+import { Sprite } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'ProgressBoxSystem' )
@@ -26,6 +27,8 @@ export class ProgressBoxSystem extends Component
     private progressPrefab: Prefab = null;
     @property( Node )
     private holder: Node = null;
+    @property( Sprite )
+    private progreesSprite: Sprite = null;
 
     @property( { group: 'Vibration' } )
     vibrationRate: number = 3;
@@ -35,6 +38,7 @@ export class ProgressBoxSystem extends Component
     delay: number = 0;
     //#endregion
     //#region PRIVATE FIELD
+    @property
     private totalProgress: number = 10;
     private currentProgress: number = 0;
     //#endregion
@@ -59,13 +63,14 @@ export class ProgressBoxSystem extends Component
         prefab.parent = this.holder;
         prefab.setWorldPosition( box.getWorldPosition() );
         tween( prefab )
-            .to( 0.8, { worldPosition: this.text.node.getWorldPosition() }, { easing: 'smooth' } )
+            .to( 0.8, { worldPosition: this.boxNode.getWorldPosition() }, { easing: 'smooth' } )
             .call( () =>
             {
                 prefab.destroy();
                 if ( this.currentProgress <= 10 )
                 {
                     this.tweenText();
+                    this.tweenProgress();
                 }
                 if ( this.currentProgress === 9 )
                 {
@@ -88,7 +93,13 @@ export class ProgressBoxSystem extends Component
             .to( 0.25, { scale: new Vec3( 1, 1, 1 ) }, { easing: 'backOut' } )
             .start();
         this.text.string = `${ this.currentProgress }/${ this.totalProgress }`;
-
+    }
+    tweenProgress ()
+    {
+        let value = ( this.currentProgress / this.totalProgress );
+        tween( this.progreesSprite )
+                .to( 0.5, { fillRange: value } )
+                .start();
     }
     actionTween ()
     {
