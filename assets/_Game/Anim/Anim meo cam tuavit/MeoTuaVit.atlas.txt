@@ -1,41 +1,41 @@
 
 MeoTuaVit.png
-size: 1944,652
+size: 548,152
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Dau_00000
   rotate: true
-  xy: 1097, 74
-  size: 574, 512
-  orig: 1080, 1920
-  offset: 230, 997
+  xy: 299, 4
+  size: 143, 129
+  orig: 270, 480
+  offset: 58, 249
   index: -1
 Than_00000
-  rotate: false
+  rotate: true
   xy: 2, 2
-  size: 576, 646
-  orig: 1080, 1920
-  offset: 298, 399
+  size: 145, 163
+  orig: 270, 480
+  offset: 74, 99
   index: -1
 cuoi_00000
   rotate: true
-  xy: 580, 75
-  size: 573, 515
-  orig: 1080, 1920
-  offset: 231, 995
+  xy: 167, 4
+  size: 143, 130
+  orig: 270, 480
+  offset: 58, 248
   index: -1
 mat den_00000
   rotate: true
-  xy: 1611, 201
-  size: 447, 253
-  orig: 1080, 1920
-  offset: 306, 1060
+  xy: 430, 35
+  size: 112, 64
+  orig: 270, 480
+  offset: 76, 265
   index: -1
 tay_00000
-  rotate: true
-  xy: 1611, 2
-  size: 197, 328
-  orig: 1080, 1920
-  offset: 214, 637
+  rotate: false
+  xy: 496, 65
+  size: 50, 82
+  orig: 270, 480
+  offset: 53, 159
   index: -1

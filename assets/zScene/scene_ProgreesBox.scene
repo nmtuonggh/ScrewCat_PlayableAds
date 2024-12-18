@@ -10641,7 +10641,7 @@
       "__id__": 425
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "cb+amuJB5P8KDeCI+dQDNf"
   },
   {
@@ -20105,7 +20105,7 @@
       "__id__": 711
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "98gbd2m99ANrohFOPqkWxF"
   },
   {
@@ -29911,7 +29911,7 @@
       "__id__": 1005
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "6cUCOQW+BKsLIqVxsGwyiG"
   },
   {
@@ -30387,7 +30387,7 @@
       "__id__": 1020
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "68/k3jz41Cl5FBQVMZwFs5"
   },
   {
@@ -35858,7 +35858,7 @@
       "__id__": 1182
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "10ccfPafVF/4QW9+DYdHjl"
   },
   {
@@ -38181,7 +38181,7 @@
       "__id__": 1250
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "b23xfrZaFFZJio2fz1dURw"
   },
   {
@@ -38657,7 +38657,7 @@
       "__id__": 1265
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "aapMG+z3tJx7gkbO0EEdMd"
   },
   {
@@ -39609,7 +39609,7 @@
       "__id__": 1295
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "96fuNEOwJFGIfTBYzT5Unp"
   },
   {
@@ -40836,7 +40836,7 @@
       "__id__": 1329
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "59XF+fIahKBpBOUoh3TPSP"
   },
   {
@@ -42264,7 +42264,7 @@
       "__id__": 1374
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "9f9sgPRApD9YCIdB6q1NbV"
   },
   {
@@ -46717,7 +46717,7 @@
       "__id__": 1506
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "29s4kkBLxHmIBZ5VR1GtH+"
   },
   {
@@ -48379,7 +48379,7 @@
       "__id__": 1555
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "6fA7vfCXZKs6cnBHzcKCY1"
   },
   {
@@ -51343,7 +51343,7 @@
       "__id__": 1642
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "2804xvhe5AlIarSvpyKy1p"
   },
   {
@@ -53000,7 +53000,7 @@
       "__id__": 1691
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "9dJeDnY/5IpIYqXCdvJbu0"
   },
   {
@@ -54657,7 +54657,7 @@
       "__id__": 1740
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "d7Fk88yPFJpbM2UjjdIvkE"
   },
   {
@@ -58196,7 +58196,7 @@
       "__id__": 1842
     },
     "colorType": 3,
-    "colorIndex": 4,
+    "colorIndex": 5,
     "_id": "f186g8cZJAq4TprYBz9973"
   },
   {
@@ -62743,11 +62743,11 @@
       "a": 255
     },
     "_skeletonData": {
-      "__uuid__": "ce322eda-0670-4931-8d5e-7590c5a17036",
+      "__uuid__": "25d3741a-9180-4331-a88c-6fecce984164",
       "__expectedType__": "sp.SkeletonData"
     },
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "animation",
     "_premultipliedAlpha": true,
     "_timeScale": 1,
     "_preCacheMode": 0,
@@ -63241,7 +63241,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "c226ac3a-1c87-48dc-91f7-5487469fcbd1@f9941",
+      "__uuid__": "31bccb09-4a5d-408e-b88d-f3432ae19832@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -70148,7 +70148,7 @@
     "LevelContainerPosPortrai": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -50,
+      "y": 150,
       "z": 0
     },
     "BoxContainerPosPortrai": {
@@ -70165,8 +70165,8 @@
     },
     "StarPosPortrai": {
       "__type__": "cc.Vec3",
-      "x": 420,
-      "y": -200,
+      "x": 550,
+      "y": -50,
       "z": 0
     },
     "BoosterPosPortrai": {
@@ -70178,7 +70178,7 @@
     "LevelContainerPosSquare": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": 100,
       "z": 0
     },
     "BoxContainerPosSquare": {
@@ -70196,7 +70196,7 @@
     "StarPosSquare": {
       "__type__": "cc.Vec3",
       "x": 850,
-      "y": -400,
+      "y": -200,
       "z": 0
     },
     "BoosterPosSquare": {
@@ -70208,7 +70208,7 @@
     "LevelContainerPosMix": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -50,
+      "y": 120,
       "z": 0
     },
     "BoxContainerPosMix": {
@@ -70225,8 +70225,8 @@
     },
     "StarPosMix": {
       "__type__": "cc.Vec3",
-      "x": 570,
-      "y": -350,
+      "x": 600,
+      "y": -150,
       "z": 0
     },
     "BoosterPosMix": {

@@ -28,12 +28,6 @@ export class ScrewRenderer extends Component
         //this.screwSprite.color = GameColorData.GetColorByType( this.colorType );
     }
 
-    public setSprite ( colorType: eColorType, data: ScrewData ): void
-    {
-        this.colorType = colorType;
-        this.topSprite.spriteFrame = data.ScrewTopSprite[ colorType ];
-    }
-
     public setSelfColor ( data: ScrewData )
     {
         this.topSprite.spriteFrame = data.ScrewTopSprite[ this.colorIndex ];

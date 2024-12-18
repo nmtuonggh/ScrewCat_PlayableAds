@@ -12,6 +12,8 @@ import { GameLayerOder } from './GameComponent/GameLayerOder';
 import { resources } from 'cc';
 import { SpriteFrame } from 'cc';
 import { Sprite } from 'cc';
+import { eColorType } from './GameConfig/GameColorConfig';
+import { log } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -165,15 +167,14 @@ export class Level extends Component
 
     setFlex ()
     {
-        var bars = this.node.getComponentsInChildren( BarController );
-        bars.forEach( element =>
+        var screws = this.node.getComponentsInChildren( Screw );
+        screws.forEach( screw =>
         {
-            
-            var sprite = element.getComponent( Sprite );
-            if ( sprite === null ) return;
-            // element.addComponent( Sprite );
-            // element.getComponent( Sprite ).spriteFrame = sprite.spriteFrame;
-            sprite.destroy();
+            if ( screw.ScrewRenderer.colorIndex === eColorType.Gray )
+            {
+                log( "flex" );
+                screw.ScrewRenderer.colorIndex = eColorType.Red;
+            }
         } );
     }
 }
