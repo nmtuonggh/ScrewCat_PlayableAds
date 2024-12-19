@@ -28,6 +28,8 @@ export class AudioController extends Component
     public drill: AudioClip = null;
     @property( AudioClip )
     public win: AudioClip = null;
+    @property( AudioClip )
+    public hidencat: AudioClip = null;
 
     //#endregion
 
@@ -84,6 +86,11 @@ export class AudioController extends Component
     public playDrill ()
     {
         this.audioSource.playOneShot( this.drill );
+    }
+
+    public playHiddenCat ()
+    {
+        this.audioSource.playOneShot( this.hidencat );
     }
 }
 

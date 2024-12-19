@@ -14,6 +14,7 @@ import { UIController } from './UIController';
 import { TestIQController } from './TestIQ/TestIQController';
 import { RealTimeTutorial } from './Controller/RealTimeTutorial';
 import { ProgressBoxSystem } from './Controller/ProgressBoxSystem';
+import { HiddenCatController } from './Controller/HiddenCatController';
 const { ccclass, property } = _decorator;
 
 var gameSystem: GameSystem;
@@ -56,9 +57,18 @@ export class GameSystem extends Component
     private realTimeTutorial: RealTimeTutorial = null;
     @property( { type: ProgressBoxSystem, group: "Controller" } )
     private progressBox: ProgressBoxSystem = null;
+    @property( { type: HiddenCatController, group: "Controller" } )
+    private hiddenCatControll: HiddenCatController = null;
+
+    @property(Node)
+    public disableInputNode: Node = null;
     //#endregion
 
     //#region PROPERTIES
+    public get HiddenCatControll ()
+    {
+        return this.hiddenCatControll;
+    }
     public get ProgressBoxSystem ()
     {
         return this.progressBox

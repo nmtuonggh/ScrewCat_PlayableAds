@@ -19,9 +19,9 @@ const { ccclass, property } = _decorator;
 export class Screw extends GameLayerComponent
 {
     //#region EDITOR EXPOSED FIELD
-    @property( { type: HingeJoint2D, readonly: true } )
-    private hingeJoint: HingeJoint2D = null;
-    @property( ScrewRenderer )
+    @property( [HingeJoint2D] )
+    private hingeJoint: HingeJoint2D[] = [];
+    //@property( ScrewRenderer )
     private screwRenderer: ScrewRenderer = null;
     //#endregion
 
@@ -34,13 +34,13 @@ export class Screw extends GameLayerComponent
     {
         return this.screwRenderer;
     }
-    public get HingeJoint (): HingeJoint2D
+    public get HingeJoint (): HingeJoint2D[]
     {
         return this.hingeJoint;
     }
-    public set HingeJoint ( value: HingeJoint2D )
+    public set HingeJoint ( value: HingeJoint2D[] )
     {
-        this.hingeJoint = value;
+        this.hingeJoint = value
     }
     public get ScrewAnimation (): ScrewAnim
     {
@@ -54,17 +54,22 @@ export class Screw extends GameLayerComponent
 
     protected onLoad (): void
     {
-        //this.screwRenderer = this.getComponent( ScrewRenderer );
+        this.screwRenderer = this.getComponent( ScrewRenderer );
         this.screwAnimation = this.getComponent( ScrewAnim );
+        this.HingeJoint = this.hingeJoint;
     }
     //#region PRIVATE METHOD
     private freeJoints (): void 
     {
-        this.hingeJoint.enabled = false;
-        if ( this.hingeJoint.node.getComponent( RigidBody2D ).type === ERigidBody2DType.Kinematic )
-        {
-            this.hingeJoint.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Dynamic;
-        }
+        this.hingeJoint.forEach(hg => {
+            hg.enabled = false;
+        });
+        this.hingeJoint.forEach(hg => {
+            if(hg.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Kinematic)
+            {
+                hg.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Dynamic;
+            }
+        });
     }
     private CheckMoveCache (): boolean
     {
@@ -314,6 +319,10 @@ export class Screw extends GameLayerComponent
     {
         this.screwRenderer.showScrew();
         this.State = eScrewState.IN_BAR;
+    }
+    public enableHgJoint (): void
+    {
+        this.hingeJoint.forEach( hg => hg.enabled = true );
     }
     //#endregion
 }

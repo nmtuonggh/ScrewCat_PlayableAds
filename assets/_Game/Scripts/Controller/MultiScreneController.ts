@@ -18,7 +18,7 @@ const { ccclass, property } = _decorator;
 @ccclass( 'MultiScreneController' )
 export class MultiScreneController extends Component
 {
-    @property(CanvasScreenController)
+    @property( CanvasScreenController )
     public canvasScreenController: CanvasScreenController[] = [];
 
     @property( Canvas )
@@ -45,9 +45,9 @@ export class MultiScreneController extends Component
 
     public onSizeChanged (): void
     {
-      
+
         this.UpdateSize();
-        
+
     }
 
     getScreenSize (): void
@@ -59,22 +59,22 @@ export class MultiScreneController extends Component
 
         if ( ratio < 0.69 )
         {
-           
+
             this.ScreenType = ScreenType.Portrait;
 
         } else if ( ratio > 0.69 && ratio < 1.4 )
         {
-            
+
             this.ScreenType = ScreenType.Square;
         }
         else if ( ratio > 1.4 && ratio < 1.65 )
         {
-            
+
             this.ScreenType = ScreenType.Mixed;
         }
         else if ( ratio > 1.65 )
         {
-           
+
             this.ScreenType = ScreenType.Landscape;
         }
 
@@ -84,7 +84,7 @@ export class MultiScreneController extends Component
     protected UpdateSize (): void
     {
         let ratio = screen.windowSize.width / screen.windowSize.height;
-        
+
         let targetSize: Size = new Size( 1920, 1080 );
         let screenType = ScreenType.Landscape;
 
@@ -119,16 +119,16 @@ export class MultiScreneController extends Component
         view.setDesignResolutionSize( targetSize.width, targetSize.height, ResolutionPolicy.FIXED_HEIGHT );
 
         for ( let i = 0; i < this.canvasScreenController.length; i++ )
+        {
+            if ( i != this.ScreenType )
             {
-                if ( i != this.ScreenType )
-                {
-                    this.canvasScreenController[ i ].node.active = false;
-                }
-                else
-                {
-                    this.setupScreen( this.ScreenType, targetSize, ratio );
-                }
+                this.canvasScreenController[ i ].node.active = false;
             }
+            else
+            {
+                this.setupScreen( this.ScreenType, targetSize, ratio );
+            }
+        }
     }
 
     setupScreen ( type: ScreenType, targetSize: Size, ratio: number ): void
@@ -138,12 +138,17 @@ export class MultiScreneController extends Component
         this.canvasScreenController[ type ].getComponent( Widget ).updateAlignment();
         getGameSystem().MoveScrewHandle.Camera = this.getCameraGamePlay();
         this.uimulti.SetComponentPosition( type );  //set vi tri cac thanh phan
-        if(getGameSystem().TestIQController){
-            getGameSystem().TestIQController.setupIQUI(type );
-        }
-        if(getGameSystem().ProgressBoxSystem)
+        if ( getGameSystem().TestIQController )
         {
-            getGameSystem().ProgressBoxSystem.setUIPosMultiscreen(type);
+            getGameSystem().TestIQController.setupIQUI( type );
+        }
+        if ( getGameSystem().ProgressBoxSystem )
+        {
+            getGameSystem().ProgressBoxSystem.setUIPosMultiscreen( type );
+        }
+        if ( getGameSystem().HiddenCatControll )
+        {
+            getGameSystem().HiddenCatControll.setUIPosMultiscreen( type );
         }
         getGameSystem().UIController.onChangedScreen();
     }
@@ -153,7 +158,7 @@ export class MultiScreneController extends Component
         return this.canvasScreenController[ this.ScreenType ].cameraGamePlay;
     }
 
-    
+
 }
 
 export enum ScreenType

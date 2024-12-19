@@ -9,6 +9,8 @@ import { AudioType } from '../../../AudioController/AudioController';
 import { GameConfig } from '../../../GameConfig/GameConfig';
 import { getGameSystem } from '../../../GameSystem';
 import { get } from 'http';
+import { PlayableAdsManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
+import { TrackingManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'Box' )
@@ -127,9 +129,20 @@ export class Box extends HoleContainer
         getGameSystem().GameManager.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
         ///Random tieng meo di kem voi con meo
-        let index = Math.floor( Math.random() * 5 );
+        let index = 0;
+        if ( getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node )
+        {
+            getGameSystem().HiddenCatControll.updatePoolCat();
+            index = getGameSystem().HiddenCatControll.Index;
+            this.boxRenderer.PlayAnimCompleBox( index );
+            getGameSystem().HiddenCatControll.showCat( index );
+        }
+        else
+        {
+            index = Math.floor( Math.random() * 5 );
+            this.boxRenderer.PlayAnimCompleBox( index );
+        }
         let iqNode;
-        this.boxRenderer.PlayAnimCompleBox( index );
         tween( this.boxRenderer.closeBox )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
@@ -153,9 +166,18 @@ export class Box extends HoleContainer
                 }
                 if ( getGameSystem().ProgressBoxSystem && getGameSystem().ProgressBoxSystem.node )
                 {
-                    getGameSystem().ProgressBoxSystem.onBoxCollect(this.node);
+                    getGameSystem().ProgressBoxSystem.onBoxCollect( this.node );
                 }
                 this.MoveOut();
+                if(getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node)
+                {
+                    if(getGameSystem().HiddenCatControll.PoolCat > 4)
+                    {
+                        getGameSystem().disableInputNode.active = true;
+                        TrackingManager.WinLevel();
+                        PlayableAdsManager.Instance().ForceOpenStore();
+                    }
+                }
             } )
             .start();
     }

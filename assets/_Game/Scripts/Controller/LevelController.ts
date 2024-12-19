@@ -98,8 +98,12 @@ export class LevelController extends Component
             bar.InitScrewColor( this.ScrewData );
             bar.BarPhysic.SetGroupLayer();
             bar.BarPhysic.CreatHGJoint();
-            bar.BarPhysic.EnableHGJoin();
+            //bar.BarPhysic.EnableHGJoin();
         } );
+        this.listScrew.forEach( screw =>
+        {
+            screw.enableHgJoint();
+        } )
     }
 
     private initBox (): void

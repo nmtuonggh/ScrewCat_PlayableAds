@@ -16,20 +16,15 @@ const { ccclass, property } = _decorator;
 export class BarController extends GameLayerComponent
 {
     //#region EDITOR EXPOSED FIELD
-    @property( { type: [ Screw ], visible: true,  } )
+    @property( { type: [ Screw ], visible: true, } )
     private listScrews: Screw[] = [];
     @property( BarPhysic )
     private barPhysic: BarPhysic = null;
-    @property( PolygonCollider2D )
-    private collider: PolygonCollider2D = null;
     @property( Sprite )
     private hideSprite: Sprite = null;
     @property( UIOpacity )
     private hideOpacity: UIOpacity = null;
     //#endregion
-    @property( PolygonCollider2D )
-    public modelCollider: PolygonCollider2D = null;
-
     private modelSprite: Sprite = null;
 
     //#region PROPERTY
@@ -40,6 +35,7 @@ export class BarController extends GameLayerComponent
     public set ListScrews ( value: Screw[] )
     {
         this.listScrews = value;
+
     }
     public get BarPhysic (): BarPhysic
     {
@@ -69,10 +65,14 @@ export class BarController extends GameLayerComponent
     //#region Spawn Screw
 
     public InitScrewColor ( screwData: ScrewData ): void
-    { 
+    {
         for ( let i = 0; i < this.listScrews.length; i++ )
         {
             this.listScrews[ i ].getComponent( Screw ).ScrewRenderer.setSelfColor( screwData );
+        }
+        if ( this.listScrews.length === 1 )
+        {
+            this.barPhysic.setRigidBodyType( ERigidBody2DType.Kinematic );
         }
     }
 
@@ -131,7 +131,7 @@ export class BarController extends GameLayerComponent
                     screw.node.destroy();
                     listStar.push( star );
                 }
-                
+
             }
         }
 

@@ -30,7 +30,7 @@ export class BarPhysic extends Component {
             const worldPos = screw.node.getWorldPosition();
             const localPos = this.node.getComponent(UITransform).convertToNodeSpaceAR(worldPos);
             const screwRb = screw.node.getComponent( RigidBody2D );
-            screw.HingeJoint = this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb );
+            screw.HingeJoint.push(this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb ));
         }
     }
 
@@ -43,21 +43,13 @@ export class BarPhysic extends Component {
         return hgJoint;
     }
 
-    public EnableHGJoin (): void
-    {
-        for ( let i = 0; i < this.barController.ListScrews.length; i++ ) 
-        {
-            this.barController.ListScrews[ i ].HingeJoint.enabled = true;
-        }
-    }
-
-    public DisableHGJoin (): void
-    {
-        for ( let i = 0; i < this.barController.ListScrews.length; i++ ) 
-        {
-            this.barController.ListScrews[ i ].HingeJoint.enabled = false;
-        }
-    }
+    // public EnableHGJoin (): void
+    // {
+    //     for ( let i = 0; i < this.barController.ListScrews.length; i++ ) 
+    //     {
+    //         this.barController.ListScrews[ i ].HingeJoint.enabled = true;
+    //     }
+    // }
 
     //#endregion
 
@@ -67,6 +59,11 @@ export class BarPhysic extends Component {
         if(this.rb === null) console.error("Rigidbody2D is null");
 
         this.rb.group = 1 << this.barController.Layer + 13;
+    }
+
+    setRigidBodyType ( type: ERigidBody2DType ): void
+    {
+        this.rb.type = type;
     }
 
 }
