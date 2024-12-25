@@ -172,10 +172,11 @@ export class Level extends Component
         var screws = this.node.getComponentsInChildren( Screw );
         screws.forEach( screw =>
         {
+            screw.ScrewRenderer = screw.node.getComponent( ScrewRenderer );
             if ( screw.ScrewRenderer.colorIndex === eColorType.Gray )
             {
                 log( "flex" );
-                screw.ScrewRenderer.colorIndex = eColorType.Red;
+                screw.ScrewRenderer.colorIndex = eColorType.Purple;
             }
         } );
     }
