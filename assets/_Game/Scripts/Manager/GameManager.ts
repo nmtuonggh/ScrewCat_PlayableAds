@@ -86,6 +86,7 @@ export class GameManager extends Component
                 }
                 if ( canWait ) break;
             }
+
             if ( !this.lose && !canWait )
             {
                 this.lose = true;
@@ -97,7 +98,7 @@ export class GameManager extends Component
                     //wait for 2s
                     setTimeout( () =>
                     {
-                        uiController.showLose();
+                        uiController.showLoseUI();
                         if ( getGameSystem().TestIQController && getGameSystem().TestIQController.node )
                         {
                             uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );

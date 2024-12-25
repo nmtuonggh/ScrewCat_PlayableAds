@@ -8,11 +8,12 @@ export class LosePage extends Component
 {
     protected onEnable (): void
     {
-        TrackingManager.LoseLevel();
-        setTimeout( () =>
-        {
-            PlayableAdsManager.Instance().ForceOpenStore();
-        }, 3000 );
+        // if ( !this.node.parent.parent.active ) return;
+        // TrackingManager.LoseLevel();
+        // setTimeout( () =>
+        // {
+        //     PlayableAdsManager.Instance().ForceOpenStore();
+        // }, 3000 );
     }
 
     public onClick (): void

@@ -1,14 +1,8 @@
 import { _decorator, Component, Node } from 'cc';
-import { BoxContainer } from './Controller/BoxContainer';
-import { tween } from 'cc';
-import { Vec3 } from 'cc';
-import { Screw } from './GameComponent/Screw/Screw';
-import { OutOfMove } from './OutOfMove';
-import { GameManager } from './Manager/GameManager';
-import { UILose } from './UI/UILose';
-import { TestIQController } from './TestIQ/TestIQController';
 import { CanvasScreenController } from './MultiScreen/CanvasScreenController';
 import { getGameSystem } from './GameSystem';
+import { TrackingManager } from '../../PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
+import { PlayableAdsManager } from '../../PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'UIController' )
@@ -43,12 +37,19 @@ export class UIController extends Component
         } );
     }
 
-    public showLose (): void
+    public showLoseUI (): void
     {
+        TrackingManager.LoseLevel();
+        setTimeout( () =>
+        {
+            PlayableAdsManager.Instance().ForceOpenStore();
+        }, 3000 );
         this.canvasScreenController.forEach( element =>
         {
             element.uiCanvasScreen.setLoseUIStatus( true );
         } );
+        // const screen = getGameSystem().MultiScreneController.ScreenType;
+        // this.canvasScreenController[screen].uiCanvasScreen.setLoseUIStatus( true );
     }
     public tweenFail (): void
     {

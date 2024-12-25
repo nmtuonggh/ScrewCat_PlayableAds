@@ -167,7 +167,7 @@ export class GameSystem extends Component
             this.uiController.setIQText( getGameSystem().TestIQController.currentIQ.toString() );
         }
         this.audioController.playWin();
-        this.uiController.showLose();
+        //this.uiController.showLose();
     }
     //#endregion
 }

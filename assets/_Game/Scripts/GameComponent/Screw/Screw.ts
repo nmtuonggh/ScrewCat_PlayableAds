@@ -34,6 +34,10 @@ export class Screw extends GameLayerComponent
     {
         return this.screwRenderer;
     }
+    public set ScrewRenderer ( value: ScrewRenderer )
+    {
+        this.screwRenderer = value   
+    }
     public get HingeJoint (): HingeJoint2D[]
     {
         return this.hingeJoint;

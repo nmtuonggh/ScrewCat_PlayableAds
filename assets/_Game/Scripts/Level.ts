@@ -14,6 +14,7 @@ import { SpriteFrame } from 'cc';
 import { Sprite } from 'cc';
 import { eColorType } from './GameConfig/GameColorConfig';
 import { log } from 'cc';
+import { ScrewRenderer } from './GameComponent/Screw/ScrewRenderer';
 
 const { ccclass, property } = _decorator;
 
@@ -147,10 +148,11 @@ export class Level extends Component
             {
                 const screw = listScrewInLayer[ j ];
                 const fullName = screw.node.name;
-                const extractedName = fullName.substring( fullName.indexOf( "Bar_" ) );
+                const extractedName = fullName.substring( fullName.indexOf( "-" ) + 1 );
                 const barName = bar.node.name;
+                var barId = barName.substring( barName.indexOf( "_" ) + 1 );
 
-                if ( extractedName === barName )
+                if ( extractedName === barId )
                 {
                     bar.ListScrews.push( screw );
                 }
@@ -158,9 +160,9 @@ export class Level extends Component
                 //lay colorIndex
                 const parts = fullName.split( "_" );
                 const colorIndex = parts[ 1 ];
-
-                screw.ScrewRenderer.colorIndex = parseInt( colorIndex );
-
+                
+                screw.ScrewRenderer = screw.node.getComponent( ScrewRenderer );
+                screw.ScrewRenderer.colorIndex = parseInt( colorIndex);
             }
         }
     }

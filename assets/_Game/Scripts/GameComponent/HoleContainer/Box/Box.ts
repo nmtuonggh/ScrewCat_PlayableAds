@@ -113,7 +113,10 @@ export class Box extends HoleContainer
                 this.boxRenderer.skeleton.enabled = false;
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
-                getGameSystem().UnlockBoxController.AddLockCount();
+                if ( getGameSystem().UnlockBoxController && getGameSystem().UnlockBoxController.node )
+                {
+                    getGameSystem().UnlockBoxController.AddLockCount();
+                }
                 getGameSystem().BoxContainer.CheckCreateBox();
                 getGameSystem().BoxContainer.RemoveActiveBox( this );
             } )
@@ -169,9 +172,9 @@ export class Box extends HoleContainer
                     getGameSystem().ProgressBoxSystem.onBoxCollect( this.node );
                 }
                 this.MoveOut();
-                if(getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node)
+                if ( getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node )
                 {
-                    if(getGameSystem().HiddenCatControll.PoolCat > 4)
+                    if ( getGameSystem().HiddenCatControll.PoolCat > 4 )
                     {
                         getGameSystem().disableInputNode.active = true;
                         TrackingManager.WinLevel();

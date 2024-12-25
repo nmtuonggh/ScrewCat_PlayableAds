@@ -1,6 +1,5 @@
 import { _decorator, Canvas, Component, Node, Sprite, SpriteFrame, View, Size } from 'cc';
 import { TutorialController } from '../TutorialController';
-import { UIController } from '../UIController';
 import { screen } from 'cc'
 import { view } from 'cc';
 import { ResolutionPolicy } from 'cc';
@@ -8,8 +7,6 @@ import { UITransform } from 'cc';
 import { Widget } from 'cc';
 import { Camera } from 'cc';
 import { UIMultiScreen } from '../MultiScreen/UIMultiScreen';
-import { MoveScrewHandle } from './MoveScrewHandle';
-import { TestIQController } from '../TestIQ/TestIQController';
 import { CanvasScreenController } from '../MultiScreen/CanvasScreenController';
 import { getGameSystem } from '../GameSystem';
 
@@ -20,7 +17,6 @@ export class MultiScreneController extends Component
 {
     @property( CanvasScreenController )
     public canvasScreenController: CanvasScreenController[] = [];
-
     @property( Canvas )
     public baseCanvas: Canvas = null;
 
@@ -35,8 +31,6 @@ export class MultiScreneController extends Component
     {
         this.baseCanvas.node.on( Node.EventType.SIZE_CHANGED, this.onSizeChanged, this );
     }
-
-
 
     protected start (): void
     {
@@ -108,8 +102,6 @@ export class MultiScreneController extends Component
             targetSize = new Size( 1920, 1080 );
             screenType = ScreenType.Landscape;
         }
-
-
 
         if ( screenType != this.ScreenType )
         {
