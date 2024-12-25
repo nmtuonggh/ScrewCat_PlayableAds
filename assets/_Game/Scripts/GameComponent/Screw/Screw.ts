@@ -19,7 +19,7 @@ const { ccclass, property } = _decorator;
 export class Screw extends GameLayerComponent
 {
     //#region EDITOR EXPOSED FIELD
-    @property( [HingeJoint2D] )
+    @property( [ HingeJoint2D ] )
     private hingeJoint: HingeJoint2D[] = [];
     //@property( ScrewRenderer )
     private screwRenderer: ScrewRenderer = null;
@@ -36,7 +36,7 @@ export class Screw extends GameLayerComponent
     }
     public set ScrewRenderer ( value: ScrewRenderer )
     {
-        this.screwRenderer = value   
+        this.screwRenderer = value
     }
     public get HingeJoint (): HingeJoint2D[]
     {
@@ -65,15 +65,17 @@ export class Screw extends GameLayerComponent
     //#region PRIVATE METHOD
     private freeJoints (): void 
     {
-        this.hingeJoint.forEach(hg => {
+        this.hingeJoint.forEach( hg =>
+        {
             hg.enabled = false;
-        });
-        this.hingeJoint.forEach(hg => {
-            if(hg.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Kinematic)
+        } );
+        this.hingeJoint.forEach( hg =>
+        {
+            if ( hg.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Kinematic )
             {
                 hg.node.getComponent( RigidBody2D ).type = ERigidBody2DType.Dynamic;
             }
-        });
+        } );
     }
     private CheckMoveCache (): boolean
     {
@@ -321,7 +323,14 @@ export class Screw extends GameLayerComponent
 
     public show (): void
     {
-        this.screwRenderer.showScrew();
+        try
+        {
+            this.screwRenderer.showScrew();
+        }
+        catch
+        {
+            debugger;
+        }
         this.State = eScrewState.IN_BAR;
     }
     public enableHgJoint (): void

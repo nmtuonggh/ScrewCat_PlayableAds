@@ -77,6 +77,7 @@ export class LevelController extends Component
         this.listBar = this.Holder.getComponentsInChildren( BarController );
         this.listScrew = this.Holder.getComponentsInChildren( Screw );
         this.listLayer = this.Holder.getComponentsInChildren( GameLayer );
+        
     }
 
     protected start (): void
@@ -179,7 +180,8 @@ export class LevelController extends Component
         //active layer 
         for ( let i = 0; i < this.activeLayerCount; i++ )
         {
-            if ( this.listUnActiveLayer.length > 0 )
+            if ( this.listUnActiveLayer.length > 0 && 
+                i < this.activeLayerCount )
             {
                 const lastLayer = this.listUnActiveLayer.pop();
                 this.activeLayer( lastLayer );
@@ -189,7 +191,7 @@ export class LevelController extends Component
         //set playing layer
         for ( let i = 0; i < this.playingLayerCount; i++ )
         {
-            if ( this.listActiveLayer.length > 0 )
+            if ( this.listActiveLayer.length > 0 && i < this.playingLayerCount )
             {
                 this.setPlayingLayer( this.listActiveLayer[ i ] );
             }
@@ -202,7 +204,7 @@ export class LevelController extends Component
     private activeNewLayer (): void
     {
         //active layer cuoi cung trong listUnActiveLayer
-        if ( this.listUnActiveLayer.length > 0 )
+        if ( this.listUnActiveLayer.length > 0 && this.listActiveLayer.length < this.activeLayerCount )
         {
             const lastLayer = this.listUnActiveLayer.pop();
             this.activeLayer( lastLayer );
