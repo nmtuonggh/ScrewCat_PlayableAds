@@ -105,12 +105,12 @@ export class Box extends HoleContainer
     private MoveOut (): void
     {
         const pos = this.node.position.clone().add( new Vec3( 0, 200, 0 ) );
-        this.boxRenderer.skeleton.setAnimation( 0, 'Appear2', false );
+        //this.boxRenderer.skeleton.setAnimation( 0, 'Appear2', false );
         tween( this.node )
             .to( GameConfig.BOX_MOVEOUT_DURATION, { position: pos } )
             .call( () =>
             {
-                this.boxRenderer.skeleton.enabled = false;
+                //this.boxRenderer.skeleton.enabled = false;
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
                 if ( getGameSystem().UnlockBoxController && getGameSystem().UnlockBoxController.node )
@@ -132,32 +132,42 @@ export class Box extends HoleContainer
         getGameSystem().GameManager.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
         ///Random tieng meo di kem voi con meo
-        let index = 0;
-        if ( getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node )
-        {
-            getGameSystem().HiddenCatControll.updatePoolCat();
-            index = getGameSystem().HiddenCatControll.Index;
-            this.boxRenderer.PlayAnimCompleBox( index );
-            getGameSystem().HiddenCatControll.showCat( index );
-        }
-        else
-        {
-            index = Math.floor( Math.random() * 5 );
-            this.boxRenderer.PlayAnimCompleBox( index );
-        }
+        // let index = 0;
+        // if ( getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node )
+        // {
+        //     getGameSystem().HiddenCatControll.updatePoolCat();
+        //     index = getGameSystem().HiddenCatControll.Index;
+        //     this.boxRenderer.PlayAnimCompleBox( index );
+        //     getGameSystem().HiddenCatControll.showCat( index );
+        // }
+        // else
+        // {
+        //     index = Math.floor( Math.random() * 5 );
+        //     this.boxRenderer.PlayAnimCompleBox( index );
+        // }
         let iqNode;
         tween( this.boxRenderer.closeBox )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
             {
                 getGameSystem().AudioController.playAudio( AudioType.boxComplete );
-                getGameSystem().AudioController.playMewoComplete( index );
+                //getGameSystem().AudioController.playMewoComplete( index );
                 this.starList = getGameSystem().StarController.spawnStar( this.listHoles.length, listHolesPos, 0 );
                 getGameSystem().StarController.playParticle( this.node.worldPosition );
                 if ( getGameSystem().TestIQController )
                 {
                     iqNode = getGameSystem().TestIQController.spawnIQ( this.node, true );
                 }
+                var scale1 = this.node.scale.clone();
+                var scale2 = this.node.scale.clone().add3f( 0.2, -0.3, 0 );
+                var pos = this.node.position.clone().add3f( 0, -10, 0 );
+                tween( this.node )
+                    .parallel(
+                        tween().to( 0.15, { position: pos } ),
+                        tween().to( 0.15, { scale: scale2 } )
+                    )
+                    .to( 0.15, { scale: scale1 } )
+                    .start();
             } )
             .delay( 0.3 )
             .call( () =>
