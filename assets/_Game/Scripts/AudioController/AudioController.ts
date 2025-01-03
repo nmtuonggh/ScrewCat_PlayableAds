@@ -31,6 +31,11 @@ export class AudioController extends Component
     @property( AudioClip )
     public hidencat: AudioClip = null;
 
+    @property( {type:AudioClip, group : "TimeAttack"} )
+    public tick: AudioClip = null;
+    @property( {type:AudioClip, group : "TimeAttack"} )
+    public reng: AudioClip = null;
+
     //#endregion
 
     public lose(): void
@@ -91,6 +96,19 @@ export class AudioController extends Component
     public playHiddenCat ()
     {
         this.audioSource.playOneShot( this.hidencat );
+    }
+
+    public playTick ()
+    {
+        this.audioSource.volume = 0.5;
+        this.audioSource.playOneShot( this.tick );
+        this.audioSource.volume = 1;
+
+    }
+
+    public playReng ()
+    {
+        this.audioSource.playOneShot( this.reng );
     }
 }
 

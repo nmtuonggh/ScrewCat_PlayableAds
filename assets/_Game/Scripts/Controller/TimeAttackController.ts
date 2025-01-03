@@ -5,6 +5,7 @@ import { tween } from 'cc';
 import { _decorator, Component, Node } from 'cc';
 import { PlayableAdsManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/PlayableAdsManager';
 import { TrackingManager } from 'db://assets/PA_iKame (1)/base-script/PlayableAds/Tracking/TrackingManager';
+import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'TimeAttackController' )
@@ -75,6 +76,7 @@ export class TimeAttackController extends Component
 
     private updateTimeLabel (): void
     {
+        getGameSystem().AudioController.playTick();
         this.timeLabel.string = this.formatTime( this.countdownTime );
         if(this.countdownTime <= 10)
         {
@@ -94,6 +96,7 @@ export class TimeAttackController extends Component
 
     private onCountdownEnd (): void
     {
+        getGameSystem().AudioController.playReng();
         this.lose = true;
         this.forceStoreUI.active = true;
         Tween.stopAllByTarget( this.timeLabel.node );

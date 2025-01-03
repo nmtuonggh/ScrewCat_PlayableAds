@@ -51626,6 +51626,14 @@
     },
     "win": null,
     "hidencat": null,
+    "tick": {
+      "__uuid__": "4655e34f-499a-470c-866c-d9b69fd74f93",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "reng": {
+      "__uuid__": "e63939f3-6022-4807-8647-8f05faf3361d",
+      "__expectedType__": "cc.AudioClip"
+    },
     "_id": "bc4ndC9aJAIbUimZblpUa3"
   },
   {
@@ -52121,6 +52129,7 @@
     },
     "progressBox": null,
     "hiddenCatControll": null,
+    "timeAttackController": null,
     "disableInputNode": null,
     "_id": "63ZGBDuP5Ca4/XGYHhE5m9"
   },

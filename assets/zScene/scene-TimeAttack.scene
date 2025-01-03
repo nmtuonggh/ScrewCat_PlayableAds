@@ -52707,6 +52707,14 @@
     },
     "win": null,
     "hidencat": null,
+    "tick": {
+      "__uuid__": "b3be6488-31e7-49ca-ba34-7c68c514c5c3",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "reng": {
+      "__uuid__": "e63939f3-6022-4807-8647-8f05faf3361d",
+      "__expectedType__": "cc.AudioClip"
+    },
     "_id": "bc4ndC9aJAIbUimZblpUa3"
   },
   {
