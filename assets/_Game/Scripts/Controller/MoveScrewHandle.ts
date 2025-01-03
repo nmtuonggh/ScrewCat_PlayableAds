@@ -34,7 +34,7 @@ export class MoveScrewHandle extends Component
     private camera: Camera = null;
     @property( PlayableAdsManager )
     private playableAdsManager: PlayableAdsManager = null;
-    @property(Node)
+    @property( Node )
     private touchVFX: Node = null;
     //#endregion
 
@@ -195,6 +195,12 @@ export class MoveScrewHandle extends Component
         ///Mo comment doan nay neu muon logic con 1 screw thi vao store!!!!!!!!!!!!!!!
         if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
         {
+            if ( getGameSystem().TimeAttackController && 
+                 getGameSystem().TimeAttackController.node &&
+                 !getGameSystem().TimeAttackController.lose )
+            {
+                getGameSystem().TimeAttackController.stopCountdown();
+            }
             this.playableAdsManager.ForceOpenStore();
             //getGameSystem().GameManager.win = true;
             TrackingManager.WinLevel();
@@ -208,11 +214,12 @@ export class MoveScrewHandle extends Component
 
         ///Touch effect
         this.touchVFX.setWorldPosition( new Vec3( this._lastMousePosition.x, this._lastMousePosition.y, 0 ) );
-        var childs = this.touchVFX.getComponentsInChildren(ParticleSystem);
-        childs.forEach(element => {
+        var childs = this.touchVFX.getComponentsInChildren( ParticleSystem );
+        childs.forEach( element =>
+        {
             element.stop();
             element.play();
-        });
+        } );
 
         this.checkClickScrew();
     }

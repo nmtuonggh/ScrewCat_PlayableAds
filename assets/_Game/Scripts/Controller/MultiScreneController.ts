@@ -142,6 +142,11 @@ export class MultiScreneController extends Component
         {
             getGameSystem().HiddenCatControll.setUIPosMultiscreen( type );
         }
+        if ( getGameSystem().TimeAttackController && getGameSystem().TimeAttackController.node )
+        {
+            getGameSystem().TimeAttackController.setUIPosition( type );
+        }
+
         getGameSystem().UIController.onChangedScreen();
     }
 
