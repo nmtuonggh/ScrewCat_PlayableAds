@@ -72,7 +72,7 @@ export class Box extends HoleContainer
         {
             this.isFullSlots = true;
             this.scheduleOnce( () =>
-                this.closeBox(), 0.2 );
+                this.closeBoxNoCat(), 0.2 );
         }
     }
     public IsGonnaMoveOut: boolean = false;
@@ -168,6 +168,65 @@ export class Box extends HoleContainer
                 //     )
                 //     .to( 0.15, { scale: scale1 } )
                 //     .start();
+            } )
+            .delay( 0.3 )
+            .call( () =>
+            {
+                getGameSystem().StarController.moveListStart( this.starList );
+                if ( getGameSystem().TestIQController && getGameSystem().TestIQController.node )
+                {
+                    getGameSystem().TestIQController.moveIQ( iqNode, 5 );
+                }
+                if ( getGameSystem().ProgressBoxSystem && getGameSystem().ProgressBoxSystem.node )
+                {
+                    getGameSystem().ProgressBoxSystem.onBoxCollect( this.node );
+                }
+                this.MoveOut();
+                if ( getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node )
+                {
+                    if ( getGameSystem().HiddenCatControll.PoolCat > 4 )
+                    {
+                        getGameSystem().disableInputNode.active = true;
+                        TrackingManager.WinLevel();
+                        PlayableAdsManager.Instance().ForceOpenStore();
+                    }
+                }
+            } )
+            .start();
+    }
+    private closeBoxNoCat (): void
+    {
+        let listHolesPos: Vec3[] = [];
+        for ( let i = 0; i < this.listHoles.length; i++ )
+        {
+            listHolesPos.push( this.listHoles[ i ].node.worldPosition );
+        }
+        getGameSystem().GameManager.CollectedScrew += this.listHoles.length;
+        this.boxRenderer.closeBox.active = true;
+
+        let iqNode;
+        tween( this.boxRenderer.closeBox )
+            .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
+            .call( () =>
+            {
+                getGameSystem().AudioController.playAudio( AudioType.boxComplete );
+                this.starList = getGameSystem().StarController.spawnStar( this.listHoles.length, listHolesPos, 0 );
+                getGameSystem().StarController.playParticle( this.node.worldPosition );
+                if ( getGameSystem().TestIQController )
+                {
+                    iqNode = getGameSystem().TestIQController.spawnIQ( this.node, true );
+                }
+
+                var scale1 = this.node.scale.clone();
+                var scale2 = this.node.scale.clone().add3f( 0.2, -0.3, 0 );
+                var pos = this.node.position.clone().add3f( 0, -10, 0 );
+                tween( this.node )
+                    .parallel(
+                        tween().to( 0.15, { position: pos } ),
+                        tween().to( 0.15, { scale: scale2 } )
+                    )
+                    .to( 0.15, { scale: scale1 } )
+                    .start();
             } )
             .delay( 0.3 )
             .call( () =>

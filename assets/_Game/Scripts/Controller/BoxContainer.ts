@@ -75,6 +75,17 @@ export class BoxContainer extends Component
         return null;
     }
 
+    public getActiveBoxColor(): eColorType[]
+    {
+        let color = [];
+        for ( const box of this.boxIsActive )
+        {
+            if ( box === null ) continue;
+            color.push( box.BoxRenderer.colorType );
+        }
+        return color;
+    }
+
     public getBoxForTutorial (): Box[]
     {
         var box = [];
