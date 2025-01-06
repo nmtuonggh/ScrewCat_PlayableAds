@@ -40,59 +40,51 @@ export class BoxSlot extends Component
     public set IsBlockByChain ( value: boolean )
     {
         this.isBlockByChain = value;
-        this.isLock = value;
         this.lockAnim.node.active = value;
         this.lockAnim.setAnimation( 0, 'Idle', false );
-        this.lockText.node.active = this.lockCount !== -5 && this.lockCount > 0;
     }
-    @property( { group: "Lock" } )
-    public get IsLock (): boolean
+
+    public get TotalLockedCount (): number
     {
-        return this.isLock;
+        return this.totalLockCount;
     }
-    public set IsLock ( value: boolean )
+    public set TotalLockedCount ( value: number )
     {
-        this.isLock = value;
+        this.totalLockCount = value;
     }
-    @property( { group: "Lock" } )
-    public get LockCount (): number
+    public get CurrentLockedCount (): number
     {
-        return this.lockCount;
+        return this.currentLockCount;
     }
-    public set LockCount ( value: number )
+    public set CurrentLockedCount ( value: number )
     {
-        this.lockCount = value;
-        if ( this.lockCount <= 0 && this.lockCount !== -5 ) this.lockAnim.node.active = false;
-        this.lockText.color = new Color( 255, 255, 255 );
-        this.lockText.string = this.currentCount + "/" + this.lockCount;
+        this.currentLockCount = value;
     }
-    @property( { readonly: true, group: "Lock" } )
-    public get CurrentCount (): number
+    public get LockAnim (): sp.Skeleton
     {
-        return this.currentCount;
+        return this.lockAnim;
     }
-    public set CurrentCount ( value: number )
+    public set LockAnim ( value: sp.Skeleton )
     {
-        this.currentCount = value;
-        if ( this.currentCount >= this.lockCount && this.lockCount !== -5 )
-        {
-            this.IsLock = false;
-            this.lockText.node.active = false;
-            this.boxAdsPrefab.active = false;
-            getGameSystem().AudioController.playAudio( AudioType.unlockChain );
-            this.lockAnim.setAnimation( 0, 'Unlock', false );
-        }
+        this.lockAnim = value;
     }
+    public get IsInProgress (): boolean
+    {
+        return this.isInProgress;
+    }
+    public set IsInProgress ( value: boolean )
+    {
+        this.isInProgress = value;
+    }
+    
     //#endregion
     //#region PRIVATE FIELD
     @property( { visible: false, readonly: true, group: "Lock" } )
     private isBlockByChain: boolean = false;
-    @property( { visible: false, readonly: true, group: "Lock" } )
-    private isLock: boolean = false;
-    @property( { visible: false, group: "Lock" } )
-    private lockCount: number = 0;
-    @property( { visible: false, readonly: true, group: "Lock" } )
-    private currentCount: number = 0;
+    private isInProgress: boolean = false;
+
+    private totalLockCount: number = 0;
+    private currentLockCount: number = 0;
 
     //#endregion
     public get Box (): Box
@@ -105,36 +97,30 @@ export class BoxSlot extends Component
         this.box = value;
     }
 
-
     private randomTime: number = 0;
-    private accumulatedTime: number = 0;
 
-    protected update ( dt: number ): void
+    private setRandomTime (): void
     {
-        // if ( this.lockAnim.node.active
-        //     && PlayableAdsManager.Instance().firstClicked
-        //     && !getGameSystem().GameManager.lose
-        //     && !getGameSystem().GameManager.win )
-        // {
-        //     if ( this.randomTime === 0 )
-        //     {
-        //         this.randomTime = Math.random() * 15000;
-        //     }
-        //     this.accumulatedTime += dt * 1000;
-        //     if ( this.accumulatedTime >= this.randomTime )
-        //     {
-        //         this.lockAnim.setAnimation( 0, 'Act', false );
-        //         getGameSystem().AudioController.playChain();
-        //         this.resetTimers();
-        //     }
-        // }
+        // Thiết lập thời gian ngẫu nhiên trong khoảng từ 1 đến 5 giây (có thể điều chỉnh)
+        this.randomTime = Math.random() * 4 + 1;
     }
 
-    private resetTimers (): void
+    private runRandomAnimation (): void
     {
-        this.randomTime = 0;
-        this.accumulatedTime = 0;
+        this.setRandomTime();
+        setTimeout( () =>
+        {
+            this.lockAnim.setAnimation( 0, 'Act', false );
+            this.runRandomAnimation(); // Tiếp tục quá trình
+        }, this.randomTime * 1000 ); // Chuyển đổi giây sang mili giây
     }
+
+    public startRandomAnimation (): void
+    {
+        this.runRandomAnimation();
+    }
+
+
 
     public InitBoxSlotData (): void
     {

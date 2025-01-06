@@ -15,6 +15,7 @@ import { JsonAsset } from 'cc';
 import { getGameSystem } from '../GameSystem';
 import { GameLayerOder } from '../GameComponent/GameLayerOder';
 import { Box } from '../GameComponent/HoleContainer/Box/Box';
+import { get } from 'http';
 
 const { ccclass, property } = _decorator;
 
@@ -84,6 +85,7 @@ export class LevelController extends Component
     {
         this.loadBoxDataFromJson();
         this.initBarAndScrewColor();
+        getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         this.initBox();
         getGameSystem().BoxContainer.InitQueue();
         getGameSystem().GameManager.CurrentScrew = this.listScrew.length;
@@ -114,11 +116,11 @@ export class LevelController extends Component
         for ( let i = 0; i < listBoxSlot.length; i++ )
         {
             const boxSlot = listBoxSlot[ i ];
-            if ( boxSlot.IsLock )
+            if ( boxSlot.IsBlockByChain )
             {
                 boxSlot.boxAdsPrefab.active = true;
             }
-            else
+            else if( !boxSlot.IsInProgress )
             {
                 const color = this.colorBoxSpawnData[ this.currentBoxDataIndex ].color;
                 const holeCount = this.colorBoxSpawnData[ this.currentBoxDataIndex ].holeCount;

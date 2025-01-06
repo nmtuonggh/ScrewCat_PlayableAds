@@ -49,7 +49,7 @@ export class BoxContainer extends Component
     {
         for ( const boxSlot of this.boxSlots )
         {
-            if ( boxSlot.IsLock ) continue;
+            if ( boxSlot.IsBlockByChain || boxSlot.IsInProgress) continue;
 
             const box = boxSlot.Box;
             if ( box !== null )
@@ -126,7 +126,7 @@ export class BoxContainer extends Component
         if ( getGameSystem().LevelController.CurrentBoxDataIndex >= getGameSystem().LevelController.ColorBoxSpawnData.length ) return;
         for ( const boxSlot of this.boxSlots )
         {
-            if ( boxSlot.IsLock ) continue;
+            if ( boxSlot.IsBlockByChain || boxSlot.IsInProgress) continue;
             const box = boxSlot.Box;
             if ( box === null )
             {

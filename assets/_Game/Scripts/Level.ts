@@ -134,6 +134,37 @@ export class Level extends Component
 
     setScrewToBar ()
     {
+        // var bars = this.node.getComponentsInChildren( BarController );
+
+        // for ( let i = 0; i < bars.length; i++ )
+        // {
+        //     if ( bars[ i ].ListScrews.length !== 0 ) continue;
+        //     const bar = bars[ i ];
+        //     bar.ListScrews.length = 0;
+
+        //     let listScrewInLayer = bar.node.parent.getComponentsInChildren( Screw );
+
+        //     for ( let j = 0; j < listScrewInLayer.length; j++ )
+        //     {
+        //         const screw = listScrewInLayer[ j ];
+        //         const fullName = screw.node.name;
+        //         const extractedName = fullName.substring( fullName.indexOf( "_" ) + 1 );
+        //         const barName = bar.node.name;
+        //         var barId = barName.substring( barName.indexOf( "_" ) + 1 );
+
+        //         if ( extractedName === barId )
+        //         {
+        //             bar.ListScrews.push( screw );
+        //         }
+
+        //         //lay colorIndex
+        //         const parts = fullName.split( "_" );
+        //         const colorIndex = parts[ 1 ];
+                
+        //         screw.ScrewRenderer = screw.node.getComponent( ScrewRenderer );
+        //         screw.ScrewRenderer.colorIndex = parseInt( colorIndex);
+        //     }
+        // }
         var bars = this.node.getComponentsInChildren( BarController );
 
         for ( let i = 0; i < bars.length; i++ )
@@ -148,10 +179,10 @@ export class Level extends Component
             {
                 const screw = listScrewInLayer[ j ];
                 const fullName = screw.node.name;
-                const extractedName = fullName.substring( fullName.indexOf( "-" ) + 1 );
+                const extractedName = fullName.substring( fullName.indexOf( "_" ) + 3 );
                 const barName = bar.node.name;
                 var barId = barName.substring( barName.indexOf( "_" ) + 1 );
-
+                
                 if ( extractedName === barId )
                 {
                     bar.ListScrews.push( screw );
@@ -169,16 +200,37 @@ export class Level extends Component
 
     setFlex ()
     {
-        var screws = this.node.getComponentsInChildren( Screw );
-        screws.forEach( screw =>
+        var bars = this.node.getComponentsInChildren( BarController );
+
+        for ( let i = 0; i < bars.length; i++ )
         {
-            screw.ScrewRenderer = screw.node.getComponent( ScrewRenderer );
-            if ( screw.ScrewRenderer.colorIndex === eColorType.Yellow )
+            if ( bars[ i ].ListScrews.length !== 0 ) continue;
+            const bar = bars[ i ];
+            bar.ListScrews.length = 0;
+
+            let listScrewInLayer = bar.node.parent.getComponentsInChildren( Screw );
+
+            for ( let j = 0; j < listScrewInLayer.length; j++ )
             {
-                log( "flex" );
-                screw.ScrewRenderer.colorIndex = eColorType.Blue;
+                const screw = listScrewInLayer[ j ];
+                const fullName = screw.node.name;
+                const extractedName = fullName.substring( fullName.indexOf( "_" ) + 3 );
+                const barName = bar.node.name;
+                var barId = barName.substring( barName.indexOf( "_" ) + 1 );
+                
+                if ( extractedName === barId )
+                {
+                    bar.ListScrews.push( screw );
+                }
+
+                //lay colorIndex
+                const parts = fullName.split( "_" );
+                const colorIndex = parts[ 1 ];
+                
+                screw.ScrewRenderer = screw.node.getComponent( ScrewRenderer );
+                screw.ScrewRenderer.colorIndex = parseInt( colorIndex);
             }
-        } );
+        }
     }
 }
 

@@ -113,10 +113,6 @@ export class Box extends HoleContainer
                 //this.boxRenderer.skeleton.enabled = false;
                 this.boxSlotOwner.Box = null;
                 this.node.destroy();
-                if ( getGameSystem().UnlockBoxController && getGameSystem().UnlockBoxController.node )
-                {
-                    getGameSystem().UnlockBoxController.AddLockCount();
-                }
                 getGameSystem().BoxContainer.CheckCreateBox();
                 getGameSystem().BoxContainer.RemoveActiveBox( this );
             } )
@@ -196,15 +192,19 @@ export class Box extends HoleContainer
     }
     private closeBoxNoCat (): void
     {
+        //Lay vi tri cua tat ca cac hole de spawn star
         let listHolesPos: Vec3[] = [];
         for ( let i = 0; i < this.listHoles.length; i++ )
         {
             listHolesPos.push( this.listHoles[ i ].node.worldPosition );
         }
+
+        ///Tang so luong screw da thu thap
         getGameSystem().GameManager.CollectedScrew += this.listHoles.length;
         this.boxRenderer.closeBox.active = true;
-
+        //
         let iqNode;
+        //Dong box
         tween( this.boxRenderer.closeBox )
             .to( GameConfig.BOX_CLOSE_DURATION, { position: new Vec3( 0, 0, 0 ) } )
             .call( () =>
@@ -240,6 +240,8 @@ export class Box extends HoleContainer
                 {
                     getGameSystem().ProgressBoxSystem.onBoxCollect( this.node );
                 }
+
+                getGameSystem().ProgressBoxSlot.onBoxComplete();
                 this.MoveOut();
                 if ( getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node )
                 {
