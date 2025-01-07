@@ -241,7 +241,7 @@ export class Box extends HoleContainer
                     getGameSystem().ProgressBoxSystem.onBoxCollect( this.node );
                 }
 
-                getGameSystem().ProgressBoxSlot.onBoxComplete();
+                getGameSystem().ProgressBoxSlot.onBoxComplete(this.node);
                 this.MoveOut();
                 if ( getGameSystem().HiddenCatControll && getGameSystem().HiddenCatControll.node )
                 {

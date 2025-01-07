@@ -249,6 +249,14 @@ export class LevelController extends Component
                 this.listLayer[ i ].removeScrew();
                 if ( this.listLayer[ i ].screwCount <= 0 )
                 {
+                    //loai screw.Layer ra khoi listACtiveLayer
+                    // const layer = this.listLayer[ i ];
+                    // const index = this.listActiveLayer.indexOf( layer );
+                    // if ( index > -1 )
+                    // {
+                    //     this.listActiveLayer.splice( index, 1 );
+                    // }
+                    this.activeLayerCount++;
                     this.activeNewLayer();
                     this.currentPlayingLayerIndex++;
                     this.displayLayer( this.currentPlayingLayerIndex );

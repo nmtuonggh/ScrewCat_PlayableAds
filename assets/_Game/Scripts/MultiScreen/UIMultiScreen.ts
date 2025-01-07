@@ -21,10 +21,15 @@ export class UIMultiScreen extends Component
     public Star: Node = null;
 
     @property( { type: Node, group: "Element" } )
+    public Drill: Node = null;
+
+    @property( { type: Node, group: "Element" } )
     public Booster: Node = null;
 
     @property( { type: Node, group: "Element" } )
     public BoosterHL: Node = null;
+
+
 
 
     //#endregion
@@ -39,6 +44,8 @@ export class UIMultiScreen extends Component
     @property( { type: Vec3, group: "Portrain" } )
     public StarPosPortrai: Vec3 = new Vec3( 0, 0, 0 );
     @property( { type: Vec3, group: "Portrain" } )
+    public DrillPosPortrai: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Portrain" } )
     public BoosterPosPortrai: Vec3 = new Vec3( 0, 0, 0 );
     //#endregion
 
@@ -51,6 +58,8 @@ export class UIMultiScreen extends Component
     public CacheContainerPosSquare: Vec3 = new Vec3( 0, 0, 0 );
     @property( { type: Vec3, group: "Square" } )
     public StarPosSquare: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Square" } )
+    public DrillPosSquare: Vec3 = new Vec3( 0, 0, 0 );
     @property( { type: Vec3, group: "Square" } )
     public BoosterPosSquare: Vec3 = new Vec3( 0, 0, 0 );
     //#endregion
@@ -65,6 +74,8 @@ export class UIMultiScreen extends Component
     @property( { type: Vec3, group: "Mix" } )
     public StarPosMix: Vec3 = new Vec3( 0, 0, 0 );
     @property( { type: Vec3, group: "Mix" } )
+    public DrillPosMix: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Mix" } )
     public BoosterPosMix: Vec3 = new Vec3( 0, 0, 0 );
     //#endregion
 
@@ -77,6 +88,8 @@ export class UIMultiScreen extends Component
     public CacheContainerPosLandscape: Vec3 = new Vec3( 0, 0, 0 );
     @property( { type: Vec3, group: "Landscape" } )
     public StarPosLandscape: Vec3 = new Vec3( 0, 0, 0 );
+    @property( { type: Vec3, group: "Landscape" } )
+    public DrillPosLandscape: Vec3 = new Vec3( 0, 0, 0 );
     @property( { type: Vec3, group: "Landscape" } )
     public BoosterPosLandscape: Vec3 = new Vec3( 0, 0, 0 );
     //#endregion
@@ -111,6 +124,7 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosPortrai );
         this.CacheContainer.setPosition( this.CacheContainerPosPortrai );
         this.Star.setPosition( this.StarPosPortrai );
+        this.Drill.setPosition( this.DrillPosPortrai );
         if ( this.Booster )
         {
             this.Booster.setPosition( this.BoosterPosPortrai );
@@ -127,6 +141,7 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosLandscape );
         this.CacheContainer.setPosition( this.CacheContainerPosLandscape );
         this.Star.setPosition( this.StarPosLandscape );
+        this.Drill.setPosition( this.DrillPosLandscape );
         if ( this.Booster )
         {
             this.Booster.setPosition( this.BoosterPosLandscape );
@@ -142,6 +157,7 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosSquare );
         this.CacheContainer.setPosition( this.CacheContainerPosSquare );
         this.Star.setPosition( this.StarPosSquare );
+        this.Drill.setPosition( this.DrillPosSquare );
         if ( this.Booster )
         {
             this.Booster.setPosition( this.BoosterPosSquare );
@@ -157,6 +173,7 @@ export class UIMultiScreen extends Component
         this.BoxContainer.setPosition( this.BoxContainerPosMix );
         this.CacheContainer.setPosition( this.CacheContainerPosMix );
         this.Star.setPosition( this.StarPosMix );
+        this.Drill.setPosition( this.DrillPosMix );
         if ( this.Booster )
         {
             this.Booster.setPosition( this.BoosterPosMix );

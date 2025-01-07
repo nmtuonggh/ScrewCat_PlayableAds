@@ -30,6 +30,8 @@ export class AudioController extends Component
     public win: AudioClip = null;
     @property( AudioClip )
     public hidencat: AudioClip = null;
+    @property(AudioClip)
+    private breakBar: AudioClip = null;
 
     @property( {type:AudioClip, group : "TimeAttack"} )
     public tick: AudioClip = null;
@@ -109,6 +111,13 @@ export class AudioController extends Component
     public playReng ()
     {
         this.audioSource.playOneShot( this.reng );
+    }
+
+    public playBreakBar ()
+    {
+        this.audioSource.volume = 0.5;
+        this.audioSource.playOneShot( this.breakBar );
+        this.audioSource.volume = 1;
     }
 }
 

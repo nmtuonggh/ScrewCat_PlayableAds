@@ -1,0 +1,34 @@
+
+drill_anim.png
+size: 92,108
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1
+  rotate: true
+  xy: 80, 11
+  size: 36, 10
+  orig: 36, 10
+  offset: 0, 0
+  index: -1
+2
+  rotate: true
+  xy: 70, 49
+  size: 55, 16
+  orig: 55, 16
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 2, 2
+  size: 76, 19
+  orig: 76, 19
+  offset: 0, 0
+  index: -1
+base
+  rotate: false
+  xy: 2, 23
+  size: 66, 81
+  orig: 66, 81
+  offset: 0, 0
+  index: -1
