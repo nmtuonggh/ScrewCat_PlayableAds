@@ -1,7 +1,6 @@
 import { _decorator, Component, ERigidBody2DType, HingeJoint2D, instantiate, Node, Prefab, RigidBody2D, UITransform, Vec2 } from 'cc';
 
 import { BarPhysic } from './BarPhysic';
-import { PolygonCollider2D } from 'cc';
 import { Screw } from '../Screw/Screw';
 import { ScrewData } from '../../FakeSO/ScrewData';
 import { GameLayerComponent } from '../GameLayerComponent';
@@ -18,12 +17,16 @@ export class BarController extends GameLayerComponent
     //#region EDITOR EXPOSED FIELD
     @property( { type: [ Screw ], visible: true, } )
     private listScrews: Screw[] = [];
+    @property([Node])
+    public listNodes: Node[] = [];
     @property( BarPhysic )
     private barPhysic: BarPhysic = null;
     @property( Sprite )
     private hideSprite: Sprite = null;
     @property( UIOpacity )
     private hideOpacity: UIOpacity = null;
+    @property()
+    public isNotCollide: boolean = false;
     //#endregion
     private modelSprite: Sprite = null;
 
@@ -35,7 +38,6 @@ export class BarController extends GameLayerComponent
     public set ListScrews ( value: Screw[] )
     {
         this.listScrews = value;
-
     }
     public get BarPhysic (): BarPhysic
     {

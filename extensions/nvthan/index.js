@@ -309,7 +309,7 @@ exports.methods = {
                                 if ( assets[ i ].name.split( '.' )[ 0 ] == child.shapeName )
                                 {
                                     textures = assets[ i ].subAssets.f9941.uuid;
-                                    texturesHideImage = assetsHideImage[ i ].subAssets.f9941.uuid;
+                                    //texturesHideImage = assetsHideImage[ i ].subAssets.f9941.uuid;
                                     break;
                                 }
                             }

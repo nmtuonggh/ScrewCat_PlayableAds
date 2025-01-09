@@ -7,10 +7,11 @@ import { UITransform } from 'cc';
 import { ERigidBody2DType } from 'cc';
 const { ccclass, property } = _decorator;
 
-@ccclass('BarPhysic')
-export class BarPhysic extends Component {
+@ccclass( 'BarPhysic' )
+export class BarPhysic extends Component
+{
     private rb: RigidBody2D = null;
-    private barController : BarController = null;
+    private barController: BarController = null;
 
     protected onLoad (): void
     {
@@ -28,9 +29,9 @@ export class BarPhysic extends Component {
             const screw = this.barController.ListScrews[ i ];
             //const worldPos = screw.node.getWorldPosition();
             const worldPos = screw.node.getWorldPosition();
-            const localPos = this.node.getComponent(UITransform).convertToNodeSpaceAR(worldPos);
+            const localPos = this.node.getComponent( UITransform ).convertToNodeSpaceAR( worldPos );
             const screwRb = screw.node.getComponent( RigidBody2D );
-            screw.HingeJoint.push(this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb ));
+            screw.HingeJoint.push( this.SetHGJoint( new Vec2( localPos.x, localPos.y ), screwRb ) );
         }
     }
 
@@ -53,12 +54,18 @@ export class BarPhysic extends Component {
 
     //#endregion
 
-    SetGroupLayer() : void
+    SetGroupLayer (): void
     {
-        if(this.barController === null) console.error("Bar Controller is null");
-        if(this.rb === null) console.error("Rigidbody2D is null");
-
-        this.rb.group = 1 << this.barController.Layer + 13;
+        if ( this.barController === null ) console.error( "Bar Controller is null" );
+        if ( this.rb === null ) console.error( "Rigidbody2D is null" );
+        if ( this.barController.isNotCollide )
+        {
+            this.rb.group = 1 << 31;
+        }
+        else
+        {
+            this.rb.group = 1 << this.barController.Layer + 13;
+        }
     }
 
     setRigidBodyType ( type: ERigidBody2DType ): void
