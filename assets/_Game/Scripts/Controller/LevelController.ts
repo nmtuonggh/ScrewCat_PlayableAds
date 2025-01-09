@@ -2,20 +2,15 @@ import { _decorator, Component, Node, Prefab } from 'cc';
 import { BarController } from '../GameComponent/Bar/BarController';
 import { BoxData } from '../FakeSO/BoxData';
 import { ScrewData } from '../FakeSO/ScrewData';
-import { BoxContainer } from './BoxContainer';
 import { Screw } from '../GameComponent/Screw/Screw';
-import { Button } from 'cc';
-import { GameManager } from '../Manager/GameManager';
-import { Layers } from 'cc';
-import { eColorType } from '../GameConfig/GameColorConfig';
 import { boxSpawnData } from '../BoxSpawndata/boxSpawnData';
-import { CCInteger } from 'cc';
 import { GameLayer } from '../GameComponent/GameLayer';
 import { JsonAsset } from 'cc';
 import { getGameSystem } from '../GameSystem';
 import { GameLayerOder } from '../GameComponent/GameLayerOder';
-import { Box } from '../GameComponent/HoleContainer/Box/Box';
-import { get } from 'http';
+import { TweenScale } from 'db://assets/PA_iKame (1)/base-script/Tween/TweenScale';
+import { director } from 'cc';
+import { PhysicsSystem2D } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -47,6 +42,8 @@ export class LevelController extends Component
     private playingLayerCount: number = 3;
     @property( { readonly: true } )
     private currentPlayingLayerIndex: number = 0;
+    @property(Node)
+    private levelNode: Node;
     //#endregion
     //#region PRIVATE FIELDS
     private listActiveLayer: GameLayer[] = [];
@@ -85,12 +82,19 @@ export class LevelController extends Component
     {
         this.loadBoxDataFromJson();
         this.initBarAndScrewColor();
+        this.initBarAndScrewPhysics();
         getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         this.initBox();
         getGameSystem().BoxContainer.InitQueue();
         getGameSystem().GameManager.CurrentScrew = this.listScrew.length;
         getGameSystem().GameManager.TotalScrew = this.listScrew.length;
         this.initLayer();
+
+        PhysicsSystem2D.instance.enable = false;
+        const tweenScales = this.levelNode.getComponentsInChildren(TweenScale);
+        tweenScales.forEach(tweenScale => {
+            tweenScale.play();
+        });
     }
     //#endregion
     //#region PRIVATE METHODS
@@ -99,14 +103,19 @@ export class LevelController extends Component
         this.listBar.forEach( bar => 
         {
             bar.InitScrewColor( this.ScrewData );
+        } );
+    }
+
+    private initBarAndScrewPhysics(): void
+    {
+        this.listBar.forEach(bar => {
             bar.BarPhysic.SetGroupLayer();
             bar.BarPhysic.CreatHGJoint();
-            //bar.BarPhysic.EnableHGJoin();
-        } );
-        this.listScrew.forEach( screw =>
-        {
+            bar.BarPhysic.setActivePhysic(true);
+        });
+        this.listScrew.forEach(screw => {
             screw.enableHgJoint();
-        } )
+        });
     }
 
     private initBox (): void

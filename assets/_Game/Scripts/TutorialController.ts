@@ -4,7 +4,6 @@ import { tween } from 'cc';
 import { Tween } from 'cc';
 import { Vec3 } from 'cc';
 import { getGameSystem } from './GameSystem';
-import { get } from 'http';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'TutorialController' )
