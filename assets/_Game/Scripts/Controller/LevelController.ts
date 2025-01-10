@@ -91,6 +91,8 @@ export class LevelController extends Component
         getGameSystem().GameManager.CurrentScrew = this.listScrew.length;
         getGameSystem().GameManager.TotalScrew = this.listScrew.length;
         this.initLayer();
+
+        
     }
     //#endregion
     //#region PRIVATE METHODS
@@ -99,7 +101,7 @@ export class LevelController extends Component
         this.listBar.forEach( bar => 
         {
             bar.InitScrewColor( this.ScrewData );
-            bar.BarPhysic.SetGroupLayer();
+            bar.BarPhysic.SetGroupLayer(); 
             bar.BarPhysic.CreatHGJoint();
             //bar.BarPhysic.EnableHGJoin();
         } );
