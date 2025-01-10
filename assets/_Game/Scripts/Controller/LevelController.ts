@@ -11,6 +11,12 @@ import { GameLayerOder } from '../GameComponent/GameLayerOder';
 import { TweenScale } from 'db://assets/PA_iKame (1)/base-script/Tween/TweenScale';
 import { director } from 'cc';
 import { PhysicsSystem2D } from 'cc';
+import { TweenRotation } from 'db://assets/PA_iKame (1)/base-script/Tween/TweenRotation';
+import { TutorialController } from '../TutorialController';
+import { RigidBody2D } from 'cc';
+import { HingeJoint2D } from 'cc';
+import { Collider2D } from 'cc';
+import { init } from '../../../../extensions/nvthan/@types/packages/engine/@types/editor-extends';
 
 const { ccclass, property } = _decorator;
 
@@ -80,22 +86,49 @@ export class LevelController extends Component
 
     protected start (): void
     {
+        this.initLevel();
+    }
+
+    private async initLevel(): Promise<void>
+    {
         this.loadBoxDataFromJson();
         this.initBarAndScrewColor();
-        this.initBarAndScrewPhysics();
-        getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         this.initBox();
+
+        this.initLayer();
+        PhysicsSystem2D.instance.enable = false;
+        await this.playIntroLevel();
+        
+        this.initBarAndScrewPhysics();
+        
+        getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         getGameSystem().BoxContainer.InitQueue();
         getGameSystem().GameManager.CurrentScrew = this.listScrew.length;
         getGameSystem().GameManager.TotalScrew = this.listScrew.length;
-        this.initLayer();
 
-        PhysicsSystem2D.instance.enable = false;
+        PhysicsSystem2D.instance.enable = true;
+    }
+
+    static delay(seconds: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    }
+    
+    private async playIntroLevel() : Promise<void>
+    {
+        let tweens = [];
         const tweenScales = this.levelNode.getComponentsInChildren(TweenScale);
         tweenScales.forEach(tweenScale => {
-            tweenScale.play();
+            tweens.push(tweenScale.play());
         });
+        const tweenRotation = this.levelNode.getComponentsInChildren(TweenRotation);
+        tweenRotation.forEach(tweenRotation => {
+            tweens.push(tweenRotation.play());
+        });
+        
+        await Promise.all(tweens);
     }
+
+
     //#endregion
     //#region PRIVATE METHODS
     private initBarAndScrewColor (): void 

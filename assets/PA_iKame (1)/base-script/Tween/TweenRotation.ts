@@ -1,5 +1,6 @@
 import { tween } from 'cc';
 import { easing } from 'cc';
+import { Tween } from 'cc';
 import { TweenEasing } from 'cc';
 import { Vec3 } from 'cc';
 import { _decorator, Component, Node } from 'cc';
@@ -23,7 +24,7 @@ export class TweenRotation extends Component {
     {
     }
 
-    play()
+    public play(): Promise<void>
     {
         this.node.eulerAngles = this.from;
         const tweenRotate = tween(this.node)
@@ -32,6 +33,14 @@ export class TweenRotation extends Component {
         if (this.repeatForever)
             tweenRotate.repeatForever();
         tweenRotate.start();
+
+        return new Promise<void>((resolve, reject) => { 
+            setTimeout(() => {
+                resolve();
+                Tween.stopAllByTarget(this.node);
+            }, (this.delay + this.duration + 1) * 1000);
+        });
+        
     }
 }
 

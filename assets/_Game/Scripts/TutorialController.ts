@@ -17,10 +17,18 @@ export class TutorialController extends Component
     private levelContainer: Node = null;
 
     private screw: Screw = null;
+
+    public static Instance: TutorialController = null;
+
+    protected onLoad(): void {
+        TutorialController.Instance = this;
+    }
+
     protected start (): void
     {
-        this.scheduleOnce( this.tweenHandTutorial, 1 );
+        // this.scheduleOnce( this.tweenHandTutorial, 1 );
     }
+
     protected onDisable (): void
     {
         Tween.stopAllByTarget( this.handTutorial );
@@ -29,7 +37,8 @@ export class TutorialController extends Component
         this.handTutorial.active = false;
         this.screw.ScrewAnimation.stopPlayTutorial();
     }
-    private tweenHandTutorial (): void
+    
+    public tweenHandTutorial (): void
     {
         try
         {

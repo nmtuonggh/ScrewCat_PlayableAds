@@ -338,6 +338,16 @@ export class Screw extends GameLayerComponent
         this.hingeJoint.forEach( hg => hg.enabled = true );
     }
     //#endregion
+
+    public enablePhysic (enable : boolean): void
+    {
+        this.hingeJoint.forEach( hg =>
+        {
+            hg.node.getComponent( RigidBody2D ).enabled = enable;
+        });
+        this.node.getComponent(RigidBody2D).enabled = enable;
+        this.node.getComponent(Collider2D).enabled = enable;
+    }
 }
 
 export enum eScrewState

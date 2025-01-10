@@ -12,7 +12,6 @@ import { Collider2D } from 'cc';
 import { PolygonCollider2D } from 'cc';
 import { BoxCollider2D } from 'cc';
 import { _decorator, Component, Node } from 'cc';
-import { debug } from 'console';
 import { getGameSystem } from '../GameSystem';
 const { ccclass, property } = _decorator;
 
