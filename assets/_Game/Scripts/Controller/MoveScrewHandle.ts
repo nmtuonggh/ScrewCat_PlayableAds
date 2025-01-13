@@ -190,14 +190,16 @@ export class MoveScrewHandle extends Component
             this.isFirstTouch = true;
             this.playableAdsManager.ActionFirstClicked();
             getGameSystem().AudioController.playerBGMusic();
+           
+
         }
 
         ///Mo comment doan nay neu muon logic con 1 screw thi vao store!!!!!!!!!!!!!!!
         if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
         {
-            if ( getGameSystem().TimeAttackController && 
-                 getGameSystem().TimeAttackController.node &&
-                 !getGameSystem().TimeAttackController.lose )
+            if ( getGameSystem().TimeAttackController &&
+                getGameSystem().TimeAttackController.node &&
+                !getGameSystem().TimeAttackController.lose )
             {
                 getGameSystem().TimeAttackController.stopCountdown();
             }

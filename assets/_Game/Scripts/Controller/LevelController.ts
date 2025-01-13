@@ -17,6 +17,7 @@ import { RigidBody2D } from 'cc';
 import { HingeJoint2D } from 'cc';
 import { Collider2D } from 'cc';
 import { init } from '../../../../extensions/nvthan/@types/packages/engine/@types/editor-extends';
+import { get } from 'http';
 
 const { ccclass, property } = _decorator;
 
@@ -48,7 +49,7 @@ export class LevelController extends Component
     private playingLayerCount: number = 3;
     @property( { readonly: true } )
     private currentPlayingLayerIndex: number = 0;
-    @property(Node)
+    @property( Node )
     private levelNode: Node;
     //#endregion
     //#region PRIVATE FIELDS
@@ -81,7 +82,7 @@ export class LevelController extends Component
         this.listBar = this.Holder.getComponentsInChildren( BarController );
         this.listScrew = this.Holder.getComponentsInChildren( Screw );
         this.listLayer = this.Holder.getComponentsInChildren( GameLayer );
-        
+
     }
 
     protected start (): void
@@ -89,7 +90,7 @@ export class LevelController extends Component
         this.initLevel();
     }
 
-    private async initLevel(): Promise<void>
+    private async initLevel (): Promise<void>
     {
         this.loadBoxDataFromJson();
         this.initBarAndScrewColor();
@@ -98,36 +99,47 @@ export class LevelController extends Component
         this.initLayer();
         PhysicsSystem2D.instance.enable = false;
         await this.playIntroLevel();
-        
-        this.initBarAndScrewPhysics();
-        
+
+
         getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         getGameSystem().BoxContainer.InitQueue();
         getGameSystem().GameManager.CurrentScrew = this.listScrew.length;
         getGameSystem().GameManager.TotalScrew = this.listScrew.length;
 
-        PhysicsSystem2D.instance.enable = true;
+        this.initBarAndScrewPhysics();
+
+        //PhysicsSystem2D.instance.enable = true;
     }
 
 
-
-    static delay(seconds: number): Promise<void> {
-        return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    static delay ( seconds: number ): Promise<void>
+    {
+        return new Promise( resolve => setTimeout( resolve, seconds * 1000 ) );
     }
-    
-    private async playIntroLevel() : Promise<void>
+
+    private async playIntroLevel (): Promise<void>
     {
         let tweens = [];
-        const tweenScales = this.levelNode.getComponentsInChildren(TweenScale);
-        tweenScales.forEach(tweenScale => {
-            tweens.push(tweenScale.play());
-        });
-        const tweenRotation = this.levelNode.getComponentsInChildren(TweenRotation);
-        tweenRotation.forEach(tweenRotation => {
-            tweens.push(tweenRotation.play());
-        });
+        const tweenScales = this.levelNode.getComponentsInChildren( TweenScale );
+        tweenScales.forEach( tweenScale =>
+        {
+            tweens.push( tweenScale.play() );
+        } );
         
-        await Promise.all(tweens);
+        const tweenRotation = this.levelNode.getComponentsInChildren( TweenRotation );
+        tweenRotation.forEach( tweenRotation =>
+        {
+            tweens.push( tweenRotation.play() );
+        } );
+
+        await Promise.all( tweens );
+        this.listBar.forEach( bar =>
+        {
+            bar.BarPhysic.SetGroupLayer();
+        } );
+
+        PhysicsSystem2D.instance.enable = true;
+        getGameSystem().MultiScreneController.onSizeChanged();
     }
 
 
@@ -141,16 +153,19 @@ export class LevelController extends Component
         } );
     }
 
-    private initBarAndScrewPhysics(): void
+    private initBarAndScrewPhysics (): void
     {
-        this.listBar.forEach(bar => {
-            bar.BarPhysic.SetGroupLayer();
+        this.listBar.forEach( bar =>
+        {
+            //bar.BarPhysic.SetGroupLayer();
+            bar.BarPhysic.SetNoneColliderGroupLayer();
             bar.BarPhysic.CreatHGJoint();
-            bar.BarPhysic.setActivePhysic(true);
-        });
-        this.listScrew.forEach(screw => {
+            bar.BarPhysic.setActivePhysic( true );
+        } );
+        this.listScrew.forEach( screw =>
+        {
             screw.enableHgJoint();
-        });
+        } );
     }
 
     private initBox (): void
@@ -164,7 +179,7 @@ export class LevelController extends Component
             {
                 boxSlot.boxAdsPrefab.active = true;
             }
-            else if( !boxSlot.IsInProgress )
+            else if ( !boxSlot.IsInProgress )
             {
                 const color = this.colorBoxSpawnData[ this.currentBoxDataIndex ].color;
                 const holeCount = this.colorBoxSpawnData[ this.currentBoxDataIndex ].holeCount;
@@ -226,7 +241,7 @@ export class LevelController extends Component
         //active layer 
         for ( let i = 0; i < this.activeLayerCount; i++ )
         {
-            if ( this.listUnActiveLayer.length > 0 && 
+            if ( this.listUnActiveLayer.length > 0 &&
                 i < this.activeLayerCount )
             {
                 const lastLayer = this.listUnActiveLayer.pop();

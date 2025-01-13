@@ -70,6 +70,13 @@ export class BarPhysic extends Component
         }
     }
 
+    SetNoneColliderGroupLayer (): void
+    {
+        if ( this.barController === null ) console.error( "Bar Controller is null" );
+        if ( this.rb === null ) console.error( "Rigidbody2D is null" );
+        this.rb.group = 1 << 31;
+    }
+
     setRigidBodyType ( type: ERigidBody2DType ): void
     {
         this.rb.type = type;
