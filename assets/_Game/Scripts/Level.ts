@@ -184,59 +184,22 @@ export class Level extends Component
         for ( let i = 0; i < screws.length; i++ )
         {
             const nodeNameParts = screws[ i ].node.name.split( '_' );
-            const number = nodeNameParts[nodeNameParts.length - 1];
-            screws[i].node.getComponent( ScrewRenderer ).colorIndex = parseInt( number );
+            const number = nodeNameParts[ nodeNameParts.length - 1 ];
+            screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = parseInt( number );
             //console.log(number);
         }
     }
 
     setFlex ()
     {
+
         var screws = this.node.getComponentsInChildren( Screw );
-        var bars = this.node.getComponentsInChildren( BarController );
-        var listDataScrews: ScrewData[] = [];
-        const levelData = this.jsonData.json;
-
-        levelData.screws.forEach( screw =>
-        {
-            const screwData: ScrewData = {
-                layer: screw.layer,
-                position: {
-                    x: screw.position.x,
-                    y: screw.position.y
-                },
-                screwId: screw.screwId,
-                shapeId: screw.shapeId,
-                colorId: screw.colorId,
-                barNames: screw.barNames
-            };
-            listDataScrews.push( screwData );
-        } );
-
-        //console.log( listDataScrews );
         for ( let i = 0; i < screws.length; i++ )
         {
-            listDataScrews[ i ].barNames.forEach( barName =>
+            if ( screws[ i ].node.getComponent( ScrewRenderer ).colorIndex === 8 )
             {
-                for ( let j = 0; j < bars.length; j++ )
-                {
-                    if ( bars[ j ].node.name === barName )
-                    {
-                        bars[ j ].listNodes.push( screws[ i ].node );
-                        //console.log( barName );
-
-                    }
-                }
-            } );
-        }
-
-        
-        var screws = this.node.getComponentsInChildren( Screw );
-        for ( let i = 0; i < screws.length; i++ )
-        {
-            const nodeNameParts = screws[ i ].node.name.split( '_' );
-            const number = nodeNameParts[nodeNameParts.length - 1];
-            screws[i].node.getComponent( ScrewRenderer ).colorIndex = parseInt( number );
+                screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = 2;
+            }
             //console.log(number);
         }
     }
