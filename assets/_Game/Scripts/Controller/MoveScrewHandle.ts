@@ -206,6 +206,11 @@ export class MoveScrewHandle extends Component
             TrackingManager.WinLevel();
             return;
         }
+        if ( getGameSystem().GameManager.CurrentScrew === 50 ) // neu con 1 screw thi vao store
+        {
+            this.playableAdsManager.ForceOpenStore();
+            
+        }
 
         let ratio = 1;
         const mousePosition = event.getLocation();

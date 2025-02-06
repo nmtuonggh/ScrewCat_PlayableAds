@@ -50,7 +50,7 @@ export class Level extends Component
             this.updateGameLayer();
             this.updateLayerBarAndScrew();
             this.setPolygonCollider();
-            //this.setScrewToBar();
+            this.setScrewToBar();
         }
     }
 
@@ -163,32 +163,81 @@ export class Level extends Component
             listDataScrews.push( screwData );
         } );
 
-        console.log( listDataScrews );
+        //console.log( listDataScrews );
         for ( let i = 0; i < screws.length; i++ )
         {
             listDataScrews[ i ].barNames.forEach( barName =>
             {
                 for ( let j = 0; j < bars.length; j++ )
                 {
-                    if ( bars[ j ].name === barName )
+                    if ( bars[ j ].node.name === barName )
                     {
-                        bars[ j ].ListScrews.push( screws[ i ] );
+                        bars[ j ].listNodes.push( screws[ i ].node );
+                        //console.log( barName );
+
                     }
                 }
             } );
+        }
+
+        var screws = this.node.getComponentsInChildren( Screw );
+        for ( let i = 0; i < screws.length; i++ )
+        {
+            const nodeNameParts = screws[ i ].node.name.split( '_' );
+            const number = nodeNameParts[nodeNameParts.length - 1];
+            screws[i].node.getComponent( ScrewRenderer ).colorIndex = parseInt( number );
+            //console.log(number);
         }
     }
 
     setFlex ()
     {
         var screws = this.node.getComponentsInChildren( Screw );
-        var listDataScrews: ScrewData[];
+        var bars = this.node.getComponentsInChildren( BarController );
+        var listDataScrews: ScrewData[] = [];
         const levelData = this.jsonData.json;
 
+        levelData.screws.forEach( screw =>
+        {
+            const screwData: ScrewData = {
+                layer: screw.layer,
+                position: {
+                    x: screw.position.x,
+                    y: screw.position.y
+                },
+                screwId: screw.screwId,
+                shapeId: screw.shapeId,
+                colorId: screw.colorId,
+                barNames: screw.barNames
+            };
+            listDataScrews.push( screwData );
+        } );
 
+        //console.log( listDataScrews );
         for ( let i = 0; i < screws.length; i++ )
         {
+            listDataScrews[ i ].barNames.forEach( barName =>
+            {
+                for ( let j = 0; j < bars.length; j++ )
+                {
+                    if ( bars[ j ].node.name === barName )
+                    {
+                        bars[ j ].listNodes.push( screws[ i ].node );
+                        //console.log( barName );
 
+                    }
+                }
+            } );
+        }
+
+        
+        var screws = this.node.getComponentsInChildren( Screw );
+        for ( let i = 0; i < screws.length; i++ )
+        {
+            const nodeNameParts = screws[ i ].node.name.split( '_' );
+            const number = nodeNameParts[nodeNameParts.length - 1];
+            screws[i].node.getComponent( ScrewRenderer ).colorIndex = parseInt( number );
+            //console.log(number);
         }
     }
 }

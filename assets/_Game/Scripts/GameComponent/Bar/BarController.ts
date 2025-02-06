@@ -55,6 +55,14 @@ export class BarController extends GameLayerComponent
         this.modelSprite = this.node.children[ 0 ].getComponent( Sprite );
     }
 
+    protected start (): void
+    {
+        for ( let i = 0; i < this.listNodes.length; i++ )
+        {
+            this.listScrews.push( this.listNodes[ i ].getComponent( Screw ) );
+        }
+    }
+
     protected update ( dt: number ): void
     {
         if ( this.node.position.y < -2000 )
