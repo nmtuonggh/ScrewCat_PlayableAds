@@ -64,7 +64,7 @@ export class BarPhysic extends Component
         }
         else
         {
-            this.rb.group = 1 << this.barController.Layer + 13;
+            this.rb.group = 1 << this.barController.Layer + 5;
         }
     }
 

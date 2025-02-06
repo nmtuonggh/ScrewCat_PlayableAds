@@ -357,7 +357,8 @@ exports.methods = {
                 {
                     var layer = parseInt( info.screws[ i ].layer );
                     let root = await Editor.Message.request( 'scene', 'create-node', {
-                        "name": "Screw_" + info.screws[ i ].colorIndex + "_" + info.screws[ i ].barName,
+                        //"name": "Screw_" + info.screws[ i ].colorIndex + "_" + info.screws[ i ].barName,
+                        "name": "Screw_" + i + "_" + info.screws[ i ].colorId,
                         "parent": uuidLayer[ layer ],
                         "assetUuid": this.$.screwPrefab.value,
                     } );

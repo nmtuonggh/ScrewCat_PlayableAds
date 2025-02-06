@@ -33,7 +33,7 @@ export class Level extends Component
             this.updateGameLayer();
             this.updateLayerBarAndScrew();
             this.setPolygonCollider();
-            this.setScrewToBar();
+            //this.setScrewToBar();
         }
     }
 
