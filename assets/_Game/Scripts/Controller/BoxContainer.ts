@@ -42,7 +42,15 @@ export class BoxContainer extends Component
 
     protected override onLoad (): void
     {
-        this.boxSlots = this.getComponentsInChildren( BoxSlot );
+        //Chi lay cac box slot active
+        let allBoxSlots = this.getComponentsInChildren( BoxSlot );
+        for ( const boxSlot of allBoxSlots )
+        {
+            if ( boxSlot.node.active )
+            {
+                this.boxSlots.push( boxSlot );
+            }
+        }
     }
     //#region PUBLIC METHOD
     public InitQueue (): void
