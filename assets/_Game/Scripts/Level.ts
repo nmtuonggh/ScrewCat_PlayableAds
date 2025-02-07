@@ -5,6 +5,8 @@ import { PolygonCollider2D } from 'cc';
 import { GameLayerOder } from './GameComponent/GameLayerOder';
 import { ScrewRenderer } from './GameComponent/Screw/ScrewRenderer';
 import { JsonAsset } from 'cc';
+import { Sprite } from 'cc';
+import { SpriteFrame } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -37,6 +39,8 @@ export class Level extends Component
     private screwLayer: 11;
     @property( [ BarController ] )
     listBar: BarController[] = [];
+    @property([SpriteFrame])
+    listSpriteFrame: SpriteFrame[] = [];
 
     //#endregion
 
@@ -193,14 +197,25 @@ export class Level extends Component
     setFlex ()
     {
 
-        var screws = this.node.getComponentsInChildren( Screw );
-        for ( let i = 0; i < screws.length; i++ )
+        // var screws = this.node.getComponentsInChildren( Screw );
+        // for ( let i = 0; i < screws.length; i++ )
+        // {
+        //     if ( screws[ i ].node.getComponent( ScrewRenderer ).colorIndex === 8 )
+        //     {
+        //         screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = 2;
+        //     }
+        //     //console.log(number);
+        // }
+        var bars = this.node.getComponentsInChildren( BarController );
+        for ( let i = 0; i < this.listSpriteFrame.length; i++ )
         {
-            if ( screws[ i ].node.getComponent( ScrewRenderer ).colorIndex === 8 )
+            for ( let j = 0; j < bars.length; j++ )
             {
-                screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = 2;
+                if ( this.listBarName[ i ] === bars[ j ].node.name )
+                {
+                    bars[ j ].node.getComponent( Sprite ).spriteFrame = this.listSpriteFrame[ i ];
+                }
             }
-            //console.log(number);
         }
     }
 }
