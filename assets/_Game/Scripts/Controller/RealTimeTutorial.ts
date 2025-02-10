@@ -17,6 +17,7 @@ export class RealTimeTutorial extends Component
     private levelContainer: Node = null;
     @property( Node )
     private handTutorial: Node = null;
+   
     @property()
     private waitTime: number = 0;
     @property( { readonly: true } )
@@ -25,6 +26,7 @@ export class RealTimeTutorial extends Component
     private offset: Vec3 = new Vec3( 0, 0, 0 );
 
     private screw: Node = null;
+    private isFirstTime: boolean = true;
 
     //#endregion
     //#region PROPERTIES
@@ -38,6 +40,10 @@ export class RealTimeTutorial extends Component
     {
         this.updateTutorial();
     }
+    protected onDisable (): void
+    {
+        this.cancelTutorial();
+    }
     //#endregion
     public cancelTutorial (): void
     {
@@ -50,25 +56,35 @@ export class RealTimeTutorial extends Component
     //#region PUBLIC METHODS
     public updateTutorial (): void
     {
-        if(getGameSystem().GameManager.lose) return;  
+        if ( getGameSystem().GameManager.lose ) return;
         this.cancelTutorial();
         this.unschedule( this.tweenHandTutorial );
-        this.scheduleOnce( this.tweenHandTutorial, this.waitTime);
+
+        if ( this.isFirstTime )
+        {
+            this.tweenHandTutorial();
+            this.isFirstTime = false;
+        } else
+        {
+            this.scheduleOnce( this.tweenHandTutorial, this.waitTime );
+        }
     }
     //#endregion
     //#region PRIVATE METHODS
-    private tweenHandTutorial (  ): void
+    private tweenHandTutorial (): void
     {
-        try {
+        try
+        {
             var screw = this.getScrew().node;
-            if(!screw) return;
+            if ( !screw ) return;
             this.handTutorial.active = true;
             this.handTutorial.parent = screw;
             var startPos = new Vec3( 0, 0, 0 );
             let offset = this.offset.clone();
             Vec3.add( startPos, this.handTutorial.getPosition(), offset );
             this.handTutorial.position = startPos;
-        } catch (error) {
+        } catch ( error )
+        {
             debugger
         }
 
@@ -89,7 +105,7 @@ export class RealTimeTutorial extends Component
     private getScrew (): Screw
     {
         var allScrews = this.levelContainer.getComponentsInChildren( Screw );
-        let availableScrews : Screw[] = [];
+        let availableScrews: Screw[] = [];
         allScrews.forEach( screw =>
         {
             if ( !screw.IsBlocked() && screw.State === eScrewState.IN_BAR )
@@ -103,7 +119,7 @@ export class RealTimeTutorial extends Component
         var screwTutos: Screw[] = [];
         for ( const screw of availableScrews )
         {
-            for (const color of colors)
+            for ( const color of colors )
             {
                 if ( screw.ScrewRenderer.colorType === color )
                 {

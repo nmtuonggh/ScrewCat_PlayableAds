@@ -67,6 +67,7 @@ export class AudioController extends Component
 
     public playerBGMusic ()
     {
+        if(this.backGroudSource.node.active === false) return;
         this.backGroudSource.play()
     }
 
