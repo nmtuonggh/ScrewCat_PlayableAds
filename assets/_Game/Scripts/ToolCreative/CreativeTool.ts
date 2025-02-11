@@ -19,7 +19,7 @@ export class CreativeTool extends Component
 
     @property( Node )
     tutorialNode: Node = null;
-    @property( Node )
+    @property( Node )  
     bgMusic: Node = null;
     @property( [ Node ] )
     tapToPlay: Node[] = [];
