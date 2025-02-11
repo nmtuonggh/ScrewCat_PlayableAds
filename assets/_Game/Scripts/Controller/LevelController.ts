@@ -2,26 +2,24 @@ import { _decorator, Component, Node, Prefab } from 'cc';
 import { BarController } from '../GameComponent/Bar/BarController';
 import { BoxData } from '../FakeSO/BoxData';
 import { ScrewData } from '../FakeSO/ScrewData';
-import { BoxContainer } from './BoxContainer';
 import { Screw } from '../GameComponent/Screw/Screw';
-import { Button } from 'cc';
-import { GameManager } from '../Manager/GameManager';
-import { Layers } from 'cc';
-import { eColorType } from '../GameConfig/GameColorConfig';
 import { boxSpawnData } from '../BoxSpawndata/boxSpawnData';
-import { CCInteger } from 'cc';
 import { GameLayer } from '../GameComponent/GameLayer';
 import { JsonAsset } from 'cc';
 import { getGameSystem } from '../GameSystem';
 import { GameLayerOder } from '../GameComponent/GameLayerOder';
-import { Box } from '../GameComponent/HoleContainer/Box/Box';
-import { get } from 'http';
+import { TweenScale } from 'db://assets/PA_iKame (1)/base-script/Tween/TweenScale';
+import { director } from 'cc';
 import { PhysicsSystem2D } from 'cc';
-import { Vec3 } from 'cc';
-import { tween } from 'cc';
-import { Quat } from 'cc';
-import { easing } from 'cc';
-import { Tween } from 'cc';
+import { TweenRotation } from 'db://assets/PA_iKame (1)/base-script/Tween/TweenRotation';
+import { TutorialController } from '../TutorialController';
+import { RigidBody2D } from 'cc';
+import { HingeJoint2D } from 'cc';
+import { Collider2D } from 'cc';
+import { init } from '../../../../extensions/nvthan/@types/packages/engine/@types/editor-extends';
+import { get } from 'http';
+import { ScaleIntro } from 'db://assets/PA_iKame (1)/base-script/Tween/ScaleIntro';
+import { RotationIntro } from 'db://assets/PA_iKame (1)/base-script/Tween/RotationIntro';
 
 const { ccclass, property } = _decorator;
 
@@ -53,6 +51,10 @@ export class LevelController extends Component
     private playingLayerCount: number = 3;
     @property( { readonly: true } )
     private currentPlayingLayerIndex: number = 0;
+    @property( Node )
+    private levelNode: Node;
+    @property( Node )
+    disableInputWhenIntro: Node;
     //#endregion
     //#region PRIVATE FIELDS
     private listActiveLayer: GameLayer[] = [];
@@ -80,87 +82,72 @@ export class LevelController extends Component
     //#region CC METHODS
     protected onLoad (): void
     {
-
         this.listBar = this.Holder.getComponentsInChildren( BarController );
         this.listScrew = this.Holder.getComponentsInChildren( Screw );
         this.listLayer = this.Holder.getComponentsInChildren( GameLayer );
 
     }
 
-    protected async start (): Promise<void>
+    protected start (): void
+    {
+        this.initLevel();
+    }
+
+    private async initLevel (): Promise<void>
     {
         this.loadBoxDataFromJson();
         this.initBarAndScrewColor();
-        getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         this.initBox();
+
+        this.initLayer();
+        PhysicsSystem2D.instance.enable = false;
+        await this.playIntroLevel();
+
+
+        getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         getGameSystem().BoxContainer.InitQueue();
         getGameSystem().GameManager.CurrentScrew = this.listScrew.length;
         getGameSystem().GameManager.TotalScrew = this.listScrew.length;
-        this.initLayer();
 
-        PhysicsSystem2D.instance.enable = false;
-        // let listBar = this.Holder.getComponentsInChildren( BarController );
-        // let listScrew = this.Holder.getComponentsInChildren( Screw );
-        // for ( let i = 0; i < listBar.length; i++ )
-        // {
-        //     this.introScale( listBar[ i ].node );
-        //     this.introRotation( listBar[ i ].node );
-        // }
-        // for ( let i = 0; i < listScrew.length; i++ )
-        // {
-        //     this.introScale( listScrew[ i ].node );
-        //     this.introRotation( listScrew[ i ].node );
-        // }
-        // let listLayer = this.Holder.getComponentsInChildren( GameLayerOder );
-        // for ( let i = 0; i < listLayer.length; i++ )
-        // {
+        this.initBarAndScrewPhysics();
+        await new Promise( resolve => setTimeout( resolve, 0 ) );
+        //this.disableInputWhenIntro.active = false;
+        getGameSystem().TutorialController.tweenHandTutorial();
+        //PhysicsSystem2D.instance.enable = true;
+    }
 
-        //     this.introScale( listLayer[ i ].node );
-        //     this.introRotation( listLayer[ i ].node );
-        //     await new Promise( resolve => setTimeout( resolve, 50 ) );
-        // }
-        // await new Promise( resolve => setTimeout( resolve, 1000 ) );
+
+    static delay ( seconds: number ): Promise<void>
+    {
+        return new Promise( resolve => setTimeout( resolve, seconds * 1000 ) );
+    }
+
+    private async playIntroLevel (): Promise<void>
+    {
+        let tweens = [];
+        const tweenScales = this.levelNode.getComponentsInChildren( ScaleIntro );
+        tweenScales.forEach( tweenScale =>
+        {
+            tweens.push( tweenScale.play() );
+        } );
+
+        const tweenRotation = this.levelNode.getComponentsInChildren( RotationIntro );
+        tweenRotation.forEach( tweenRotation =>
+        {
+            tweens.push( tweenRotation.play() );
+        } );
+
+        await Promise.all( tweens );
+        this.listBar.forEach( bar =>
+        {
+            bar.BarPhysic.SetGroupLayer();
+        } );
+
         PhysicsSystem2D.instance.enable = true;
         getGameSystem().MultiScreneController.onSizeChanged();
     }
-    //#region Intro
-    private introScale ( node: Node )
-    {
-        let startScale = node.getScale();
-        node.setScale( Vec3.ZERO );
-        tween( node )
-            .delay( 0 )
-            .to( 0.25, { scale: startScale }, { easing: "linear" } )
-            .start();
-    }
-    private offsetRotation = 180;
-    private introRotation ( node: Node )
-    {
-        // let startRotation = node.getRotation();
-        // let endRotation = new Quat();
-        // Quat.rotateZ( endRotation, startRotation, this.offsetRotation * Math.PI / 180 );
-        // tween( node )
-        //     .delay( 0.2 )
-        //     .to( 0.5, { rotation: endRotation }, { easing: "linear" } )
-        //     //.to( 0.5, { rotation: startRotation }, { easing: "linear" } )
-        //     .start();
-        //
-        node.eulerAngles = new Vec3( 0, 0, -275 );
-        const tweenRotate = tween( node )
-            .delay( 0 )
-            .to( 0.25, { eulerAngles: new Vec3( 0, 0, 0 ) }, { easing: easing.backOut } )
-        tweenRotate.start();
 
-        // return new Promise<void>( ( resolve, reject ) =>
-        // {
-        //     setTimeout( () =>
-        //     {
-        //         resolve();
-        //         Tween.stopAllByTarget( node );
-        //     }, ( 0 + 0.25 + 1 ) * 1000 );
-        // } );
-    }
-    //#endregion
+
     //#endregion
     //#region PRIVATE METHODS
     private initBarAndScrewColor (): void 
@@ -168,14 +155,23 @@ export class LevelController extends Component
         this.listBar.forEach( bar => 
         {
             bar.InitScrewColor( this.ScrewData );
-            bar.BarPhysic.SetGroupLayer();
+        } );
+    }
+
+    private initBarAndScrewPhysics (): void
+    {
+        this.listBar.forEach( bar =>
+        {
+            //bar.BarPhysic.SetGroupLayer();
+            bar.BarPhysic.setActivePhysic( false );
+            //bar.BarPhysic.SetNoneColliderGroupLayer();
             bar.BarPhysic.CreatHGJoint();
-            //bar.BarPhysic.EnableHGJoin();
+            bar.BarPhysic.setActivePhysic( true );
         } );
         this.listScrew.forEach( screw =>
         {
             screw.enableHgJoint();
-        } )
+        } );
     }
 
     private initBox (): void

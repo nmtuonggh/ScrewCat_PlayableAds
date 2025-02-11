@@ -5,6 +5,7 @@ import { Vec3 } from 'cc';
 import { Sprite } from 'cc';
 import { UITransform } from 'cc';
 import { ERigidBody2DType } from 'cc';
+import { Collider2D } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'BarPhysic' )
@@ -71,6 +72,12 @@ export class BarPhysic extends Component
     setRigidBodyType ( type: ERigidBody2DType ): void
     {
         this.rb.type = type;
+    }
+
+    setActivePhysic(enable : boolean): void
+    {
+        this.getComponent(RigidBody2D).enabled = enable;
+        this.getComponent(Collider2D).enabled = enable;
     }
 
 }

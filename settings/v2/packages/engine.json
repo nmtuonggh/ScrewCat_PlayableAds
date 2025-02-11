@@ -121,8 +121,8 @@
       "procedural-animation": {
         "_value": false
       },
-      "custom-pipeline": {
-        "_value": false
+      "render-pipeline": {
+        "_option": "legacy-pipeline"
       }
     },
     "flags": {},

@@ -39,7 +39,7 @@ export class Level extends Component
     private screwLayer: 11;
     @property( [ BarController ] )
     listBar: BarController[] = [];
-    @property([SpriteFrame])
+    @property( [ SpriteFrame ] )
     listSpriteFrame: SpriteFrame[] = [];
 
     //#endregion
@@ -197,25 +197,16 @@ export class Level extends Component
     setFlex ()
     {
 
-        // var screws = this.node.getComponentsInChildren( Screw );
-        // for ( let i = 0; i < screws.length; i++ )
-        // {
-        //     if ( screws[ i ].node.getComponent( ScrewRenderer ).colorIndex === 8 )
-        //     {
-        //         screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = 2;
-        //     }
-        //     //console.log(number);
-        // }
-        var bars = this.node.getComponentsInChildren( BarController );
-        for ( let i = 0; i < this.listSpriteFrame.length; i++ )
+        let screws = this.node.getComponentsInChildren( Screw );
+        for ( let i = 0; i < screws.length; i++ )
         {
-            for ( let j = 0; j < bars.length; j++ )
-            {
-                if ( this.listBarName[ i ] === bars[ j ].node.name )
-                {
-                    bars[ j ].node.getComponent( Sprite ).spriteFrame = this.listSpriteFrame[ i ];
-                }
-            }
+            //cong y cua tat ca screw them 120
+            screws[ i ].node.setPosition( screws[ i ].node.position.x, screws[ i ].node.position.y + 120, screws[ i ].node.position.z );
+        }
+        var bars = this.node.getComponentsInChildren( BarController );
+        for ( let i = 0; i < bars.length; i++ )
+        {
+            bars[ i ].node.setPosition( bars[ i ].node.position.x, bars[ i ].node.position.y + 120, bars[ i ].node.position.z );
         }
     }
 }

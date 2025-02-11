@@ -30,7 +30,7 @@ export class TutorialController extends Component
         this.handTutorial.active = false;
         this.screw.ScrewAnimation.stopPlayTutorial();
     }
-    private tweenHandTutorial (): void
+    public tweenHandTutorial (): void
     {
         try
         {

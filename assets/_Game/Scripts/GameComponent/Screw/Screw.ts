@@ -267,6 +267,8 @@ export class Screw extends GameLayerComponent
                     this.State = eScrewState.MOVING;
                     moveSuccess = true;
                     getGameSystem().AudioController.playAudio( AudioType.screwOut );
+                    this.node.setScale( new Vec3( 1, 1, 1 ) );
+
                 }
                 else if ( this.CheckMoveCache() )
                 {
@@ -274,7 +276,7 @@ export class Screw extends GameLayerComponent
                     moveSuccess = true;
                     getGameSystem().AudioController.playAudio( AudioType.screwOut );
                     getGameSystem().CahedContainer.CurrentScrewCount++;
-
+                    this.node.setScale( new Vec3( 1, 1, 1 ) );
                 }
 
                 if ( moveSuccess === true )
