@@ -201,12 +201,12 @@ export class Level extends Component
         for ( let i = 0; i < screws.length; i++ )
         {
             //cong y cua tat ca screw them 120
-            screws[ i ].node.setPosition( screws[ i ].node.position.x, screws[ i ].node.position.y + 120, screws[ i ].node.position.z );
+            screws[ i ].node.setPosition( screws[ i ].node.position.x, screws[ i ].node.position.y + 5, screws[ i ].node.position.z );
         }
         var bars = this.node.getComponentsInChildren( BarController );
         for ( let i = 0; i < bars.length; i++ )
         {
-            bars[ i ].node.setPosition( bars[ i ].node.position.x, bars[ i ].node.position.y + 120, bars[ i ].node.position.z );
+            bars[ i ].node.setPosition( bars[ i ].node.position.x, bars[ i ].node.position.y + 5, bars[ i ].node.position.z );
         }
     }
 }
