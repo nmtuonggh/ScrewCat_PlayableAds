@@ -16,6 +16,12 @@ import { getGameSystem } from '../GameSystem';
 import { GameLayerOder } from '../GameComponent/GameLayerOder';
 import { Box } from '../GameComponent/HoleContainer/Box/Box';
 import { get } from 'http';
+import { PhysicsSystem2D } from 'cc';
+import { Vec3 } from 'cc';
+import { tween } from 'cc';
+import { Quat } from 'cc';
+import { easing } from 'cc';
+import { Tween } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -78,10 +84,10 @@ export class LevelController extends Component
         this.listBar = this.Holder.getComponentsInChildren( BarController );
         this.listScrew = this.Holder.getComponentsInChildren( Screw );
         this.listLayer = this.Holder.getComponentsInChildren( GameLayer );
-        
+
     }
 
-    protected start (): void
+    protected async start (): Promise<void>
     {
         this.loadBoxDataFromJson();
         this.initBarAndScrewColor();
@@ -92,8 +98,69 @@ export class LevelController extends Component
         getGameSystem().GameManager.TotalScrew = this.listScrew.length;
         this.initLayer();
 
-        
+        PhysicsSystem2D.instance.enable = false;
+        // let listBar = this.Holder.getComponentsInChildren( BarController );
+        // let listScrew = this.Holder.getComponentsInChildren( Screw );
+        // for ( let i = 0; i < listBar.length; i++ )
+        // {
+        //     this.introScale( listBar[ i ].node );
+        //     this.introRotation( listBar[ i ].node );
+        // }
+        // for ( let i = 0; i < listScrew.length; i++ )
+        // {
+        //     this.introScale( listScrew[ i ].node );
+        //     this.introRotation( listScrew[ i ].node );
+        // }
+        // let listLayer = this.Holder.getComponentsInChildren( GameLayerOder );
+        // for ( let i = 0; i < listLayer.length; i++ )
+        // {
+
+        //     this.introScale( listLayer[ i ].node );
+        //     this.introRotation( listLayer[ i ].node );
+        //     await new Promise( resolve => setTimeout( resolve, 50 ) );
+        // }
+        // await new Promise( resolve => setTimeout( resolve, 1000 ) );
+        PhysicsSystem2D.instance.enable = true;
+        getGameSystem().MultiScreneController.onSizeChanged();
     }
+    //#region Intro
+    private introScale ( node: Node )
+    {
+        let startScale = node.getScale();
+        node.setScale( Vec3.ZERO );
+        tween( node )
+            .delay( 0 )
+            .to( 0.25, { scale: startScale }, { easing: "linear" } )
+            .start();
+    }
+    private offsetRotation = 180;
+    private introRotation ( node: Node )
+    {
+        // let startRotation = node.getRotation();
+        // let endRotation = new Quat();
+        // Quat.rotateZ( endRotation, startRotation, this.offsetRotation * Math.PI / 180 );
+        // tween( node )
+        //     .delay( 0.2 )
+        //     .to( 0.5, { rotation: endRotation }, { easing: "linear" } )
+        //     //.to( 0.5, { rotation: startRotation }, { easing: "linear" } )
+        //     .start();
+        //
+        node.eulerAngles = new Vec3( 0, 0, -275 );
+        const tweenRotate = tween( node )
+            .delay( 0 )
+            .to( 0.25, { eulerAngles: new Vec3( 0, 0, 0 ) }, { easing: easing.backOut } )
+        tweenRotate.start();
+
+        // return new Promise<void>( ( resolve, reject ) =>
+        // {
+        //     setTimeout( () =>
+        //     {
+        //         resolve();
+        //         Tween.stopAllByTarget( node );
+        //     }, ( 0 + 0.25 + 1 ) * 1000 );
+        // } );
+    }
+    //#endregion
     //#endregion
     //#region PRIVATE METHODS
     private initBarAndScrewColor (): void 
@@ -101,7 +168,7 @@ export class LevelController extends Component
         this.listBar.forEach( bar => 
         {
             bar.InitScrewColor( this.ScrewData );
-            bar.BarPhysic.SetGroupLayer(); 
+            bar.BarPhysic.SetGroupLayer();
             bar.BarPhysic.CreatHGJoint();
             //bar.BarPhysic.EnableHGJoin();
         } );
@@ -122,7 +189,7 @@ export class LevelController extends Component
             {
                 boxSlot.boxAdsPrefab.active = true;
             }
-            else if( !boxSlot.IsInProgress )
+            else if ( !boxSlot.IsInProgress )
             {
                 const color = this.colorBoxSpawnData[ this.currentBoxDataIndex ].color;
                 const holeCount = this.colorBoxSpawnData[ this.currentBoxDataIndex ].holeCount;
@@ -184,7 +251,7 @@ export class LevelController extends Component
         //active layer 
         for ( let i = 0; i < this.activeLayerCount; i++ )
         {
-            if ( this.listUnActiveLayer.length > 0 && 
+            if ( this.listUnActiveLayer.length > 0 &&
                 i < this.activeLayerCount )
             {
                 const lastLayer = this.listUnActiveLayer.pop();
