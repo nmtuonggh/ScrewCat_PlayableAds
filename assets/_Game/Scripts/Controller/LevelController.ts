@@ -113,7 +113,7 @@ export class LevelController extends Component
         this.initBarAndScrewPhysics();
         await new Promise( resolve => setTimeout( resolve, 0 ) );
         this.disableInputWhenIntro.active = false;
-        getGameSystem().TutorialController.tweenHandTutorial();
+        //getGameSystem().TutorialController.tweenHandTutorial();
         //PhysicsSystem2D.instance.enable = true;
     }
 

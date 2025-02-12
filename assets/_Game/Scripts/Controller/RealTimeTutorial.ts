@@ -56,6 +56,7 @@ export class RealTimeTutorial extends Component
     //#region PUBLIC METHODS
     public updateTutorial (): void
     {
+        if ( !this.node.active ) return;
         if ( getGameSystem().GameManager.lose ) return;
         this.cancelTutorial();
         this.unschedule( this.tweenHandTutorial );

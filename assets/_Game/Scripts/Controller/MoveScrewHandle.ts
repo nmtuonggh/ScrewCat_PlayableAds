@@ -206,7 +206,7 @@ export class MoveScrewHandle extends Component
             getGameSystem().AudioController.playerBGMusic();
         }
 
-        this.resetNoInputTimer();
+        //this.resetNoInputTimer();
 
         ///Mo comment doan nay neu muon logic con 1 screw thi vao store!!!!!!!!!!!!!!!
         if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
