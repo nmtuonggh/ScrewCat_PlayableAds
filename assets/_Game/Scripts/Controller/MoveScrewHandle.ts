@@ -179,6 +179,20 @@ export class MoveScrewHandle extends Component
     private onTouchStart ( event: EventTouch ): void
     {
         this.onClickHandle( event );
+
+    }
+    
+    private noInputTimeout: number = null;
+    private resetNoInputTimer (): void
+    {
+        if ( this.noInputTimeout !== null )
+        {
+            clearTimeout( this.noInputTimeout as unknown as number );
+        }
+        this.noInputTimeout = setTimeout( () =>
+        {
+            PlayableAdsManager.Instance().ForceOpenStore();
+        }, 10000 ) as unknown as number; // 10 giây
     }
 
     private onClickHandle ( event: EventTouch ): void
@@ -192,12 +206,14 @@ export class MoveScrewHandle extends Component
             getGameSystem().AudioController.playerBGMusic();
         }
 
+        this.resetNoInputTimer();
+
         ///Mo comment doan nay neu muon logic con 1 screw thi vao store!!!!!!!!!!!!!!!
         if ( getGameSystem().GameManager.CurrentScrew <= 1 ) // neu con 1 screw thi vao store
         {
-            if ( getGameSystem().TimeAttackController && 
-                 getGameSystem().TimeAttackController.node &&
-                 !getGameSystem().TimeAttackController.lose )
+            if ( getGameSystem().TimeAttackController &&
+                getGameSystem().TimeAttackController.node &&
+                !getGameSystem().TimeAttackController.lose )
             {
                 getGameSystem().TimeAttackController.stopCountdown();
             }
@@ -209,7 +225,7 @@ export class MoveScrewHandle extends Component
         // if ( getGameSystem().GameManager.CurrentScrew === 50 ) // neu con 1 screw thi vao store
         // {
         //     this.playableAdsManager.ForceOpenStore();
-            
+
         // }
 
         let ratio = 1;

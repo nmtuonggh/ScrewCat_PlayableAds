@@ -95,6 +95,7 @@ export class LevelController extends Component
 
     private async initLevel (): Promise<void>
     {
+        this.disableInputWhenIntro.active = true;
         this.loadBoxDataFromJson();
         this.initBarAndScrewColor();
         this.initBox();
@@ -111,7 +112,7 @@ export class LevelController extends Component
 
         this.initBarAndScrewPhysics();
         await new Promise( resolve => setTimeout( resolve, 0 ) );
-        //this.disableInputWhenIntro.active = false;
+        this.disableInputWhenIntro.active = false;
         getGameSystem().TutorialController.tweenHandTutorial();
         //PhysicsSystem2D.instance.enable = true;
     }
