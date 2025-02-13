@@ -31,6 +31,8 @@ export class Level extends Component
     private flex = false;
     private syncDataBox = false;
     private changeColorData = false;
+    private switchColor = false;
+
     @property( JsonAsset )
     jsonData: JsonAsset = null;
     @property( [ String ] )
@@ -41,7 +43,10 @@ export class Level extends Component
     listBar: BarController[] = [];
     @property( [ SpriteFrame ] )
     listSpriteFrame: SpriteFrame[] = [];
-
+    @property()
+    fromColor: number = 0;
+    @property()
+    toColor: number = 0;
     //#endregion
 
     //#region PROPERTIES
@@ -106,8 +111,22 @@ export class Level extends Component
         return this.changeColorData;
     }
 
+    @property
+    set SwitchColor ( value: boolean )
+    {
+        if ( !this.switchColor )
+        {
+            this.switchColor = value;
+            this.switchColorScrew();
+        }
+    }
+    get SwitchColor ()
+    {
+        return this.switchColor;
+    }
     //#endregion
 
+    //#region Update Game Layer
     updateGameLayer ()
     {
         var gamelayers = this.node.getComponentsInChildren( GameLayerOder );
@@ -116,7 +135,9 @@ export class Level extends Component
             gamelayers[ i ].layerOrder = i;
         }
     }
+    //#endregion
 
+    //#region Update Layer Bar And Screw
     updateLayerBarAndScrew ()
     {
         var bars = this.node.getComponentsInChildren( BarController );
@@ -141,7 +162,9 @@ export class Level extends Component
             } );
         } );
     }
+    //#endregion
 
+    //#region Set Polygon Collider
     setPolygonCollider ()
     {
         var bars = this.node.getComponentsInChildren( BarController );
@@ -156,7 +179,9 @@ export class Level extends Component
             modelCollider.destroy();
         } );
     }
+    //#endregion
 
+    //#region Set Screw To Bar
     setScrewToBar ()
     {
         var screws = this.node.getComponentsInChildren( Screw );
@@ -206,7 +231,8 @@ export class Level extends Component
             //console.log(number);
         }
     }
-
+    //#endregion
+    //#region Change Color
     changeColorScrew ()
     {
         var screws = this.node.getComponentsInChildren( Screw );
@@ -234,6 +260,24 @@ export class Level extends Component
             screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = listDataScrews[ i ].colorId;
         }
     }
+    //#endregion
+
+    //#region Switch Color
+    switchColorScrew ()
+    {
+        var screws = this.node.getComponentsInChildren( Screw );
+        for ( let i = 0; i < screws.length; i++ )
+        {
+            let colorIndex = screws[ i ].node.getComponent( ScrewRenderer ).colorIndex;
+            if ( colorIndex === this.fromColor )
+            {
+                screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = this.toColor;
+            }
+        }
+    }
+    //#endregion
+
+    //#region Flex
     setFlex ()
     {
 
@@ -249,6 +293,7 @@ export class Level extends Component
             bars[ i ].node.setPosition( bars[ i ].node.position.x, bars[ i ].node.position.y + 5, bars[ i ].node.position.z );
         }
     }
+    //#endregion
 }
 
 
