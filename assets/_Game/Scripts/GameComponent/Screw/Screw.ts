@@ -100,7 +100,7 @@ export class Screw extends GameLayerComponent
         const screwPosition = this.node.getWorldPosition();
 
         const screwPosition2D = new Vec2( screwPosition.x, screwPosition.y );
-        const radius = GameConfig.SCREW_RADIUS;
+        const radius = GameConfig.SCREW_RADIUS * 0.7;
 
         const points = [];
         for ( let i = 0; i < 8; i++ )
@@ -139,7 +139,7 @@ export class Screw extends GameLayerComponent
             {
                 if ( bar.Layer > this.Layer )
                 {
-                    //console.log( "Is blocked" + bar.node.name );
+                    console.log( "Is blocked" + bar.node.name );
                     return true;
                 }
             }
