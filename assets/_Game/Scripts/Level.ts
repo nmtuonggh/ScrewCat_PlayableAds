@@ -28,9 +28,9 @@ export class Level extends Component
 {
     //#region PRIVATE FIELDS
     private _updatedGamePlayer = false;
-    private updatedHideLayer = false;
     private flex = false;
     private syncDataBox = false;
+    private changeColorData = false;
     @property( JsonAsset )
     jsonData: JsonAsset = null;
     @property( [ String ] )
@@ -92,6 +92,19 @@ export class Level extends Component
         return this.syncDataBox;
     }
 
+    @property
+    set ChangeColorData ( value: boolean )
+    {
+        if ( !this.changeColorData )
+        {
+            this.changeColorData = value;
+            this.changeColorScrew();
+        }
+    }
+    get ChangeColorData ()
+    {
+        return this.changeColorData;
+    }
 
     //#endregion
 
@@ -194,6 +207,33 @@ export class Level extends Component
         }
     }
 
+    changeColorScrew ()
+    {
+        var screws = this.node.getComponentsInChildren( Screw );
+        var listDataScrews: ScrewData[] = [];
+        const levelData = this.jsonData.json;
+
+        levelData.screws.forEach( screw =>
+        {
+            const screwData: ScrewData = {
+                layer: screw.layer,
+                position: {
+                    x: screw.position.x,
+                    y: screw.position.y
+                },
+                screwId: screw.screwId,
+                shapeId: screw.shapeId,
+                colorId: screw.colorId,
+                barNames: screw.barNames
+            };
+            listDataScrews.push( screwData );
+        } );
+
+        for ( let i = 0; i < screws.length; i++ )
+        {
+            screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = listDataScrews[ i ].colorId;
+        }
+    }
     setFlex ()
     {
 
