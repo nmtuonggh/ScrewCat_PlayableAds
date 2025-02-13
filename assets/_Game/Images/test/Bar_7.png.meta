@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "f3223fb7-fd04-46c5-8279-b67edb349ff1",
+  "uuid": "d89b72db-c34a-4f18-96da-9b71c41badcc",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "f3223fb7-fd04-46c5-8279-b67edb349ff1@6c48a",
+      "uuid": "d89b72db-c34a-4f18-96da-9b71c41badcc@6c48a",
       "displayName": "Bar_7",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "f3223fb7-fd04-46c5-8279-b67edb349ff1",
+        "imageUuidOrDatabaseUri": "d89b72db-c34a-4f18-96da-9b71c41badcc",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "f3223fb7-fd04-46c5-8279-b67edb349ff1@f9941",
+      "uuid": "d89b72db-c34a-4f18-96da-9b71c41badcc@f9941",
       "displayName": "Bar_7",
       "id": "f9941",
       "name": "spriteFrame",
@@ -46,10 +46,10 @@
         "offsetY": 0,
         "trimX": 0,
         "trimY": 0,
-        "width": 104,
-        "height": 98,
-        "rawWidth": 104,
-        "rawHeight": 98,
+        "width": 148,
+        "height": 318,
+        "rawWidth": 148,
+        "rawHeight": 318,
         "borderTop": 0,
         "borderBottom": 0,
         "borderLeft": 0,
@@ -61,17 +61,17 @@
         "meshType": 0,
         "vertices": {
           "rawPosition": [
-            -52,
-            -49,
+            -74,
+            -159,
             0,
-            52,
-            -49,
+            74,
+            -159,
             0,
-            -52,
-            49,
+            -74,
+            159,
             0,
-            52,
-            49,
+            74,
+            159,
             0
           ],
           "indexes": [
@@ -84,12 +84,12 @@
           ],
           "uv": [
             0,
-            98,
-            104,
-            98,
+            318,
+            148,
+            318,
             0,
             0,
-            104,
+            148,
             0
           ],
           "nuv": [
@@ -103,18 +103,18 @@
             1
           ],
           "minPos": [
-            -52,
-            -49,
+            -74,
+            -159,
             0
           ],
           "maxPos": [
-            52,
-            49,
+            74,
+            159,
             0
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "f3223fb7-fd04-46c5-8279-b67edb349ff1@6c48a",
+        "imageUuidOrDatabaseUri": "d89b72db-c34a-4f18-96da-9b71c41badcc@6c48a",
         "atlasUuid": ""
       },
       "ver": "1.0.12",
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "hasAlpha": true,
     "fixAlphaTransparencyArtifacts": false,
-    "redirect": "f3223fb7-fd04-46c5-8279-b67edb349ff1@6c48a"
+    "redirect": "d89b72db-c34a-4f18-96da-9b71c41badcc@6c48a"
   }
 }

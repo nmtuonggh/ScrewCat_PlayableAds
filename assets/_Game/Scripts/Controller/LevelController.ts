@@ -20,6 +20,8 @@ import { init } from '../../../../extensions/nvthan/@types/packages/engine/@type
 import { get } from 'http';
 import { ScaleIntro } from 'db://assets/PA_iKame (1)/base-script/Tween/ScaleIntro';
 import { RotationIntro } from 'db://assets/PA_iKame (1)/base-script/Tween/RotationIntro';
+import { UIOpacity } from 'cc';
+import { tween } from 'cc';
 
 const { ccclass, property } = _decorator;
 
@@ -92,7 +94,8 @@ export class LevelController extends Component
     {
         this.initLevel();
     }
-
+    //#endregion
+    //#region Init Level
     private async initLevel (): Promise<void>
     {
         this.disableInputWhenIntro.active = true;
@@ -116,7 +119,7 @@ export class LevelController extends Component
         //getGameSystem().TutorialController.tweenHandTutorial();
         //PhysicsSystem2D.instance.enable = true;
     }
-
+    //#endregion
 
     static delay ( seconds: number ): Promise<void>
     {
@@ -126,7 +129,22 @@ export class LevelController extends Component
     private async playIntroLevel (): Promise<void>
     {
         let tweens = [];
+        let noneIntroLayer = this.levelNode.getComponentsInChildren( UIOpacity );
         const tweenScales = this.levelNode.getComponentsInChildren( ScaleIntro );
+        if ( tweenScales.length > 0 )
+        {
+            noneIntroLayer.forEach( layer =>
+            {
+                layer.getComponent( UIOpacity ).opacity = 0;
+            } );
+        }
+        this.scheduleOnce( () =>
+        {
+            noneIntroLayer.forEach( layer =>
+            {
+                tween( layer ).to( 0.75, { opacity: 255 } ).start();
+            } );
+        }, 0.75 );
         tweenScales.forEach( tweenScale =>
         {
             tweens.push( tweenScale.play() );
@@ -143,6 +161,7 @@ export class LevelController extends Component
         {
             bar.BarPhysic.SetGroupLayer();
         } );
+        
 
         PhysicsSystem2D.instance.enable = true;
         getGameSystem().MultiScreneController.onSizeChanged();

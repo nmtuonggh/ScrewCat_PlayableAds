@@ -276,7 +276,7 @@ export class Level extends Component
         }
     }
     //#endregion
-
+    //#region ChangePicktu
     //#region Flex
     setFlex ()
     {
