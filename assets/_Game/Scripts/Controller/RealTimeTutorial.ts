@@ -17,6 +17,9 @@ export class RealTimeTutorial extends Component
     private levelContainer: Node = null;
     @property( Node )
     private handTutorial: Node = null;
+    @property(Screw)
+    forceScrew: Screw = null;
+    
    
     @property()
     private waitTime: number = 0;
@@ -76,7 +79,15 @@ export class RealTimeTutorial extends Component
     {
         try
         {
-            var screw = this.getScrew().node;
+            if(this.forceScrew && this.isFirstTime)
+            {
+                var screw = this.forceScrew.node;
+            }
+            else
+            {
+                var screw = this.getScrew().node;
+            }
+
             if ( !screw ) return;
             this.handTutorial.active = true;
             this.handTutorial.parent = screw;

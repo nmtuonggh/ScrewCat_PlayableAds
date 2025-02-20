@@ -27,17 +27,17 @@ export class ScrewData
 export class Level extends Component
 {
     //#region PRIVATE FIELDS
-    @property( { group: " Update Game Data", visible: false } )
+    @property()
     private _updatedGamePlayer = false;
-    @property( { group: " Flex", visible: false } )
+    @property()
     private flex = false;
-    @property( { group: " Sync Data Box", visible: false } )
+    @property()
     private syncDataBox = false;
-    @property( { group: " Change Color", visible: false } )
+    @property()
     private changeColorData = false;
-    @property( { group: " Switch Color", visible: false } )
+    @property()
     private switchColor = false;
-    @property( { group: " Change Sprite Frame", visible: false } )
+    @property()
     private changeSpriteFrame = false;
 
     @property( JsonAsset )
@@ -273,6 +273,11 @@ export class Level extends Component
             };
             listDataScrews.push( screwData );
         } );
+
+        // for ( let i = 0; i < listDataScrews.length; i++ )
+        // {
+        //     console.log( listDataScrews[ i ].colorId );
+        // }
 
         for ( let i = 0; i < screws.length; i++ )
         {

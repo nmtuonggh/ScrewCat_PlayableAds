@@ -744,7 +744,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 0,
             "barNames": [
                 "Bar_1"
             ]
@@ -770,7 +770,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 0,
             "barNames": [
                 "Bar_3"
             ]
@@ -796,7 +796,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 0,
             "barNames": [
                 "Bar_5"
             ]
@@ -809,7 +809,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 7,
+            "colorId": 1,
             "barNames": [
                 "Bar_6"
             ]
@@ -822,7 +822,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 8,
             "barNames": [
                 "Bar_7"
             ]
@@ -835,7 +835,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 4,
+            "colorId": 2,
             "barNames": [
                 "Bar_8"
             ]
@@ -848,7 +848,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 4,
+            "colorId": 8,
             "barNames": [
                 "Bar_7",
                 "Bar_6",
@@ -868,7 +868,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 0,
             "barNames": [
                 "Bar_17",
                 "Bar_16"
@@ -882,7 +882,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 6,
+            "colorId": 7,
             "barNames": [
                 "Bar_18",
                 "Bar_15"
@@ -910,7 +910,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 4,
+            "colorId": 8,
             "barNames": [
                 "Bar_20",
                 "Bar_13"
@@ -924,7 +924,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 6,
+            "colorId": 7,
             "barNames": [
                 "Bar_21",
                 "Bar_12"
@@ -938,7 +938,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 0,
             "barNames": [
                 "Bar_22",
                 "Bar_11"
@@ -952,7 +952,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 4,
+            "colorId": 7,
             "barNames": [
                 "Bar_23",
                 "Bar_10"
@@ -966,7 +966,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 6,
+            "colorId": 8,
             "barNames": [
                 "Bar_24",
                 "Bar_9"
@@ -980,7 +980,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 7,
+            "colorId": 6,
             "barNames": [
                 "Bar_24",
                 "Bar_23",
@@ -996,8 +996,8 @@
                 "Bar_13",
                 "Bar_12",
                 "Bar_11",
-                "Bar_10",
-                "Bar_9"
+                "Bar_9",
+                "Bar_10"
             ]
         },
         {
@@ -1008,7 +1008,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 7,
             "barNames": [
                 "Bar_33",
                 "Bar_32"
@@ -1022,7 +1022,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 6,
+            "colorId": 0,
             "barNames": [
                 "Bar_34",
                 "Bar_31"
@@ -1036,7 +1036,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 7,
+            "colorId": 1,
             "barNames": [
                 "Bar_35",
                 "Bar_30"
@@ -1050,7 +1050,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 4,
+            "colorId": 8,
             "barNames": [
                 "Bar_36",
                 "Bar_29"
@@ -1078,7 +1078,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 7,
+            "colorId": 1,
             "barNames": [
                 "Bar_38",
                 "Bar_27"
@@ -1092,7 +1092,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 4,
+            "colorId": 2,
             "barNames": [
                 "Bar_39",
                 "Bar_26"
@@ -1106,7 +1106,7 @@
             },
             "screwId": 0,
             "shapeId": 0,
-            "colorId": 2,
+            "colorId": 8,
             "barNames": [
                 "Bar_40",
                 "Bar_39",
@@ -1115,8 +1115,8 @@
                 "Bar_36",
                 "Bar_35",
                 "Bar_34",
-                "Bar_33",
                 "Bar_32",
+                "Bar_33",
                 "Bar_31",
                 "Bar_30",
                 "Bar_29",
