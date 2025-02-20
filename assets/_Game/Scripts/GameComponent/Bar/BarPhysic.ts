@@ -59,14 +59,12 @@ export class BarPhysic extends Component
     {
         if ( this.barController === null ) console.error( "Bar Controller is null" );
         if ( this.rb === null ) console.error( "Rigidbody2D is null" );
-        if ( this.barController.isNotCollide )
-        {
-            this.rb.group = 1 << 31;
-        }
-        else
-        {
-            this.rb.group = 1 << this.barController.Layer + 5;
-        }
+        this.rb.group = 1 << this.barController.Layer + 5;
+    }
+
+    setUnColliderGroupLayer (): void
+    {
+        this.rb.group = 1 << 31;
     }
 
     setRigidBodyType ( type: ERigidBody2DType ): void
@@ -74,10 +72,10 @@ export class BarPhysic extends Component
         this.rb.type = type;
     }
 
-    setActivePhysic(enable : boolean): void
+    setActivePhysic ( enable: boolean ): void
     {
-        this.getComponent(RigidBody2D).enabled = enable;
-        this.getComponent(Collider2D).enabled = enable;
+        this.getComponent( RigidBody2D ).enabled = enable;
+        this.getComponent( Collider2D ).enabled = enable;
     }
 
 }

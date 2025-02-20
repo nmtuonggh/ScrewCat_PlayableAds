@@ -27,11 +27,18 @@ export class ScrewData
 export class Level extends Component
 {
     //#region PRIVATE FIELDS
+    @property( { group: " Update Game Data", visible: false } )
     private _updatedGamePlayer = false;
+    @property( { group: " Flex", visible: false } )
     private flex = false;
+    @property( { group: " Sync Data Box", visible: false } )
     private syncDataBox = false;
+    @property( { group: " Change Color", visible: false } )
     private changeColorData = false;
+    @property( { group: " Switch Color", visible: false } )
     private switchColor = false;
+    @property( { group: " Change Sprite Frame", visible: false } )
+    private changeSpriteFrame = false;
 
     @property( JsonAsset )
     jsonData: JsonAsset = null;
@@ -50,7 +57,7 @@ export class Level extends Component
     //#endregion
 
     //#region PROPERTIES
-    @property
+    @property( { group: " Update Game Data" } )
     set UpdatedGamePlayer ( value: boolean )
     {
         if ( !this._updatedGamePlayer )
@@ -68,7 +75,7 @@ export class Level extends Component
         return this._updatedGamePlayer;
     }
 
-    @property
+    @property( { group: " Flex" } )
     set Flex ( value: boolean )
     {
         if ( !this.flex )
@@ -83,7 +90,7 @@ export class Level extends Component
         return this.flex;
     }
 
-    @property
+    @property( { group: " Sync Data Box" } )
     set SyncDataBox ( value: boolean )
     {
         if ( !this.syncDataBox )
@@ -97,7 +104,7 @@ export class Level extends Component
         return this.syncDataBox;
     }
 
-    @property
+    @property( { group: " Change Color" } )
     set ChangeColorData ( value: boolean )
     {
         if ( !this.changeColorData )
@@ -111,7 +118,7 @@ export class Level extends Component
         return this.changeColorData;
     }
 
-    @property
+    @property( { group: " Switch Color" } )
     set SwitchColor ( value: boolean )
     {
         if ( !this.switchColor )
@@ -123,6 +130,19 @@ export class Level extends Component
     get SwitchColor ()
     {
         return this.switchColor;
+    }
+    @property( { group: " Change Sprite Frame" } )
+    set ChangeSpriteFrame ( value: boolean )
+    {
+        if ( !this.changeSpriteFrame )
+        {
+            this.changeSpriteFrame = value;
+            this.ChangeSF();
+        }
+    }
+    get ChangeSpriteFrame ()
+    {
+        return this.changeSpriteFrame;
     }
     //#endregion
 
@@ -216,7 +236,6 @@ export class Level extends Component
                     {
                         bars[ j ].listNodes.push( screws[ i ].node );
                         //console.log( barName );
-
                     }
                 }
             } );
@@ -280,7 +299,6 @@ export class Level extends Component
     //#region Flex
     setFlex ()
     {
-
         let screws = this.node.getComponentsInChildren( Screw );
         for ( let i = 0; i < screws.length; i++ )
         {
@@ -292,6 +310,26 @@ export class Level extends Component
         {
             bars[ i ].node.setPosition( bars[ i ].node.position.x, bars[ i ].node.position.y + 5, bars[ i ].node.position.z );
         }
+    }
+    //#endregion
+    //#region Change Sprite Frame
+    ChangeSF ()
+    {
+        var bars = this.node.getComponentsInChildren( BarController );
+        bars.forEach( bar =>
+        {
+            this.listSpriteFrame.forEach( spriteFrame =>
+            {
+                if ( bar.node.name === spriteFrame.name )
+                {
+                    const sprite = bar.node.children[ 0 ].getComponent( Sprite );
+                    if ( sprite )
+                    {
+                        sprite.spriteFrame = spriteFrame;
+                    }
+                }
+            } );
+        } );
     }
     //#endregion
 }

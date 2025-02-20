@@ -57,6 +57,8 @@ export class LevelController extends Component
     private levelNode: Node;
     @property( Node )
     disableInputWhenIntro: Node;
+    @property()
+    private isNotCollide: boolean = false;
     //#endregion
     //#region PRIVATE FIELDS
     private listActiveLayer: GameLayer[] = [];
@@ -125,7 +127,7 @@ export class LevelController extends Component
     {
         return new Promise( resolve => setTimeout( resolve, seconds * 1000 ) );
     }
-
+    //#region Play Intro Level
     private async playIntroLevel (): Promise<void>
     {
         let tweens = [];
@@ -157,16 +159,25 @@ export class LevelController extends Component
         } );
 
         await Promise.all( tweens );
-        this.listBar.forEach( bar =>
+        if ( this.isNotCollide )
         {
-            bar.BarPhysic.SetGroupLayer();
-        } );
-        
+            this.listBar.forEach( bar =>
+            {
+                bar.BarPhysic.setUnColliderGroupLayer();
+            } );
+        }
+        else
+        {
+            this.listBar.forEach( bar =>
+            {
+                bar.BarPhysic.SetGroupLayer();
+            } );
+        }
 
         PhysicsSystem2D.instance.enable = true;
         getGameSystem().MultiScreneController.onSizeChanged();
     }
-
+    //#endregion
 
     //#endregion
     //#region PRIVATE METHODS

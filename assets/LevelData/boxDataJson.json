@@ -1,54 +1,6 @@
 {
     "BoxData": [
         {
-            "Color": 2,
-            "HoleCount": 3
-        },
-        {
-            "Color": 5,
-            "HoleCount": 3
-        },
-        {
-            "Color": 7,
-            "HoleCount": 3
-        },
-        {
-            "Color": 0,
-            "HoleCount": 3
-        },
-        {
-            "Color": 6,
-            "HoleCount": 3
-        },
-        {
-            "Color": 1,
-            "HoleCount": 3
-        },
-        {
-            "Color": 1,
-            "HoleCount": 3
-        },
-        {
-            "Color": 6,
-            "HoleCount": 3
-        },
-        {
-            "Color": 1,
-            "HoleCount": 3
-        },
-        {
-            "Color": 0,
-            "HoleCount": 3
-        },
-        {
-            "Color": 7,
-            "HoleCount": 3
-        },
-        {
-            "Color": 2,
-            "HoleCount": 3
-        },
-        {
             "Color": 5,
             "HoleCount": 3
         },
@@ -57,35 +9,7 @@
             "HoleCount": 3
         },
         {
-            "Color": 7,
-            "HoleCount": 3
-        },
-        {
-            "Color": 0,
-            "HoleCount": 3
-        },
-        {
-            "Color": 2,
-            "HoleCount": 3
-        },
-        {
-            "Color": 1,
-            "HoleCount": 3
-        },
-        {
-            "Color": 7,
-            "HoleCount": 3
-        },
-        {
-            "Color": 0,
-            "HoleCount": 3
-        },
-        {
-            "Color": 5,
-            "HoleCount": 3
-        },
-        {
-            "Color": 7,
+            "Color": 8,
             "HoleCount": 3
         },
         {
@@ -97,39 +21,11 @@
             "HoleCount": 3
         },
         {
-            "Color": 6,
-            "HoleCount": 3
-        },
-        {
-            "Color": 6,
-            "HoleCount": 3
-        },
-        {
-            "Color": 2,
-            "HoleCount": 3
-        },
-        {
-            "Color": 1,
-            "HoleCount": 3
-        },
-        {
-            "Color": 6,
-            "HoleCount": 3
-        },
-        {
             "Color": 5,
             "HoleCount": 3
         },
         {
-            "Color": 5,
-            "HoleCount": 3
-        },
-        {
-            "Color": 6,
-            "HoleCount": 3
-        },
-        {
-            "Color": 5,
+            "Color": 8,
             "HoleCount": 3
         },
         {
@@ -137,35 +33,7 @@
             "HoleCount": 3
         },
         {
-            "Color": 5,
-            "HoleCount": 3
-        },
-        {
-            "Color": 2,
-            "HoleCount": 3
-        },
-        {
-            "Color": 5,
-            "HoleCount": 3
-        },
-        {
-            "Color": 2,
-            "HoleCount": 3
-        },
-        {
-            "Color": 2,
-            "HoleCount": 3
-        },
-        {
-            "Color": 7,
-            "HoleCount": 3
-        },
-        {
-            "Color": 7,
-            "HoleCount": 3
-        },
-        {
-            "Color": 2,
+            "Color": 6,
             "HoleCount": 3
         }
     ]
