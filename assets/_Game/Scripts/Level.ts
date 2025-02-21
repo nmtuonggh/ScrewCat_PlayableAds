@@ -284,6 +284,7 @@ export class Level extends Component
             screws[ i ].node.getComponent( ScrewRenderer ).colorIndex = listDataScrews[ i ].colorId;
         }
     }
+    
     //#endregion
 
     //#region Switch Color

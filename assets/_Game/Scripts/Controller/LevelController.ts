@@ -22,9 +22,16 @@ import { ScaleIntro } from 'db://assets/PA_iKame (1)/base-script/Tween/ScaleIntr
 import { RotationIntro } from 'db://assets/PA_iKame (1)/base-script/Tween/RotationIntro';
 import { UIOpacity } from 'cc';
 import { tween } from 'cc';
+import { ShowLayerId } from '../GameComponent/ShowLayerId';
+import { ServicesPool } from '../ServicePool/ServicesPool';
+import { RealTimeTutorial } from './RealTimeTutorial';
 
 const { ccclass, property } = _decorator;
-
+export class LayerGroup
+{
+    public id: number;
+    public listLayer: ShowLayerId[] = [];
+}
 @ccclass( 'LevelController' )
 export class LevelController extends Component
 {
@@ -89,7 +96,6 @@ export class LevelController extends Component
         this.listBar = this.Holder.getComponentsInChildren( BarController );
         this.listScrew = this.Holder.getComponentsInChildren( Screw );
         this.listLayer = this.Holder.getComponentsInChildren( GameLayer );
-
     }
 
     protected start (): void
@@ -107,8 +113,8 @@ export class LevelController extends Component
 
         this.initLayer();
         PhysicsSystem2D.instance.enable = false;
+        await this.playIntro2();
         await this.playIntroLevel();
-
 
         getGameSystem().ProgressBoxSlot.initLockBoxSlot();
         getGameSystem().BoxContainer.InitQueue();
@@ -120,6 +126,8 @@ export class LevelController extends Component
         this.disableInputWhenIntro.active = false;
         //getGameSystem().TutorialController.tweenHandTutorial();
         //PhysicsSystem2D.instance.enable = true;
+        ServicesPool.get( RealTimeTutorial ).updateTutorial();
+
     }
     //#endregion
 
@@ -132,7 +140,8 @@ export class LevelController extends Component
     {
         let tweens = [];
         let noneIntroLayer = this.levelNode.getComponentsInChildren( UIOpacity );
-        const tweenScales = this.levelNode.getComponentsInChildren( ScaleIntro );
+        let tweenScales = this.levelNode.getComponentsInChildren( ScaleIntro );
+
         if ( tweenScales.length > 0 )
         {
             noneIntroLayer.forEach( layer =>
@@ -152,7 +161,7 @@ export class LevelController extends Component
             tweens.push( tweenScale.play() );
         } );
 
-        const tweenRotation = this.levelNode.getComponentsInChildren( RotationIntro );
+        let tweenRotation = this.levelNode.getComponentsInChildren( RotationIntro );
         tweenRotation.forEach( tweenRotation =>
         {
             tweens.push( tweenRotation.play() );
@@ -178,7 +187,56 @@ export class LevelController extends Component
         getGameSystem().MultiScreneController.onSizeChanged();
     }
     //#endregion
+    //#region Intro2
+    private async playIntro2 (): Promise<void>
+    {
+        let listLayer = this.levelNode.getComponentsInChildren( ShowLayerId );
+        let listLayerGroup: LayerGroup[] = [];
+        if ( listLayer.length <= 0 ) return;
 
+        listLayer.forEach( layer =>
+        {
+            let existingGroup = listLayerGroup.find( group => group.id === layer.layerId );
+            if ( !existingGroup )
+            {
+                existingGroup = new LayerGroup();
+                existingGroup.id = layer.layerId;
+                listLayerGroup.push( existingGroup );
+            }
+            existingGroup.listLayer.push( layer );
+        } );
+
+        // Set opacity to 0 for all layers
+        listLayer.forEach( layer =>
+        {
+            let uiOpacity = layer.getComponent( UIOpacity );
+            if ( uiOpacity )
+            {
+                uiOpacity.opacity = 0;
+            }
+        } );
+
+        // Sort layer groups by id
+        listLayerGroup.sort( ( a, b ) => a.id - b.id );
+
+        // Tween opacity to 255 in order with delay
+        for ( const group of listLayerGroup )
+        {
+            for ( const layer of group.listLayer )
+            {
+                await LevelController.delay( 0.1 );
+                let uiOpacity = layer.getComponent( UIOpacity );
+                if ( uiOpacity )
+                {
+                    tween( uiOpacity ).to( 0.1, { opacity: 255 } ).start();
+                }
+            }
+        }
+
+        // let timeDelay = 0.1 * listLayerGroup.length;
+        // await LevelController.delay( timeDelay );
+        // ServicesPool.get( RealTimeTutorial ).updateTutorial();
+    }
     //#endregion
     //#region PRIVATE METHODS
     private initBarAndScrewColor (): void 

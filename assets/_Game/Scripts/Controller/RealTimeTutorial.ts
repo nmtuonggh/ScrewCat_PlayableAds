@@ -5,6 +5,7 @@ import { Vec3 } from 'cc';
 import { tween } from 'cc';
 import { Tween } from 'cc';
 import { log } from 'console';
+import { ServicesPool } from '../ServicePool/ServicesPool';
 const { ccclass, property } = _decorator;
 
 @ccclass( 'RealTimeTutorial' )
@@ -41,7 +42,9 @@ export class RealTimeTutorial extends Component
     //#region CC METHODS
     protected onEnable (): void
     {
-        this.updateTutorial();
+        //this.updateTutorial();
+        this.handTutorial.active = false;
+        ServicesPool.register( this );
     }
     protected onDisable (): void
     {
@@ -63,7 +66,6 @@ export class RealTimeTutorial extends Component
         if ( getGameSystem().GameManager.lose ) return;
         this.cancelTutorial();
         this.unschedule( this.tweenHandTutorial );
-
         if ( this.isFirstTime )
         {
             this.tweenHandTutorial();
@@ -79,7 +81,7 @@ export class RealTimeTutorial extends Component
     {
         try
         {
-            if(this.forceScrew && this.isFirstTime)
+            if(this.forceScrew.node && this.isFirstTime)
             {
                 var screw = this.forceScrew.node;
             }
